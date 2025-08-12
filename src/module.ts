@@ -1,4 +1,4 @@
-import { addComponentsDir, createResolver, defineNuxtModule } from '@nuxt/kit';
+import { installModule, addComponentsDir, createResolver, defineNuxtModule } from '@nuxt/kit';
 import { importCSS } from './utils/import-css';
 import { importTailwind } from './utils/import-tailwind';
 
@@ -34,5 +34,19 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.hook('modules:done', async () => {
       await importCSS(nuxt, [components]);
     });
+
+    await installModule('@primevue/nuxt-module', {
+      options: {
+        unstyled: true,
+      },
+
+      components: {
+        prefix: 'prime',
+      },
+
+      directives: {
+        prefix: 'prime',
+      },
+    }, nuxt);
   },
 });

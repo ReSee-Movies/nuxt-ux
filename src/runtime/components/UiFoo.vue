@@ -1,6 +1,8 @@
 <template>
   <div class="foo bar">
     <slot />
+
+    <PrimeButton label="Click Here" />
   </div>
 </template>
 
