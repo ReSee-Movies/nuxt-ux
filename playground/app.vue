@@ -1,15 +1,15 @@
 <template>
-  <div class="baz">
-    Nuxt module playground!
-
-    <UiFoo>
-      Hello World!
-    </UiFoo>
+  <div>
+    <span class="text-green-700 foo content-zero-width">
+      Nuxt module playground!
+    </span>
   </div>
 </template>
 
 <style scoped>
-  .baz {
-    background-color: var(--color-green-100)
+  @layer components {
+    .foo {
+      color: var(--zero-width-space);
+    }
   }
 </style>

@@ -1,0 +1,3 @@
+@utility content-zero-width {
+  content: var(--zero-width-space);
+}

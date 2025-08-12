@@ -21,24 +21,38 @@ function getDefaults(config: ExtNuxtConfig) {
 }
 
 
+export type Options = {
+  sources?: string[];
+  plugins?: string[];
+  imports?: string[];
+};
+
+
 /**
  * Resolves CSS files for Tailwind to process.
  */
-export async function importCSS(nuxt: Nuxt = useNuxt(), extraSources?: string[]) {
+export async function importCSS(nuxt: Nuxt = useNuxt(), options?: Options) {
   const sources = nuxt.options._layers.map(
     (layer) => layer.config.srcDir || layer.cwd,
   );
 
-  if (extraSources) {
-    sources.push(...extraSources);
+  const plugins = options?.plugins ?? [];
+
+  if (options?.sources) {
+    sources.push(...options.sources);
   }
 
   await nuxt.callHook('tailwindcss:sources:extend', sources)
 
   const sourcesTemplate = addTemplate({
     filename    : 'tailwindcss/sources.css',
-    getContents : () => sources.map(source => `@source ${JSON.stringify(source)};`).join('\n'),
     write       : true,
+    getContents : () => {
+      const sourceStrings = sources.map((source) => `@source ${JSON.stringify(source)};`).join('\n');
+      const pluginStrings = plugins.map((plugin) => `@plugin ${JSON.stringify(plugin)};`).join('\n');
+
+      return sourceStrings + '\n' + pluginStrings;
+    },
   });
 
   const importingFiles  = [] as ImportingFile[];
@@ -90,8 +104,14 @@ export async function importCSS(nuxt: Nuxt = useNuxt(), extraSources?: string[])
     ? [
       addTemplate({
         filename    : 'tailwind.css',
-        getContents : () => [`@import 'tailwindcss';`, `@import ${JSON.stringify(sourcesTemplate.dst)};`].join('\n'),
         write       : true,
+        getContents : () => {
+          return [
+            `@import 'tailwindcss';`,
+            `@import ${JSON.stringify(sourcesTemplate.dst)};`,
+            ...(options?.imports ?? []).map((item) => `@import ${JSON.stringify(item)};`),
+          ].join('\n');
+          },
       }).dst,
     ]
     : importingFiles.find(file => file[1].isInNuxt) || importingFiles.pop()!
