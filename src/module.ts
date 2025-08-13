@@ -52,9 +52,18 @@ export default defineNuxtModule<ModuleOptions>({
     });
 
     await installModule('@primevue/nuxt-module', {
-      options    : { unstyled: true },
-      components : { prefix: 'prime' },
-      directives : { prefix: 'prime' },
+      options: {
+        unstyled   : true,
+        autoImport : false,
+      },
+
+      directives: {
+        prefix: 'prime',
+      },
+
+      components: {
+        prefix: 'prime',
+      },
     }, nuxt);
   },
 });
