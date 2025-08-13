@@ -1,33 +1,12 @@
-import { addComponentsDir, createResolver, defineNuxtModule } from '@nuxt/kit';
+import { addComponentsDir, createResolver, defineNuxtModule, addServerScanDir } from '@nuxt/kit';
 import { importCSS } from './utils/import-css';
 import { importModules } from './utils/import-modules';
 import { importTailwind } from './utils/import-tailwind';
-
-
-export interface ModuleOptions {
-  tailwind?: {
-    plugins?: string[];
-    sources?: string[];
-    imports?: string[];
-  };
-}
-
-export interface ModuleHooks {
-  /** Allows extending sources for Tailwind CSS. */
-  'tailwindcss:sources:extend': (sources: string[]) => void;
-}
-
-declare module '@nuxt/schema' {
-  interface NuxtHooks extends ModuleHooks {}
-}
+import { ModuleOptions } from './runtime/types';
 
 
 export default defineNuxtModule<ModuleOptions>({
-  defaults: {
-    plugins: [],
-    sources: [],
-    imports: [],
-  },
+  defaults: {},
 
   meta: {
     name      : '@resee-movies/nuxt-ux',
@@ -40,8 +19,10 @@ export default defineNuxtModule<ModuleOptions>({
 
     const resolver   = createResolver(import.meta.url);
     const components = resolver.resolve('./runtime/components/');
+    const serverDir  = resolver.resolve('./runtime/server/');
 
     addComponentsDir({ path: components });
+    addServerScanDir([ serverDir ]);
 
     const sources = options.tailwind?.sources?.slice() ?? [];
     const plugins = options.tailwind?.plugins?.slice() ?? [];
