@@ -1,0 +1,384 @@
+/*
+ * Use .dark classname to toggle color mode
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+/*
+ * Dark color-mode variations.
+ */
+@variant dark {
+  --color-global-background        : var(--color-global-background-dark);
+  --color-global-background-accent : var(--color-global-background-accent-dark);
+  --color-global-foreground        : var(--color-global-foreground-dark);
+  --color-global-foreground-accent : var(--color-global-foreground-accent-dark);
+
+  --color-invert-global-background        : var(--color-global-background-lite);
+  --color-invert-global-background-accent : var(--color-global-background-accent-lite);
+  --color-invert-global-foreground        : var(--color-global-foreground-lite);
+  --color-invert-global-foreground-accent : var(--color-global-foreground-accent-lite);
+
+  --color-background-scale-a : var(--color-background-scale-a-dark);
+  --color-background-scale-b : var(--color-background-scale-b-dark);
+  --color-background-scale-c : var(--color-background-scale-c-dark);
+  --color-background-scale-d : var(--color-background-scale-d-dark);
+  --color-background-scale-e : var(--color-background-scale-e-dark);
+  --color-background-scale-f : var(--color-background-scale-f-dark);
+  --color-background-scale-g : var(--color-background-scale-g-dark);
+
+  --color-foreground-scale-a : var(--color-foreground-scale-a-dark);
+  --color-foreground-scale-b : var(--color-foreground-scale-b-dark);
+  --color-foreground-scale-c : var(--color-foreground-scale-c-dark);
+  --color-foreground-scale-d : var(--color-foreground-scale-d-dark);
+  --color-foreground-scale-e : var(--color-foreground-scale-e-dark);
+  --color-foreground-scale-f : var(--color-foreground-scale-f-dark);
+  --color-foreground-scale-g : var(--color-foreground-scale-g-dark);
+
+  --color-invert-background-scale-a : var(--color-background-scale-a-lite);
+  --color-invert-background-scale-b : var(--color-background-scale-b-lite);
+  --color-invert-background-scale-c : var(--color-background-scale-c-lite);
+  --color-invert-background-scale-d : var(--color-background-scale-d-lite);
+  --color-invert-background-scale-e : var(--color-background-scale-e-lite);
+  --color-invert-background-scale-f : var(--color-background-scale-f-lite);
+  --color-invert-background-scale-g : var(--color-background-scale-g-lite);
+
+  --color-invert-foreground-scale-a : var(--color-foreground-scale-a-lite);
+  --color-invert-foreground-scale-b : var(--color-foreground-scale-b-lite);
+  --color-invert-foreground-scale-c : var(--color-foreground-scale-c-lite);
+  --color-invert-foreground-scale-d : var(--color-foreground-scale-d-lite);
+  --color-invert-foreground-scale-e : var(--color-foreground-scale-e-lite);
+  --color-invert-foreground-scale-f : var(--color-foreground-scale-f-lite);
+  --color-invert-foreground-scale-g : var(--color-foreground-scale-g-lite);
+
+  --color-info          : var(--color-info-dark);
+  --color-info-emphasis : var(--color-info-emphasis-dark);
+  --color-info-contrast : var(--color-info-contrast-dark);
+
+  --color-help          : var(--color-help-dark);
+  --color-help-emphasis : var(--color-help-emphasis-dark);
+  --color-help-contrast : var(--color-help-contrast-dark);
+
+  --color-success          : var(--color-success-dark);
+  --color-success-emphasis : var(--color-success-emphasis-dark);
+  --color-success-contrast : var(--color-success-contrast-dark);
+
+  --color-warning          : var(--color-warning-contrast-dark);
+  --color-warning-emphasis : var(--color-warning-contrast-dark);
+  --color-warning-contrast : var(--color-warning-contrast-dark);
+
+  --color-danger          : var(--color-danger-dark);
+  --color-danger-emphasis : var(--color-danger-emphasis-dark);
+  --color-danger-contrast : var(--color-danger-contrast-dark);
+}
+
+
+/*
+ * The primary "lite" theme.
+ */
+@theme {
+  /* *********************** *
+     Fonts
+   * *********************** */
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+
+  /* *********************** *
+     Miscellaneous
+   * *********************** */
+  --zero-width-space: "​";
+
+
+  /* *********************** *
+     Colors
+   * *********************** */
+  --color-surface-0   : oklch(100.0% 0 0);
+  --color-surface-50  : oklch(97.31% 0 0);
+  --color-surface-100 : oklch(92.80% 0 0);
+  --color-surface-200 : oklch(86.07% 0 0);
+  --color-surface-300 : oklch(75.72% 0 0);
+  --color-surface-400 : oklch(62.68% 0 0);
+  --color-surface-500 : oklch(53.48% 0 0);
+  --color-surface-600 : oklch(47.84% 0 0);
+  --color-surface-700 : oklch(42.76% 0 0);
+  --color-surface-800 : oklch(39.04% 0 0);
+  --color-surface-850 : oklch(37.53% 0 0);
+  --color-surface-900 : oklch(36.00% 0 0);
+  --color-surface-925 : oklch(28.50% 0 0);
+  --color-surface-950 : oklch(20.02% 0 0);
+
+  --color-primary-50  : oklch(97.94% 0.0171 103.14);
+  --color-primary-100 : oklch(94.93% 0.0459 101.86);
+  --color-primary-200 : oklch(89.80% 0.0854 99.1);
+  --color-primary-300 : oklch(83.23% 0.1222 96.48);
+  --color-primary-400 : oklch(76.65% 0.1387 91.06);
+  --color-primary-500 : oklch(71.00% 0.1307 86.56);
+  --color-primary-600 : oklch(61.31% 0.1146 77.38);
+  --color-primary-700 : oklch(50.50% 0.0943 67.44);
+  --color-primary-800 : oklch(44.38% 0.0782 62.58);
+  --color-primary-900 : oklch(39.94% 0.0661 58.15);
+  --color-primary-950 : oklch(27.10% 0.0457 53.29);
+
+  --color-resee-red     : oklch(57.47% 0.2229 28.19);
+  --color-resee-orange  : oklch(67.79% 0.201 41.61);
+  --color-resee-yellow  : oklch(84.78% 0.171 89.53);
+  --color-resee-green   : oklch(71.41% 0.1907 132.48);
+  --color-resee-seaweed : oklch(59.95% 0.1179 167.71);
+  --color-resee-aqua    : oklch(74.55% 0.1224 209.96);
+  --color-resee-blue    : oklch(42.42% 0.1982 265.5);
+  --color-resee-indigo  : oklch(39.67% 0.1568 293.38);
+  --color-resee-violet  : oklch(46.25% 0.1488 353.55);
+
+  --color-resee-lite-red     : oklch(from var(--color-resee-red)     calc(l + 0.22) c h);
+  --color-resee-lite-orange  : oklch(from var(--color-resee-orange)  calc(l + 0.25) c h);
+  --color-resee-lite-yellow  : oklch(from var(--color-resee-yellow)  calc(l + 0.30) calc(c - 0.03) h);
+  --color-resee-lite-green   : oklch(from var(--color-resee-green)   calc(l + 0.30) calc(c + 0.02) h);
+  --color-resee-lite-seaweed : oklch(from var(--color-resee-seaweed) calc(l + 0.20) c h);
+  --color-resee-lite-aqua    : oklch(from var(--color-resee-aqua)    calc(l + 0.25) calc(c - 0.03) h);
+  --color-resee-lite-blue    : oklch(from var(--color-resee-blue)    calc(l + 0.38) c h);
+  --color-resee-lite-indigo  : oklch(from var(--color-resee-indigo)  calc(l + 0.45) calc(c + 0.1) h);
+  --color-resee-lite-violet  : oklch(from var(--color-resee-violet)  calc(l + 0.30) calc(c - 0.05) h);
+
+  --color-global-background-lite        : var(--color-surface-50);
+  --color-global-background-accent-lite : oklch(from var(--color-surface-50) calc(l - 0.15) c h);
+  --color-global-foreground-lite        : var(--color-surface-950);
+  --color-global-foreground-accent-lite : var(--color-surface-700);
+
+  --color-global-background-dark        : var(--color-surface-950);
+  --color-global-background-accent-dark : oklch(from var(--color-surface-950) calc(l + 0.15) c h);
+  --color-global-foreground-dark        : var(--color-surface-0);
+  --color-global-foreground-accent-dark : var(--color-surface-400);
+
+  --color-background-scale-a-lite: color-mix(in oklch, var(--color-surface-950)  5%, var(--color-global-background-lite));
+  --color-background-scale-b-lite: color-mix(in oklch, var(--color-surface-950)  8%, var(--color-global-background-lite));
+  --color-background-scale-c-lite: color-mix(in oklch, var(--color-surface-950) 11%, var(--color-global-background-lite));
+  --color-background-scale-d-lite: color-mix(in oklch, var(--color-surface-950) 14%, var(--color-global-background-lite));
+  --color-background-scale-e-lite: color-mix(in oklch, var(--color-surface-950) 17%, var(--color-global-background-lite));
+  --color-background-scale-f-lite: color-mix(in oklch, var(--color-surface-950) 20%, var(--color-global-background-lite));
+  --color-background-scale-g-lite: color-mix(in oklch, var(--color-surface-950) 29%, var(--color-global-background-lite));
+
+  --color-background-scale-a-dark: color-mix(in oklch, var(--color-surface-0)  5%, var(--color-global-background-dark));
+  --color-background-scale-b-dark: color-mix(in oklch, var(--color-surface-0)  8%, var(--color-global-background-dark));
+  --color-background-scale-c-dark: color-mix(in oklch, var(--color-surface-0) 11%, var(--color-global-background-dark));
+  --color-background-scale-d-dark: color-mix(in oklch, var(--color-surface-0) 14%, var(--color-global-background-dark));
+  --color-background-scale-e-dark: color-mix(in oklch, var(--color-surface-0) 17%, var(--color-global-background-dark));
+  --color-background-scale-f-dark: color-mix(in oklch, var(--color-surface-0) 20%, var(--color-global-background-dark));
+  --color-background-scale-g-dark: color-mix(in oklch, var(--color-surface-0) 29%, var(--color-global-background-dark));
+
+  --color-foreground-scale-a-lite: var(--color-background-scale-a-dark);
+  --color-foreground-scale-b-lite: var(--color-background-scale-b-dark);
+  --color-foreground-scale-c-lite: var(--color-background-scale-c-dark);
+  --color-foreground-scale-d-lite: var(--color-background-scale-d-dark);
+  --color-foreground-scale-e-lite: var(--color-background-scale-e-dark);
+  --color-foreground-scale-f-lite: var(--color-background-scale-f-dark);
+  --color-foreground-scale-g-lite: var(--color-background-scale-g-dark);
+
+  --color-foreground-scale-a-dark: var(--color-background-scale-a-lite);
+  --color-foreground-scale-b-dark: var(--color-background-scale-b-lite);
+  --color-foreground-scale-c-dark: var(--color-background-scale-c-lite);
+  --color-foreground-scale-d-dark: var(--color-background-scale-d-lite);
+  --color-foreground-scale-e-dark: var(--color-background-scale-e-lite);
+  --color-foreground-scale-f-dark: var(--color-background-scale-f-lite);
+  --color-foreground-scale-g-dark: var(--color-background-scale-g-lite);
+
+  --color-info-lite          : #3b82f6;
+  --color-info-emphasis-lite : #2563eb;
+  --color-info-contrast-lite : white;
+
+  --color-info-dark          : var(--color-resee-aqua);
+  --color-info-emphasis-dark : oklch(from var(--color-resee-aqua) calc(l + 0.1) c h);
+  --color-info-contrast-dark : var(--color-surface-950);
+
+  --color-help-lite          : #8b5cf6;
+  --color-help-emphasis-lite : #7c3aed;
+  --color-help-contrast-lite : var(--color-surface-50);
+
+  --color-help-dark          : #c4b5fd;
+  --color-help-emphasis-dark : #ddd6fe;
+  --color-help-contrast-dark : var(--color-surface-950);
+
+  --color-success-lite          : #15803d;
+  --color-success-emphasis-lite : #166534;
+  --color-success-contrast-lite : var(--color-surface-50);
+
+  --color-success-dark          : var(--color-resee-lite-seaweed);
+  --color-success-emphasis-dark : oklch(from var(--color-resee-lite-seaweed) calc(l + 0.02) c h);
+  --color-success-contrast-dark : var(--color-surface-950);
+
+  --color-warning-lite          : #b45309;
+  --color-warning-emphasis-lite : #92400e;
+  --color-warning-contrast-lite : var(--color-surface-50);
+
+  --color-warning-dark          : #fbbf24;
+  --color-warning-emphasis-dark : #fcd34d;
+  --color-warning-contrast-dark : var(--color-surface-950);
+
+  --color-danger-lite          : #991b1b;
+  --color-danger-emphasis-lite : #7f1d1d;
+  --color-danger-contrast-lite : var(--color-surface-50);
+
+  --color-danger-dark          : #ef4444;
+  --color-danger-emphasis-dark : #f87171;
+  --color-danger-contrast-dark : var(--color-surface-950);
+
+
+  /* *********************** *
+     Mode changing colors
+   * *********************** */
+  --color-global-background        : var(--color-global-background-lite);
+  --color-global-background-accent : var(--color-global-background-accent-lite);
+  --color-global-foreground        : var(--color-global-foreground-lite);
+  --color-global-foreground-accent : var(--color-global-foreground-accent-lite);
+
+  --color-background-scale-a : var(--color-background-scale-a-lite);
+  --color-background-scale-b : var(--color-background-scale-b-lite);
+  --color-background-scale-c : var(--color-background-scale-c-lite);
+  --color-background-scale-d : var(--color-background-scale-d-lite);
+  --color-background-scale-e : var(--color-background-scale-e-lite);
+  --color-background-scale-f : var(--color-background-scale-f-lite);
+  --color-background-scale-g : var(--color-background-scale-g-lite);
+
+  --color-foreground-scale-a : var(--color-foreground-scale-a-lite);
+  --color-foreground-scale-b : var(--color-foreground-scale-b-lite);
+  --color-foreground-scale-c : var(--color-foreground-scale-c-lite);
+  --color-foreground-scale-d : var(--color-foreground-scale-d-lite);
+  --color-foreground-scale-e : var(--color-foreground-scale-e-lite);
+  --color-foreground-scale-f : var(--color-foreground-scale-f-lite);
+  --color-foreground-scale-g : var(--color-foreground-scale-g-lite);
+
+  --color-invert-global-background        : var(--color-global-background-dark);
+  --color-invert-global-background-accent : var(--color-global-background-accent-dark);
+  --color-invert-global-foreground        : var(--color-global-foreground-dark);
+  --color-invert-global-foreground-accent : var(--color-global-foreground-accent-dark);
+
+  --color-invert-background-scale-a : var(--color-background-scale-a-dark);
+  --color-invert-background-scale-b : var(--color-background-scale-b-dark);
+  --color-invert-background-scale-c : var(--color-background-scale-c-dark);
+  --color-invert-background-scale-d : var(--color-background-scale-d-dark);
+  --color-invert-background-scale-e : var(--color-background-scale-e-dark);
+  --color-invert-background-scale-f : var(--color-background-scale-f-dark);
+  --color-invert-background-scale-g : var(--color-background-scale-g-dark);
+
+  --color-invert-foreground-scale-a : var(--color-foreground-scale-a-dark);
+  --color-invert-foreground-scale-b : var(--color-foreground-scale-b-dark);
+  --color-invert-foreground-scale-c : var(--color-foreground-scale-c-dark);
+  --color-invert-foreground-scale-d : var(--color-foreground-scale-d-dark);
+  --color-invert-foreground-scale-e : var(--color-foreground-scale-e-dark);
+  --color-invert-foreground-scale-f : var(--color-foreground-scale-f-dark);
+  --color-invert-foreground-scale-g : var(--color-foreground-scale-g-dark);
+
+  --color-info          : var(--color-info-lite);
+  --color-info-emphasis : var(--color-info-emphasis-lite);
+  --color-info-contrast : var(--color-info-contrast-lite);
+
+  --color-help          : var(--color-help-lite);
+  --color-help-emphasis : var(--color-help-emphasis-lite);
+  --color-help-contrast : var(--color-help-contrast-lite);
+
+  --color-success          : var(--color-success-lite);
+  --color-success-emphasis : var(--color-success-emphasis-lite);
+  --color-success-contrast : var(--color-success-contrast-lite);
+
+  --color-warning          : var(--color-warning-lite);
+  --color-warning-emphasis : var(--color-warning-emphasis-lite);
+  --color-warning-contrast : var(--color-warning-contrast-lite);
+
+  --color-danger          : var(--color-danger-lite);
+  --color-danger-emphasis : var(--color-danger-emphasis-lite);
+  --color-danger-contrast : var(--color-danger-contrast-lite);
+
+
+  /* *********************** *
+     Gradient Color Scales
+   * *********************** */
+  --colorscale-resee-linear:
+    var(--color-resee-red)          0%,
+    var(--color-resee-orange)  16.666%,
+    var(--color-resee-yellow)  27.777%,
+    var(--color-resee-green)   38.888%,
+    var(--color-resee-seaweed) 49.999%,
+    var(--color-resee-aqua)    60.000%,
+    var(--color-resee-blue)    71.111%,
+    var(--color-resee-indigo)  82.222%,
+    var(--color-resee-violet)     100%;
+
+  --colorscale-resee-linear-step:
+    var(--color-resee-red)          0% 11.111%,
+    var(--color-resee-orange)  11.111% 22.222%,
+    var(--color-resee-yellow)  22.222% 33.333%,
+    var(--color-resee-green)   33.333% 44.444%,
+    var(--color-resee-seaweed) 44.444% 55.555%,
+    var(--color-resee-aqua)    55.555% 66.666%,
+    var(--color-resee-blue)    66.666% 77.777%,
+    var(--color-resee-indigo)  77.777% 88.888%,
+    var(--color-resee-violet)  88.888% 100%;
+
+  --colorscale-resee-conic:
+    var(--color-resee-violet)   18deg,
+    var(--color-resee-red)      54deg,
+    var(--color-resee-orange)   90deg,
+    var(--color-resee-yellow)  126deg,
+    var(--color-resee-green)   164deg,
+    var(--color-resee-seaweed) 198deg,
+    var(--color-resee-aqua)    234deg,
+    var(--color-resee-blue)    270deg,
+    var(--color-resee-indigo)  306deg,
+    var(--color-resee-violet)  342deg;
+
+  --colorscale-resee-conic-step:
+    var(--color-resee-violet)    0deg  20deg,
+    var(--color-resee-red)      20deg  60deg,
+    var(--color-resee-orange)   60deg 100deg,
+    var(--color-resee-yellow)  100deg 140deg,
+    var(--color-resee-green)   140deg 180deg,
+    var(--color-resee-seaweed) 180deg 220deg,
+    var(--color-resee-aqua)    220deg 260deg,
+    var(--color-resee-blue)    260deg 300deg,
+    var(--color-resee-indigo)  300deg 340deg,
+    var(--color-resee-violet)  340deg 360deg;
+
+  --colorscale-resee-lite-linear:
+    var(--color-resee-lite-red)          0%,
+    var(--color-resee-lite-orange)  16.666%,
+    var(--color-resee-lite-yellow)  27.777%,
+    var(--color-resee-lite-green)   38.888%,
+    var(--color-resee-lite-seaweed) 49.999%,
+    var(--color-resee-lite-aqua)    60.000%,
+    var(--color-resee-lite-blue)    71.111%,
+    var(--color-resee-lite-indigo)  82.222%,
+    var(--color-resee-lite-violet)     100%;
+
+  --colorscale-resee-lite-linear-step:
+    var(--color-resee-lite-red)          0% 11.111%,
+    var(--color-resee-lite-orange)  11.111% 22.222%,
+    var(--color-resee-lite-yellow)  22.222% 33.333%,
+    var(--color-resee-lite-green)   33.333% 44.444%,
+    var(--color-resee-lite-seaweed) 44.444% 55.555%,
+    var(--color-resee-lite-aqua)    55.555% 66.666%,
+    var(--color-resee-lite-blue)    66.666% 77.777%,
+    var(--color-resee-lite-indigo)  77.777% 88.888%,
+    var(--color-resee-lite-violet)  88.888% 100%;
+
+  --colorscale-resee-lite-conic:
+    var(--color-resee-lite-violet)   18deg,
+    var(--color-resee-lite-red)      54deg,
+    var(--color-resee-lite-orange)   90deg,
+    var(--color-resee-lite-yellow)  126deg,
+    var(--color-resee-lite-green)   164deg,
+    var(--color-resee-lite-seaweed) 198deg,
+    var(--color-resee-lite-aqua)    234deg,
+    var(--color-resee-lite-blue)    270deg,
+    var(--color-resee-lite-indigo)  306deg,
+    var(--color-resee-lite-violet)  342deg;
+
+  --colorscale-resee-lite-conic-step:
+    var(--color-resee-lite-violet)    0deg  20deg,
+    var(--color-resee-lite-red)      20deg  60deg,
+    var(--color-resee-lite-orange)   60deg 100deg,
+    var(--color-resee-lite-yellow)  100deg 140deg,
+    var(--color-resee-lite-green)   140deg 180deg,
+    var(--color-resee-lite-seaweed) 180deg 220deg,
+    var(--color-resee-lite-aqua)    220deg 260deg,
+    var(--color-resee-lite-blue)    260deg 300deg,
+    var(--color-resee-lite-indigo)  300deg 340deg,
+    var(--color-resee-lite-violet)  340deg 360deg;
+}

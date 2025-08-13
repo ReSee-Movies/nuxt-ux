@@ -49,7 +49,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     sources.push(components);
     plugins.push('@egoist/tailwindcss-icons');
-    imports.push(resolver.resolve('./runtime/css/theme.css'));
+    imports.push(resolver.resolve('./runtime/css/styles.css'));
 
     nuxt.hook('modules:done', async () => {
       await importCSS(nuxt, { sources, plugins, imports });

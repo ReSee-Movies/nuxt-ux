@@ -1,0 +1,103 @@
+/**
+ This file describes styles for the big-ticket content items like
+ the body, header, and footer.
+ */
+
+@layer base {
+  :root {
+    /*
+     This value is automatically set by Primevue when a dialog opens, and applied to
+     the body element at the same time that its overflow is hidden so-as to avoid layout
+     shifts from the scrollbar disappearing. It won't work right unless initialized in
+     the stylesheet before being set dynamically.
+
+     See: https://github.com/primefaces/primeuix/blob/main/packages/utils/src/dom/helpers/blockBodyScroll.ts
+     */
+    --p-scrollbar-width: 0px;
+  }
+
+  html:has(body.p-overflow-hidden) {
+    scrollbar-color: transparent var(--color-global-background);
+  }
+
+  body {
+    color               : var(--color-global-foreground);
+    background-color    : var(--color-global-background);
+    min-height          : 100vh;
+    transition          : color, background-color;
+    transition-duration : var(--default-transition-duration);
+
+    @variant dark {
+      -webkit-font-smoothing  : antialiased;
+      -moz-osx-font-smoothing : grayscale;
+    }
+  }
+
+  @property --background-grid-line-color {
+    syntax        : "<color>";
+    inherits      : false;
+    initial-value : transparent;
+  }
+
+  /*
+   The app-root ID is provided to the root <div> element that Nuxt generates for
+   the application to run in. The value itself is defined in this layer's
+   nuxt.config.ts, so any app that uses the layer will receive it. This also means
+   that app cannot set the ID for itself... whatever, we'll figure it out if we
+   ever run into that wall.
+   */
+  #app-root {
+    min-height: 100vh;
+
+    @variant sm {
+      background-size     : 160px 80px;
+      background-position : top center;
+      transition          : --background-grid-line-color;
+      transition-duration : var(--default-transition-duration);
+
+      --background-grid-line-color: var(--color-global-background-accent);
+
+      /*
+       This background image is intentionally on this element, rather than the body
+       itself, to avoid a visual shift when components such as modals open and the
+       page's scrollbar is replaced with padding.
+       */
+
+      background-image:
+        linear-gradient(
+          to bottom,
+          transparent 0 45px,
+          var(--background-grid-line-color) 45px 46px,
+          transparent 46px 59px,
+          var(--background-grid-line-color) 59px 60px,
+          transparent 60px
+        ),
+
+        linear-gradient(
+          to right,
+          transparent 0 80px,
+          var(--background-grid-line-color) 80px 81px,
+          transparent 81px
+        );
+    }
+  }
+
+  /*
+   Apply this class name to the root element of the implementing application's app.vue
+   file. This will cause that element to take up, at minimum, 100% of the viewport height.
+   */
+  .app-main {
+    min-height: 100vh;
+  }
+
+  /*
+   Apply this to the implementing application's global footer, if applicable. Combined
+   with the usage of `.app-main` defined above, this will pin the footer to the bottom
+   of the viewport even if the primary content of the page does not take up 100% of
+   its height.
+   */
+  .app-footer {
+    position : sticky;
+    top      : 100vh;
+  }
+}
