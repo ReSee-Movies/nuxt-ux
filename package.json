@@ -9,6 +9,9 @@
     ".": {
       "types": "./dist/types.d.mts",
       "import": "./dist/module.mjs"
+    },
+    "./components/*": {
+      "import": "./dist/runtime/components/*"
     }
   },
   "main": "./dist/module.mjs",
@@ -53,8 +56,10 @@
     "@tailwindcss/vite": "^4.1.11",
     "@types/node": "latest",
     "@vue/language-server": "^3.0.5",
+    "@vue/test-utils": "^2.4.6",
     "changelogen": "^0.6.2",
     "eslint": "^9.33.0",
+    "happy-dom": "^18.0.1",
     "nuxt": "^4.0.3",
     "tailwindcss": "^4.1.11",
     "typescript": "~5.9.2",
