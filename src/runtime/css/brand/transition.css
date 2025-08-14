@@ -1,0 +1,63 @@
+@layer base {
+  /*
+   * Styles for Vue's <Transition /> component.
+   *
+   * @see https://vuejs.org/guide/built-ins/transition.html#named-transitions
+   *
+   * Components that utilize transitions which also animate height or width
+   * may need some special consideration in their own layout. See the <UiMessage />
+   * component for an example.
+   */
+
+  .slide-y-enter-active,
+  .slide-y-leave-active,
+  .slide-x-enter-active,
+  .slide-x-leave-active,
+  .fade-enter-active,
+  .fade-leave-active {
+    transition                 : opacity;
+    transition-duration        : calc(var(--default-transition-duration) * 2);
+    transition-timing-function : var(--default-transition-timing-function);
+  }
+
+  .slide-y-enter-from,
+  .slide-y-leave-to,
+  .slide-x-enter-from,
+  .slide-x-leave-to,
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+
+  @supports (interpolate-size: allow-keywords) {
+    .slide-y-enter-active,
+    .slide-y-leave-active {
+      interpolate-size           : allow-keywords;
+      transition                 : opacity, height;
+      transition-duration        : calc(var(--default-transition-duration) * 2);
+      transition-timing-function : var(--default-transition-timing-function);
+      overflow-y                 : clip;
+      height                     : max-content;
+    }
+
+    .slide-y-enter-from,
+    .slide-y-leave-to {
+      height: 0;
+    }
+
+    .slide-x-enter-active,
+    .slide-x-leave-active {
+      interpolate-size           : allow-keywords;
+      transition                 : opacity, width;
+      transition-duration        : calc(var(--default-transition-duration) * 2);
+      transition-timing-function : var(--default-transition-timing-function);
+      overflow-x                 : clip;
+      width                      : auto;
+    }
+
+    .slide-x-enter-from,
+    .slide-x-leave-to {
+      width: 0;
+    }
+  }
+}

@@ -1,8 +1,8 @@
-import { addComponentsDir, createResolver, defineNuxtModule, addServerScanDir } from '@nuxt/kit';
+import { addComponentsDir, addImportsDir, addServerScanDir, createResolver, defineNuxtModule } from '@nuxt/kit';
+import { ModuleOptions } from './runtime/types';
 import { importCSS } from './utils/import-css';
 import { importModules } from './utils/import-modules';
 import { importTailwind } from './utils/import-tailwind';
-import { ModuleOptions } from './runtime/types';
 
 
 export default defineNuxtModule<ModuleOptions>({
@@ -14,15 +14,11 @@ export default defineNuxtModule<ModuleOptions>({
   },
 
   async setup(options, nuxt) {
-    await importTailwind(nuxt);
-    await importModules(nuxt);
-
-    const resolver   = createResolver(import.meta.url);
-    const components = resolver.resolve('./runtime/components/');
-    const serverDir  = resolver.resolve('./runtime/server/');
-
-    addComponentsDir({ path: components });
-    addServerScanDir([ serverDir ]);
+    const resolver    = createResolver(import.meta.url);
+    const components  = resolver.resolve('./runtime/components/');
+    const composables = resolver.resolve('./runtime/composables/');
+    const server      = resolver.resolve('./runtime/server/');
+    const stylesheet  = resolver.resolve('./runtime/css/styles.css');
 
     const sources = options.tailwind?.sources?.slice() ?? [];
     const plugins = options.tailwind?.plugins?.slice() ?? [];
@@ -30,7 +26,14 @@ export default defineNuxtModule<ModuleOptions>({
 
     sources.push(components);
     plugins.push('@egoist/tailwindcss-icons');
-    imports.push(resolver.resolve('./runtime/css/styles.css'));
+    imports.push(stylesheet);
+
+    addComponentsDir({ path: components });
+    addImportsDir([ composables ]);
+    addServerScanDir([ server ]);
+
+    await importTailwind(nuxt);
+    await importModules(nuxt);
 
     nuxt.hook('modules:done', async () => {
       await importCSS(nuxt, { sources, plugins, imports });

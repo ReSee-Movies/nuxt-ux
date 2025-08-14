@@ -1,21 +1,34 @@
 <template>
   <UiLayoutPageColumn layout="vista">
-    <UiLayoutPageContainer>
-      <div>
-        Here is some text before
-        <UiIconTextPair v-once text="Hello World" icon="i-ph-chart-bar" trailing-icon="i-ph-lego-smiley" />
-        and here is some text after.
-      </div>
+    <UiLayoutPageContainer is="main">
+      Hello World
+      <br>
+      <button @click="message">Toast Message</button>
+      <br>
 
-      <div class="flex flex-col gap-4">
-        <div class="size-96" style="background-image: linear-gradient(to right, var(--colorscale-resee-linear))" />
-
-        <div class="size-96" style="background-image: linear-gradient(to right, var(--colorscale-resee-linear-step))" />
-
-        <div class="size-96" style="background-image: conic-gradient(var(--colorscale-resee-conic))" />
-
-        <div class="size-96" style="background-image: conic-gradient(var(--colorscale-resee-conic-step))" />
+      <div class="flex flex-col mt-4">
+        <UiMessage text="This is a plain box" class="mb-2" closable />
+        <UiMessage severity="info" icon="i-ph-chart-bar" class="mb-2">
+          This is an info box. This is an info box. This is an info box. This is an info box. This is an info box.
+          This is an info box. This is an info box. This is an info box. This is an info box. This is an info box.
+        </UiMessage>
+        <UiMessage severity="help" text="This is a help box" icon="i-ph-chart-bar" class="mb-2" closable />
+        <UiMessage severity="success" text="This is a success box" class="mb-2" />
+        <UiMessage severity="warn" text="This is a warn box" class="mb-2" />
+        <UiMessage severity="error" text="This is an error box" />
       </div>
     </UiLayoutPageContainer>
   </UiLayoutPageColumn>
+
+  <LazyUiSnackbarContainer />
 </template>
+
+<script setup lang="ts">
+  import { useSnackbar } from '#imports';
+
+  const snack = useSnackbar();
+
+  function message() {
+    snack.add({ severity: 'success', summary: 'Hello World', detail: 'Foo Bar Baz' });
+  }
+</script>

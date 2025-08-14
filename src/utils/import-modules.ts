@@ -22,11 +22,11 @@ export async function importModules(nuxt: Nuxt = useNuxt()) {
 
     components: {
       prefix  : 'Prime',
-      include : [],
+      include : ['Message', 'Toast'],
     },
 
     composables: {
-      include: [],
+      include: ['useToast'],
     },
   }, nuxt);
 

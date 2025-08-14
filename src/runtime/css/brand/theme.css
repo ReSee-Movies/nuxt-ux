@@ -62,8 +62,8 @@
   --color-success-emphasis : var(--color-success-emphasis-dark);
   --color-success-contrast : var(--color-success-contrast-dark);
 
-  --color-warning          : var(--color-warning-contrast-dark);
-  --color-warning-emphasis : var(--color-warning-contrast-dark);
+  --color-warning          : var(--color-warning-dark);
+  --color-warning-emphasis : var(--color-warning-emphasis-dark);
   --color-warning-contrast : var(--color-warning-contrast-dark);
 
   --color-danger          : var(--color-danger-dark);

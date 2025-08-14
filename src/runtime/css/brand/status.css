@@ -1,0 +1,59 @@
+@layer components {
+  .status-indicating {
+    --border-color     : var(--color-invert-global-background);
+    --background-color : var(--color-invert-global-background);
+    --text-color       : var(--color-invert-global-foreground);
+
+    background    : var(--background-color);
+    border        : solid 1px var(--border-color);
+    border-radius : --spacing(1);
+    color         : var(--text-color);
+
+    .icon {
+      color: var(--border-color);
+    }
+
+    .close {
+      background-color    : var(--background-color);
+      padding             : --spacing(1.25);
+      border-radius       : 9999px;
+      cursor              : pointer;
+      transition          : background-color;
+      transition-duration : var(--default-transition-duration);
+
+      &:hover, &:focus-visible {
+        background-color: --alpha(var(--border-color) / 30%);
+      }
+    }
+
+    &.info {
+      --border-color     : var(--color-info);
+      --background-color : --alpha(var(--color-info) / 15%);
+      --text-color       : var(--color-info-emphasis);
+    }
+
+    &.help {
+      --border-color     : var(--color-help);
+      --background-color : --alpha(var(--color-help) / 15%);
+      --text-color       : var(--color-help-emphasis);
+    }
+
+    &.success {
+      --border-color     : var(--color-success);
+      --background-color : --alpha(var(--color-success) / 15%);
+      --text-color       : var(--color-success-emphasis);
+    }
+
+    &.warn {
+      --border-color     : var(--color-warning);
+      --background-color : --alpha(var(--color-warning) / 15%);
+      --text-color       : var(--color-warning-emphasis);
+    }
+
+    &.error {
+      --border-color     : var(--color-danger);
+      --background-color : --alpha(var(--color-danger) / 5%);
+      --text-color       : var(--color-danger-emphasis);
+    }
+  }
+}

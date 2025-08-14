@@ -33,3 +33,9 @@ export type HTMLElementClassNames
  * A string-type, with some suggestions.
  */
 export type HintedString<T> = string | T;
+
+/**
+ * Describes the intent - and therefore styling - of elements like message blocks,
+ * toast notifications, tags, and chips.
+ */
+export type StatusLevel = 'info' | 'help' | 'success' | 'warn' | 'error';
