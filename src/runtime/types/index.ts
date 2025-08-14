@@ -17,3 +17,19 @@ export interface ModuleHooks {
 declare module '@nuxt/schema' {
   interface NuxtHooks extends ModuleHooks {}
 }
+
+
+/**
+ * The shape of object that can be passed into an element's dynamic `:class=""` prop.
+ */
+export type HTMLElementClassNames
+  = string
+  | HTMLElementClassNames[]
+  | Record<string, boolean>
+  | null
+  | undefined;
+
+/**
+ * A string-type, with some suggestions.
+ */
+export type HintedString<T> = string | T;

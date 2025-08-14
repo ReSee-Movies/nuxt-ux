@@ -12,6 +12,9 @@
     },
     "./components/*": {
       "import": "./dist/runtime/components/*"
+    },
+    "./types": {
+      "types": "./dist/runtime/types/index.ts"
     }
   },
   "main": "./dist/module.mjs",

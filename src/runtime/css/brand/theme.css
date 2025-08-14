@@ -69,6 +69,11 @@
   --color-danger          : var(--color-danger-dark);
   --color-danger-emphasis : var(--color-danger-emphasis-dark);
   --color-danger-contrast : var(--color-danger-contrast-dark);
+
+  --shadow-heavy       : var(--shadow-heavy-dark);
+  --shadow-heavy-right : var(--shadow-heavy-right-dark);
+  --shadow-heavy-left  : var(--shadow-heavy-left-dark);
+  --shadow-heavy-top   : var(--shadow-heavy-top-dark);
 }
 
 
@@ -381,4 +386,23 @@
     var(--color-resee-lite-blue)    260deg 300deg,
     var(--color-resee-lite-indigo)  300deg 340deg,
     var(--color-resee-lite-violet)  340deg 360deg;
+
+
+  /* *********************** *
+     Extra shadow values
+   * *********************** */
+  --shadow-heavy-lite       : 0 2px 3px rgba(0,0,0,0.2);
+  --shadow-heavy-right-lite : 2px 0 3px rgba(0,0,0,0.2);
+  --shadow-heavy-left-lite  : -2px 0 3px rgba(0,0,0,0.2);
+  --shadow-heavy-top-lite   : 0 -2px 3px rgba(0,0,0,0.2);
+
+  --shadow-heavy-dark       : 0 2px 3px rgba(0,0,0,0.7);
+  --shadow-heavy-right-dark : 2px 0 3px rgba(0,0,0,0.7);
+  --shadow-heavy-left-dark  : -2px 0 3px rgba(0,0,0,0.7);
+  --shadow-heavy-top-dark   : 0 -2px 3px rgba(0,0,0,0.7);
+
+  --shadow-heavy       : var(--shadow-heavy-lite);
+  --shadow-heavy-right : var(--shadow-heavy-right-lite);
+  --shadow-heavy-left  : var(--shadow-heavy-left-lite);
+  --shadow-heavy-top   : var(--shadow-heavy-top-lite);
 }
