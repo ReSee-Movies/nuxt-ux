@@ -7,6 +7,17 @@ import type { Nuxt } from '@nuxt/schema';
  * relies on.
  */
 export async function importModules(nuxt: Nuxt = useNuxt()) {
+  await installModule('@nuxt/fonts', {
+    families: [
+      {
+        name     : 'Archivo',
+        provider : 'google',
+        styles   : ['normal'],
+        weights  : [200, 300, 400, 500],
+      },
+    ],
+  });
+
   await installModule('@primevue/nuxt-module', {
     autoImport : false,
     loadStyles : false,
@@ -20,24 +31,13 @@ export async function importModules(nuxt: Nuxt = useNuxt()) {
       include : [],
     },
 
-    components: {
-      prefix  : 'Prime',
-      include : ['Message', 'Toast'],
-    },
-
     composables: {
       include: ['useToast'],
     },
-  }, nuxt);
 
-  await installModule('@nuxt/fonts', {
-    families: [
-      {
-        name     : 'Archivo',
-        provider : 'google',
-        styles   : ['normal'],
-        weights  : [200, 300, 400, 500],
-      },
-    ],
-  });
+    components: {
+      prefix  : 'Prime',
+      include : ['Message', 'ProgressSpinner', 'Toast'],
+    },
+  }, nuxt);
 }

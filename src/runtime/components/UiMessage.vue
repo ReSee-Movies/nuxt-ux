@@ -49,7 +49,8 @@
       },
 
       transition: {
-        name: 'slide-y',
+        name   : 'slide-y',
+        appear : false,
       },
     };
   });
