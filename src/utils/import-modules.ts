@@ -22,22 +22,26 @@ export async function importModules(nuxt: Nuxt = useNuxt()) {
     autoImport : false,
     loadStyles : false,
 
-    options: {
-      unstyled: true,
+    importPT: {
+      from: '@resee-movies/nuxt-ux/primevue',
     },
 
-    directives: {
-      prefix  : 'Prime',
-      include : [],
+    options: {
+      unstyled: true,
     },
 
     composables: {
       include: ['useToast'],
     },
 
+    directives: {
+      prefix  : 'Prime',
+      include : ['Tooltip'],
+    },
+
     components: {
       prefix  : 'Prime',
-      include : ['Message', 'ProgressBar', 'ProgressSpinner', 'Toast'],
+      include : ['Message', 'ProgressBar', 'ProgressSpinner', 'Tag', 'Toast'],
     },
   }, nuxt);
 }

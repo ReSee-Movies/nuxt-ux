@@ -15,6 +15,9 @@
     },
     "./types": {
       "types": "./dist/runtime/types/index.ts"
+    },
+    "./primevue": {
+      "import": "./dist/runtime/theme/primevue/index.js"
     }
   },
   "main": "./dist/module.mjs",

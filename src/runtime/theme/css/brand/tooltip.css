@@ -1,0 +1,98 @@
+@layer components {
+  .tooltip {
+    position  : absolute;
+    animation : show-tooltip calc(var(--default-transition-duration) * 2) none var(--default-transition-timing-function);
+
+    .content {
+      padding       : --spacing(3) --spacing(1.5);
+      color         : var(--color-invert-global-foreground);
+      background    : var(--color-invert-background-scale-c);
+      line-height   : 0;
+      border-radius : var(--radius-xs);
+      word-break    : break-word;
+      white-space   : pre-line;
+    }
+
+    &.left, &.right {
+      padding: 0 --spacing(1);
+    }
+
+    &.top, &.bottom {
+      padding: --spacing(1) 0;
+    }
+
+    &.top {
+      transform  : translateY(--spacing(-1));
+      box-shadow : var(--shadow-heavy);
+    }
+
+    &.right {
+      transform  : translateX(--spacing(1));
+      box-shadow : var(--shadow-heavy-left);
+    }
+
+    &.bottom {
+      transform  : translateY(--spacing(1));
+      box-shadow : var(--shadow-heavy-top);
+    }
+
+    &.left {
+      transform  : translateX(--spacing(-1));
+      box-shadow : var(--shadow-heavy-right);
+    }
+  }
+
+
+  .tooltip .arrow {
+    position : absolute;
+    height   : 0;
+    width    : 0;
+    border   : solid --spacing(1) transparent;
+  }
+
+
+  .tooltip.left, .tooltip.right {
+    .arrow {
+      border-top-width    : --spacing(1);
+      border-bottom-width : --spacing(1);
+      margin-top          : --spacing(-1);
+    }
+  }
+
+  .tooltip.top, .tooltip.bottom {
+    .arrow {
+      border-left-width  : --spacing(1);
+      border-right-width : --spacing(1);
+      margin-left        : --spacing(-1);
+    }
+  }
+
+  .tooltip.top .arrow {
+    border-top-width    : --spacing(1);
+    border-top-color    : var(--color-invert-background-scale-c);
+    border-bottom-width : 0;
+  }
+
+  .tooltip.right .arrow {
+    border-right-width : --spacing(1);
+    border-right-color : var(--color-invert-background-scale-c);
+    border-left-width  : 0;
+  }
+
+  .tooltip.bottom .arrow {
+    border-bottom-width : --spacing(1);
+    border-bottom-color : var(--color-invert-background-scale-c);
+    border-top-width    : 0;
+  }
+
+  .tooltip.left .arrow {
+    border-left-width  : --spacing(1);
+    border-left-color  : var(--color-invert-background-scale-c);
+    border-right-width : 0;
+  }
+
+  @keyframes show-tooltip {
+    from { opacity: 0 }
+    to { opacity: 100% }
+  }
+}

@@ -18,7 +18,7 @@ export default defineNuxtModule<ModuleOptions>({
     const components  = resolver.resolve('./runtime/components/');
     const composables = resolver.resolve('./runtime/composables/');
     const server      = resolver.resolve('./runtime/server/');
-    const stylesheet  = resolver.resolve('./runtime/css/styles.css');
+    const stylesheet  = resolver.resolve('./runtime/theme/css/styles.css');
 
     const sources = options.tailwind?.sources?.slice() ?? [];
     const plugins = options.tailwind?.plugins?.slice() ?? [];
