@@ -37,7 +37,7 @@ export async function importModules(nuxt: Nuxt = useNuxt()) {
 
     components: {
       prefix  : 'Prime',
-      include : ['Message', 'ProgressSpinner', 'Toast'],
+      include : ['Message', 'ProgressBar', 'ProgressSpinner', 'Toast'],
     },
   }, nuxt);
 }

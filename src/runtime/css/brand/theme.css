@@ -405,4 +405,12 @@
   --shadow-heavy-right : var(--shadow-heavy-right-lite);
   --shadow-heavy-left  : var(--shadow-heavy-left-lite);
   --shadow-heavy-top   : var(--shadow-heavy-top-lite);
+
+
+  /* *********************** *
+     Other miscellaneous
+   * *********************** */
+  --radius-full: 9999px;
+
+  --custom-accent-color: unset;
 }
