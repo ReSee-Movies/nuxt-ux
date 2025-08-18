@@ -7,8 +7,8 @@ export default <NitroAppPlugin> function (nitroApp) {
   nitroApp.hooks.hook('render:html', (html) => {
     const config = useAppConfig() as { ux?: Partial<ModuleOptions> };
 
-    const defaultColorMode        = config?.ux?.defaultColorMode;
-    const usePreferredColorScheme = config.ux?.usePreferredColorScheme;
+    const defaultColorMode        = config?.ux?.defaultColorMode ?? 'dark';
+    const usePreferredColorScheme = config.ux?.usePreferredColorScheme ?? false;
 
     // language=js
     const scriptContent = `
