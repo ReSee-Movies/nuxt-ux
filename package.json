@@ -13,6 +13,9 @@
     "./components/*": {
       "import": "./dist/runtime/components/*"
     },
+    "./composables/*": {
+      "import": "./dist/runtime/composables/*"
+    },
     "./types": {
       "types": "./dist/runtime/types/index.ts"
     },

@@ -9,23 +9,6 @@
     border-radius : --spacing(1);
     color         : var(--text-color);
 
-    .icon {
-      color: var(--border-color);
-    }
-
-    .close {
-      background-color    : var(--background-color);
-      padding             : --spacing(1.25);
-      border-radius       : 9999px;
-      cursor              : pointer;
-      transition          : background-color;
-      transition-duration : var(--default-transition-duration);
-
-      &:hover, &:focus-visible {
-        background-color: --alpha(var(--border-color) / 30%);
-      }
-    }
-
     &.info {
       --border-color     : var(--color-info);
       --background-color : --alpha(var(--color-info) / 15%);
@@ -54,6 +37,66 @@
       --border-color     : var(--color-danger);
       --background-color : --alpha(var(--color-danger) / 5%);
       --text-color       : var(--color-danger-emphasis);
+    }
+  }
+
+
+  .status-indicating-accent {
+    --background-color : --alpha(var(--color-invert-global-background) / 20%);
+    --border-color     : var(--color-invert-global-background);
+
+    border           : solid 1px var(--color-global-background-accent);
+    border-left      : solid 3px var(--border-color);
+    border-radius    : --spacing(1);
+    box-shadow       : var(--shadow-heavy);
+    background       : var(--color-global-background);
+    background-image : linear-gradient(to bottom right, var(--background-color), var(--color-global-background));
+
+    &.info {
+      --border-color     : var(--color-info);
+      --background-color : --alpha(var(--color-info) / 15%);
+    }
+
+    &.help {
+      --border-color     : var(--color-help);
+      --background-color : --alpha(var(--color-help) / 15%);
+    }
+
+    &.success {
+      --border-color     : var(--color-success);
+      --background-color : --alpha(var(--color-success) / 20%);
+    }
+
+    &.warn {
+      --border-color     : var(--color-warning);
+      --background-color : --alpha(var(--color-warning) / 15%);
+    }
+
+    &.error {
+      --border-color     : var(--color-danger);
+      --background-color : --alpha(var(--color-danger) / 20%);
+    }
+  }
+
+
+  .status-indicating .icon,
+  .status-indicating-accent .icon,
+  .status-indicating-accent .headline {
+    color: var(--border-color);
+  }
+
+
+  .status-indicating .close,
+  .status-indicating-accent .close {
+    background-color    : var(--background-color);
+    padding             : --spacing(1.25);
+    border-radius       : var(--radius-full);
+    cursor              : pointer;
+    transition          : background-color;
+    transition-duration : var(--default-transition-duration);
+
+    &:hover, &:focus-visible {
+      background-color: --alpha(var(--border-color) / 30%);
     }
   }
 }
