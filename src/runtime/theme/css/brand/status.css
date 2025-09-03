@@ -1,13 +1,19 @@
 @layer components {
   .status-indicating {
-    --border-color     : var(--color-invert-global-background);
-    --background-color : var(--color-invert-global-background);
-    --text-color       : var(--color-invert-global-foreground);
+    --border-color     : var(--color-global-foreground-accent);
+    --background-color : var(--color-global-background);
+    --text-color       : var(--color-global-foreground);
 
     background    : var(--background-color);
     border        : solid 1px var(--border-color);
     border-radius : --spacing(1);
     color         : var(--text-color);
+
+    &.inverted {
+      --border-color     : var(--color-invert-global-background);
+      --background-color : var(--color-invert-global-background);
+      --text-color       : var(--color-invert-global-foreground);
+    }
 
     &.info {
       --border-color     : var(--color-info);
@@ -48,9 +54,8 @@
     border           : solid 1px var(--color-global-background-accent);
     border-left      : solid 3px var(--border-color);
     border-radius    : --spacing(1);
-    box-shadow       : var(--shadow-heavy);
     background       : var(--color-global-background);
-    background-image : linear-gradient(to bottom right, var(--background-color), var(--color-global-background));
+    background-image : linear-gradient(to right, var(--background-color), var(--color-global-background));
 
     &.info {
       --border-color     : var(--color-info);

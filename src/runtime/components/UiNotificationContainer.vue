@@ -15,6 +15,7 @@
       class: [
         'notification',
         'status-indicating-accent',
+        'shadow-heavy',
         props.message?.severity,
         props.message?.summary?.trim() ? 'has-summary' : undefined,
       ],

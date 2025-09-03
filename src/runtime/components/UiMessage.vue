@@ -15,6 +15,7 @@
     text?     : string;
     class?    : string;
     style?    : string;
+    accented? : boolean;
   };
 </script>
 
@@ -32,7 +33,7 @@
   const passthroughProps = computed(() => {
     return {
       content: {
-        class : ['content', 'status-indicating', props.severity, props.class],
+        class : ['content', `status-indicating${ props.accented ? '-accent' : '' }`, props.severity, props.class],
         style : props.style,
       },
 
