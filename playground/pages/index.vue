@@ -9,5 +9,6 @@
     <NuxtLink :to="{ name: 'components-ui-progress-bar' }">Progress Bar</NuxtLink>
     <NuxtLink :to="{ name: 'components-ui-tag' }">Tag</NuxtLink>
     <NuxtLink :to="{ name: 'components-ui-notification' }">Notifications</NuxtLink>
+    <NuxtLink :to="{ name: 'components-ui-card' }">Cards</NuxtLink>
   </div>
 </template>
