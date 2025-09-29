@@ -1,8 +1,8 @@
 <template>
   <span :class="['pair', props.layout]">
     <UiIcon
-      v-if  = "!!(props.icon || props.leadingIcon)"
-      :name = "props.icon || props.leadingIcon"
+      v-if  = "leadingIconName"
+      :name = "leadingIconName"
     />
 
     <span>
@@ -12,14 +12,14 @@
     </span>
 
     <UiIcon
-      v-if  = "!!props.trailingIcon"
+      v-if  = "props.trailingIcon"
       :name = "props.trailingIcon"
     />
   </span>
 </template>
 
 <script setup lang="ts">
-  import UiIcon from './UiIcon.vue';
+  import { computed } from 'vue';
 
   const props = withDefaults(
     defineProps<{
@@ -36,6 +36,10 @@
       trailingIcon : undefined,
     },
   );
+
+  const leadingIconName = computed(() => {
+    return props.icon || props.leadingIcon;
+  });
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 import { addComponentsDir, addImportsDir, addServerScanDir, createResolver, defineNuxtModule } from '@nuxt/kit';
-import { ModuleOptions } from './runtime/types';
+import type { ModuleOptions } from './runtime/types';
 import { importCSS } from './utils/import-css';
 import { importModules } from './utils/import-modules';
 import { importTailwind } from './utils/import-tailwind';
