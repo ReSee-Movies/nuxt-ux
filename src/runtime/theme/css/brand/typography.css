@@ -1,0 +1,422 @@
+@layer components {
+  :root {
+    /*
+     The upper bound of each clamp can be calculated by taking the previous,
+     smaller, result, and multiplying it by `1.2`. For the smallest value -
+     H6 - the base font size (1rem/16px) is used.
+
+     The range of each clamp is calculated by dividing the upper bound by
+     the width of the viewport at the medium breakpoint (48rem/768px). The
+     result is that beginning at the middle breakpoint, heading sizes will
+     smoothly decrease in size by one level.
+
+     It's a slick effect.
+     */
+    --typo-h6: clamp(var(--text-base), 2.500vw, 1.2rem);
+    --typo-h5: clamp(var(--typo-h6),   3.000vw, 1.44rem);
+    --typo-h4: clamp(var(--typo-h5),   3.600vw, 1.728rem);
+    --typo-h3: clamp(var(--typo-h4),   4.320vw, 2.0736rem);
+    --typo-h2: clamp(var(--typo-h3),   5.184vw, 2.4883rem);
+    --typo-h1: clamp(var(--typo-h2),   6.221vw, 2.986rem);
+
+    /* 1.5 x the --typo-h1 value */
+    --typo-h1-hero: clamp(var(--typo-h1), 9.331vw, 4.479rem);
+
+    /* Slightly larger text for hero paragraphs */
+    --typo-p-hero: clamp(1.25rem, 3.125vw, 1.5rem);
+  }
+
+  /*
+   Specifically for typography that is contained in a UiLayoutPageContainer;
+   if that container's `accent-color` has been set, then we can optionally
+   tap into that value and apply a tweaked version to text.
+   */
+  .text-accent-color {
+    color: color-mix(in srgb-linear, var(--page-container-accent-color-bind) 40%, currentColor);
+  }
+
+  /*
+   At the time of writing, Tailwind only provides support for numeric
+   font-variant styling.
+   */
+  .font-variant-small-caps {
+    font-variant: small-caps;
+  }
+
+  /*
+   Use this to better align icons within the inline flow of text.
+   */
+  .icon-inline {
+    display     : inline-flex;
+    align-items : center;
+
+    &:before {
+      content : "​"; /* Note: this contains a zero-width space U+200B */
+      display : block;
+    }
+  }
+
+  /*
+   Content containers for typographic content. Text is most easily read
+   in narrow columns, which these provide.
+   */
+  .prose-container, .prose-layout-container {
+    width        : 100%;
+    max-width    : var(--breakpoint-md);
+    margin-left  : auto;
+    margin-right : auto;
+  }
+
+  /*
+   The `.prose` and `.prose-container` classes automatically apply typography
+   styles to their nested elements. This is particularly useful in places like
+   the blog where HTML content is not managed by Nuxt.
+   */
+  .prose, .prose-container {
+    &:first-child > :first-child {
+      margin-block-start: 0;
+    }
+
+    &:last-child > :last-child,
+    :is(section:last-child, th, td, td ol, td ul, figure, figcaption, .grid > *) > :last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  /*
+   Margins are automatically applied to heading elements when they are
+   within a `.prose` or `.prose-container` parent element, or if given
+   the `.prose` classname directly while also utilizing a `.h*` classname.
+   */
+  :where(.prose-container, .prose) :where(h1, h2, h3, h4, h5, h6),
+  :where(.h1, .h2, .h3, .h4, .h5, .h6).prose {
+    margin-block-start : 0.9lh;
+    margin-block-end   : 0.4lh;
+    text-wrap          : pretty;
+  }
+
+  /*
+   Margins are automatically applied to content elements when they are
+   within a `.prose` or `.prose-container` parent element, or if given
+   the `.prose` classname directly while also utilizing a
+   typography-related classname.
+   */
+  :where(.prose-container, .prose) :where(p, pre, table, ol, ul, img, figure, blockquote),
+  :where(.p, .pre, .table, .ol, .ul, .img, .figure, .blockquote).prose {
+    margin-block-end : 1lh;
+    text-wrap        : pretty;
+  }
+
+  /** ---------------------------------
+      Horizontal Ruler
+   -- --------------------------------- */
+  :where(.prose-container, .prose) hr + * {
+    margin-block-start: 0;
+  }
+
+  :where(.prose-container, .prose) *:has(+ hr) {
+    margin-block-end: 0;
+  }
+
+  .hr, .prose hr, .prose-container hr {
+    border-color       : var(--color-global-foreground-accent);
+    margin-block-start : 1lh;
+    margin-block-end   : 1lh;
+  }
+
+  /** ---------------------------------
+      Heading Level 1
+   -- --------------------------------- */
+  .h1, .prose h1, .prose-container h1 {
+    font-size      : var(--typo-h1);
+    line-height    : 1.125;
+    letter-spacing : 0.0025em;
+
+    &.hero {
+      font-size   : var(--typo-h1-hero);
+      line-height : 1;
+    }
+  }
+
+  /** ---------------------------------
+      Heading Level 2
+   -- --------------------------------- */
+  .h2, .prose h2, .prose-container h2 {
+    font-size      : var(--typo-h2);
+    line-height    : 1.1765;
+    letter-spacing : 0.0108em;
+    font-weight    : var(--font-weight-extralight);
+  }
+
+  /** ---------------------------------
+      Heading Level 3
+   -- --------------------------------- */
+  .h3, .prose h3, .prose-container h3 {
+    font-size      : var(--typo-h3);
+    line-height    : 1.2;
+    letter-spacing : 0.022em;
+    font-weight    : var(--font-weight-extralight);
+  }
+
+  /** ---------------------------------
+      Heading Level 4
+   -- --------------------------------- */
+  .h4, .prose h4, .prose-container h4 {
+    font-size      : var(--typo-h4);
+    line-height    : 1.25;
+    letter-spacing : 0.035em;
+  }
+
+  /** ---------------------------------
+      Heading Level 5
+   -- --------------------------------- */
+  .h5, .prose h5, .prose-container h5 {
+    font-size      : var(--typo-h5);
+    line-height    : 1.28;
+    letter-spacing : 0.0532em;
+  }
+
+  /** ---------------------------------
+      Heading Level 6
+   -- --------------------------------- */
+  .h6, .prose h6, .prose-container h6 {
+    font-size      : var(--typo-h6);
+    line-height    : 1.28;
+    letter-spacing : 0.0532em;
+  }
+
+  /** ---------------------------------
+    Paragraph
+ -- --------------------------------- */
+  .p, .prose p, .prose-container p {
+    font-size      : 1rem;
+    line-height    : 1.5;
+    letter-spacing : 0.03em;
+
+    &.hero {
+      font-size   : var(--typo-p-hero);
+      line-height : 1.3;
+    }
+  }
+
+  /** ---------------------------------
+    Emphasis styling for text
+ -- --------------------------------- */
+  .note {
+    font-size      : 0.95rem !important;
+    line-height    : 1.5 !important;
+    letter-spacing : 0.05rem !important;
+    color          : var(--color-foreground-scale-g);
+  }
+
+  /** ---------------------------------
+      Code
+   -- --------------------------------- */
+  .code, .prose code, .prose-container code,
+  .pre, .prose pre, .prose-container pre {
+    font-family         : monospace;
+    color               : var(--color-foreground-scale-e);
+    outline             : dashed 2px var(--color-background-scale-g);
+    outline-offset      : -2px;
+    padding             : 0.2rem 0.25rem;
+    font-size           : 0.9rem;
+    border-radius       : 0.25rem;
+    font-weight         : bolder;
+    transition          : color, outline-color;
+    transition-duration : 150ms;
+
+    &:hover {
+      color: var(--color-global-foreground);
+    }
+  }
+
+  /** ---------------------------------
+      Pre (also see .code class above)
+   -- --------------------------------- */
+  .pre, .prose pre, .prose-container pre {
+    padding: 0.5rem 0.75rem;
+  }
+
+  /** ---------------------------------
+      Table
+   -- --------------------------------- */
+  .table, .prose table, .prose-container table {
+    border-collapse: collapse;
+
+    td, th {
+      border         : solid 1px var(--color-background-scale-f);
+      vertical-align : top;
+      padding        : 0.5rem;
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--color-background-scale-a);
+    }
+
+    th {
+      background-color : var(--color-background-scale-c);
+      text-align       : start;
+      letter-spacing   : 0.1em;
+    }
+  }
+
+  /** ---------------------------------
+      Un/ordered List
+   -- --------------------------------- */
+  .ul, .prose ul, .prose-container ul,
+  .ol, .prose ol, .prose-container ol {
+    list-style-type      : disc;
+    padding-inline-start : 1.25rem;
+
+    li {
+      ol, ul {
+        padding-inline-start : 2rem;
+      }
+
+    /*
+     Remove the bottom margin from nested lists that are not the very last
+     child of their parent, only if they are not preceded by a block element
+     (a paragraph, right now) where the lack of margin would make things
+     look oddly squished.
+    */
+    &:not(:last-child) {
+      ol:not(p + ol), ul:not(p + ul) {
+        margin-block-end: 0;
+      }
+    }
+    }
+  }
+
+  /** ---------------------------------
+      Ordered List (also see .ul class above)
+   -- --------------------------------- */
+  .ol, .prose ol, .prose-container ol {
+    list-style-type : none;
+    counter-reset   : item;
+
+    & > li {
+      counter-increment: item;
+
+      &::marker {
+        content: counters(item, ".") ". ";
+      }
+    }
+  }
+
+  /** ---------------------------------
+      Image
+   -- --------------------------------- */
+  .img, .prose img, .prose-container img {
+    border        : solid 2px var(--color-background-scale-e);
+    margin-left   : auto;
+    margin-right  : auto;
+    max-height    : 450px;
+    width         : auto;
+    border-radius : 0.25rem;
+  }
+
+  /** ---------------------------------
+      Figure
+   -- --------------------------------- */
+  .figure, .prose figure, .prose-container figure {
+    display      : table;
+    margin-left  : auto;
+    margin-right : auto;
+
+    img {
+      display : block;
+      margin  : 0;
+
+      &:has(+figcaption) {
+        border-bottom-left-radius  : 0;
+        border-bottom-right-radius : 0;
+      }
+    }
+
+    figcaption {
+      background-color           : var(--color-background-scale-e);
+      display                    : table-caption;
+      caption-side               : bottom;
+      text-align                 : center;
+      padding                    : 0.5rem;
+      font-size                  : 0.85rem;
+      border-bottom-left-radius  : 0.25rem;
+      border-bottom-right-radius : 0.25rem;
+
+      & > * {
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  /** ---------------------------------
+      Blockquote
+   -- --------------------------------- */
+  .blockquote, .prose blockquote, .prose-container blockquote {
+    font-family      : serif;
+    font-size        : 1.1rem;
+    background-color : var(--color-background-scale-b);
+    border-radius    : 0.25rem;
+    padding          : 0.25rem 0.75rem;
+  }
+
+
+  /*
+   Support for prefixing headings with numbers, simulating an ordered list.
+   This begins with the H2 heading, as H1 is typically reserved for the page
+   itself. The numerical suffix of the class name indicates the maximum
+   heading level that will receive a counter.
+   */
+  .prose-numbering-2,
+  .prose-numbering-3,
+  .prose-numbering-4,
+  .prose-numbering-5,
+  .prose-numbering-6 {
+    counter-reset: l1;
+  }
+
+  :where(.prose-numbering-2, .prose-numbering-3, .prose-numbering-4, .prose-numbering-5, .prose-numbering-6) h2 {
+    counter-reset: l2;
+
+    &:before {
+      content: counter(l1) ". ";
+      counter-increment: l1;
+    }
+  }
+
+  :where(.prose-numbering-3, .prose-numbering-4, .prose-numbering-5, .prose-numbering-6) h3 {
+    counter-reset: l3;
+
+    &:before {
+      content: counter(l1) "." counter(l2) ". ";
+      counter-increment: l2;
+    }
+  }
+
+  :where(.prose-numbering-4, .prose-numbering-5, .prose-numbering-6) h4 {
+    counter-reset: l4;
+
+    &:before {
+      content: counter(l1) "." counter(l2) "." counter(l3) ". ";
+      counter-increment: l3;
+    }
+  }
+
+  :where(.prose-numbering-5, .prose-numbering-6) h5 {
+    counter-reset: l5;
+
+    &:before {
+      content: counter(l1) "." counter(l2) "." counter(l3) "." counter(l4) ". ";
+      counter-increment: l4;
+    }
+  }
+
+  .prose-numbering-6 h6 {
+    counter-reset: l6;
+
+    &:before {
+      content: counter(l1) "." counter(l2) "." counter(l3) "." counter(l4) "." counter(l5) ". ";
+      counter-increment: l5;
+    }
+  }
+}
