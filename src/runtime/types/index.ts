@@ -39,3 +39,10 @@ export type HintedString<T> = string | T;
  * toast notifications, tags, and chips.
  */
 export type StatusLevel = 'info' | 'help' | 'success' | 'warn' | 'error';
+
+/**
+ * Additional descriptors beyond what {@link StatusLevel} provides. As these are
+ * not descriptive of intent, they exist separately so the two can be used
+ * separately.
+ */
+export type StyleStatusLevel = 'default' | 'inverted' & StatusLevel;

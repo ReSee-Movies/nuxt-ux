@@ -1,0 +1,134 @@
+@layer components {
+  @property --btn-background-color {
+    syntax        : "<color>";
+    inherits      : false;
+    initial-value : transparent;
+  }
+
+  .btn, .btn.default {
+    --btn-border-width: 2px;
+
+    --btn-background-color       : var(--color-background-scale-a);
+    --btn-background-focus-color : var(--color-background-scale-c);
+    --btn-border-color           : var(--color-background-scale-g);
+
+    --btn-bg-image-background-layer : linear-gradient(to right, var(--btn-background-color), var(--btn-background-color));
+    --btn-bg-image-border-layer     : linear-gradient(to right, var(--btn-border-color), var(--btn-border-color));
+    --btn-bg-image-color-layer      : linear-gradient(to right, var(--colorscale-resee-linear));
+
+    --btn-background-image:
+      var(--btn-bg-image-background-layer),
+      var(--btn-bg-image-border-layer),
+      var(--btn-bg-image-color-layer);
+
+    @variant dark {
+      --btn-bg-image-color-layer: linear-gradient(to right, var(--colorscale-resee-lite-linear));
+    }
+
+    &.icon-only {
+      --btn-bg-image-color-layer: conic-gradient(from 0deg, var(--colorscale-resee-conic));
+
+      @variant dark {
+        --btn-bg-image-color-layer: conic-gradient(from 0deg, var(--colorscale-resee-lite-conic));
+      }
+    }
+  }
+
+
+  .btn {
+    cursor                     : pointer;
+    padding                    : --spacing(1) --spacing(5);
+    border-radius              : var(--radius-full);
+    border                     : solid var(--btn-border-width) var(--btn-border-color);
+    background-origin          : border-box;
+    background-repeat          : no-repeat;
+    background-size            : 100%, 100% 100%, 100%;
+    background-position        : bottom right;
+    background-clip            : padding-box, border-box, border-box;
+    background-image           : var(--btn-background-image);
+    transition                 : box-shadow, background-size, --btn-background-color, border-color;
+    transition-duration        : 300ms;
+    transition-timing-function : ease-in-out;
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:where(:disabled, .disabled, [aria-disabled="true"]):not(.loading) {
+      cursor  : not-allowed;
+      opacity : 0.4;
+    }
+
+    &.borderless {
+      background-image : var(--btn-bg-image-background-layer);
+      border           : solid 2px transparent;
+      background-clip  : border-box;
+    }
+
+    &.icon-only {
+      padding     : --spacing(2);
+      line-height : 1;
+
+      .label {
+        display: none;
+      }
+    }
+
+    &.small {
+      font-size: var(--icon-size-small);
+
+      &.icon-only {
+        padding: --spacing(1.75);
+      }
+
+      &:not(.icon-only) {
+        padding: --spacing(0.5) --spacing(4);
+      }
+    }
+
+    &.large {
+      font-size: var(--icon-size-large);
+
+      &.icon-only {
+        padding: --spacing(1.5);
+      }
+
+      &:not(.icon-only) {
+        padding: --spacing(1.5) --spacing(6);
+      }
+    }
+
+    &.loading {
+      cursor: progress;
+    }
+
+    &:not(:disabled, .disabled, [aria-disabled="true"], .loading) {
+      &:hover, &:focus-visible {
+        --btn-background-color: var(--btn-background-focus-color);
+
+        border-color    : transparent;
+        background-size : 100%, 0 100%, 100%;
+
+        &:not(.borderless) {
+          box-shadow: var(--shadow);
+        }
+      }
+    }
+
+    @variant max-md {
+      &.responsive-grow {
+        width   : 100%;
+        padding : 0.5rem;
+      }
+
+      &.responsive-shrink {
+        padding     : --spacing(2);
+        line-height : 1;
+
+        :not(.icon) {
+          display: none;
+        }
+      }
+    }
+  }
+}
