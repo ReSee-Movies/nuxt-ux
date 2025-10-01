@@ -3,9 +3,11 @@
 </template>
 
 <script setup lang="ts">
+  import type { UiIconProps } from './UiIcon.vue';
+
   const props = withDefaults(
     defineProps<{
-      size?: 'sm' | 'md' | 'xl';
+      size?: UiIconProps['size'];
     }>(),
     {
       size: 'md',
@@ -14,9 +16,11 @@
 </script>
 
 <style scoped>
+  @reference "tailwindcss";
+
   .indicator.sm {
-    height : 1rem;
-    width  : 1rem;
+    height : var(--icon-size-small);
+    width  : var(--icon-size-small);
 
     &:deep(circle) {
       stroke-width: 7;
@@ -24,8 +28,17 @@
   }
 
   .indicator.md {
-    height : 1.5rem;
-    width  : 1.5rem;
+    height : var(--icon-size-medium);
+    width  : var(--icon-size-medium);
+
+    &:deep(circle) {
+      stroke-width: 7;
+    }
+  }
+
+  .indicator.lg {
+    height : var(--icon-size-large);
+    width  : var(--icon-size-large);
 
     &:deep(circle) {
       stroke-width: 5;
@@ -33,8 +46,8 @@
   }
 
   .indicator.xl {
-    height : 3rem;
-    width  : 3rem;
+    height : var(--icon-size-jumbo);
+    width  : var(--icon-size-jumbo);
 
     &:deep(circle) {
       stroke-width: 4;

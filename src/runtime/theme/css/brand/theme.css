@@ -90,7 +90,14 @@
   /* *********************** *
      Miscellaneous
    * *********************** */
-  --zero-width-space: "​";
+  --zero-width-space    : "​";
+  --radius-full         : 9999px;
+  --custom-accent-color : unset;
+
+  --icon-size-small  : --spacing(3.5);
+  --icon-size-medium : --spacing(4);
+  --icon-size-large  : --spacing(6);
+  --icon-size-jumbo  : --spacing(12);
 
 
   /* *********************** *
@@ -405,12 +412,4 @@
   --shadow-heavy-right : var(--shadow-heavy-right-lite);
   --shadow-heavy-left  : var(--shadow-heavy-left-lite);
   --shadow-heavy-top   : var(--shadow-heavy-top-lite);
-
-
-  /* *********************** *
-     Other miscellaneous
-   * *********************** */
-  --radius-full: 9999px;
-
-  --custom-accent-color: unset;
 }

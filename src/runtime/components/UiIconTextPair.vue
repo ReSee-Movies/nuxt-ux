@@ -1,11 +1,19 @@
 <template>
-  <span :class="['pair', props.layout]">
+  <span
+    :class="[
+      'pair',
+      props.layout,
+      props.spacing ? `spacing-${ props.spacing }` : undefined,
+    ]"
+  >
     <UiIcon
-      v-if  = "leadingIconName"
-      :name = "leadingIconName"
+      v-if     = "props.icon || props.loading"
+      :name    = "props.icon"
+      :size    = "props.iconSize"
+      :loading = "props.loading"
     />
 
-    <span>
+    <span v-if="props.text || slots.default" class="label">
       <slot>
         {{ props.text }}
       </slot>
@@ -14,39 +22,56 @@
     <UiIcon
       v-if  = "props.trailingIcon"
       :name = "props.trailingIcon"
+      :size = "props.iconSize"
     />
   </span>
 </template>
 
-<script setup lang="ts">
-  import { computed } from 'vue';
+<script lang="ts">
+  import { useSlots } from 'vue';
+  import type { UiIconProps } from './UiIcon.vue';
 
+  export type UiIconTextPairProps = {
+    text?             : string;
+    icon?             : string;
+    trailingIcon?     : string;
+    iconSize?         : UiIconProps['size'];
+    trailingIconSize? : UiIconProps['size'];
+    layout?           : 'column' | 'row';
+    spacing?          : 'wide';
+    loading?          : boolean;
+  };
+</script>
+
+<script setup lang="ts">
   const props = withDefaults(
-    defineProps<{
-      text?         : string;
-      icon?         : string;
-      leadingIcon?  : string;
-      trailingIcon? : string;
-      layout?       : 'column' | 'row';
-    }>(),
+    defineProps<UiIconTextPairProps>(),
     {
-      text         : undefined,
-      icon         : undefined,
-      leadingIcon  : undefined,
-      trailingIcon : undefined,
+      text             : undefined,
+      icon             : undefined,
+      trailingIcon     : undefined,
+      iconSize         : 'md',
+      trailingIconSize : 'md',
+      layout           : undefined,
+      spacing          : undefined,
+      loading          : false,
     },
   );
 
-  const leadingIconName = computed(() => {
-    return props.icon || props.leadingIcon;
-  });
+  const slots = useSlots();
 </script>
 
 <style scoped>
+  @reference "tailwindcss";
+
   .pair {
     display     : inline-flex;
-    gap         : calc(var(--spacing) * 1);
+    gap         : --spacing(1);
     align-items : baseline;
+
+    &.wide {
+      gap: --spacing(2);
+    }
 
     &.row {
       display: flex;
