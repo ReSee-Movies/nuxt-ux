@@ -25,7 +25,7 @@
       :icon-size     = "props.size"
       :trailing-icon = "props.trailingIcon"
       :layout        = "props.layout"
-      :spacing       = "props.layout === 'column' ? undefined : 'wide'"
+      :spacing       = "props.spacing ?? (props.layout === 'column' ? undefined : 'wide')"
       :loading       = "showLoading"
     >
       <slot />

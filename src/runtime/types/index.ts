@@ -45,4 +45,4 @@ export type StatusLevel = 'info' | 'help' | 'success' | 'warn' | 'error';
  * not descriptive of intent, they exist separately so the two can be used
  * separately.
  */
-export type StyleStatusLevel = 'default' | 'inverted' & StatusLevel;
+export type StyleStatusLevel = 'default' | 'inverted' | StatusLevel;

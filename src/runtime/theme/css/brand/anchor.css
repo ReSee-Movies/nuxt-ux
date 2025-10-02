@@ -1,0 +1,71 @@
+@layer components {
+  @property --a-underline-mask-stop {
+    syntax        : "<percentage>";
+    inherits      : false;
+    initial-value : 0%;
+  }
+
+  .a, .a.default {
+    --a-underline-mask-stop       : 0%;
+    --default-underline           : var(--color-background-scale-g);
+    --default-underline-emphasis  : var(--colorscale-resee-linear);
+    --default-color               : currentColor;
+    --default-color-emphasis      : currentColor;
+
+    --accent-underline-base       : var(--custom-accent-color, var(--default-underline));
+    --accent-underline-mixed      : color-mix(in srgb-linear, var(--accent-underline-base) 15%, var(--default-underline));
+    --accent-underline-emphasis   : var(--custom-accent-color, var(--default-underline-emphasis));
+
+    --accent-color-base           : var(--custom-accent-color, var(--default-color));
+    --accent-color-mixed          : color-mix(in srgb-linear, var(--accent-color-base) 30%, var(--default-color));
+    --accent-color-emphasis-base  : var(--custom-accent-color, var(--default-color-emphasis));
+    --accent-color-emphasis-mixed : color-mix(in srgb-linear, var(--accent-color-emphasis-base) 60%, var(--default-color-emphasis));
+
+    @variant dark {
+      --default-underline-emphasis: var(--colorscale-resee-lite-linear);
+    }
+
+    background-image:
+      linear-gradient(to right, var(--accent-underline-mixed), var(--accent-underline-mixed)),
+      linear-gradient(to right, var(--accent-underline-emphasis), var(--accent-underline-emphasis));
+
+    color                      : var(--accent-color-mixed);
+    font-weight                : var(--font-weight-semibold);
+    box-decoration-break       : slice;
+    background-size            : 100% 1px, 100% 1px;
+    background-repeat          : no-repeat;
+    background-position        : bottom right, bottom left;
+    transition                 : color, background-size, --a-underline-mask-stop;
+    transition-duration        : 300ms;
+    transition-timing-function : ease-out;
+
+    &.small {
+      font-size   : 0.875rem;
+      line-height : 1.25rem;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:not(:disabled, .disabled, [aria-disabled="true"]) {
+      &:hover, &:focus {
+        --a-underline-mask-stop: 100%;
+
+        background-size : 0 1px, 100% 1px;
+        color           : var(--accent-color-emphasis-mixed);
+      }
+    }
+
+    &.no-underline {
+      mask-image:
+        linear-gradient(to right, white, white),
+        linear-gradient(to right, white 0 var(--a-underline-mask-stop), transparent var(--a-underline-mask-stop) 100%);
+
+      font-weight   : var(--font-weight-medium);
+      mask-repeat   : no-repeat;
+      mask-size     : 100% calc(100% - 1px), 100% 1px;
+      mask-position : top left, bottom left;
+    }
+  }
+}

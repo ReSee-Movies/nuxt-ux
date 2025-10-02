@@ -2,7 +2,7 @@
   <span
     :class="[
       'pair',
-      props.layout,
+      props.layout ? `layout-${ props.layout }` : undefined,
       props.spacing ? `spacing-${ props.spacing }` : undefined,
     ]"
   >
@@ -38,7 +38,7 @@
     iconSize?         : UiIconProps['size'];
     trailingIconSize? : UiIconProps['size'];
     layout?           : 'column' | 'row';
-    spacing?          : 'wide';
+    spacing?          : 'wide' | 'normal';
     loading?          : boolean;
   };
 </script>
@@ -69,15 +69,15 @@
     gap         : --spacing(1);
     align-items : baseline;
 
-    &.wide {
+    &.spacing-wide {
       gap: --spacing(2);
     }
 
-    &.row {
+    &.layout-row {
       display: flex;
     }
 
-    &.column {
+    &.layout-column {
       flex-direction : column;
       align-items    : center;
     }

@@ -4,12 +4,13 @@
   <hr class="mb-6">
 
   <div class="flex flex-col gap-4">
-    <NuxtLink :to="{ name: 'typography' }">Typography</NuxtLink>
-    <NuxtLink :to="{ name: 'components-ui-message' }">Messages</NuxtLink>
-    <NuxtLink :to="{ name: 'components-ui-loading-indicator' }">Loading Indicator</NuxtLink>
-    <NuxtLink :to="{ name: 'components-ui-progress-bar' }">Progress Bar</NuxtLink>
-    <NuxtLink :to="{ name: 'components-ui-tag' }">Tag</NuxtLink>
-    <NuxtLink :to="{ name: 'components-ui-notification' }">Notifications</NuxtLink>
-    <NuxtLink :to="{ name: 'components-ui-card' }">Cards</NuxtLink>
+    <UiLink :to="{ name: 'typography' }" icon="i-ph-text-aa">Typography</UiLink>
+    <UiLink :to="{ name: 'components-ui-message' }" icon="i-ph-chat">Messages</UiLink>
+    <UiLink :to="{ name: 'components-ui-loading-indicator' }" icon="i-ph-gauge">Loading Indicator</UiLink>
+    <UiLink :to="{ name: 'components-ui-progress-bar' }">Progress Bar</UiLink>
+    <UiLink :to="{ name: 'components-ui-tag' }">Tag</UiLink>
+    <UiLink :to="{ name: 'components-ui-notification' }">Notifications</UiLink>
+    <UiLink :to="{ name: 'components-ui-card' }" icon="i-ph-bounding-box">Cards</UiLink>
+    <UiLink :to="{ name: 'components-ui-button' }">Buttons</UiLink>
   </div>
 </template>
