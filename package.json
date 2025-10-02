@@ -17,7 +17,7 @@
       "import": "./dist/runtime/composables/*"
     },
     "./types": {
-      "types": "./dist/runtime/types/index.ts"
+      "types": "./dist/runtime/types/index.d.ts"
     },
     "./primevue": {
       "import": "./dist/runtime/theme/primevue/index.js"
