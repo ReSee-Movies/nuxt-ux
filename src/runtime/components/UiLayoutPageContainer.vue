@@ -38,10 +38,8 @@
   }
 
   .page-container {
-    /* noinspection CssUnresolvedCustomProperty */
-    --page-container-accent-color-base : var(--custom-accent-color, var(--color-global-foreground-accent));
-    --page-container-accent-color-bind : v-bind(accentColor);
-    --page-container-accent-color      : var(--page-container-accent-color-bind, var(--page-container-accent-color-base));
+    --custom-accent-color         : v-bind(accentColor);
+    --page-container-accent-color : var(--custom-accent-color, var(--color-global-foreground-accent));
 
     border              : solid 1px var(--page-container-accent-color);
     border-radius       : var(--page-container-radius);

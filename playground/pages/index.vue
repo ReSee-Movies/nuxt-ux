@@ -1,7 +1,8 @@
 <template>
-  <h1>ReSee Nuxt UX Library</h1>
-
-  <hr class="mb-6">
+  <div class="prose">
+    <h1>ReSee Nuxt UX Library</h1>
+    <hr>
+  </div>
 
   <div class="flex flex-col gap-4">
     <UiLink :to="{ name: 'typography' }" icon="i-ph-text-aa">Typography</UiLink>

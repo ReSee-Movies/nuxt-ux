@@ -27,15 +27,6 @@
   }
 
   /*
-   Specifically for typography that is contained in a UiLayoutPageContainer;
-   if that container's `accent-color` has been set, then we can optionally
-   tap into that value and apply a tweaked version to text.
-   */
-  .text-accent-color {
-    color: color-mix(in srgb-linear, var(--page-container-accent-color-bind) 40%, currentColor);
-  }
-
-  /*
    At the time of writing, Tailwind only provides support for numeric
    font-variant styling.
    */
@@ -131,6 +122,7 @@
     font-size      : var(--typo-h1);
     line-height    : 1.125;
     letter-spacing : 0.0025em;
+    color          : color-mix(in srgb-linear, var(--custom-accent-color) 40%, currentColor);
 
     &.hero {
       font-size   : var(--typo-h1-hero);
