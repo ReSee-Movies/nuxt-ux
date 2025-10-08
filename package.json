@@ -1,8 +1,11 @@
 {
   "name": "@resee-movies/nuxt-ux",
-  "version": "1.0.0",
-  "description": "",
-  "repository": "",
+  "version": "0.0.0",
+  "description": "The next-gen user experience library for ReSee Movies - currently in development. ",
+  "repository": {
+    "url": "https://github.com/ReSee-Movies/nuxt-ux.git"
+  },
+  "bugs": "https://github.com/ReSee-Movies/nuxt-ux/issues",
   "license": "MIT",
   "type": "module",
   "exports": {
