@@ -44,6 +44,8 @@
 </script>
 
 <script setup lang="ts">
+  import UiIcon from './UiIcon.vue';
+
   const props = withDefaults(
     defineProps<UiIconTextPairProps>(),
     {

@@ -14,6 +14,8 @@
 </script>
 
 <script setup lang="ts">
+  import UiLoadingIndicator from './UiLoadingIndicator.vue';
+
   const props = withDefaults(
     defineProps<UiIconProps>(),
     {

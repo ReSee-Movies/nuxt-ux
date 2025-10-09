@@ -44,9 +44,10 @@
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
-    "test": "vitest run",
+    "test": "vitest",
     "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@egoist/tailwindcss-icons": "^1.9.0",
@@ -70,6 +71,7 @@
     "@nuxt/test-utils": "^3.19.2",
     "@tailwindcss/vite": "^4.1.14",
     "@types/node": "^22.18.8",
+    "@vitest/coverage-v8": "^3.2.4",
     "@vue/language-server": "^3.1.0",
     "@vue/test-utils": "^2.4.6",
     "changelogen": "^0.6.2",

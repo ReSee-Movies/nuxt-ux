@@ -3,6 +3,7 @@
 </template>
 
 <script setup lang="ts">
+  import { ProgressSpinner as PrimeProgressSpinner } from 'primevue';
   import type { UiIconProps } from './UiIcon.vue';
 
   const props = withDefaults(

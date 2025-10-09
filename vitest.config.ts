@@ -12,5 +12,10 @@ export default defineConfig({
         },
       }),
     ],
+
+    coverage: {
+      include  : ['**/src/**'],
+      reporter : ['html', 'lcov'],
+    },
   },
 });

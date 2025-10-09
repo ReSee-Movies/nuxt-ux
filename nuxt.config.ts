@@ -4,6 +4,6 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxt/eslint',
-    '@nuxt/test-utils',
+    '@nuxt/test-utils/module',
   ],
 });
