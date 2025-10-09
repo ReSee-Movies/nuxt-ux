@@ -23,7 +23,7 @@ export async function importModules(nuxt: Nuxt = useNuxt()) {
     loadStyles : false,
 
     importPT: {
-      from: '@resee-movies/nuxt-ux/primevue',
+      from: '#resee-movies-nuxt-ux-primevue-passthrough',
     },
 
     options: {

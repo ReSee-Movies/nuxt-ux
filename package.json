@@ -21,9 +21,6 @@
     },
     "./types": {
       "types": "./dist/runtime/types/index.d.ts"
-    },
-    "./primevue": {
-      "import": "./dist/runtime/theme/primevue/index.js"
     }
   },
   "main": "./dist/module.mjs",
@@ -41,6 +38,7 @@
     "prepack": "nuxt-module-build build",
     "dev": "npm run dev:prepare && nuxi dev playground",
     "dev:build": "nuxi build playground",
+    "dev:preview": "nuxi preview playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
