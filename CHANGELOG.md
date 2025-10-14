@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.4](https://github.com/ReSee-Movies/nuxt-ux/compare/0.0.3...0.0.4) (2025-10-14)
+
+### Bug Fixes
+
+* test for the correct extension on primevue's passthrough config file ([5637ac1](https://github.com/ReSee-Movies/nuxt-ux/commit/5637ac1f421d2ccfb10579df505c3ca73d4037ee))
+
 ## [0.0.3](https://github.com/ReSee-Movies/nuxt-ux/compare/0.0.2...0.0.3) (2025-10-14)
 
 ### Bug Fixes
