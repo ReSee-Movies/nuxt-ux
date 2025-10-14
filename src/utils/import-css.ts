@@ -1,7 +1,9 @@
+import { addTemplate, logger, resolvePath, useNuxt } from '@nuxt/kit';
 import type { Nuxt, NuxtConfig } from '@nuxt/schema';
+import { toNonNullableArray } from '@resee-movies/utilities/arrays/to-non-nullable-array';
 import { readFile } from 'node:fs/promises';
-import { useNuxt, resolvePath, addTemplate, logger } from '@nuxt/kit';
 import { join } from 'node:path';
+import { resolveModuleDirectory } from './resolve-module-directory';
 
 
 const IMPORT_REGEX = /(?<=\s|^|;|\})@import\s+["']tailwindcss["']/gmu;
@@ -22,9 +24,9 @@ function getDefaults(config: ExtNuxtConfig) {
 
 
 export type Options = {
-  sources?: string[];
-  plugins?: string[];
-  imports?: string[];
+  sources?: (string | undefined)[];
+  plugins?: (string | undefined)[];
+  imports?: (string | undefined)[];
 };
 
 
@@ -36,10 +38,10 @@ export async function importCSS(nuxt: Nuxt = useNuxt(), options?: Options) {
     (layer) => layer.config.srcDir || layer.cwd,
   );
 
-  const plugins = options?.plugins ?? [];
+  const plugins = toNonNullableArray(options?.plugins ?? []);
 
   if (options?.sources) {
-    sources.push(...options.sources);
+    sources.push(...toNonNullableArray(options.sources));
   }
 
   await nuxt.callHook('tailwindcss:sources:extend', sources)
@@ -107,9 +109,9 @@ export async function importCSS(nuxt: Nuxt = useNuxt(), options?: Options) {
         write       : true,
         getContents : () => {
           return [
-            `@import 'tailwindcss';`,
+            `@import ${JSON.stringify(resolveModuleDirectory('tailwindcss'))};`,
             `@import ${JSON.stringify(sourcesTemplate.dst)};`,
-            ...(options?.imports ?? []).map((item) => `@import ${JSON.stringify(item)};`),
+            ...toNonNullableArray(options?.imports ?? []).map((item) => `@import ${JSON.stringify(item)};`),
           ].join('\n');
           },
       }).dst,

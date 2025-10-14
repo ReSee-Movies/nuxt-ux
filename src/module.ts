@@ -3,6 +3,7 @@ import type { ModuleOptions } from './runtime/types';
 import { importCSS } from './utils/import-css';
 import { importModules } from './utils/import-modules';
 import { importTailwind } from './utils/import-tailwind';
+import { resolveModuleDirectory } from './utils/resolve-module-directory';
 
 
 export default defineNuxtModule<ModuleOptions>({
@@ -28,7 +29,7 @@ export default defineNuxtModule<ModuleOptions>({
     const imports = options.tailwind?.plugins?.slice() ?? [];
 
     sources.push(components);
-    plugins.push('@egoist/tailwindcss-icons');
+    plugins.push(resolveModuleDirectory('@egoist/tailwindcss-icons', 'dist', 'index.js'));
     imports.push(stylesheet);
 
     addComponentsDir({ path: components });

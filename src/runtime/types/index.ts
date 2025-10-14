@@ -3,9 +3,9 @@ export interface ModuleOptions {
   usePreferredColorScheme? : boolean;
 
   tailwind?: {
-    plugins?: string[];
-    sources?: string[];
-    imports?: string[];
+    plugins?: (string | undefined)[];
+    sources?: (string | undefined)[];
+    imports?: (string | undefined)[];
   };
 }
 

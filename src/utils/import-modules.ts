@@ -1,5 +1,7 @@
 import { installModule, useNuxt } from '@nuxt/kit';
 import type { Nuxt } from '@nuxt/schema';
+import NuxtFontsModule from '@nuxt/fonts';
+import NuxtPrimevueModule from '@primevue/nuxt-module';
 
 
 /**
@@ -7,7 +9,8 @@ import type { Nuxt } from '@nuxt/schema';
  * relies on.
  */
 export async function importModules(nuxt: Nuxt = useNuxt()) {
-  await installModule('@nuxt/fonts', {
+  // @ts-expect-error
+  await installModule(NuxtFontsModule, {
     families: [
       {
         name     : 'Archivo',
@@ -18,7 +21,7 @@ export async function importModules(nuxt: Nuxt = useNuxt()) {
     ],
   });
 
-  await installModule('@primevue/nuxt-module', {
+  await installModule(NuxtPrimevueModule, {
     autoImport : false,
     loadStyles : false,
 
