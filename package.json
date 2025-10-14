@@ -47,20 +47,6 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
     "test:coverage": "vitest run --coverage"
   },
-  "dependencies": {
-    "@egoist/tailwindcss-icons": "^1.9.0",
-    "@iconify-json/ph": "^1.2.2",
-    "@iconify-json/simple-icons": "^1.2.53",
-    "@iconify-json/solar": "^1.2.4",
-    "@nuxt/fonts": "^0.11.4",
-    "@primevue/nuxt-module": "^4.4.0",
-    "@resee-movies/utilities": "^0.10.0",
-    "@tailwindcss/postcss": "^4.1.14",
-    "@tailwindcss/vite": "^4.1.14",
-    "@vueuse/core": "^13.9.0",
-    "primevue": "^4.4.0",
-    "tailwindcss": "^4.1.14"
-  },
   "devDependencies": {
     "@nuxt/devtools": "^2.6.5",
     "@nuxt/eslint": "^1.9.0",
@@ -82,5 +68,19 @@
     "typescript": "^5.9.3",
     "vitest": "^3.2.4",
     "vue-tsc": "^3.1.0"
+  },
+  "peerDependencies": {
+    "@egoist/tailwindcss-icons": "^1.9.0",
+    "@iconify-json/ph": "^1.2.2",
+    "@iconify-json/simple-icons": "^1.2.53",
+    "@iconify-json/solar": "^1.2.4",
+    "@nuxt/fonts": "^0.11.4",
+    "@primevue/nuxt-module": "^4.4.0",
+    "@resee-movies/utilities": "^0.10.0",
+    "@tailwindcss/postcss": "^4.1.14",
+    "@tailwindcss/vite": "^4.1.14",
+    "@vueuse/core": "^13.9.0",
+    "primevue": "^4.4.0",
+    "tailwindcss": "^4.1.14"
   }
 }
