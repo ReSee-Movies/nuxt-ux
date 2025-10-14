@@ -22,7 +22,7 @@ export default defineNuxtModule<ModuleOptions>({
     const stylesheet  = resolver.resolve('./runtime/theme/css/styles.css');
 
     nuxt.options.alias['#resee-movies-nuxt-ux-primevue-passthrough']
-      = resolver.resolve('./runtime/theme/primevue/index.ts');
+      = await resolver.resolvePath('./runtime/theme/primevue/index', { extensions: ['ts', 'js'] });
 
     const sources = options.tailwind?.sources?.slice() ?? [];
     const plugins = options.tailwind?.plugins?.slice() ?? [];
