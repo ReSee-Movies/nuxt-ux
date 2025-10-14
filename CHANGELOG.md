@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.3](https://github.com/ReSee-Movies/nuxt-ux/compare/0.0.2...0.0.3) (2025-10-14)
+
+### Bug Fixes
+
+* explicit import paths for Tailwind ([8cf9e9e](https://github.com/ReSee-Movies/nuxt-ux/commit/8cf9e9e0bb3176c48a94cb70e9a7e19f09539e34))
+
 ## [0.0.2](https://github.com/ReSee-Movies/nuxt-ux/compare/0.0.1...0.0.2) (2025-10-14)
 
 ## 0.0.1 (2025-10-14)
