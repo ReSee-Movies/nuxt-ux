@@ -1,9 +1,15 @@
-import { addComponentsDir, addImportsDir, addServerScanDir, createResolver, defineNuxtModule } from '@nuxt/kit';
+import {
+  addComponentsDir,
+  addImportsDir,
+  addServerScanDir,
+  createResolver,
+  defineNuxtModule,
+  resolvePath,
+} from '@nuxt/kit';
 import type { ModuleOptions } from './runtime/types';
 import { importCSS } from './utils/import-css';
 import { importModules } from './utils/import-modules';
 import { importTailwind } from './utils/import-tailwind';
-import { resolveModuleDirectory } from './utils/resolve-module-directory';
 
 
 export default defineNuxtModule<ModuleOptions>({
@@ -13,6 +19,8 @@ export default defineNuxtModule<ModuleOptions>({
     name      : '@resee-movies/nuxt-ux',
     configKey : 'ux',
   },
+
+  moduleDependencies: () => importModules(),
 
   async setup(options, nuxt) {
     const resolver    = createResolver(import.meta.url);
@@ -29,7 +37,7 @@ export default defineNuxtModule<ModuleOptions>({
     const imports = options.tailwind?.plugins?.slice() ?? [];
 
     sources.push(components);
-    plugins.push(resolveModuleDirectory('@egoist/tailwindcss-icons', 'dist', 'index.js'));
+    plugins.push(await resolvePath('@egoist/tailwindcss-icons'));
     imports.push(stylesheet);
 
     addComponentsDir({ path: components });
@@ -37,7 +45,6 @@ export default defineNuxtModule<ModuleOptions>({
     addServerScanDir([ server ]);
 
     await importTailwind(nuxt);
-    await importModules(nuxt);
 
     nuxt.hook('modules:done', async () => {
       await importCSS(nuxt, { sources, plugins, imports });

@@ -1,50 +1,55 @@
-import { installModule, useNuxt } from '@nuxt/kit';
-import type { Nuxt } from '@nuxt/schema';
-import NuxtFontsModule from '@nuxt/fonts';
-import NuxtPrimevueModule from '@primevue/nuxt-module';
+import type { ModuleDependencies } from '@nuxt/schema';
 
 
 /**
  * Appends the config with additional modules that this one
  * relies on.
  */
-export async function importModules(nuxt: Nuxt = useNuxt()) {
-  // @ts-expect-error
-  await installModule(NuxtFontsModule, {
-    families: [
-      {
-        name     : 'Archivo',
-        provider : 'google',
-        styles   : ['normal'],
-        weights  : [200, 300, 400, 500],
+export function importModules() {
+  const NuxtFonts: ModuleDependencies['@nuxt/fonts'] = {
+    defaults: {
+      families: [
+        {
+          name     : 'Archivo',
+          provider : 'google',
+          styles   : ['normal'],
+          weights  : [200, 300, 400, 500],
+        },
+      ],
+    }
+  }
+
+  const Primevue: ModuleDependencies['@primevue/nuxt-module'] = {
+    defaults: {
+      autoImport : false,
+      loadStyles : false,
+
+      importPT: {
+        from: '#resee-movies-nuxt-ux-primevue-passthrough',
       },
-    ],
-  });
 
-  await installModule(NuxtPrimevueModule, {
-    autoImport : false,
-    loadStyles : false,
+      options: {
+        unstyled: true,
+      },
 
-    importPT: {
-      from: '#resee-movies-nuxt-ux-primevue-passthrough',
+      composables: {
+        include: ['useToast'],
+      },
+
+      directives: {
+        prefix  : 'Prime',
+        include : ['Tooltip'],
+      },
+
+      components: {
+        prefix  : 'Prime',
+        include : ['Message', 'ProgressBar', 'ProgressSpinner', 'Tag', 'Toast'],
+      },
     },
+  };
 
-    options: {
-      unstyled: true,
-    },
-
-    composables: {
-      include: ['useToast'],
-    },
-
-    directives: {
-      prefix  : 'Prime',
-      include : ['Tooltip'],
-    },
-
-    components: {
-      prefix  : 'Prime',
-      include : ['Message', 'ProgressBar', 'ProgressSpinner', 'Tag', 'Toast'],
-    },
-  }, nuxt);
+  return {
+    '@nuxt/fonts': NuxtFonts,
+    '@primevue/nuxt-module': Primevue,
+  };
 }
