@@ -13,30 +13,30 @@
       white-space   : pre-line;
     }
 
-    &.left, &.right {
+    &[data-p-position="left"], &[data-p-position="right"] {
       padding: 0 --spacing(1);
     }
 
-    &.top, &.bottom {
+    &[data-p-position="top"], &[data-p-position="bottom"] {
       padding: --spacing(1) 0;
     }
 
-    &.top {
+    &[data-p-position="top"] {
       transform  : translateY(--spacing(-1));
       box-shadow : var(--shadow-heavy);
     }
 
-    &.right {
+    &[data-p-position="right"] {
       transform  : translateX(--spacing(1));
       box-shadow : var(--shadow-heavy-left);
     }
 
-    &.bottom {
+    &[data-p-position="bottom"] {
       transform  : translateY(--spacing(1));
       box-shadow : var(--shadow-heavy-top);
     }
 
-    &.left {
+    &[data-p-position="left"] {
       transform  : translateX(--spacing(-1));
       box-shadow : var(--shadow-heavy-right);
     }
@@ -51,7 +51,7 @@
   }
 
 
-  .tooltip.left, .tooltip.right {
+  .tooltip[data-p-position="left"], .tooltip[data-p-position="right"] {
     .arrow {
       border-top-width    : --spacing(1);
       border-bottom-width : --spacing(1);
@@ -59,7 +59,7 @@
     }
   }
 
-  .tooltip.top, .tooltip.bottom {
+  .tooltip[data-p-position="top"], .tooltip[data-p-position="bottom"] {
     .arrow {
       border-left-width  : --spacing(1);
       border-right-width : --spacing(1);
@@ -67,25 +67,25 @@
     }
   }
 
-  .tooltip.top .arrow {
+  .tooltip[data-p-position="top"] .arrow {
     border-top-width    : --spacing(1);
     border-top-color    : var(--color-invert-background-scale-c);
     border-bottom-width : 0;
   }
 
-  .tooltip.right .arrow {
+  .tooltip[data-p-position="right"] .arrow {
     border-right-width : --spacing(1);
     border-right-color : var(--color-invert-background-scale-c);
     border-left-width  : 0;
   }
 
-  .tooltip.bottom .arrow {
+  .tooltip[data-p-position="bottom"] .arrow {
     border-bottom-width : --spacing(1);
     border-bottom-color : var(--color-invert-background-scale-c);
     border-top-width    : 0;
   }
 
-  .tooltip.left .arrow {
+  .tooltip[data-p-position="left"] .arrow {
     border-left-width  : --spacing(1);
     border-left-color  : var(--color-invert-background-scale-c);
     border-right-width : 0;
