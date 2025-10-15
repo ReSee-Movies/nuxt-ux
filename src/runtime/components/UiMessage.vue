@@ -24,7 +24,7 @@
    * Placing the visual design tokens such as the `status-indicating` classname,
    * the `class` prop, and the `style` prop, on the immediate child of the outermost
    * element, instead of on that outermost element itself, is intentional. In browsers
-   * that support it, the `slide-y` transition also transition height, and we want to make
+   * that support it, the `grow-y` transition also transition height, and we want to make
    * sure that things like margins are included as part of that calculation.
    */
 
@@ -50,7 +50,7 @@
       },
 
       transition: {
-        name   : 'slide-y',
+        name   : 'grow-y',
         appear : false,
       },
     };
