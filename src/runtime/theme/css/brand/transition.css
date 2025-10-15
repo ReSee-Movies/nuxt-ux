@@ -7,6 +7,16 @@
    * Components that utilize transitions which also animate height or width
    * may need some special consideration in their own layout. See the <UiMessage />
    * component for an example.
+   *
+   *
+   * Available effects (can be used via <Transition name="EFFECT_NAME" />):
+   *
+   * - "fade"    : Tween opacity of the element in/out.
+   * - "grow-x"  : Tween width + opacity of the element, if `interpolate-size: allow-keywords`
+   *               is supported. If it is not supported, this behaves the same as "fade".
+   * - "grow-y"  : Tween height + opacity of the element, if `interpolate-size: allow-keywords`
+   *               is supported. If it is not supported, this behaves the same as "fade".
+   * - "occlude" :
    */
 
   .grow-y-enter-active,
@@ -59,5 +69,38 @@
     .grow-x-leave-to {
       width: 0;
     }
+  }
+
+  .slide-in-top-enter-active,
+  .slide-in-top-leave-active,
+  .slide-in-right-enter-active,
+  .slide-in-right-leave-active,
+  .slide-in-bottom-enter-active,
+  .slide-in-bottom-leave-active,
+  .slide-in-left-enter-active,
+  .slide-in-left-leave-active {
+    transition-duration        : calc(var(--default-transition-duration) * 3);
+    transition-property        : transform;
+    transition-timing-function : var(--default-transition-timing-function);
+  }
+
+  .slide-in-left-enter-from,
+  .slide-in-left-leave-to {
+    transform: translateX(-100%);
+  }
+
+  .slide-in-right-enter-from,
+  .slide-in-right-leave-to {
+    transform: translateX(100%);
+  }
+
+  .slide-in-top-enter-from,
+  .slide-in-top-leave-to {
+    transform: translateY(-100%);
+  }
+
+  .slide-in-bottom-enter-from,
+  .slide-in-bottom-leave-to {
+    transform: translateY(100%);
   }
 }

@@ -82,5 +82,8 @@
     "@vueuse/core": "^13.9.0",
     "primevue": "^4.4.0",
     "tailwindcss": "^4.1.14"
+  },
+  "dependencies": {
+    "@primeuix/utils": "^0.6.1"
   }
 }

@@ -1,3 +1,42 @@
+/**
+ * Sets `content` to the zero-width space character. This is useful when you want to do
+ * something with ::before or ::after, but don't want the content to take up any space,
+ * or have to get crafty with hiding that space.
+ */
 @utility content-zero-width {
   content: var(--zero-width-space);
+}
+
+/**
+ * Fades + blurs the content behind the element to which this is applied. This is
+ * particularly useful as the backdrop for full-attention overlays like dialogs and
+ * drawers.
+ */
+@utility occlude-background {
+  transition-property : background-color, backdrop-filter;
+  transition-duration : calc(var(--default-transition-duration) * 3);
+  backdrop-filter     : blur(var(--blur-xs));
+  background-color    : --alpha(var(--color-black) / 60%);
+
+  /**
+   * Specifically for those dialogs and drawers, this causes the fade + blur to animate
+   * in/out when the immediate child is also animating.
+   */
+  &:has(> [class*="-enter-from"], > [class*="-leave-active"], > [class*="-leave-to"]) {
+    backdrop-filter  : blur(0px);
+    background-color : transparent;
+  }
+
+  /**
+   * Replaces the same amount of space that the page scrollbar takes up up with
+   * a solid block of color equal to the body background. Particularly in the
+   * UiDrawer overlay, if it slides in the same side as the scrollbar, and then the
+   * scrollbar is disabled, the result is it hopping to the right by that width.
+   * This doesn't look good, so we hide that by effectively using this as one of the
+   * side margins.
+   *
+   */
+  &.replace-scrollbar {
+    border-inline-end: solid var(--p-scrollbar-width) var(--color-global-background);
+  }
 }

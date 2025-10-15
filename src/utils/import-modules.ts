@@ -43,7 +43,7 @@ export function importModules() {
 
       components: {
         prefix  : 'Prime',
-        include : ['Message', 'ProgressBar', 'ProgressSpinner', 'Tag', 'Toast'],
+        include : ['Drawer', 'Message', 'ProgressBar', 'ProgressSpinner', 'Tag', 'Toast'],
       },
     },
   };
