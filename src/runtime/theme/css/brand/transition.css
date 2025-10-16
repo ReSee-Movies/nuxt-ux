@@ -11,12 +11,14 @@
    *
    * Available effects (can be used via <Transition name="EFFECT_NAME" />):
    *
-   * - "fade"    : Tween opacity of the element in/out.
-   * - "grow-x"  : Tween width + opacity of the element, if `interpolate-size: allow-keywords`
-   *               is supported. If it is not supported, this behaves the same as "fade".
-   * - "grow-y"  : Tween height + opacity of the element, if `interpolate-size: allow-keywords`
-   *               is supported. If it is not supported, this behaves the same as "fade".
-   * - "occlude" :
+   * - "fade"       : Tween opacity of the element in/out.
+   * - "scale":     : Tween the scale (from 85%) and the opacity of the element in/out.
+   * - "grow-x"     : Tween width + opacity of the element, if `interpolate-size: allow-keywords`
+   *                  is supported. If it is not supported, this behaves the same as "fade".
+   * - "grow-y"     : Tween height + opacity of the element, if `interpolate-size: allow-keywords`
+   *                  is supported. If it is not supported, this behaves the same as "fade".
+   * - "slide-in-*" : Where * is one of [left, top, right, bottom]. Uses translateX/translateY to
+   *                  cause the element to move into the viewport from the indicated direction.
    */
 
   .grow-y-enter-active,
@@ -71,6 +73,7 @@
     }
   }
 
+
   .slide-in-top-enter-active,
   .slide-in-top-leave-active,
   .slide-in-right-enter-active,
@@ -102,5 +105,19 @@
   .slide-in-bottom-enter-from,
   .slide-in-bottom-leave-to {
     transform: translateY(100%);
+  }
+
+
+  .scale-enter-active,
+  .scale-leave-active {
+    transition-duration        : calc(var(--default-transition-duration) * 2);
+    transition-property        : opacity, transform;
+    transition-timing-function : var(--default-transition-timing-function);
+  }
+
+  .scale-enter-from,
+  .scale-leave-to {
+    opacity   : 0;
+    transform : scale(0.85);
   }
 }
