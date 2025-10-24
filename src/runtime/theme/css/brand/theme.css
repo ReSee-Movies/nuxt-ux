@@ -99,6 +99,11 @@
   --icon-size-large  : --spacing(6);
   --icon-size-jumbo  : --spacing(12);
 
+  /* FYI: Tailwind also provides "square" (1:1) and "video" (16:9) */
+  --aspect-poster : 2/3;
+  --aspect-tall   : 4/5;
+
+
 
   /* *********************** *
      Colors
