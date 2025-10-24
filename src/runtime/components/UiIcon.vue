@@ -1,15 +1,16 @@
 <template>
   <Transition name="fade" mode="out-in">
     <UiLoadingIndicator v-if="props.loading" :size="props.size" class="icon" />
-    <span v-else role="presentation" :class="['icon', props.name, props.size]" />
+    <span v-else role="presentation" :class="['icon', props.name, props.size, { 'color-cycle': props.colorCycle }]" />
   </Transition>
 </template>
 
 <script lang="ts">
   export type UiIconProps = {
-    name?    : string;
-    loading? : boolean;
-    size?    : 'sm' | 'md' | 'lg' | 'xl';
+    name?       : string;
+    loading?    : boolean;
+    size?       : 'sm' | 'md' | 'lg' | 'xl';
+    colorCycle? : boolean;
   };
 </script>
 
@@ -19,9 +20,10 @@
   const props = withDefaults(
     defineProps<UiIconProps>(),
     {
-      name    : undefined,
-      loading : false,
-      size    : 'md',
+      name       : undefined,
+      loading    : false,
+      size       : 'md',
+      colorCycle : false,
     },
   );
 </script>
@@ -50,5 +52,26 @@
     &.xl {
       font-size: var(--icon-size-jumbo);
     }
+
+    &.color-cycle {
+      --resee-color-cycle-timing: cubic-bezier(0,.5,1,.5);
+
+      animation-name            : resee-color-cycle;
+      animation-duration        : 8s;
+      animation-iteration-count : infinite;
+    }
+  }
+
+  @keyframes resee-color-cycle {
+    0%     { color: var(--color-resee-red);     animation-timing-function: var(--resee-color-cycle-timing); }
+    6.25%  { color: var(--color-resee-orange);  animation-timing-function: var(--resee-color-cycle-timing); }
+    18.75% { color: var(--color-resee-yellow);  animation-timing-function: var(--resee-color-cycle-timing); }
+    31.25% { color: var(--color-resee-green);   animation-timing-function: var(--resee-color-cycle-timing); }
+    43.75% { color: var(--color-resee-seaweed); animation-timing-function: var(--resee-color-cycle-timing); }
+    56.25% { color: var(--color-resee-aqua);    animation-timing-function: var(--resee-color-cycle-timing); }
+    68.75% { color: var(--color-resee-blue);    animation-timing-function: var(--resee-color-cycle-timing); }
+    81.25% { color: var(--color-resee-indigo);  animation-timing-function: var(--resee-color-cycle-timing); }
+    93.75% { color: var(--color-resee-violet);  animation-timing-function: var(--resee-color-cycle-timing); }
+    100%   { color: var(--color-resee-red);     animation-timing-function: var(--resee-color-cycle-timing); }
   }
 </style>
