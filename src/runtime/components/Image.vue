@@ -9,7 +9,7 @@
       raised   : props.raised,
     }]"
   >
-    <UiIcon
+    <Icon
       v-if         = "props.defaultIcon && (!imgSrc || imgError || imgLoading || props.showLoading)"
       :name        = "props.defaultIcon"
       :size        = "props.iconSize"
@@ -38,7 +38,7 @@
   import type { TmdbImageSize } from '@resee-movies/utilities/tmdb/get-tmdb-image-url';
   import type { LoadImageType } from '../composables/use-load-image';
   import type { HTMLElementClassNames } from '../types';
-  import type { UiIconProps } from './UiIcon.vue';
+  import type { IconProps } from './Icon.vue';
 
   export type UiImgProps = {
     src             : ImageFileDescriptor | null | undefined;
@@ -50,7 +50,7 @@
     fit?            : MediaAssetTransformConfig['fit'];
     showLoading?    : boolean;
     defaultIcon?    : string;
-    iconSize?       : UiIconProps['size'];
+    iconSize?       : IconProps['size'];
     loading?        : 'lazy' | 'eager';
     glassy?         : boolean;
     bordered?       : boolean;
@@ -85,6 +85,7 @@
   import { computed, ref } from 'vue';
   import { useLoadImage } from '../composables/use-load-image';
   import { useSharedIntersectionObserver } from '../composables/use-shared-intersection-observer';
+  import Icon from './Icon.vue';
 
   const props = withDefaults(
     defineProps<UiImgProps>(),

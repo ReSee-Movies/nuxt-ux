@@ -6,7 +6,7 @@
       props.spacing ? `spacing-${ props.spacing }` : undefined,
     ]"
   >
-    <UiIcon
+    <Icon
       v-if     = "props.icon || props.loading"
       :name    = "props.icon"
       :size    = "props.iconSize"
@@ -19,7 +19,7 @@
       </slot>
     </span>
 
-    <UiIcon
+    <Icon
       v-if  = "props.trailingIcon"
       :name = "props.trailingIcon"
       :size = "props.iconSize"
@@ -29,14 +29,14 @@
 
 <script lang="ts">
   import { useSlots } from 'vue';
-  import type { UiIconProps } from './UiIcon.vue';
+  import type { IconProps } from './Icon.vue';
 
-  export type UiIconTextPairProps = {
+  export type IconTextPairProps = {
     text?             : string;
     icon?             : string;
     trailingIcon?     : string;
-    iconSize?         : UiIconProps['size'];
-    trailingIconSize? : UiIconProps['size'];
+    iconSize?         : IconProps['size'];
+    trailingIconSize? : IconProps['size'];
     layout?           : 'column' | 'row';
     spacing?          : 'wide' | 'normal';
     loading?          : boolean;
@@ -44,10 +44,10 @@
 </script>
 
 <script setup lang="ts">
-  import UiIcon from './UiIcon.vue';
+  import Icon from './Icon.vue';
 
   const props = withDefaults(
-    defineProps<UiIconTextPairProps>(),
+    defineProps<IconTextPairProps>(),
     {
       text             : undefined,
       icon             : undefined,

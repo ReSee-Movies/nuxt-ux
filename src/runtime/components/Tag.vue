@@ -9,12 +9,13 @@
     ]"
     v-primetooltip.top="{ value: props.tooltip, showDelay: 500 }"
   >
-    <UiIconTextPair :icon="props.icon" :text="props.text" />
+    <IconTextPair :icon="props.icon" :text="props.text" />
   </PrimeTag>
 </template>
 
 <script setup lang="ts">
   import type { StatusLevel } from '../types';
+  import IconTextPair from './IconTextPair.vue';
 
   const props = withDefaults(
     defineProps<{

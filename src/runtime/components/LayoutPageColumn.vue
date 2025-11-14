@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-  export type UiLayoutPageColumn = {
+  export type LayoutPageColumn = {
     is?     : string;
     layout? : 'main' | 'vista';
   };
@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
   const props = withDefaults(
-    defineProps<UiLayoutPageColumn>(),
+    defineProps<LayoutPageColumn>(),
     {
       is     : 'div',
       layout : undefined,

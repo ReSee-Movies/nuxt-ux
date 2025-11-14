@@ -10,7 +10,7 @@
 <script lang="ts">
   import type { HintedString } from '../types';
 
-  export type UiLayoutPageContainerProps = {
+  export type LayoutPageContainerProps = {
     is?          : HintedString<'div' | 'main' | 'section' | 'article' | 'nav'>;
     glassEffect? : boolean;
     accentColor? : string;
@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
   const props = withDefaults(
-    defineProps<UiLayoutPageContainerProps>(),
+    defineProps<LayoutPageContainerProps>(),
     {
       is          : 'div',
       glassEffect : false,

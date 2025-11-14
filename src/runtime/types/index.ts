@@ -1,6 +1,7 @@
 export interface ModuleOptions {
   defaultColorMode?        : 'lite' | 'dark';
   usePreferredColorScheme? : boolean;
+  componentPrefix?         : string;
 
   tailwind?: {
     plugins?: (string | undefined)[];

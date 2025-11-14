@@ -1,12 +1,12 @@
 <template>
   <Transition name="fade" mode="out-in">
-    <UiLoadingIndicator v-if="props.loading" :size="props.size" class="icon" />
+    <LoadingIndicator v-if="props.loading" :size="props.size" class="icon" />
     <span v-else role="presentation" :class="['icon', props.name, props.size, { 'color-cycle': props.colorCycle }]" />
   </Transition>
 </template>
 
 <script lang="ts">
-  export type UiIconProps = {
+  export type IconProps = {
     name?       : string;
     loading?    : boolean;
     size?       : 'sm' | 'md' | 'lg' | 'xl';
@@ -15,10 +15,10 @@
 </script>
 
 <script setup lang="ts">
-  import UiLoadingIndicator from './UiLoadingIndicator.vue';
+  import LoadingIndicator from './LoadingIndicator.vue';
 
   const props = withDefaults(
-    defineProps<UiIconProps>(),
+    defineProps<IconProps>(),
     {
       name       : undefined,
       loading    : false,

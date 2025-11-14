@@ -1,5 +1,5 @@
 <template>
-  <UiButton
+  <Button
     :is      = "LinkComponent"
     :to      = "props.to"
     :variant = "props.variant"
@@ -8,25 +8,27 @@
     :spacing = "props.spacing"
   >
     <slot />
-  </UiButton>
+  </Button>
 </template>
 
 <script lang="ts">
   import type { RouteLocationRaw } from 'vue-router';
   import { useNuxtUxConfig } from '../composables/use-nuxt-ux-config';
-  import type { UiButtonProps } from './UiButton.vue';
+  import type { ButtonProps } from './Button.vue';
 
   export type UiLinkProps = {
     to         : RouteLocationRaw;
     external?  : boolean;
     target?    : '_blank' | '_parent' | '_self' | '_top';
     underline? : boolean;
-    variant?   : UiButtonProps['variant'];
-    spacing?   : UiButtonProps['spacing'];
-  } & /* @vue-ignore */ Omit<UiButtonProps, 'bordered' | 'variant' | 'spacing'>;
+    variant?   : ButtonProps['variant'];
+    spacing?   : ButtonProps['spacing'];
+  } & /* @vue-ignore */ Omit<ButtonProps, 'bordered' | 'variant' | 'spacing'>;
 </script>
 
 <script setup lang="ts">
+  import Button from './Button.vue';
+
   const LinkComponent = useNuxtUxConfig().getConfig('UiLinkBaseComponent');
 
   const props = withDefaults(

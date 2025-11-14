@@ -25,7 +25,7 @@
     </template>
 
     <template #closebutton="{ closeCallback }">
-      <UiCloseButton @click="closeCallback" />
+      <CloseButton @click="closeCallback" />
     </template>
 
     <template #default>
@@ -36,20 +36,21 @@
 
 
 <script lang="ts">
-  import type { DialogProps } from 'primevue';
+  import type { DialogProps as PrimeDialogProps } from 'primevue';
 
-  export type UiDialogProps = {
+  export type DialogProps = {
     size?           : 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
     showHeaderText? : boolean;
-  } & DialogProps;
+  } & PrimeDialogProps;
 </script>
 
 
 <script setup lang="ts">
   import { computed, useId, useAttrs } from 'vue';
+  import CloseButton from './CloseButton.vue';
 
   const props = withDefaults(
-    defineProps<UiDialogProps>(),
+    defineProps<DialogProps>(),
     {
       modal           : true,
       closable        : true,

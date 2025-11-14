@@ -10,7 +10,7 @@
   import { computed } from 'vue';
   import type { StatusLevel } from '../types';
 
-  export type UiMessageProps = {
+  export type MessageProps = {
     severity? : StatusLevel;
     text?     : string;
     class?    : string;
@@ -28,7 +28,7 @@
    * sure that things like margins are included as part of that calculation.
    */
 
-  const props = defineProps<UiMessageProps>();
+  const props = defineProps<MessageProps>();
 
   const passthroughProps = computed(() => {
     return {

@@ -4,11 +4,11 @@
 
 <script setup lang="ts">
   import { ProgressSpinner as PrimeProgressSpinner } from 'primevue';
-  import type { UiIconProps } from './UiIcon.vue';
+  import type { IconProps } from './Icon.vue';
 
   const props = withDefaults(
     defineProps<{
-      size?: UiIconProps['size'];
+      size?: IconProps['size'];
     }>(),
     {
       size: 'md',

@@ -19,7 +19,7 @@
     v-primetooltip.top = "{ value: tooltipText, showDelay: 250 }"
     @click             = "handleButtonClick"
   >
-    <UiIconTextPair
+    <IconTextPair
       :text          = "props.text"
       :icon          = "props.icon"
       :icon-size     = "props.size"
@@ -29,7 +29,7 @@
       :loading       = "showLoading"
     >
       <slot />
-    </UiIconTextPair>
+    </IconTextPair>
   </Component>
 </template>
 
@@ -38,10 +38,10 @@
   import { isPromiseLike } from '@resee-movies/utilities/objects/is-promise-like';
   import { type Component, computed, ref, useSlots } from 'vue';
   import type { StyleStatusLevel } from '../types';
-  import type { UiIconTextPairProps } from './UiIconTextPair.vue';
+  import type { IconTextPairProps } from './IconTextPair.vue';
 
   /**
-   * UiButton component properties.
+   * Button component properties.
    *
    * A note about the `responsive` prop:
    *
@@ -52,7 +52,7 @@
    * When "grow", causes the button to expand to the full width of its container, and
    * increase its font size when at the small breakpoint.
    */
-  export type UiButtonProps = {
+  export type ButtonProps = {
     is?              : string | Component;
     severity?        : StyleStatusLevel | 'unset';
     bordered?        : boolean;
@@ -64,16 +64,18 @@
     tooltip?         : string;
     disabledTooltip? : string;
     onClick?         : ((evt: Event) => void | Promise<void>) | ((evt: Event) => void | Promise<void>)[];
-  } & UiIconTextPairProps;
+  } & IconTextPairProps;
 </script>
 
 <script setup lang="ts">
+  import IconTextPair from './IconTextPair.vue';
+
   defineEmits<{
     (e: 'click', evt: Event): (void | Promise<void>);
   }>();
 
   const props = withDefaults(
-    defineProps<UiButtonProps>(),
+    defineProps<ButtonProps>(),
     {
       is              : 'button',
       severity        : undefined,

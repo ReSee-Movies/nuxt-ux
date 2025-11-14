@@ -9,7 +9,7 @@
     @update:visible = "updatedValue => emits('update:visible', updatedValue)"
   >
     <template #closebutton="{ closeCallback }">
-      <UiCloseButton @click="closeCallback" />
+      <CloseButton @click="closeCallback" />
     </template>
 
     <template #header>
@@ -29,20 +29,20 @@
 
 <script lang="ts">
   import { calculateBodyScrollbarWidth } from '@primeuix/utils';
-  import type { DrawerProps } from 'primevue';
+  import type { DrawerProps as PrimeDrawerProps } from 'primevue';
 
-  export type UiDrawerProps = {
+  export type DrawerProps = {
     showHeaderText?: boolean;
-  } & DrawerProps;
+  } & PrimeDrawerProps;
 </script>
 
 
 <script setup lang="ts">
   import { computed } from 'vue';
-  import UiCloseButton from './UiCloseButton.vue';
+  import CloseButton from './CloseButton.vue';
 
   const props = withDefaults(
-    defineProps<UiDrawerProps>(),
+    defineProps<DrawerProps>(),
     {
       showHeaderText : true,
       blockScroll    : true,

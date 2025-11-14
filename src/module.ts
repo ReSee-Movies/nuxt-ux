@@ -13,7 +13,9 @@ import { importTailwind } from './utils/import-tailwind';
 
 
 export default defineNuxtModule<ModuleOptions>({
-  defaults: {},
+  defaults: {
+    componentPrefix: 'Ui',
+  },
 
   meta: {
     name      : '@resee-movies/nuxt-ux',
@@ -40,7 +42,7 @@ export default defineNuxtModule<ModuleOptions>({
     plugins.push(await resolvePath('@egoist/tailwindcss-icons'));
     imports.push(stylesheet);
 
-    addComponentsDir({ path: components });
+    addComponentsDir({ path: components, prefix: options.componentPrefix });
     addImportsDir([ composables ]);
     addServerScanDir([ server ]);
 
