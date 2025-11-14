@@ -8,6 +8,10 @@ export interface ModuleOptions {
     sources?: (string | undefined)[];
     imports?: (string | undefined)[];
   };
+
+  primevue?: {
+    passthroughImport?: string;
+  };
 }
 
 export interface ModuleHooks {

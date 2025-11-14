@@ -2,6 +2,7 @@ import {
   addComponentsDir,
   addImportsDir,
   addServerScanDir,
+  addTemplate,
   createResolver,
   defineNuxtModule,
   resolvePath,
@@ -31,9 +32,6 @@ export default defineNuxtModule<ModuleOptions>({
     const server      = resolver.resolve('./runtime/server/');
     const stylesheet  = resolver.resolve('./runtime/theme/css/styles.css');
 
-    nuxt.options.alias['#resee-movies-nuxt-ux-primevue-passthrough']
-      = await resolver.resolvePath('./runtime/theme/primevue/index', { extensions: ['ts', 'js'] });
-
     const sources = options.tailwind?.sources?.slice() ?? [];
     const plugins = options.tailwind?.plugins?.slice() ?? [];
     const imports = options.tailwind?.plugins?.slice() ?? [];
@@ -51,5 +49,32 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.hook('modules:done', async () => {
       await importCSS(nuxt, { sources, plugins, imports });
     });
+
+
+    // ----------------------------
+    // Primevue Passthrough
+    // ----------------------------
+    let primePassthroughFilename = await resolver.resolvePath('./runtime/theme/primevue/index', {
+      extensions: ['ts', 'js'],
+    });
+
+    if (options.primevue?.passthroughImport) {
+      const ownPassthroughFilename = primePassthroughFilename;
+
+      primePassthroughFilename = addTemplate({
+        filename : 'resee-movies-nuxt-ux-primevue-passthrough.js',
+        write    : true,
+
+        // language=js
+        getContents: () => `
+          import OwnPassthrough from '${ ownPassthroughFilename }';
+          import ExtPassthrough from '${ options.primevue?.passthroughImport }';
+
+          export default { ...OwnPassthrough, ...ExtPassthrough };
+        `,
+      }).dst;
+    }
+
+    nuxt.options.alias['#resee-movies-nuxt-ux-primevue-passthrough'] = primePassthroughFilename;
   },
 });

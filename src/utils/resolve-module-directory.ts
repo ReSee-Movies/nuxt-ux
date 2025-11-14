@@ -3,6 +3,9 @@ import { join } from 'node:path';
 import { createRequire } from 'node:module';
 
 
+/**
+ * Returns the absolute path to an NPM package dependency.
+ */
 export function resolveModuleDirectory(entry: string, ...packagePaths: string[]) {
   const packageName = entry.includes('/')
     ? entry.startsWith('@')
