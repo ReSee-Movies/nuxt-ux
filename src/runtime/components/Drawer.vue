@@ -39,6 +39,7 @@
 
 <script setup lang="ts">
   import { computed } from 'vue';
+  import PrimeDrawer from 'primevue/drawer';
   import CloseButton from './CloseButton.vue';
 
   const props = withDefaults(

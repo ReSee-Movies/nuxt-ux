@@ -16,8 +16,8 @@
         'icon-only'         : iconOnly,
       },
     ]"
-    v-primetooltip.top = "{ value: tooltipText, showDelay: 250 }"
-    @click             = "handleButtonClick"
+    v-prime-tooltip.top = "{ value: tooltipText, showDelay: 250 }"
+    @click              = "handleButtonClick"
   >
     <IconTextPair
       :text          = "props.text"
@@ -68,6 +68,7 @@
 </script>
 
 <script setup lang="ts">
+  import vPrimeTooltip from 'primevue/tooltip';
   import IconTextPair from './IconTextPair.vue';
 
   defineEmits<{

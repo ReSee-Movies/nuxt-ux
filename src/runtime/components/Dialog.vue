@@ -47,6 +47,7 @@
 
 <script setup lang="ts">
   import { computed, useId, useAttrs } from 'vue';
+  import PrimeDialog from 'primevue/dialog';
   import CloseButton from './CloseButton.vue';
 
   const props = withDefaults(

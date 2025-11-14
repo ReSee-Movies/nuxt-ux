@@ -10,6 +10,7 @@
 
 <script setup lang="ts">
   import { computed } from 'vue';
+  import PrimeProgressBar from 'primevue/progressbar';
 
   const props = withDefaults(
     defineProps<{

@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-  import type { ToastPassThroughOptions } from 'primevue';
+  import PrimeToast, { type ToastPassThroughOptions } from 'primevue/toast';
   import { StatusLevelIcons } from '../constants';
 
   const passthroughProps: ToastPassThroughOptions = {

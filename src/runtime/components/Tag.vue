@@ -7,13 +7,15 @@
       props.size,
       props.tooltip ? 'has-tooltip' : undefined
     ]"
-    v-primetooltip.top="{ value: props.tooltip, showDelay: 500 }"
+    v-prime-tooltip.top="{ value: props.tooltip, showDelay: 500 }"
   >
     <IconTextPair :icon="props.icon" :text="props.text" />
   </PrimeTag>
 </template>
 
 <script setup lang="ts">
+  import PrimeTag from 'primevue/tag';
+  import vPrimeTooltip from 'primevue/tooltip';
   import type { StatusLevel } from '../types';
   import IconTextPair from './IconTextPair.vue';
 

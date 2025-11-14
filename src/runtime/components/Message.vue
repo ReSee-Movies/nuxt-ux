@@ -20,6 +20,8 @@
 </script>
 
 <script setup lang="ts">
+  import PrimeMessage from 'primevue/message';
+
   /*
    * Placing the visual design tokens such as the `status-indicating` classname,
    * the `class` prop, and the `style` prop, on the immediate child of the outermost
