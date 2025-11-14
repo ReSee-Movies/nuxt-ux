@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.0.4...0.1.0) (2025-11-14)
+
+### Features
+
+* added a color-cycle prop to UiIcon that will transition the icon color through the ReSee color palette ([286d2b4](https://github.com/ReSee-Movies/nuxt-ux/commit/286d2b4d2e67f60842c19e3ed3703c84fd1eaff5))
+* added ability to customize Primevue component prefixes, and load additional components via their base name ([60e2fc1](https://github.com/ReSee-Movies/nuxt-ux/commit/60e2fc1cfab5d2ca925f19a98202aeee4ef5e580))
+* added the ability to provide a custom prefix for components ([b1f7895](https://github.com/ReSee-Movies/nuxt-ux/commit/b1f7895adc1bbc0b100da9e5cdb89014c0d8e5b7))
+* added the ability to provide a passthrough definition source for Primevue ([5da8e3c](https://github.com/ReSee-Movies/nuxt-ux/commit/5da8e3c4ac7193d1ee20345e6633d7761f5d8493))
+* implement UiDialog component ([0dc0e19](https://github.com/ReSee-Movies/nuxt-ux/commit/0dc0e19cebb05a3f2eb694b64c1349446e7d9110))
+* implement UiDrawer component ([4864408](https://github.com/ReSee-Movies/nuxt-ux/commit/48644083a28b7a90d7ad4713ca646de53d6ca6b7))
+* introduce UiCloseButton for standardization of more complex components that require one ([fbf9c9a](https://github.com/ReSee-Movies/nuxt-ux/commit/fbf9c9ad406037b8a253856fb0cbf63b21663933))
+* introduced UiImage component ([a060aec](https://github.com/ReSee-Movies/nuxt-ux/commit/a060aec28a2ef0223d970b5481c9db690c17e265))
+
 ## [0.0.4](https://github.com/ReSee-Movies/nuxt-ux/compare/0.0.3...0.0.4) (2025-10-14)
 
 ### Bug Fixes
