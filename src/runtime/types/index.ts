@@ -10,7 +10,9 @@ export interface ModuleOptions {
   };
 
   primevue?: {
-    passthroughImport?: string;
+    passthroughImport? : string;
+    componentPrefix?   : string;
+    includeComponents? : string[];
   };
 }
 

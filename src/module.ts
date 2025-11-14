@@ -23,7 +23,7 @@ export default defineNuxtModule<ModuleOptions>({
     configKey : 'ux',
   },
 
-  moduleDependencies: () => importModules(),
+  moduleDependencies: (nuxt) => importModules(nuxt),
 
   async setup(options, nuxt) {
     const resolver    = createResolver(import.meta.url);

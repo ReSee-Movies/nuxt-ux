@@ -1,11 +1,12 @@
-import type { ModuleDependencies } from '@nuxt/schema';
+import type { ModuleDependencies, Nuxt } from '@nuxt/schema';
+import type { ModuleOptions } from '../runtime/types';
 
 
 /**
  * Appends the config with additional modules that this one
  * relies on.
  */
-export function importModules() {
+export function importModules(nuxt: Nuxt) {
   const NuxtFonts: ModuleDependencies['@nuxt/fonts'] = {
     defaults: {
       families: [
@@ -18,6 +19,22 @@ export function importModules() {
       ],
     }
   }
+
+  const primeOptions = nuxt.options.ux?.primevue as ModuleOptions['primevue'];
+  const componentPrefix = primeOptions?.componentPrefix ?? 'Prime';
+
+  const primeComponents = Array.from(
+    new Set([
+      'Dialog',
+      'Drawer',
+      'Message',
+      'ProgressBar',
+      'ProgressSpinner',
+      'Tag',
+      'Toast',
+      ...(primeOptions?.includeComponents ?? []),
+    ]),
+  )
 
   const Primevue: ModuleDependencies['@primevue/nuxt-module'] = {
     defaults: {
@@ -33,17 +50,17 @@ export function importModules() {
       },
 
       composables: {
-        include: ['useToast'],
+        include: ['usePrimeVue', 'useToast'],
       },
 
       directives: {
-        prefix  : 'Prime',
+        prefix  : componentPrefix,
         include : ['Tooltip'],
       },
 
       components: {
-        prefix  : 'Prime',
-        include : ['Dialog', 'Drawer', 'Message', 'ProgressBar', 'ProgressSpinner', 'Tag', 'Toast'],
+        prefix  : componentPrefix,
+        include : primeComponents,
       },
     },
   };
