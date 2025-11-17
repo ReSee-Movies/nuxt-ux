@@ -26,10 +26,11 @@
 </script>
 
 <script setup lang="ts">
+  import { resolveComponent } from 'vue';
   import { getReseeUxConstant } from '../config';
   import Button from './Button.vue';
 
-  const LinkComponent = getReseeUxConstant('UiLinkBaseComponent');
+  const LinkComponent = getReseeUxConstant('UiLinkBaseComponent') ?? resolveComponent('NuxtLink');
 
   const props = withDefaults(
     defineProps<LinkProps>(),

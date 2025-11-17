@@ -1,4 +1,3 @@
-import { NuxtLink } from '#components';
 import { type Component } from 'vue';
 import { isObjectLike } from '@resee-movies/utilities/objects/is-object-like';
 
@@ -7,7 +6,7 @@ import { isObjectLike } from '@resee-movies/utilities/objects/is-object-like';
  * Runtime constants can be set once and then used throughout this package.
  */
 export type ReseeUxRuntimeConstants = {
-  UiLinkBaseComponent: Component;
+  UiLinkBaseComponent?: Component;
 };
 
 export type ConstantsKey = keyof ReseeUxRuntimeConstants;
@@ -16,7 +15,7 @@ export type ConstantsValue<K extends ConstantsKey> = ReseeUxRuntimeConstants[K];
 
 
 const RuntimeConstants: ReseeUxRuntimeConstants = {
-  UiLinkBaseComponent: NuxtLink,
+  UiLinkBaseComponent: undefined,
 };
 
 
