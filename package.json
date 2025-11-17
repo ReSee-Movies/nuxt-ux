@@ -20,7 +20,7 @@
       "import": "./dist/runtime/components/*"
     },
     "./composables/*": {
-      "import": "./dist/runtime/composables/*"
+      "import": "./dist/runtime/composables/*.js"
     },
     "./types": {
       "types": "./dist/runtime/types/index.d.ts"
