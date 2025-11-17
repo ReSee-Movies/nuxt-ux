@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.1.0...0.2.0) (2025-11-17)
+
+### Features
+
+* added `.js` extension to composables imports path so it doesn't need to be explicitly provided ([39434d7](https://github.com/ReSee-Movies/nuxt-ux/commit/39434d703120f1615f85da6486fd0e3347adc487))
+* added `resee-ux` alias for module assets ([ec8dacf](https://github.com/ReSee-Movies/nuxt-ux/commit/ec8dacfe0c023b09fbe71bd1a900aeb136468fed))
+
 ## [0.1.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.0.4...0.1.0) (2025-11-14)
 
 ### Features
