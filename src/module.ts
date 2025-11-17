@@ -32,6 +32,8 @@ export default defineNuxtModule<ModuleOptions>({
     const server      = resolver.resolve('./runtime/server/');
     const stylesheet  = resolver.resolve('./runtime/theme/css/styles.css');
 
+    nuxt.options.alias['#resee-ux'] = resolver.resolve('./runtime');
+
     const sources = options.tailwind?.sources?.slice() ?? [];
     const plugins = options.tailwind?.plugins?.slice() ?? [];
     const imports = options.tailwind?.plugins?.slice() ?? [];
