@@ -49,6 +49,7 @@
     transition                 : box-shadow, background-size, --btn-background-color, border-color;
     transition-duration        : 300ms;
     transition-timing-function : ease-in-out;
+    text-align                 : center;
 
     &:focus-visible {
       outline: none;
