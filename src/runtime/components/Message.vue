@@ -10,13 +10,13 @@
   import { computed } from 'vue';
   import type { StatusLevel } from '../types';
 
-  export type MessageProps = {
+  export interface MessageProps {
     severity? : StatusLevel;
     text?     : string;
     class?    : string;
     style?    : string;
     accented? : boolean;
-  };
+  }
 </script>
 
 <script setup lang="ts">

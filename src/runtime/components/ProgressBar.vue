@@ -8,16 +8,20 @@
   />
 </template>
 
+<script lang="ts">
+  export interface ProgressBarProps {
+    value?         : number | undefined;
+    showValue?     : boolean;
+    indeterminate? : boolean;
+  }
+</script>
+
 <script setup lang="ts">
   import { computed } from 'vue';
   import PrimeProgressBar from 'primevue/progressbar';
 
   const props = withDefaults(
-    defineProps<{
-      value?         : number | undefined;
-      showValue?     : boolean;
-      indeterminate? : boolean;
-    }>(),
+    defineProps<ProgressBarProps>(),
     {
       value         : undefined,
       showValue     : false,

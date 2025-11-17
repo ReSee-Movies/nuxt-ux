@@ -6,12 +6,12 @@
 </template>
 
 <script lang="ts">
-  export type IconProps = {
+  export interface IconProps {
     name?       : string;
     loading?    : boolean;
     size?       : 'sm' | 'md' | 'lg' | 'xl';
     colorCycle? : boolean;
-  };
+  }
 </script>
 
 <script setup lang="ts">

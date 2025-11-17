@@ -40,7 +40,7 @@
   import type { HTMLElementClassNames } from '../types';
   import type { IconProps } from './Icon.vue';
 
-  export type UiImgProps = {
+  export interface ImageProps {
     src             : ImageFileDescriptor | null | undefined;
     alt?            : string | null | ((error: unknown) => string);
     type?           : LoadImageType;
@@ -57,7 +57,7 @@
     beveled?        : boolean;
     raised?         : boolean;
     overlayClasses? : HTMLElementClassNames;
-  };
+  }
 
   export const AspectRatioClassNames = {
     '1/1'    : 'aspect-square',
@@ -88,7 +88,7 @@
   import Icon from './Icon.vue';
 
   const props = withDefaults(
-    defineProps<UiImgProps>(),
+    defineProps<ImageProps>(),
     {
       type           : undefined,
       alt            : '',

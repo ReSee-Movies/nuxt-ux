@@ -38,10 +38,10 @@
 <script lang="ts">
   import type { DialogProps as PrimeDialogProps } from 'primevue';
 
-  export type DialogProps = {
+  export interface DialogProps extends PrimeDialogProps {
     size?           : 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
     showHeaderText? : boolean;
-  } & PrimeDialogProps;
+  }
 </script>
 
 

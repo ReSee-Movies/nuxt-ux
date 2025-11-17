@@ -10,11 +10,11 @@
 <script lang="ts">
   import type { HintedString } from '../types';
 
-  export type LayoutPageContainerProps = {
+  export interface LayoutPageContainerProps {
     is?          : HintedString<'div' | 'main' | 'section' | 'article' | 'nav'>;
     glassEffect? : boolean;
     accentColor? : string;
-  };
+  }
 </script>
 
 <script setup lang="ts">

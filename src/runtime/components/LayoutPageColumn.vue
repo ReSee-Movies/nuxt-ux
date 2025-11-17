@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-  export type LayoutPageColumn = {
+  export interface LayoutPageColumn {
     is?     : string;
     layout? : 'main' | 'vista';
   };

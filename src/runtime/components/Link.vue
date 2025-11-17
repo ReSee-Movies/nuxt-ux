@@ -13,17 +13,16 @@
 
 <script lang="ts">
   import type { RouteLocationRaw } from 'vue-router';
-  import { useNuxtUxConfig } from '../composables/use-nuxt-ux-config';
   import type { ButtonProps } from './Button.vue';
 
-  export type UiLinkProps = {
+  export interface LinkProps extends /* @vue-ignore */ Omit<ButtonProps, 'bordered' | 'variant' | 'spacing'> {
     to         : RouteLocationRaw;
     external?  : boolean;
     target?    : '_blank' | '_parent' | '_self' | '_top';
     underline? : boolean;
     variant?   : ButtonProps['variant'];
     spacing?   : ButtonProps['spacing'];
-  } & /* @vue-ignore */ Omit<ButtonProps, 'bordered' | 'variant' | 'spacing'>;
+  }
 </script>
 
 <script setup lang="ts">
@@ -33,7 +32,7 @@
   const LinkComponent = getReseeUxConstant('UiLinkBaseComponent');
 
   const props = withDefaults(
-    defineProps<UiLinkProps>(),
+    defineProps<LinkProps>(),
     {
       external  : false,
       variant   : 'a',

@@ -31,7 +31,7 @@
   import { useSlots } from 'vue';
   import type { IconProps } from './Icon.vue';
 
-  export type IconTextPairProps = {
+  export interface IconTextPairProps {
     text?             : string;
     icon?             : string;
     trailingIcon?     : string;
@@ -40,7 +40,7 @@
     layout?           : 'column' | 'row';
     spacing?          : 'wide' | 'normal';
     loading?          : boolean;
-  };
+  }
 </script>
 
 <script setup lang="ts">

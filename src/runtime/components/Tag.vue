@@ -13,20 +13,25 @@
   </PrimeTag>
 </template>
 
+<script lang="ts">
+  import type { StatusLevel } from '../types';
+
+  export interface TagProps {
+    text?     : string;
+    icon?     : string;
+    severity? : StatusLevel;
+    size?     : 'sm' | 'md' | 'lg';
+    tooltip?  : string;
+  }
+</script>
+
 <script setup lang="ts">
   import PrimeTag from 'primevue/tag';
   import vPrimeTooltip from 'primevue/tooltip';
-  import type { StatusLevel } from '../types';
   import IconTextPair from './IconTextPair.vue';
 
   const props = withDefaults(
-    defineProps<{
-      text?     : string;
-      icon?     : string;
-      severity? : StatusLevel;
-      size?     : 'sm' | 'md' | 'lg';
-      tooltip?  : string;
-    }>(),
+    defineProps<TagProps>(),
     {
       text     : undefined,
       icon     : undefined,

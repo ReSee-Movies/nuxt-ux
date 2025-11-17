@@ -52,7 +52,7 @@
    * When "grow", causes the button to expand to the full width of its container, and
    * increase its font size when at the small breakpoint.
    */
-  export type ButtonProps = {
+  export interface ButtonProps extends IconTextPairProps {
     is?              : string | Component;
     severity?        : StyleStatusLevel | 'unset';
     bordered?        : boolean;
@@ -64,7 +64,7 @@
     tooltip?         : string;
     disabledTooltip? : string;
     onClick?         : ((evt: Event) => void | Promise<void>) | ((evt: Event) => void | Promise<void>)[];
-  } & IconTextPairProps;
+  }
 </script>
 
 <script setup lang="ts">

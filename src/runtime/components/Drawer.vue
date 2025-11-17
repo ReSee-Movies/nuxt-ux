@@ -31,9 +31,9 @@
   import { calculateBodyScrollbarWidth } from '@primeuix/utils';
   import type { DrawerProps as PrimeDrawerProps } from 'primevue';
 
-  export type DrawerProps = {
+  export interface DrawerProps extends PrimeDrawerProps {
     showHeaderText?: boolean;
-  } & PrimeDrawerProps;
+  }
 </script>
 
 

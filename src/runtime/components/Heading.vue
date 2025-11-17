@@ -4,6 +4,13 @@
   </Component>
 </template>
 
+<script lang="ts">
+  export interface HeadingProps {
+    text?  : string | null;
+    level? : '1' | '2' | '3' | '4' | '5' | '6' | 1 | 2 | 3 | 4 | 5 | 6;
+  }
+</script>
+
 <script setup lang="ts">
   import { computed } from 'vue';
 
@@ -11,10 +18,7 @@
   // h1, h2, h3, h4, h5, h6
 
   const props = withDefaults(
-    defineProps<{
-      text?  : string | null;
-      level? : '1' | '2' | '3' | '4' | '5' | '6' | 1 | 2 | 3 | 4 | 5 | 6;
-    }>(),
+    defineProps<HeadingProps>(),
     {
       text  : undefined,
       level : '1',

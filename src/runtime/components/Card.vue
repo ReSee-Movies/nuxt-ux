@@ -12,14 +12,18 @@
   </Component>
 </template>
 
+<script lang="ts">
+  export interface CardProps {
+    is?          : string;
+    interactive? : boolean;
+  }
+</script>
+
 <script setup lang="ts">
   import { useSlots } from '#imports';
 
   const props = withDefaults(
-    defineProps<{
-      is?          : string;
-      interactive? : boolean;
-    }>(),
+    defineProps<CardProps>(),
     {
       is          : 'div',
       interactive : false,

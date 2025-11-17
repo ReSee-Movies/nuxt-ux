@@ -2,14 +2,19 @@
   <PrimeProgressSpinner :class="['indicator', props.size]" />
 </template>
 
-<script setup lang="ts">
-  import { ProgressSpinner as PrimeProgressSpinner } from 'primevue';
+<script lang="ts">
   import type { IconProps } from './Icon.vue';
 
+  export interface LoadingIndicatorProps {
+    size?: IconProps['size'];
+  }
+</script>
+
+<script setup lang="ts">
+  import { ProgressSpinner as PrimeProgressSpinner } from 'primevue';
+
   const props = withDefaults(
-    defineProps<{
-      size?: IconProps['size'];
-    }>(),
+    defineProps<LoadingIndicatorProps>(),
     {
       size: 'md',
     },

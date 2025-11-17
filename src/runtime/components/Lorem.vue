@@ -10,22 +10,26 @@
   </template>
 </template>
 
+<script lang="ts">
+  export interface LoremProps {
+    type?: 'words' | 'sentences' | 'paragraphs';
+    min?               : string | number;
+    max?               : string | number;
+    minParagraphCount? : string | number;
+    maxParagraphCount? : string | number;
+    minSentenceCount?  : string | number;
+    maxSentenceCount?  : string | number;
+    minWordCount?      : string | number;
+    maxWordCount?      : string | number;
+  }
+</script>
+
 <script setup lang="ts">
   import { useId, useState } from '#imports';
   import { computed } from 'vue';
 
   const props = withDefaults(
-    defineProps<{
-      type?: 'words' | 'sentences' | 'paragraphs';
-      min?               : string | number;
-      max?               : string | number;
-      minParagraphCount? : string | number;
-      maxParagraphCount? : string | number;
-      minSentenceCount?  : string | number;
-      maxSentenceCount?  : string | number;
-      minWordCount?      : string | number;
-      maxWordCount?      : string | number;
-    }>(),
+    defineProps<LoremProps>(),
     {
       type              : 'words',
       min               : undefined,
