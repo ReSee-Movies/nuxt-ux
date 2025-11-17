@@ -27,9 +27,10 @@
 </script>
 
 <script setup lang="ts">
+  import { getReseeUxConstant } from '../config';
   import Button from './Button.vue';
 
-  const LinkComponent = useNuxtUxConfig().getConfig('UiLinkBaseComponent');
+  const LinkComponent = getReseeUxConstant('UiLinkBaseComponent');
 
   const props = withDefaults(
     defineProps<UiLinkProps>(),

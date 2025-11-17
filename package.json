@@ -13,6 +13,9 @@
       "types": "./dist/types.d.mts",
       "import": "./dist/module.mjs"
     },
+    "./config": {
+      "import": "./dist/runtime/config.js"
+    },
     "./components/*": {
       "import": "./dist/runtime/components/*"
     },
