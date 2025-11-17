@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.2.0...0.2.1) (2025-11-17)
+
+### Bug Fixes
+
+* resolve NuxtLink within the UxLink component instead of trying to import it in the config ([5a0e27e](https://github.com/ReSee-Movies/nuxt-ux/commit/5a0e27e766700670fa1d1794b8264c628dec54c9))
+
 ## [0.2.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.1.0...0.2.0) (2025-11-17)
 
 ### Features
