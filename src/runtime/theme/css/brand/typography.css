@@ -110,7 +110,7 @@
   }
 
   .hr, .prose hr, .prose-container hr {
-    border-color       : var(--color-global-foreground-accent);
+    border-color       : var(--color-global-background-accent);
     margin-block-start : 1lh;
     margin-block-end   : 1lh;
   }
