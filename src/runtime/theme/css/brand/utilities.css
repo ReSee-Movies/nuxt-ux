@@ -26,17 +26,4 @@
     backdrop-filter  : blur(0px);
     background-color : transparent;
   }
-
-  /**
-   * Replaces the same amount of space that the page scrollbar takes up up with
-   * a solid block of color equal to the body background. Particularly in the
-   * UiDrawer overlay, if it slides in the same side as the scrollbar, and then the
-   * scrollbar is disabled, the result is it hopping to the right by that width.
-   * This doesn't look good, so we hide that by effectively using this as one of the
-   * side margins.
-   *
-   */
-  &.replace-scrollbar {
-    border-inline-end: solid var(--p-scrollbar-width) var(--color-global-background);
-  }
 }
