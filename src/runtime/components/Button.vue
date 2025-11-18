@@ -22,7 +22,7 @@
     <IconTextPair
       :text          = "props.text"
       :icon          = "props.icon"
-      :icon-size     = "props.size"
+      :icon-size     = "props.iconSize ?? props.size"
       :trailing-icon = "props.trailingIcon"
       :layout        = "props.layout"
       :spacing       = "props.spacing ?? (props.layout === 'column' ? undefined : 'wide')"
