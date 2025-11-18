@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.2](https://github.com/ReSee-Movies/nuxt-ux/compare/0.2.1...0.2.2) (2025-11-18)
+
+### Bug Fixes
+
+* drop Link component - good grief ([339f86a](https://github.com/ReSee-Movies/nuxt-ux/commit/339f86ad27f6eb1270a3136a1bed0d19a9ea05cd))
+
+### Style Updates
+
+* center-align text within .btn classes ([6cd6b56](https://github.com/ReSee-Movies/nuxt-ux/commit/6cd6b56c74f8ecd15f0472283f80f21a255feb32))
+* don't break words in tooltips ([8327882](https://github.com/ReSee-Movies/nuxt-ux/commit/83278820306b49ce759a54a6e88aaf083301f19d))
+* introduce ReSee color scale gradients ([c9aca7d](https://github.com/ReSee-Movies/nuxt-ux/commit/c9aca7dc53a0a3635349c5a12f9a31dc8920878a))
+
 ## [0.2.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.2.0...0.2.1) (2025-11-17)
 
 ### Bug Fixes
