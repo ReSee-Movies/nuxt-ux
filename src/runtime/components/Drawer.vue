@@ -90,37 +90,48 @@
 </script>
 
 
+<!-- Since the Drawer component is teleported, it's styles cannot be scoped here. -->
 <style>
   @reference "tailwindcss";
 
   .drawer {
+    --drawer-border-radius: --spacing(3);
+
     background   : var(--color-global-background);
     border-color : var(--color-global-background-accent);
 
     &.drawer-left {
-      border-right-width : 1px;
-      height             : 100%;
-      width              : --spacing(80);
-      box-shadow         : var(--shadow-heavy-right);
+      border-right-width         : 1px;
+      border-top-right-radius    : var(--drawer-border-radius);
+      border-bottom-right-radius : var(--drawer-border-radius);
+      height                     : 100%;
+      width                      : --spacing(80);
+      box-shadow                 : var(--shadow-heavy-right);
     }
 
     &.drawer-right {
-      border-left-width  : 1px;
-      height             : 100%;
-      width              : --spacing(80);
-      box-shadow         : var(--shadow-heavy-left);
+      border-left-width         : 1px;
+      border-top-left-radius    : var(--drawer-border-radius);
+      border-bottom-left-radius : var(--drawer-border-radius);
+      height                    : 100%;
+      width                     : --spacing(80);
+      box-shadow                : var(--shadow-heavy-left);
     }
 
     &.drawer-top {
-      border-bottom-width : 1px;
-      width               : 100%;
-      box-shadow         : var(--shadow-heavy);
+      border-bottom-width        : 1px;
+      border-bottom-left-radius  : var(--drawer-border-radius);
+      border-bottom-right-radius : var(--drawer-border-radius);
+      width                      : 100%;
+      box-shadow                 : var(--shadow-heavy);
     }
 
     &.drawer-bottom {
-      border-top-width : 1px;
-      width            : 100%;
-      box-shadow         : var(--shadow-heavy-top);
+      border-top-width        : 1px;
+      border-top-left-radius  : var(--drawer-border-radius);
+      border-top-right-radius : var(--drawer-border-radius);
+      width                   : 100%;
+      box-shadow              : var(--shadow-heavy-top);
     }
   }
 
