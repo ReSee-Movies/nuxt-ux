@@ -47,6 +47,13 @@ export function importModules(nuxt: Nuxt) {
 
       options: {
         unstyled: true,
+
+        zIndex: {
+          overlay : 800,
+          modal   : 850,
+          menu    : 900,
+          tooltip : 1000,
+        },
       },
 
       composables: {
