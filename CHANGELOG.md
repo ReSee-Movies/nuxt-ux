@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.3](https://github.com/ReSee-Movies/nuxt-ux/compare/0.2.2...0.2.3) (2025-11-18)
+
+### Bug Fixes
+
+* prefer the `icon-size` over `size` prop, if provided, in the Button component ([4cf5dd0](https://github.com/ReSee-Movies/nuxt-ux/commit/4cf5dd00b1abf3f78e5a93fb65d6d1bb11f716d1))
+
+### Style Updates
+
+* make .btn classed elements inline-block ([dd5e673](https://github.com/ReSee-Movies/nuxt-ux/commit/dd5e67343679760181fa219b2fb0a482ea53ad46))
+* round over the visible corners of the Drawer component ([56b5c2f](https://github.com/ReSee-Movies/nuxt-ux/commit/56b5c2f2fcb09deb77147170763083730d67ea12))
+* tweaked tooltip outer padding to not smash right up against the viewport edges ([997f3c4](https://github.com/ReSee-Movies/nuxt-ux/commit/997f3c4cba5c6b511116547884bf0e7f986c99f1))
+* update the horizontal rule color ([1a67415](https://github.com/ReSee-Movies/nuxt-ux/commit/1a6741550a17fc18448afa6450d985706d5e0c2f))
+* updated Drawer component to play better with the page scrollbar around all four sides that it can slide in from ([eacb48c](https://github.com/ReSee-Movies/nuxt-ux/commit/eacb48c82586f0da9c48e93b644f06eaf38522f7))
+
 ## [0.2.2](https://github.com/ReSee-Movies/nuxt-ux/compare/0.2.1...0.2.2) (2025-11-18)
 
 ### Bug Fixes
