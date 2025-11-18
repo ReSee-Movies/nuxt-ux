@@ -87,6 +87,7 @@
   --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
 
+
   /* *********************** *
      Miscellaneous
    * *********************** */
@@ -238,6 +239,7 @@
   --color-danger-contrast-dark : var(--color-surface-950);
 
 
+
   /* *********************** *
      Mode changing colors
    * *********************** */
@@ -302,6 +304,7 @@
   --color-danger          : var(--color-danger-lite);
   --color-danger-emphasis : var(--color-danger-emphasis-lite);
   --color-danger-contrast : var(--color-danger-contrast-lite);
+
 
 
   /* *********************** *
@@ -398,6 +401,7 @@
     var(--color-resee-lite-blue)    260deg 300deg,
     var(--color-resee-lite-indigo)  300deg 340deg,
     var(--color-resee-lite-violet)  340deg 360deg;
+
 
 
   /* *********************** *

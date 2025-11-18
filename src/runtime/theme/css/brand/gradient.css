@@ -1,0 +1,53 @@
+@layer utilities {
+  /*
+   Apply ReSee color gradients as a text mask.
+   */
+  .text-resee-linear-gradient, .text-resee-linear-step-gradient {
+    color           : transparent;
+    background-clip : text;
+    text-shadow     : none;
+  }
+
+  .text-resee-linear-gradient {
+    background-image: linear-gradient(to left, var(--colorscale-resee-linear));
+
+    @variant dark {
+      background-image: linear-gradient(to left, var(--colorscale-resee-lite-linear));
+    }
+  }
+
+  .text-resee-linear-step-gradient {
+    background-image: linear-gradient(to left, var(--colorscale-resee-linear-step));
+
+    @variant dark {
+      background-image: linear-gradient(to left, var(--colorscale-resee-lite-linear-step));
+    }
+  }
+
+  /*
+   Apply ReSee color gradients as a background.
+   */
+  .resee-linear-gradient {
+    background-image: linear-gradient(to left, var(--colorscale-resee-linear));
+  }
+
+  .resee-linear-step-gradient {
+    background-image: linear-gradient(to left, var(--colorscale-resee-linear-step));
+  }
+
+  .resee-light-linear-gradient {
+    background-image: linear-gradient(to left, var(--colorscale-resee-lite-linear));
+  }
+
+  .resee-light-linear-step-gradient {
+    background-image: linear-gradient(to left, var(--colorscale-resee-lite-linear-step));
+  }
+
+  .resee-conic-gradient {
+    background-image: conic-gradient(from 0deg, var(--colorscale-resee-conic));
+  }
+
+  .resee-light-conic-gradient {
+    background-image: conic-gradient(from 0deg, var(--colorscale-resee-lite-conic));
+  }
+}
