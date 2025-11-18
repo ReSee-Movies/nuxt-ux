@@ -1,6 +1,6 @@
 <template>
   <Transition name="fade" mode="out-in">
-    <LoadingIndicator v-if="props.loading" :size="props.size" class="icon" />
+    <ProgressSpinner v-if="props.loading" :size="props.size" class="icon" />
     <span v-else role="presentation" :class="['icon', props.name, props.size, { 'color-cycle': props.colorCycle }]" />
   </Transition>
 </template>
@@ -15,7 +15,7 @@
 </script>
 
 <script setup lang="ts">
-  import LoadingIndicator from './LoadingIndicator.vue';
+  import ProgressSpinner from './ProgressSpinner.vue';
 
   const props = withDefaults(
     defineProps<IconProps>(),

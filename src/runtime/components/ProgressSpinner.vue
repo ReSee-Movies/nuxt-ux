@@ -5,7 +5,7 @@
 <script lang="ts">
   import type { IconProps } from './Icon.vue';
 
-  export interface LoadingIndicatorProps {
+  export interface ProgressSpinnerProps {
     size?: IconProps['size'];
   }
 </script>
@@ -14,7 +14,7 @@
   import { ProgressSpinner as PrimeProgressSpinner } from 'primevue';
 
   const props = withDefaults(
-    defineProps<LoadingIndicatorProps>(),
+    defineProps<ProgressSpinnerProps>(),
     {
       size: 'md',
     },
