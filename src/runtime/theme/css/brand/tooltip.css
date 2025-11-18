@@ -2,6 +2,7 @@
   .tooltip {
     position  : absolute;
     animation : show-tooltip calc(var(--default-transition-duration) * 2) none var(--default-transition-timing-function);
+    padding   : --spacing(4);
 
     .content {
       padding       : --spacing(3) --spacing(1.5);
@@ -13,32 +14,42 @@
       white-space   : pre-line;
     }
 
-    &[data-p-position="left"], &[data-p-position="right"] {
-      padding: 0 --spacing(1);
-    }
 
-    &[data-p-position="top"], &[data-p-position="bottom"] {
-      padding: --spacing(1) 0;
-    }
 
     &[data-p-position="top"] {
-      transform  : translateY(--spacing(-1));
-      box-shadow : var(--shadow-heavy);
+      transform      : translateY(--spacing(-1));
+      padding-bottom : --spacing(1);
+
+      > .content {
+        box-shadow: var(--shadow-heavy);
+      }
     }
 
     &[data-p-position="right"] {
-      transform  : translateX(--spacing(1));
-      box-shadow : var(--shadow-heavy-left);
+      transform    : translateX(--spacing(1));
+      padding-left : --spacing(1);
+
+      > .content {
+        box-shadow: var(--shadow-heavy-left);
+      }
     }
 
     &[data-p-position="bottom"] {
-      transform  : translateY(--spacing(1));
-      box-shadow : var(--shadow-heavy-top);
+      transform   : translateY(--spacing(1));
+      padding-top : --spacing(1);
+
+      > .content {
+        box-shadow: var(--shadow-heavy-top);
+      }
     }
 
     &[data-p-position="left"] {
-      transform  : translateX(--spacing(-1));
-      box-shadow : var(--shadow-heavy-right);
+      transform     : translateX(--spacing(-1));
+      padding-right : --spacing(1);
+
+      > .content {
+        box-shadow: var(--shadow-heavy-right);
+      }
     }
   }
 
