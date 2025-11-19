@@ -16,7 +16,9 @@
 
 
 <script setup lang="ts">
-  const menuItems = [
+  import type { MenuItem } from '#resee-ux/components/Menu.vue';
+
+  const menuItems: MenuItem[] = [
     { label: 'Item 1', icon: 'i-ph-x' },
     { label: 'Item 2' },
     { label: 'Item 3' },
@@ -30,6 +32,7 @@
         { label: 'Foo' },
         { label: 'Bar' },
         { label: 'Baz' },
+        { label: 'Google', url: 'https://www.google.com', target: '_blank' },
       ],
     },
   ];

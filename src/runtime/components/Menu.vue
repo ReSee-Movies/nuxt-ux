@@ -25,7 +25,15 @@
 
     <template #item="{ item }">
       <slot name="item">
+        <a v-if="item.url" :href="item.url" :target="item.target">
+          <IconTextPair
+            :text = "isString(item.label) ? item.label : item.label?.()"
+            :icon = "item.icon"
+          />
+        </a>
+
         <IconTextPair
+          v-else
           :text = "isString(item.label) ? item.label : item.label?.()"
           :icon = "item.icon"
         />
@@ -43,6 +51,7 @@
 
 <script lang="ts">
   import type { ComputedGetter } from 'vue';
+  import type { MenuItem as PrimeMenuItem } from 'primevue/menuitem';
 
   export interface MenuProps {
     model       : MenuItem[];
@@ -55,6 +64,9 @@
     icon?      : string;
     disabled?  : boolean;
     separator? : boolean;
+    command?   : PrimeMenuItem['command'];
+    url?       : PrimeMenuItem['url'];
+    target?    : PrimeMenuItem['target'];
     items?     : MenuItem[];
   }
 
@@ -141,23 +153,38 @@
     li[role="menuitem"] {
       user-select         : none;
       cursor              : pointer;
-      padding             : --spacing(1) --spacing(2);
       border-radius       : var(--radius-md);
       transition          : background-color;
       transition-duration : var(--default-transition-duration);
 
-      &[data-p-focused="true"] {
-        background-color: var(--color-background-scale-c);
+      /* Callback Function Items */
+      > :only-child:not(:has(> a:only-child)) {
+        padding: --spacing(1) --spacing(2);
+      }
+
+      /* Anchor Items */
+      > :only-child:has(> a:only-child) > a {
+        display : block;
+        padding : --spacing(1) --spacing(2);
       }
 
       &[aria-disabled="true"] {
         cursor : not-allowed;
         color  : var(--color-global-foreground-accent);
-
-        &[data-p-focused="true"] {
-          background-color: transparent;
-        }
       }
+    }
+
+    /*
+     The `data-p-focused` attr is driven internally by the Primevue component,
+     and responds to keyboard interaction. It only occurs when the list is focused
+     though - and there are several ways for it to lose focus. If both the :hover
+     and attr approaches are used together, it can sometimes appear if two options
+     are selected if the cursor sits right at the boundary of those options. So,
+     its either one or the other, but not both.
+     */
+    ul:not(:focus) li[role="menuitem"]:not([aria-disabled="true"]):hover,
+    li[role="menuitem"][data-p-focused="true"]:not([aria-disabled="true"]) {
+      background-color: var(--color-background-scale-c);
     }
 
     .menu-prefix {
