@@ -242,10 +242,10 @@
   @reference "tailwindcss";
 
   .image {
-    background-color: white;
-    position : relative;
-    overflow : clip;
-    width    : max-content;
+    background-color : white;
+    position         : relative;
+    overflow         : clip;
+    width            : fit-content;
 
     @variant dark {
       background-color: black;
