@@ -28,6 +28,7 @@ export function importModules(nuxt: Nuxt) {
       'Dialog',
       'Drawer',
       'Message',
+      'Menu',
       'ProgressBar',
       'ProgressSpinner',
       'Tag',
