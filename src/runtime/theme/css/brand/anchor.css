@@ -5,7 +5,10 @@
     initial-value : 0%;
   }
 
-  .a, .a.default {
+  .a,
+  .a.default,
+  .prose a,
+  .prose-container a {
     --a-underline-mask-stop       : 0%;
     --default-underline           : var(--color-background-scale-g);
     --default-underline-emphasis  : var(--colorscale-resee-linear);

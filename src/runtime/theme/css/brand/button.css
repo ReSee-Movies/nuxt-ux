@@ -5,7 +5,10 @@
     initial-value : transparent;
   }
 
-  .btn, .btn.default {
+  .btn,
+  .btn.default,
+  .prose button,
+  .prose-container button {
     --btn-border-width: 2px;
 
     --btn-background-color       : var(--color-background-scale-a);
@@ -35,7 +38,9 @@
   }
 
 
-  .btn {
+  .btn,
+  .prose button,
+  .prose-container button {
     display                    : inline-block;
     cursor                     : pointer;
     padding                    : --spacing(1) --spacing(5);
