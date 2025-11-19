@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.2.4...0.3.0) (2025-11-19)
+
+### Features
+
+* introduce Menu component ([482eb0e](https://github.com/ReSee-Movies/nuxt-ux/commit/482eb0eb3645d9d67a59f029f0673dc4b07b41a8))
+
+### Bug Fixes
+
+* passthrough additional attrs to the Icon component ([456e5da](https://github.com/ReSee-Movies/nuxt-ux/commit/456e5da8f60716e872bd84cfe0880311fd5fd202))
+
 ## [0.2.4](https://github.com/ReSee-Movies/nuxt-ux/compare/0.2.3...0.2.4) (2025-11-19)
 
 ### Style Updates
