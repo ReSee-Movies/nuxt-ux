@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.4.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.3.1...0.4.0) (2025-11-19)
+
+### Features
+
+* added Icon props to Message component ([12c0ca0](https://github.com/ReSee-Movies/nuxt-ux/commit/12c0ca06869da894bbae1cd05d1ccd8f7fe12c3c))
+
+### Bug Fixes
+
+* width of UiImage component outer wrapping ([3c60564](https://github.com/ReSee-Movies/nuxt-ux/commit/3c6056487e80343ea68c41f4e2ba707f094491f7))
+
 ## [0.3.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.3.0...0.3.1) (2025-11-19)
 
 ### Bug Fixes

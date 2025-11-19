@@ -1,6 +1,6 @@
 {
   "name": "@resee-movies/nuxt-ux",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "The next-gen user experience library for ReSee Movies - currently in development. ",
   "repository": {
     "url": "https://github.com/ReSee-Movies/nuxt-ux.git"
