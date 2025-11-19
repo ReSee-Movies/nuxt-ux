@@ -1,7 +1,17 @@
 <template>
   <Transition name="fade" mode="out-in">
-    <ProgressSpinner v-if="props.loading" :size="props.size" class="icon" />
-    <span v-else role="presentation" :class="['icon', props.name, props.size, { 'color-cycle': props.colorCycle }]" />
+    <ProgressSpinner
+      v-if  = "props.loading"
+      :size = "props.size"
+      class = "icon"
+    />
+
+    <span
+      v-else
+      v-bind = "attrs"
+      role   = "presentation"
+      :class = "['icon', props.name, props.size, { 'color-cycle': props.colorCycle }]"
+    />
   </Transition>
 </template>
 
@@ -15,7 +25,10 @@
 </script>
 
 <script setup lang="ts">
+  import { useAttrs } from 'vue';
   import ProgressSpinner from './ProgressSpinner.vue';
+
+  const attrs = useAttrs();
 
   const props = withDefaults(
     defineProps<IconProps>(),
