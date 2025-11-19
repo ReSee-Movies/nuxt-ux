@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.4](https://github.com/ReSee-Movies/nuxt-ux/compare/0.2.3...0.2.4) (2025-11-19)
+
+### Style Updates
+
+* add button and anchor styling to .prose blocks ([2990eef](https://github.com/ReSee-Movies/nuxt-ux/commit/2990eef72ab7be43ac0f61a72e1de63a67dd1542))
+* added the ability to disable the visible styling of dialogs, for uber customization ([1ec937d](https://github.com/ReSee-Movies/nuxt-ux/commit/1ec937d59cba2050783dd2207598be211024a668))
+* update z-index values for various overlay elements (dialogs, tooltips, etc) ([e1f0793](https://github.com/ReSee-Movies/nuxt-ux/commit/e1f0793fe56919d02fe5f5e156c42174b612eefd))
+
+### Refactors
+
+* rename LoadingIndicator to ProgressSpinner ([53b0554](https://github.com/ReSee-Movies/nuxt-ux/commit/53b0554d7cc4db279408e6d455c970fa1566d806))
+
 ## [0.2.3](https://github.com/ReSee-Movies/nuxt-ux/compare/0.2.2...0.2.3) (2025-11-18)
 
 ### Bug Fixes
