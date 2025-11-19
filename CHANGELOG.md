@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.3.0...0.3.1) (2025-11-19)
+
+### Bug Fixes
+
+* add support for links to Menu items ([00f7c01](https://github.com/ReSee-Movies/nuxt-ux/commit/00f7c014aa4714753cf595b66bbb0c10b001c379))
+
 ## [0.3.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.2.4...0.3.0) (2025-11-19)
 
 ### Features
