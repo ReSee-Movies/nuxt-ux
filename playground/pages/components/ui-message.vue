@@ -7,7 +7,8 @@
         <UiMessage
           :severity = "item"
           :text     = "`Message box type: ${ item ?? 'plain' }`"
-          :closable = "true" />
+          :closable = "true"
+        />
       </div>
 
       <div>

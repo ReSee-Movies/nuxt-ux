@@ -1,14 +1,19 @@
 <template>
   <PrimeMessage :severity="props.severity" class="message" :pt="passthroughProps">
-    <slot>
-      {{ props.text }}
-    </slot>
+    <template #icon>
+      <Icon :name="props.icon" :size="props.iconSize" />
+    </template>
+
+    <template #default>
+      <slot>{{ props.text }}</slot>
+    </template>
   </PrimeMessage>
 </template>
 
 <script lang="ts">
   import { computed } from 'vue';
   import type { StatusLevel } from '../types';
+  import type { IconProps } from './Icon.vue';
 
   export interface MessageProps {
     severity? : StatusLevel;
@@ -16,11 +21,14 @@
     class?    : string;
     style?    : string;
     accented? : boolean;
+    icon?     : IconProps['name'];
+    iconSize? : IconProps['size'];
   }
 </script>
 
 <script setup lang="ts">
   import PrimeMessage from 'primevue/message';
+  import Icon from './Icon.vue';
 
   /*
    * Placing the visual design tokens such as the `status-indicating` classname,
