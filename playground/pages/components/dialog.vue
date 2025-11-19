@@ -6,12 +6,11 @@
   <UiLorem type="paragraphs" min="20" />
 
   <UiDialog v-model:visible="showDialog" header="Dialog Header">
-    Hello World
+    <UiLorem type="paragraphs" min="4" />
   </UiDialog>
 </template>
 
 <script setup lang="ts">
   import { ref } from 'vue';
-
   const showDialog = ref(false);
 </script>

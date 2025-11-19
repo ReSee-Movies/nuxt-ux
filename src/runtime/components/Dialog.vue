@@ -10,7 +10,7 @@
     :footer           = "props.footer"
     :dismissable-mask = "props.dismissableMask"
     :position         = "props.position"
-    :class            = "['dialog', dialogWidth]"
+    :class            = "['dialog', dialogWidth, { 'dialog-styles': props.showModalStyle }]"
     :content-class    = "props.contentClass"
     :pt               = "passthroughProps"
     :aria-labelledby  = "dialogLabelledBy"
@@ -39,8 +39,10 @@
   import type { DialogProps as PrimeDialogProps } from 'primevue';
 
   export interface DialogProps extends PrimeDialogProps {
-    size?           : 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
-    showHeaderText? : boolean;
+    size?            : 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
+    showHeaderText?  : boolean;
+    showHeaderStyle? : boolean;
+    showModalStyle?  : boolean;
   }
 </script>
 
@@ -60,6 +62,8 @@
       dismissableMask : true,
       showHeader      : true,
       showHeaderText  : true,
+      showHeaderStyle : true,
+      showModalStyle  : true,
       position        : undefined,
       contentClass    : undefined,
     },
@@ -89,9 +93,9 @@
 
   const passthroughProps = computed(() => {
     return {
-      header: {
-        class: 'header',
-      },
+      header: () => ({
+        class: ['header', { 'header-styles': props.showHeaderStyle }],
+      }),
 
       content: {
         class: 'content',
@@ -109,41 +113,54 @@
 </script>
 
 
+<!-- Since the Dialog component is teleported, it's styles cannot be scoped here. -->
 <style>
   @reference "tailwindcss";
 
   .dialog {
+    width  : 100%;
+    margin : --spacing(2);
+
+    .header {
+      display        : flex;
+      align-items    : center;
+      gap            : --spacing(3);
+      padding-bottom : --spacing(3);
+
+      .title {
+        flex-grow : 1;
+        font-size : var(--text-lg);
+      }
+    }
+
+    .content {
+      overflow-y: auto;
+    }
+  }
+
+  .dialog.dialog-styles {
+    height           : calc(100% - --spacing(4));
     border           : solid 1px var(--color-global-background-accent);
     border-radius    : var(--radius-md);
     background-color : var(--color-global-background);
     overflow         : clip;
-    width            : 100%;
-    height           : calc(100% - --spacing(4));
-    margin           : --spacing(2);
 
     @variant sm {
       box-shadow : var(--shadow-heavy);
       height     : auto;
     }
-  }
 
-  .dialog .header {
-    display        : flex;
-    align-items    : center;
-    gap            : --spacing(3);
-    margin-inline  : --spacing(3);
-    margin-top     : --spacing(3);
-    padding-bottom : --spacing(3);
-    border-bottom  : solid 1px var(--color-global-background-accent);
+    .header {
+      margin-inline : --spacing(3);
+      margin-top    : --spacing(3);
 
-    .title {
-      flex-grow : 1;
-      font-size : var(--text-lg);
+      &.header-styles {
+        border-bottom: solid 1px var(--color-global-background-accent);
+      }
     }
-  }
 
-  .dialog .content {
-    padding    : --spacing(3);
-    overflow-y : auto;
+    .content {
+      padding: --spacing(3);
+    }
   }
 </style>
