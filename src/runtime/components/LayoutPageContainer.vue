@@ -3,7 +3,13 @@
     :is    = "props.is"
     :class = "['page-container', props.glassEffect ? 'glass-effect' : undefined]"
   >
-    <slot />
+    <div v-if="props.headingText || slots.heading" class="mb-6">
+      <slot name="heading">
+        <Heading :text="props.headingText" />
+      </slot>
+    </div>
+
+    <slot name="default" />
   </Component>
 </template>
 
@@ -14,16 +20,23 @@
     is?          : HintedString<'div' | 'main' | 'section' | 'article' | 'nav'>;
     glassEffect? : boolean;
     accentColor? : string;
+    headingText? : string;
   }
 </script>
 
 <script setup lang="ts">
+  import { useSlots } from 'vue';
+  import Heading from './Heading.vue';
+
+  const slots = useSlots();
+
   const props = withDefaults(
     defineProps<LayoutPageContainerProps>(),
     {
       is          : 'div',
       glassEffect : false,
       accentColor : undefined,
+      headingText : undefined,
     },
   );
 </script>
