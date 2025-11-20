@@ -1,17 +1,36 @@
 <template>
-  <div class="prose">
-    <h1>ReSee Nuxt UX Library</h1>
-    <hr>
-  </div>
-
-  <div class="flex flex-col gap-4">
-    <NuxtLink :to="{ name: 'typography' }" icon="i-ph-text-aa">Typography</NuxtLink>
-    <NuxtLink :to="{ name: 'components-ui-message' }" icon="i-ph-chat">Messages</NuxtLink>
-    <NuxtLink :to="{ name: 'components-ui-progress-spinner' }" icon="i-ph-gauge">Progress Spinner</NuxtLink>
-    <NuxtLink :to="{ name: 'components-ui-progress-bar' }">Progress Bar</NuxtLink>
-    <NuxtLink :to="{ name: 'components-ui-tag' }">Tag</NuxtLink>
-    <NuxtLink :to="{ name: 'components-ui-notification' }">Notifications</NuxtLink>
-    <NuxtLink :to="{ name: 'components-ui-card' }" icon="i-ph-bounding-box">Cards</NuxtLink>
-    <NuxtLink :to="{ name: 'components-ui-button' }">Buttons</NuxtLink>
+  <div class="columns-2 *:block *:mb-2">
+    <NuxtLink
+      v-for = "page of pages"
+      :key  = "page.route"
+      :to   = "{ name: page.route }"
+      class = "a"
+    >
+      <IconTextPair :text="page.label" :icon="page.icon" />
+    </NuxtLink>
   </div>
 </template>
+
+
+<script setup lang="ts">
+  import IconTextPair from '#resee-ux/components/IconTextPair.vue';
+
+  definePageMeta({
+    heading: 'ReSee UX Component Library',
+  });
+
+  const pages = [
+    { label: 'Typography',       icon: 'i-ph-text-aa',             route: 'typography' },
+    { label: 'Button',           icon: 'i-ph-radio-button',        route: 'components-button' },
+    { label: 'Card',             icon: 'i-ph-bounding-box',        route: 'components-card' },
+    { label: 'Dialog',           icon: 'i-ph-box-arrow-up',        route: 'components-dialog' },
+    { label: 'Drawer',           icon: 'i-ph-arrow-line-left',     route: 'components-drawer' },
+    { label: 'Image',            icon: 'i-ph-image',               route: 'components-image' },
+    { label: 'Menu',             icon: 'i-ph-list',                route: 'components-menu' },
+    { label: 'Message',          icon: 'i-ph-chat-centered-text',  route: 'components-message' },
+    { label: 'Notification',     icon: 'i-ph-notification',        route: 'components-notification' },
+    { label: 'Progress Bar',     icon: 'i-ph-battery-medium-fill', route: 'components-progress-bar' },
+    { label: 'Progress Spinner', icon: 'i-ph-arrows-clockwise',    route: 'components-progress-spinner' },
+    { label: 'Tag',              icon: 'i-ph-tag',                 route: 'components-tag' },
+  ];
+</script>

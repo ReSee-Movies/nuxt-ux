@@ -1,6 +1,4 @@
 <template>
-  <h1 class="h1 mb-4">&ltUiProgressSpinner /&gt;</h1>
-
   <dl class="grid gap-4 grid-cols-[min-content_1fr]">
     <dt>Small</dt>
     <dd><UiProgressSpinner size="sm" /></dd>
@@ -15,3 +13,10 @@
     <dd><UiProgressSpinner size="xl" /></dd>
   </dl>
 </template>
+
+
+<script setup lang="ts">
+  definePageMeta({
+    heading: 'ProgressSpinner',
+  });
+</script>

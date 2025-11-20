@@ -1,6 +1,4 @@
 <template>
-  <h1>&ltUiCard /&gt;</h1>
-
   <div class="grid grid-cols-3">
     <UiCard interactive>
       <template #content>
@@ -9,3 +7,10 @@
     </UiCard>
   </div>
 </template>
+
+
+<script setup lang="ts">
+  definePageMeta({
+    heading: 'Card',
+  });
+</script>

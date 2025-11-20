@@ -1,6 +1,4 @@
 <template>
-  <h1 class="h1">Menu</h1>
-
   <UiMenu :model="menuItems" prefix-text="Some Prefix Text" suffix-text="Some Suffix Text">
     <template #control="{ toggle, menuId, expanded }">
       <UiButton
@@ -17,6 +15,10 @@
 
 <script setup lang="ts">
   import type { MenuItem } from '#resee-ux/components/Menu.vue';
+
+  definePageMeta({
+    heading: 'Menu',
+  });
 
   const menuItems: MenuItem[] = [
     { label: 'Item 1', icon: 'i-ph-x' },

@@ -1,6 +1,4 @@
 <template>
-  <h1 class="h1 mb-4">&lt;UiButton /&gt;</h1>
-
   <div class="flex items-center gap-3 mb-4">
     <div>
       <UiButton
@@ -88,4 +86,8 @@
 
 <script setup lang="ts">
   import { sleep } from '@resee-movies/utilities/timers/sleep';
+
+  definePageMeta({
+    heading: 'Button',
+  });
 </script>

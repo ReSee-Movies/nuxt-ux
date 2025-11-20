@@ -1,6 +1,4 @@
 <template>
-  <h1>&ltUiNotification /&gt;</h1>
-
   <div class="flex gap-2">
     <button
       class="btn"
@@ -20,6 +18,10 @@
 
 <script setup lang="ts">
   import { useNotification } from '#imports';
+
+  definePageMeta({
+    heading: 'Notification',
+  });
 
   const {
     notify,

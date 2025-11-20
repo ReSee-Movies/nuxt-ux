@@ -1,6 +1,4 @@
 <template>
-  <h1 class="h1">UiDialog</h1>
-
   <UiButton text="Open" @click="showDialog = true" />
 
   <UiLorem type="paragraphs" min="20" />
@@ -12,5 +10,10 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
+
+  definePageMeta({
+    heading: 'Dialog',
+  });
+
   const showDialog = ref(false);
 </script>

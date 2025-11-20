@@ -5,3 +5,10 @@
     <UiProgressBar />
   </div>
 </template>
+
+
+<script setup lang="ts">
+  definePageMeta({
+    heading: 'ProgressBar',
+  });
+</script>
