@@ -29,8 +29,6 @@
         iconClassName = props.message.icon;
       }
 
-      console.log(iconClassName);
-
       return {
         class: ['icon', iconClassName],
       };
