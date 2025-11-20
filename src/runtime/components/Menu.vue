@@ -132,7 +132,7 @@
   .menu {
     border           : solid 1px var(--color-global-background-accent);
     border-radius    : var(--radius-md);
-    background-color : var(--color-global-background);
+    background-color : var(--color-background-scale-a);
     box-shadow       : var(--shadow-heavy);
     margin-block     : --spacing(1);
     padding          : --spacing(1);
