@@ -37,6 +37,15 @@ export function importModules(nuxt: Nuxt) {
     ]),
   )
 
+  nuxt.options.vite.optimizeDeps ??= {};
+  nuxt.options.vite.optimizeDeps.include ??= [];
+
+  nuxt.options.vite.optimizeDeps.include.push(
+    'primevue/usetoast',
+    'primevue/toasteventbus',
+    'primevue/toastservice',
+  );
+
   const Primevue: ModuleDependencies['@primevue/nuxt-module'] = {
     defaults: {
       autoImport : false,

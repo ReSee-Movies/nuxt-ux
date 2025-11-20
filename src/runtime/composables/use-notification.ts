@@ -1,64 +1,53 @@
-import type { ToastMessageOptions, ToastServiceMethods } from 'primevue';
+import { isNumber } from '@resee-movies/utilities/numbers/is-number';
+import type { ToastServiceMethods } from 'primevue/toastservice';
 import { useToast } from 'primevue/usetoast';
 import type { StatusLevel } from '../types';
 
-const DefaultLifetime = 5000;
 
-function createToastMessageOptions(
-  message : string,
-  status? : StatusLevel,
-  config? : NotificationOptions,
-): ToastMessageOptions {
-  return {
-    detail   : message,
-    severity : status,
-    summary  : config?.headline,
-    closable : config?.closable === true,
-    life     : config?.closable === true ? undefined : DefaultLifetime,
-  };
-}
-
-function createToastMessageClosure(toast: ToastServiceMethods, status: undefined | StatusLevel) {
-  const fn = (message: string, options?: NotificationOptions) => {
-    toast.add(createToastMessageOptions(message, status, options));
-  };
-
-  Object.defineProperty(fn, 'name', {
-    value: `notify${ status ?? '' }`,
-  });
-
-  return fn;
-}
-
-
-export type NotificationOptions = {
+export interface NotificationOptions {
   headline? : string;
   closable? : boolean;
-};
+  icon?     : string;
+  lifetime? : number;
+}
 
-export type UseNotificationReturn = {
-  notify        : (message: string, options?: NotificationOptions) => void;
-  notifyInfo    : (message: string, options?: NotificationOptions) => void;
-  notifyHelp    : (message: string, options?: NotificationOptions) => void;
-  notifySuccess : (message: string, options?: NotificationOptions) => void;
-  notifyWarning : (message: string, options?: NotificationOptions) => void;
-  notifyError   : (message: string, options?: NotificationOptions) => void;
-};
+
+export class NotificationService {
+  public readonly notify        : (message: string, options?: NotificationOptions & { severity?: StatusLevel }) => void;
+  public readonly notifyInfo    : (message: string, options?: NotificationOptions) => void;
+  public readonly notifyHelp    : (message: string, options?: NotificationOptions) => void;
+  public readonly notifySuccess : (message: string, options?: NotificationOptions) => void;
+  public readonly notifyWarning : (message: string, options?: NotificationOptions) => void;
+  public readonly notifyError   : (message: string, options?: NotificationOptions) => void;
+
+
+  constructor(toast: ToastServiceMethods) {
+    this.notify = (message, options) => {
+      toast.add({
+        detail   : message,
+        severity : options?.severity,
+        summary  : options?.headline,
+        closable : options?.closable === true,
+        life     : isNumber(options?.lifetime) ? options?.lifetime : 5000,
+
+        /* @ts-expect-error - adding custom props to extend functionality */
+        icon: options?.icon,
+      });
+    };
+
+    this.notifyInfo    = (message, options) => this.notify(message, { severity: 'info', ...options });
+    this.notifyHelp    = (message, options) => this.notify(message, { severity: 'help', ...options });
+    this.notifySuccess = (message, options) => this.notify(message, { severity: 'success', ...options });
+    this.notifyWarning = (message, options) => this.notify(message, { severity: 'warn', ...options });
+    this.notifyError   = (message, options) => this.notify(message, { severity: 'error', ...options });
+  }
+}
 
 
 /**
  * Returns a collection of methods for providing user feedback via popup
  * notifications (a.k.a. toast notifications / snackbar notifications).
  */
-export function useNotification(): UseNotificationReturn {
-  const toast = useToast();
-
-  return {
-    notify        : createToastMessageClosure(toast, undefined),
-    notifyInfo    : createToastMessageClosure(toast, 'info'),
-    notifyHelp    : createToastMessageClosure(toast, 'help'),
-    notifySuccess : createToastMessageClosure(toast, 'success'),
-    notifyWarning : createToastMessageClosure(toast, 'warn'),
-    notifyError   : createToastMessageClosure(toast, 'error'),
-  };
+export function useNotification(): NotificationService {
+  return new NotificationService(useToast());
 }

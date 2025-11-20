@@ -38,7 +38,11 @@ export default defineNuxtModule<ModuleOptions>({
     const plugins = options.tailwind?.plugins?.slice() ?? [];
     const imports = options.tailwind?.plugins?.slice() ?? [];
 
-    sources.push(components);
+    const constants = await resolver.resolvePath('./runtime/constants', {
+      extensions: ['ts', 'js'],
+    });
+
+    sources.push(components, constants);
     plugins.push(await resolvePath('@egoist/tailwindcss-icons'));
     imports.push(stylesheet);
 

@@ -7,6 +7,7 @@
 </template>
 
 <script setup lang="ts">
+  import { isString } from '@resee-movies/utilities/strings/is-string';
   import PrimeToast, { type ToastPassThroughOptions } from 'primevue/toast';
   import { StatusLevelIcons } from '../constants';
 
@@ -21,9 +22,19 @@
       ],
     }),
 
-    messageIcon: ({ props }) => ({
-      class: ['icon', StatusLevelIcons[props.message?.severity ?? 'default'] ],
-    }),
+    messageIcon: ({ props }) => {
+      let iconClassName = StatusLevelIcons[props.message?.severity ?? 'default'];
+
+      if (props.message && 'icon' in props.message && isString(props.message.icon)) {
+        iconClassName = props.message.icon;
+      }
+
+      console.log(iconClassName);
+
+      return {
+        class: ['icon', iconClassName],
+      };
+    },
 
     root            : { class: 'notification-container' },
     messageContent  : { class: 'content' },
