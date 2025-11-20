@@ -90,6 +90,7 @@ export function useLoadImage(
           }
         }
 
+        loading.value = true;
         key.value = sourceUnwrapped;
         return;
       }
