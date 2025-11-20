@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.4.0...0.4.1) (2025-11-20)
+
+### Bug Fixes
+
+* added Primevue toast assets to Vite's dep optimization list, added constants file to tailwind sources ([c9b2180](https://github.com/ReSee-Movies/nuxt-ux/commit/c9b218069525c9700c59c22d3e63a7b00b349f24))
+
 ## [0.4.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.3.1...0.4.0) (2025-11-19)
 
 ### Features
