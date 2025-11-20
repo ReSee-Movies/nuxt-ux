@@ -12,11 +12,11 @@
 
 <script lang="ts">
   import { computed } from 'vue';
-  import type { StatusLevel } from '../types';
+  import type { StyleStatusLevel } from '../types';
   import type { IconProps } from './Icon.vue';
 
   export interface MessageProps {
-    severity? : StatusLevel;
+    severity? : StyleStatusLevel;
     text?     : string;
     class?    : string;
     style?    : string;
