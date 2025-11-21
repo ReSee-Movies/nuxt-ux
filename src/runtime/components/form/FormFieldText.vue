@@ -5,9 +5,11 @@
       :aria-describedby = "messageId"
       :disabled         = "disabled"
       :readonly         = "readonly"
+      class             = "form-control"
     />
   </FormField>
 </template>
+
 
 <script setup lang="ts">
   import PrimeInputText from 'primevue/inputtext';

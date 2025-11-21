@@ -1,0 +1,195 @@
+@layer components {
+  .form-field {
+    display        : flex;
+    flex-direction : column;
+    gap            : --spacing(0.75);
+
+
+    /**
+     * Anything that wants to look like a label.
+     */
+    .label {
+      display: block;
+
+      &.required::after {
+        display             : inline-block;
+        content             : "*";
+        margin-inline-start : --spacing(1);
+        color               : var(--color-danger);
+      }
+    }
+
+    &.disabled .label {
+      opacity : 0.6;
+      cursor  : not-allowed;
+    }
+
+
+    /**
+     * The message that is displayed for an input when its value is not valid.
+     * The height here is intentionally 0 - having a validation that appears and
+     * pushes everything else on the page down is annoying. This relies on there
+     * being adequate gap between elements on the page, but IMO looks better.
+     */
+    .validation-message {
+      color      : var(--color-danger);
+      font-size  : var(--text-sm);
+      line-clamp : 2;
+      height     : 0;
+    }
+
+
+    /**
+     * The element that wraps an input of some sort + a label.
+     * This allows for a variety of layouts for the two relative
+     * to each other.
+     */
+    .labelled-group {
+      display        : flex;
+      flex-direction : column;
+      gap            : --spacing(1);
+
+      &.layout-inline-reverse label {
+        order: 2;
+      }
+
+      &.layout-inline, &.layout-inline-reverse {
+        flex-direction : row;
+        align-items    : start;
+        gap            : --spacing(3);
+
+        label {
+          flex-grow: 1;
+        }
+      }
+    }
+
+
+    /**
+     * The base styles of things that look like an input field.
+     */
+    .control-group,
+    .form-control:where(:not(.control-group .form-control)) {
+      width               : 100%;
+      overflow            : clip;
+      background-color    : var(--color-global-background);
+      outline             : solid 2px var(--color-background-scale-e);
+      border-radius       : --spacing(1);
+      transition          : color, background-color, outline-color, box-shadow;
+      transition-duration : calc(var(--default-transition-duration) * 2);
+
+      &:is(:disabled, [aria-disabled="true"]),
+      &:has(:disabled, [aria-disabled="true"]) {
+        cursor  : not-allowed;
+        opacity : 0.6;
+      }
+
+      /**
+       * Focus effects. Checkbox inputs receive a more subtle treatment than text inputs.
+       */
+      &:not(:disabled, [aria-disabled="true"], :has(:disabled, [aria-disabled="true"])) {
+        &:hover, &:focus-within {
+          outline-color: var(--color-global-foreground-accent);
+        }
+
+        &:not(:has(> input[type="checkbox"])):focus-within {
+          box-shadow       : var(--shadow-heavy);
+          background-color : var(--color-background-scale-b);
+        }
+      }
+    }
+
+
+    /*
+     * Dedicated form-control styling, regardless of where it appears or
+     * what it is inside of.
+     */
+    .form-control {
+      flex-grow : 1;
+      padding   : --spacing(2) --spacing(3);
+    }
+
+
+    /*
+     * Dedicated control-group styling, regardless of where it appears or what it is inside
+     * of. The control-group class name is to be used on a container element - most
+     * typically a div - that contains an <input> and optionally one or more
+     * .control-group-addon styled elements (or various other elements that Primevue throws
+     * into the mix, but serve a similar purpose).
+     */
+    .control-group {
+      display     : flex;
+      align-items : center;
+
+      &.control-group-loading {
+        cursor: wait;
+      }
+    }
+
+
+    /**
+     *
+     */
+    .control-group:where(:has(> input[type="checkbox"])) {
+      position    : relative;
+      user-select : none;
+      display     : inline-flex;
+      flex-shrink : 0;
+      width       : 1.5rem;
+      height      : 1.5rem;
+      transform   : translateY(-1px);
+
+      svg {
+        line-height : 1;
+        font-size   : 1rem;
+        width       : 1rem;
+        height      : 1rem;
+        margin-left : 0.25rem;
+      }
+
+      input {
+        appearance : none;
+        position   : absolute;
+        height     : 100%;
+        inset      : 0;
+        z-index    : 10;
+        opacity    : 0;
+
+        &:not(:disabled) {
+          cursor: pointer;
+        }
+      }
+
+      &.toggle-switch {
+        border-radius : 1rem;
+        width         : 2.5rem;
+
+        &:has(:checked) {
+          .slider:before {
+            background-color : var(--color-global-foreground);
+            transform        : translateX(1rem);
+          }
+        }
+
+        .slider {
+          position      : absolute;
+          inset         : 0;
+          border-radius : 1rem;
+
+          &:before {
+            content             : '';
+            position            : absolute;
+            background-color    : var(--color-background-scale-d);
+            border-radius       : var(--radius-full);
+            width               : 1rem;
+            height              : 1rem;
+            top                 : 0.25rem;
+            left                : 0.25rem;
+            transition          : transform, background-color;
+            transition-duration : var(--default-transition-duration);
+          }
+        }
+      }
+    }
+  }
+}

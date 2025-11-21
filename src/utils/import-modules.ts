@@ -25,6 +25,7 @@ export function importModules(nuxt: Nuxt) {
 
   const primeComponents = Array.from(
     new Set([
+      'Checkbox',
       'Dialog',
       'Drawer',
       'Form',
@@ -36,6 +37,7 @@ export function importModules(nuxt: Nuxt) {
       'ProgressSpinner',
       'Tag',
       'Toast',
+      'ToggleSwitch',
       ...(primeOptions?.includeComponents ?? []),
     ]),
   )

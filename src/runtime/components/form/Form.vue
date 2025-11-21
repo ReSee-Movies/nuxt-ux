@@ -10,7 +10,7 @@
     :aria-disabled            = "props.disabled"
     @submit                   = "handleFormSubmit"
   >
-    <slot :isValid="$form.valid" />
+    <slot :state="$form" />
   </PrimeForm>
 </template>
 
@@ -46,9 +46,10 @@
 <script setup lang="ts" generic="T extends FormValues">
   import PrimeForm from '@primevue/forms/form';
   import { toNonNullableArray } from '@resee-movies/utilities/arrays/to-non-nullable-array';
+  import { isObjectLike } from '@resee-movies/utilities/objects/is-object-like';
   import { isPromiseLike } from '@resee-movies/utilities/objects/is-promise-like';
   import { syncRefs } from '@vueuse/core';
-  import { provide, ref, toValue } from 'vue';
+  import { provide, ref, toValue, toRaw } from 'vue';
 
   const props = withDefaults(
     defineProps<FormProps<T>>(),
@@ -91,7 +92,21 @@
       const handlers = toNonNullableArray(props.onSubmit);
 
       const values = Object.entries(event.states).reduce((acc, cur) => {
-        return Object.defineProperty(acc, cur[0], { value: toValue(cur[1].value) });
+        const rawValue = toRaw(toValue(cur[1]).value);
+
+        let value;
+
+        if (Array.isArray(rawValue)) {
+          value = Array.from(rawValue);
+        }
+        else if (isObjectLike(rawValue)) {
+          value = { ...rawValue };
+        }
+        else {
+          value = rawValue;
+        }
+
+        return Object.defineProperty(acc, cur[0], { value });
       }, {} as T);
 
       const newEvent: FormSubmitEvent<T> = { ...event, values };
@@ -106,11 +121,3 @@
     }
   }
 </script>
-
-
-<style>
-  input {
-    color: black;
-    background-color: white;
-  }
-</style>

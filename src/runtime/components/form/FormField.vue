@@ -4,30 +4,40 @@
     :name          = "props.name"
     :resolver      = "validatorFunction"
     :initial-value = "props.initialValue"
-    :disabled      = "props.disabled || isFormDisabled"
+    :class         = "['form-field', { disabled: props.disabled || isFormDisabled }]"
   >
-    <label :for="inputId" class="block">
-      {{ labelText }}
-    </label>
+    <div :class="['labelled-group', props.layout ? `layout-${ props.layout }` : undefined]">
+      <label
+        :class = "['label', { required: props.required }]"
+        :for   = "inputId"
+      >
+        <slot name="label">
+          {{ labelText }}
+        </slot>
+      </label>
 
-    <slot
-      :input-id   = "inputId"
-      :message-id = "$field.error ? messageId : undefined"
-      :disabled   = "props.disabled || isFormDisabled"
-      :readonly   = "props.readonly || isSubmitPending"
-    />
+      <slot
+        :input-id   = "inputId"
+        :message-id = "$field.error ? messageId : undefined"
+        :disabled   = "props.disabled || isFormDisabled"
+        :readonly   = "props.readonly || isSubmitPending"
+      />
+    </div>
 
     <div
-      v-if   = "$field.error"
-      :id    = "messageId"
-      :class = "[
-        'text-danger opacity-0 h-0',
+      v-if        = "$field.error"
+      :id         = "messageId"
+      aria-atomic = "true"
+      aria-live   = "polite"
+      :class      = "[
+        'validation-message',
         {
-         '!opacity-100 h-auto': $field.touched || hasBeenSubmitted,
+          visible   : $field.touched || hasBeenSubmitted,
+          invisible : !($field.touched && hasBeenSubmitted),
         },
       ]"
     >
-      {{ $field.error }}
+      {{ $field.error}}
     </div>
   </PrimeFormField>
 </template>
@@ -41,6 +51,7 @@
     required?     : boolean;
     disabled?     : boolean;
     readonly?     : boolean;
+    layout?       : 'inline' | 'inline-reverse';
   }
 </script>
 
@@ -57,6 +68,7 @@
       label    : undefined,
       required : false,
       disabled : false,
+      layout   : undefined,
     },
   );
 
