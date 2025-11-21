@@ -10,6 +10,12 @@ export default defineNuxtConfig({
   sourcemap: false,
 
   app: {
+    head: {
+      htmlAttrs: {
+        lang: 'en',
+      },
+    },
+
     rootAttrs: {
       id: 'app-root',
     },

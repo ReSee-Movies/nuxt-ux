@@ -7,6 +7,11 @@
 </template>
 
 <script setup lang="ts">
-  import { useRoute } from '#imports';
+  import { useHead, useRoute } from '#imports';
+
   const route = useRoute();
+
+  useHead({
+    title: () => `${ route.meta.heading } | ReSee UX`,
+  });
 </script>
