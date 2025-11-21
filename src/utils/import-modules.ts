@@ -27,6 +27,9 @@ export function importModules(nuxt: Nuxt) {
     new Set([
       'Dialog',
       'Drawer',
+      'Form',
+      'FormField',
+      'InputText',
       'Message',
       'Menu',
       'ProgressBar',
