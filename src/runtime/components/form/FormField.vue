@@ -1,9 +1,10 @@
 <template>
   <PrimeFormField
-    v-slot    = "$field"
-    :name     = "props.name"
-    :resolver = "validatorFunction"
-    :disabled = "props.disabled || isFormDisabled"
+    v-slot         = "$field"
+    :name          = "props.name"
+    :resolver      = "validatorFunction"
+    :initial-value = "props.initialValue"
+    :disabled      = "props.disabled || isFormDisabled"
   >
     <label :for="inputId" class="block">
       {{ labelText }}
@@ -34,11 +35,12 @@
 
 <script lang="ts">
   export interface FormFieldProps {
-    name      : string;
-    label?    : string;
-    required? : boolean;
-    disabled? : boolean;
-    readonly? : boolean;
+    name          : string;
+    label?        : string;
+    initialValue? : string;
+    required?     : boolean;
+    disabled?     : boolean;
+    readonly?     : boolean;
   }
 </script>
 

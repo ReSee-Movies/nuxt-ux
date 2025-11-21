@@ -19,13 +19,17 @@
   import type { FormInstance as PrimeFormInstance, FormSubmitEvent as PrimeFormSubmitEvent } from '@primevue/forms';
   import type { Ref, InjectionKey } from 'vue';
 
-  export type FormSubmitHandler
-    = (evt: PrimeFormSubmitEvent) => void | Promise<void>;
+  export type FormValues = Record<string, any>;
 
-  export interface FormProps {
+  export type FormSubmitEvent<T extends FormValues = FormValues> = PrimeFormSubmitEvent<T>;
+
+  export type FormSubmitHandler<T extends FormValues = FormValues>
+    = (event: FormSubmitEvent<T>) => void | Promise<void>;
+
+  export interface FormProps<T extends FormValues = FormValues> {
     disabled?      : boolean;
     initialValues? : Record<string, unknown>;
-    onSubmit?      : FormSubmitHandler | FormSubmitHandler[];
+    onSubmit?      : FormSubmitHandler<T> | FormSubmitHandler<T>[];
   }
 
   export interface ReseeFormInstance {
@@ -39,20 +43,20 @@
 </script>
 
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends FormValues">
   import PrimeForm from '@primevue/forms/form';
   import { toNonNullableArray } from '@resee-movies/utilities/arrays/to-non-nullable-array';
   import { isPromiseLike } from '@resee-movies/utilities/objects/is-promise-like';
   import { syncRefs } from '@vueuse/core';
-  import { provide, ref } from 'vue';
+  import { provide, ref, toValue } from 'vue';
 
   const props = withDefaults(
-    defineProps<FormProps>(),
+    defineProps<FormProps<T>>(),
     {},
   );
 
   defineEmits<{
-    (e: 'submit', evt: PrimeFormSubmitEvent): (void | Promise<void>);
+    (e: 'submit', evt: FormSubmitEvent<T>): (void | Promise<void>);
   }>();
 
   const extendedState: ReseeFormInstance = {
@@ -65,16 +69,34 @@
 
   provide(ReseeFormSymbol, extendedState);
 
-  async function handleFormSubmit(evt: PrimeFormSubmitEvent) {
+
+  /**
+   * This internal event handler takes the value from Primevue's form component
+   * and performs some additional processing, because, at the time of writing,
+   * the setting of `initial-value` directly on FormField instances produces some
+   * really weird behavior wherein the event's `values` winds up just being whatever
+   * the value of the last FormField encountered was.
+   *
+   * This also manages some internal state flags that other components within the
+   * form use to toggle their own behavior.
+   */
+  async function handleFormSubmit (event: PrimeFormSubmitEvent) {
     extendedState.hasBeenSubmitted.value = true;
 
-    if (!evt.valid) {
+    if (!event.valid) {
       return;
     }
 
     if (props.onSubmit) {
       const handlers = toNonNullableArray(props.onSubmit);
-      const results  = handlers.map((handler) => handler(evt));
+
+      const values = Object.entries(event.states).reduce((acc, cur) => {
+        return Object.defineProperty(acc, cur[0], { value: toValue(cur[1].value) });
+      }, {} as T);
+
+      const newEvent: FormSubmitEvent<T> = { ...event, values };
+
+      const results = handlers.map((handler) => handler(newEvent));
 
       if (!!results.find((result) => isPromiseLike(result))) {
         extendedState.isSubmitPending.value = true;
