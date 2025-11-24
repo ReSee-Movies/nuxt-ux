@@ -2,8 +2,6 @@
   .form-field {
     display        : flex;
     flex-direction : column;
-    gap            : --spacing(0.75);
-
 
     /**
      * Anything that wants to look like a label.
@@ -48,6 +46,7 @@
       display        : flex;
       flex-direction : column;
       gap            : --spacing(1);
+      margin-bottom  : --spacing(0.75);
 
       &.layout-inline-reverse label {
         order: 2;
@@ -128,7 +127,7 @@
 
 
     /**
-     *
+     * Checkboxes
      */
     .control-group:where(:has(> input[type="checkbox"])) {
       position    : relative;
@@ -160,6 +159,9 @@
         }
       }
 
+      /**
+       * A checkbox styled like a toggle switch.
+       */
       &.toggle-switch {
         border-radius : 1rem;
         width         : 2.5rem;

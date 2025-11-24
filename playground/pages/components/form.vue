@@ -4,7 +4,7 @@
     class   = "grid grid-cols-2 gap-x-6 gap-y-8"
     @submit = "handleFormSubmit"
   >
-    <UiFormFieldText name="firstName" initial-value="Tobias" required />
+    <UiFormFieldText name="firstName" initial-value="Tobias" required min-length="2" />
     <UiFormFieldText name="lastName" initial-value="Funk" required />
 
     <UiFormCheckbox name="accept" value="foo" label="Accept Foo" class="col-span-2" />

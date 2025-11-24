@@ -37,13 +37,15 @@
         },
       ]"
     >
-      {{ $field.error}}
+      {{ $field.error.message }}
     </div>
   </PrimeFormField>
 </template>
 
 
 <script lang="ts">
+  import type { ZodMiniType } from 'zod/mini';
+
   export interface FormFieldProps {
     name          : string;
     label?        : string;
@@ -52,6 +54,7 @@
     disabled?     : boolean;
     readonly?     : boolean;
     layout?       : 'inline' | 'inline-reverse';
+    validator?    : (value: unknown) => undefined | ZodMiniType;
   }
 </script>
 
@@ -88,9 +91,13 @@
 
   const validatorFunction = computed(() => {
     return ({ value }: FormFieldResolverOptions) => {
-      return props.required && !value
-        ? { errors: ['Required'] }
-        : undefined;
+      const result = props?.validator?.(value)?.safeParse(value);
+
+      if (result?.error?.issues.length) {
+        return { errors: result.error.issues };
+      }
+
+      return undefined;
     };
   });
 </script>
