@@ -42,7 +42,7 @@
      * This allows for a variety of layouts for the two relative
      * to each other.
      */
-    .labelled-group {
+    .label-group {
       display        : flex;
       flex-direction : column;
       gap            : --spacing(1);
@@ -189,6 +189,7 @@
             left                : 0.25rem;
             transition          : transform, background-color;
             transition-duration : var(--default-transition-duration);
+            box-shadow          : var(--shadow-md);
           }
         }
       }

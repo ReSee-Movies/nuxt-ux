@@ -1,60 +1,74 @@
 <template>
   <PrimeFormField
     v-slot         = "$field"
+    :as            = "props.is"
     :name          = "props.name"
     :resolver      = "validatorFunction"
     :initial-value = "props.initialValue"
-    :class         = "['form-field', { disabled: props.disabled || isFormDisabled }]"
+    :class         = "['form-field', { disabled: isDisabled }]"
   >
-    <div :class="['labelled-group', props.layout ? `layout-${ props.layout }` : undefined]">
-      <label
-        :class = "['label', { required: props.required }]"
-        :for   = "inputId"
-      >
-        <slot name="label">
-          {{ labelText }}
-        </slot>
-      </label>
-
-      <slot
-        :input-id   = "inputId"
-        :message-id = "$field.error ? messageId : undefined"
-        :disabled   = "props.disabled || isFormDisabled"
-        :readonly   = "props.readonly || isSubmitPending"
-      />
-    </div>
-
-    <div
-      v-if        = "$field.error"
-      :id         = "messageId"
-      aria-atomic = "true"
-      aria-live   = "polite"
-      :class      = "[
-        'validation-message',
-        {
-          visible   : $field.touched || hasBeenSubmitted,
-          invisible : !($field.touched && hasBeenSubmitted),
-        },
-      ]"
+    <FormLabelGroup
+      :label-is   = "props.labelIs"
+      :label-text = "labelText"
+      :layout     = "props.layout"
+      :required   = "props.required"
+      :input-id   = "inputId"
     >
-      {{ $field.error.message }}
-    </div>
+      <template #label>
+        <slot name="label" />
+      </template>
+
+      <template #default>
+        <slot
+          name        = "default"
+          :input-id   = "inputId"
+          :message-id = "$field.error ? messageId : undefined"
+          :disabled   = "isDisabled"
+          :readonly   = "isReadonly"
+        />
+      </template>
+    </FormLabelGroup>
+
+    <FormValidationMessage
+      v-if     = "$field.error"
+      :id      = "messageId"
+      :visible = "$field.touched || formState.hasSubmitted.value"
+      :message = "$field.error.message"
+    >
+      <template #default>
+        <slot name="validation" />
+      </template>
+    </FormValidationMessage>
   </PrimeFormField>
 </template>
 
 
 <script lang="ts">
+  import { pluckObject } from '@resee-movies/utilities/objects/pluck-object';
+  import { computed } from 'vue';
   import type { ZodMiniType } from 'zod/mini';
+  import type { HintedString } from '../../types';
+  import type { FormLabelGroupProps } from './FormLabelGroup.vue';
 
   export interface FormFieldProps {
     name          : string;
+    is?           : HintedString<'div'>;
+    labelIs?      : FormLabelGroupProps['labelIs'];
     label?        : string;
-    initialValue? : string;
+    initialValue? : unknown;
     required?     : boolean;
     disabled?     : boolean;
     readonly?     : boolean;
-    layout?       : 'inline' | 'inline-reverse';
-    validator?    : (value: unknown) => undefined | ZodMiniType;
+    layout?       : FormLabelGroupProps['layout'];
+    validator?    : (value: unknown, label: string) => undefined | ZodMiniType;
+  }
+
+  export function useFormFieldProps<T extends Record<string, unknown>>(props: T) {
+    return computed(() => {
+      return pluckObject(props, [
+        'is', 'name', 'label', 'initialValue', 'required', 'disabled', 'readonly', 'layout',
+      ]);
+    });
   }
 </script>
 
@@ -62,19 +76,26 @@
 <script setup lang="ts">
   import PrimeFormField, { type FormFieldResolverOptions } from '@primevue/forms/formfield';
   import { humanize } from '@resee-movies/utilities/strings/humanize';
-  import { computed, inject, useId } from 'vue';
-  import { ReseeFormSymbol } from './Form.vue';
+  import { useId } from 'vue';
+  import { injectFormInstance } from '../../utils/form';
+  import FormLabelGroup from './FormLabelGroup.vue';
+  import FormValidationMessage from './FormValidationMessage.vue';
 
   const props = withDefaults(
     defineProps<FormFieldProps>(),
     {
-      label    : undefined,
-      required : false,
-      disabled : false,
-      layout   : undefined,
+      is           : 'div',
+      label        : undefined,
+      initialValue : undefined,
+      required     : false,
+      disabled     : false,
+      readonly     : false,
+      layout       : undefined,
+      validator    : undefined,
     },
   );
 
+  const formState = injectFormInstance();
   const inputId   = useId();
   const messageId = `${ inputId }_message`;
 
@@ -82,16 +103,18 @@
     return props.label ?? humanize(props.name);
   });
 
-  const {
-    isFormDisabled,
-    isSubmitPending,
-    hasBeenSubmitted,
-  } = inject(ReseeFormSymbol) ?? {};
+  const isDisabled = computed(() => {
+    return props.disabled || formState.isDisabled.value;
+  });
+
+  const isReadonly = computed(() => {
+    return props.readonly || formState.isSubmitting.value;
+  });
 
 
   const validatorFunction = computed(() => {
     return ({ value }: FormFieldResolverOptions) => {
-      const result = props?.validator?.(value)?.safeParse(value);
+      const result = props?.validator?.(value, labelText.value)?.safeParse(value);
 
       if (result?.error?.issues.length) {
         return { errors: result.error.issues };

@@ -1,27 +1,34 @@
 <template>
-  <FormField
-    v-bind     = "props" v-slot="{ inputId, messageId, disabled, readonly }"
-    :validator = "validatorFunction"
-  >
-    <PrimeInputText
-      :id               = "inputId"
-      :aria-describedby = "messageId"
-      :disabled         = "disabled"
-      :readonly         = "readonly"
-      :type             = "props.type"
-      :required         = "props.required"
-      :minlength        = "props.minLength"
-      :maxlength        = "props.maxLength"
-      class             = "form-control"
-    />
+  <FormField v-bind="formFieldProps" :validator="validatorFunction">
+    <template #label>
+      <slot name="label" />
+    </template>
+
+    <template #default="{ inputId, messageId, disabled, readonly }">
+      <PrimeInputText
+        :id               = "inputId"
+        :aria-describedby = "messageId"
+        :disabled         = "disabled"
+        :readonly         = "readonly"
+        :type             = "props.type"
+        :required         = "props.required"
+        :minlength        = "props.minLength"
+        :maxlength        = "props.maxLength"
+        class             = "form-control"
+      />
+    </template>
+
+    <template #validation>
+      <slot name="validation" />
+    </template>
   </FormField>
 </template>
 
 
 <script lang="ts">
-  import type { FormFieldProps } from './FormField.vue';
+  import { useFormFieldProps, type FormFieldProps } from '../FormField.vue';
 
-  export interface FormFieldTextProps extends FormFieldProps {
+  export interface FormFieldTextProps extends Omit<FormFieldProps, 'validator'> {
     type?      : 'text' | 'url' | 'email';
     minLength? : string | number;
     maxLength? : string | number;
@@ -32,8 +39,9 @@
 <script setup lang="ts">
   import { toInteger } from '@resee-movies/utilities/numbers/to-integer';
   import PrimeInputText from 'primevue/inputtext';
+  import type { ZodMiniType } from 'zod/mini';
   import * as z from 'zod/mini';
-  import FormField from './FormField.vue';
+  import FormField from '../FormField.vue';
 
   const props = withDefaults(
     defineProps<FormFieldTextProps>(),
@@ -44,9 +52,11 @@
     },
   );
 
+  const formFieldProps = useFormFieldProps(props);
 
-  function validatorFunction(_value: unknown) {
-    let validator = z.string().check(z.trim());
+
+  function validatorFunction(_value: unknown, _label: string) {
+    let validator: ZodMiniType = z.string({ error: 'Required' }).check(z.trim());
 
     if (props.required) {
       validator = validator.check(
@@ -76,6 +86,10 @@
           z.maxLength(toInteger(props.maxLength), { error: `Cannot have more than ${ props.maxLength } character(s)` }),
         );
       }
+    }
+
+    if (!props.required) {
+      validator = z.union([z.null({ error: 'Required' }), validator]);
     }
 
     return validator;

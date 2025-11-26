@@ -4,16 +4,12 @@
     class   = "grid grid-cols-2 gap-x-6 gap-y-8"
     @submit = "handleFormSubmit"
   >
-    <UiFormFieldText name="firstName" initial-value="Tobias" required min-length="2" />
-    <UiFormFieldText name="lastName" initial-value="Funk" required />
-
-    <UiFormCheckbox name="accept" value="foo" label="Accept Foo" class="col-span-2" />
-    <UiFormCheckbox name="accept" value="bar" label="Accept Bar" class="col-span-2" />
-
-    <UiFormToggleSwitch name="activate" class="col-span-2" />
+    <UiFormFieldText name="foggle" required />
+    <UiFormFieldToggleSwitch name="toggle" class="col-span-2" required />
+    <UiFormFieldCheckbox name="check" class="col-span-2" required />
 
     <div>
-      <UiFormSubmitButton />
+      <FormSubmitButton />
     </div>
 
     <div class="col-span-2">
@@ -25,10 +21,10 @@
 
 <script setup lang="ts">
   import UiForm, { type FormSubmitEvent } from '#resee-ux/components/form/Form.vue';
-  import UiFormCheckbox from '#resee-ux/components/form/FormFieldCheckbox.vue';
-  import UiFormFieldText from '#resee-ux/components/form/FormFieldText.vue';
-  import UiFormSubmitButton from '#resee-ux/components/form/FormSubmitButton.vue';
-  import UiFormToggleSwitch from '#resee-ux/components/form/FormFieldToggleSwitch.vue';
+  import UiFormFieldCheckbox from '#resee-ux/components/form/field/FormFieldCheckbox.vue';
+  import UiFormFieldText from '#resee-ux/components/form/field/FormFieldText.vue';
+  import UiFormFieldToggleSwitch from '#resee-ux/components/form/field/FormFieldToggleSwitch.vue';
+  import FormSubmitButton from '#resee-ux/components/form/FormSubmitButton.vue';
   import { sleep } from '@resee-movies/utilities/timers/sleep';
 
   definePageMeta({

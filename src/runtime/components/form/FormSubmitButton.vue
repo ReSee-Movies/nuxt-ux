@@ -1,5 +1,5 @@
 <template>
-  <Button v-bind="props" type="submit" :loading="isSubmitPending" />
+  <Button v-bind="props" type="submit" :loading="formState.isSubmitting.value" />
 </template>
 
 
@@ -10,9 +10,8 @@
 
 
 <script setup lang="ts">
-  import { inject } from 'vue';
+  import { injectFormInstance } from '../../utils/form';
   import Button from '../Button.vue';
-  import { ReseeFormSymbol } from './Form.vue';
 
   const props = withDefaults(
     defineProps<FormSubmitButtonProps>(),
@@ -22,5 +21,5 @@
     },
   );
 
-  const { isSubmitPending } = inject(ReseeFormSymbol) ?? {};
+  const formState = injectFormInstance();
 </script>
