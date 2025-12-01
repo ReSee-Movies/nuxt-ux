@@ -4,18 +4,17 @@
     :mode   = "props.transitionMode"
     :appear = "props.transitionOnAppear"
   >
-    <ProgressSpinner
-      v-if  = "props.loading"
-      :size = "props.size"
-      class = "icon"
-    />
+    <span v-if="props.loading" class="icon">
+      <ProgressSpinner :size="props.size" />
+    </span>
 
     <span
-      v-else
-      v-bind = "attrs"
-      role   = "presentation"
-      :class = "['icon', props.name, props.size, { 'color-cycle': props.colorCycle }]"
-    />
+      v-else-if = "props.name"
+      role      = "presentation"
+      :class    = "['icon', props.size]"
+    >
+      <span :class="[props.name, { 'color-cycle': props.colorCycle }]" />
+    </span>
   </Transition>
 </template>
 
@@ -32,14 +31,7 @@
 </script>
 
 <script setup lang="ts">
-  import { useAttrs } from 'vue';
   import ProgressSpinner from './ProgressSpinner.vue';
-
-  defineOptions({
-    inheritAttrs: false,
-  });
-
-  const attrs = useAttrs();
 
   const props = withDefaults(
     defineProps<IconProps>(),

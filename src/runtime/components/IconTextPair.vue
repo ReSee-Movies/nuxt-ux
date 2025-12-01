@@ -1,13 +1,7 @@
 <template>
-  <span
-    :class="[
-      'pair',
-      props.layout ? `layout-${ props.layout }` : undefined,
-      props.spacing ? `spacing-${ props.spacing }` : undefined,
-    ]"
-  >
+  <span :class="['pair', props.spacing ? `spacing-${ props.spacing }` : undefined]">
     <Icon
-      v-if                  = "props.icon || props.loading"
+      class                 = "leading-icon"
       :name                 = "props.icon"
       :size                 = "props.iconSize"
       :loading              = "props.loading"
@@ -24,6 +18,7 @@
 
     <Icon
       v-if                  = "props.trailingIcon"
+      class                 = "trailing-icon"
       :name                 = "props.trailingIcon"
       :size                 = "props.iconSize"
       :transition-name      = "props.iconTransitionName"
@@ -43,7 +38,6 @@
     trailingIcon?           : string;
     iconSize?               : IconProps['size'];
     trailingIconSize?       : IconProps['size'];
-    layout?                 : 'column' | 'row';
     spacing?                : 'wide' | 'normal' | 'none';
     loading?                : boolean;
     iconTransitionName?     : IconProps['transitionName'];
@@ -78,26 +72,32 @@
 <style scoped>
   @reference "tailwindcss";
 
+  /**
+   * We are intentionally targeting the immediate child of the icon component
+   * to apply a margin to so that the icon can animated in/out via its size
+   * and that extra bit of space included.
+   */
+
   .pair {
-    display     : inline-flex;
-    gap         : --spacing(1);
+    --element-spacing: --spacing(1);
+
+    display     : inline;
     align-items : baseline;
 
     &.spacing-none {
-      gap: 0;
+      --element-spacing: 0;
     }
 
     &.spacing-wide {
-      gap: --spacing(2);
+      --element-spacing: --spacing(2);
     }
 
-    &.layout-row {
-      display: flex;
+    .leading-icon > * {
+      margin-inline-end: var(--element-spacing);
     }
 
-    &.layout-column {
-      flex-direction : column;
-      align-items    : center;
+    .trailing-icon > * {
+      margin-inline-start: var(--element-spacing);
     }
   }
 </style>
