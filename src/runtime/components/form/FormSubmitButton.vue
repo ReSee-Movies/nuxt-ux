@@ -1,5 +1,12 @@
 <template>
-  <Button v-bind="props" type="submit" :loading="formState.isSubmitting.value" />
+  <Button
+    v-bind                     = "props"
+    type                       = "submit"
+    :loading                   = "formState.isSubmitting.value"
+    icon-transition-name       = "grow-x"
+    :icon-transition-on-appear = "true"
+    spacing = "none"
+  />
 </template>
 
 

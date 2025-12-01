@@ -7,10 +7,13 @@
     ]"
   >
     <Icon
-      v-if     = "props.icon || props.loading"
-      :name    = "props.icon"
-      :size    = "props.iconSize"
-      :loading = "props.loading"
+      v-if                  = "props.icon || props.loading"
+      :name                 = "props.icon"
+      :size                 = "props.iconSize"
+      :loading              = "props.loading"
+      :transition-name      = "props.iconTransitionName"
+      :transition-mode      = "props.iconTransitionMode"
+      :transition-on-appear = "props.iconTransitionOnAppear"
     />
 
     <span v-if="props.text || slots.default" class="label">
@@ -20,9 +23,12 @@
     </span>
 
     <Icon
-      v-if  = "props.trailingIcon"
-      :name = "props.trailingIcon"
-      :size = "props.iconSize"
+      v-if                  = "props.trailingIcon"
+      :name                 = "props.trailingIcon"
+      :size                 = "props.iconSize"
+      :transition-name      = "props.iconTransitionName"
+      :transition-mode      = "props.iconTransitionMode"
+      :transition-on-appear = "props.iconTransitionOnAppear"
     />
   </span>
 </template>
@@ -32,14 +38,17 @@
   import type { IconProps } from './Icon.vue';
 
   export interface IconTextPairProps {
-    text?             : string;
-    icon?             : string;
-    trailingIcon?     : string;
-    iconSize?         : IconProps['size'];
-    trailingIconSize? : IconProps['size'];
-    layout?           : 'column' | 'row';
-    spacing?          : 'wide' | 'normal';
-    loading?          : boolean;
+    text?                   : string;
+    icon?                   : string;
+    trailingIcon?           : string;
+    iconSize?               : IconProps['size'];
+    trailingIconSize?       : IconProps['size'];
+    layout?                 : 'column' | 'row';
+    spacing?                : 'wide' | 'normal' | 'none';
+    loading?                : boolean;
+    iconTransitionName?     : IconProps['transitionName'];
+    iconTransitionMode?     : IconProps['transitionMode'];
+    iconTransitionOnAppear? : IconProps['transitionOnAppear'];
   }
 </script>
 
@@ -49,14 +58,17 @@
   const props = withDefaults(
     defineProps<IconTextPairProps>(),
     {
-      text             : undefined,
-      icon             : undefined,
-      trailingIcon     : undefined,
-      iconSize         : 'md',
-      trailingIconSize : 'md',
-      layout           : undefined,
-      spacing          : undefined,
-      loading          : false,
+      text                   : undefined,
+      icon                   : undefined,
+      trailingIcon           : undefined,
+      iconSize               : 'md',
+      trailingIconSize       : 'md',
+      layout                 : undefined,
+      spacing                : undefined,
+      loading                : false,
+      iconTransitionName     : undefined,
+      iconTransitionMode     : undefined,
+      iconTransitionOnAppear : false,
     },
   );
 
@@ -70,6 +82,10 @@
     display     : inline-flex;
     gap         : --spacing(1);
     align-items : baseline;
+
+    &.spacing-none {
+      gap: 0;
+    }
 
     &.spacing-wide {
       gap: --spacing(2);

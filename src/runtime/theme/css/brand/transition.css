@@ -54,7 +54,7 @@
 
     .grow-y-enter-from,
     .grow-y-leave-to {
-      height: 0;
+      height: 0 !important;
     }
 
     .grow-x-enter-active,
@@ -69,7 +69,7 @@
 
     .grow-x-enter-from,
     .grow-x-leave-to {
-      width: 0;
+      width: 0 !important;
     }
   }
 

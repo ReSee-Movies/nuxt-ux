@@ -1,5 +1,9 @@
 <template>
-  <Transition name="fade" mode="out-in">
+  <Transition
+    :name   = "props.transitionName"
+    :mode   = "props.transitionMode"
+    :appear = "props.transitionOnAppear"
+  >
     <ProgressSpinner
       v-if  = "props.loading"
       :size = "props.size"
@@ -17,10 +21,13 @@
 
 <script lang="ts">
   export interface IconProps {
-    name?       : string;
-    loading?    : boolean;
-    size?       : 'sm' | 'md' | 'lg' | 'xl';
-    colorCycle? : boolean;
+    name?               : string;
+    loading?            : boolean;
+    size?               : 'sm' | 'md' | 'lg' | 'xl';
+    colorCycle?         : boolean;
+    transitionName?     : string;
+    transitionMode?     : 'out-in' | 'in-out';
+    transitionOnAppear? : boolean;
   }
 </script>
 
@@ -28,15 +35,22 @@
   import { useAttrs } from 'vue';
   import ProgressSpinner from './ProgressSpinner.vue';
 
+  defineOptions({
+    inheritAttrs: false,
+  });
+
   const attrs = useAttrs();
 
   const props = withDefaults(
     defineProps<IconProps>(),
     {
-      name       : undefined,
-      loading    : false,
-      size       : 'md',
-      colorCycle : false,
+      name               : undefined,
+      loading            : false,
+      size               : 'md',
+      colorCycle         : false,
+      transitionName     : 'fade',
+      transitionMode     : 'out-in',
+      transitionOnAppear : false,
     },
   );
 </script>

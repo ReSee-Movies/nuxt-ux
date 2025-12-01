@@ -20,13 +20,16 @@
     @click              = "handleButtonClick"
   >
     <IconTextPair
-      :text          = "props.text"
-      :icon          = "props.icon"
-      :icon-size     = "props.iconSize ?? props.size"
-      :trailing-icon = "props.trailingIcon"
-      :layout        = "props.layout"
-      :spacing       = "props.spacing ?? (props.layout === 'column' ? undefined : 'wide')"
-      :loading       = "showLoading"
+      :text                      = "props.text"
+      :icon                      = "props.icon"
+      :icon-size                 = "props.iconSize ?? props.size"
+      :trailing-icon             = "props.trailingIcon"
+      :layout                    = "props.layout"
+      :spacing                   = "props.spacing ?? (props.layout === 'column' ? undefined : 'wide')"
+      :loading                   = "showLoading"
+      :icon-transition-name      = "props.iconTransitionName"
+      :icon-transition-mode      = "props.iconTransitionMode"
+      :icon-transition-on-appear = "props.iconTransitionOnAppear"
     >
       <slot />
     </IconTextPair>
