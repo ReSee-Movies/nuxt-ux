@@ -1,5 +1,5 @@
 <template>
-  <FormField v-bind="formFieldProps" :validator="validatorFunction">
+  <FormField v-bind="props" :validator="validatorFunction">
     <template #label>
       <slot name="label" />
     </template>
@@ -14,19 +14,15 @@
         :required         = "props.required"
         :minlength        = "props.minLength"
         :maxlength        = "props.maxLength"
-        class             = "form-control"
+        class             = "input-control"
       />
-    </template>
-
-    <template #validation>
-      <slot name="validation" />
     </template>
   </FormField>
 </template>
 
 
 <script lang="ts">
-  import { useFormFieldProps, type FormFieldProps } from '../FormField.vue';
+  import { type FormFieldProps } from './FormField.vue';
 
   export interface FormFieldTextProps extends Omit<FormFieldProps, 'validator'> {
     type?      : 'text' | 'url' | 'email';
@@ -39,8 +35,8 @@
 <script setup lang="ts">
   import PrimeInputText from 'primevue/inputtext';
   import { computed } from 'vue';
-  import FormField from '../FormField.vue';
-  import { createTextValidator } from '../../../utils/validation';
+  import FormField from './FormField.vue';
+  import { createTextValidator } from '../../utils/validation';
 
   const props = withDefaults(
     defineProps<FormFieldTextProps>(),
@@ -50,8 +46,6 @@
       maxLength : undefined,
     },
   );
-
-  const formFieldProps = useFormFieldProps(props);
 
   const validatorFunction = computed(() => {
     return () => createTextValidator({

@@ -1,5 +1,6 @@
 import { toInteger } from '@resee-movies/utilities/numbers/to-integer';
-import z, { type core } from 'zod/mini';
+import * as z from 'zod/mini';
+import type { core } from 'zod/mini';
 import { useReseeUx } from '../composables/use-resee-ux';
 
 

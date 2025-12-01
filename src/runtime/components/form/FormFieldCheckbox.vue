@@ -1,5 +1,5 @@
 <template>
-  <FormField v-bind="formFieldProps" :validator="validatorFunction">
+  <FormField v-bind="props" :validator="validatorFunction">
     <template #label>
       <slot name="label" />
     </template>
@@ -14,12 +14,8 @@
         :aria-describedby = "messageId"
         :disabled         = "disabled"
         :readonly         = "readonly"
-        class             = "control-group"
+        class             = "input-group"
       />
-    </template>
-
-    <template #validation>
-      <slot name="validation" />
     </template>
   </FormField>
 </template>
@@ -27,8 +23,7 @@
 
 <script lang="ts">
   import { computed } from 'vue';
-  import type { FormFieldProps } from '../FormField.vue';
-  import { createBooleanValidator } from '../../../utils/validation';
+  import type { FormFieldProps } from './FormField.vue';
 
   export interface FormFieldCheckboxProps extends Omit<FormFieldProps, 'validator'> {
     value?      : unknown;
@@ -41,21 +36,20 @@
 
 <script setup lang="ts">
   import PrimeCheckbox from 'primevue/checkbox';
-  import FormField, { useFormFieldProps } from '../FormField.vue';
+  import { createBooleanValidator } from '../../utils/validation';
+  import FormField from './FormField.vue';
 
   const props = withDefaults(
     defineProps<FormFieldCheckboxProps>(),
     {
-      layout       : 'inline-reverse',
-      value        : undefined,
-      trueValue    : () => true,
-      falseValue   : () => false,
-      binary       : () => true,
-      initialValue : () => false,
+      labelPosition : 'after',
+      value         : undefined,
+      trueValue     : () => true,
+      falseValue    : () => false,
+      binary        : () => true,
+      initialValue  : () => false,
     },
   );
-
-  const formFieldProps = useFormFieldProps(props);
 
   const validatorFunction = computed(() => {
     return () => createBooleanValidator({ required: props.required });

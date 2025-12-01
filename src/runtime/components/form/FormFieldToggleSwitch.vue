@@ -1,5 +1,5 @@
 <template>
-  <FormField v-bind="formFieldProps" :validator="validatorFunction">
+  <FormField v-bind="props" :validator="validatorFunction">
     <template #label>
       <slot name="label" />
     </template>
@@ -10,20 +10,16 @@
         :aria-describedby = "messageId"
         :disabled         = "disabled"
         :readonly         = "readonly"
-        class             = "control-group toggle-switch"
+        class             = "input-group toggle-switch"
         pt:slider:class   = "slider"
       />
-    </template>
-
-    <template #validation>
-      <slot name="validation" />
     </template>
   </FormField>
 </template>
 
 
 <script lang="ts">
-  import type { FormFieldProps } from '../FormField.vue';
+  import type { FormFieldProps } from './FormField.vue';
 
   export interface FormFieldToggleSwitchProps extends Omit<FormFieldProps, 'validator'> {
     trueValue?  : unknown;
@@ -35,20 +31,18 @@
 <script setup lang="ts">
   import PrimeToggleSwitch from 'primevue/toggleswitch';
   import { computed } from 'vue';
-  import FormField, { useFormFieldProps } from '../FormField.vue';
-  import { createBooleanValidator } from '../../../utils/validation';
+  import FormField from './FormField.vue';
+  import { createBooleanValidator } from '../../utils/validation';
 
   const props = withDefaults(
     defineProps<FormFieldToggleSwitchProps>(),
     {
-      layout       : 'inline-reverse',
-      trueValue    : () => true,
-      falseValue   : () => false,
-      initialValue : () => false,
+      labelPosition : 'after',
+      trueValue     : () => true,
+      falseValue    : () => false,
+      initialValue  : () => false,
     },
   );
-
-  const formFieldProps = useFormFieldProps(props);
 
   const validatorFunction = computed(() => {
     return () => createBooleanValidator({ required: props.required });

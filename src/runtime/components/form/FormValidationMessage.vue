@@ -3,7 +3,7 @@
     :id         = "props.id"
     aria-atomic = "true"
     aria-live   = "polite"
-    :class      = "['validation-message', (props.visible ? 'visible' : 'invisible')]"
+    :class      = "['input-validation', (props.visible ? 'visible' : 'invisible')]"
   >
     <slot name="default">
       {{ props.message }}
