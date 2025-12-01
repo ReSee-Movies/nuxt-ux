@@ -1,7 +1,6 @@
 import type { FormFieldState } from '@primevue/forms';
-// import type { FormInstance as PrimeFormInstance } from '@primevue/forms/form';
 import { isObjectLike } from '@resee-movies/utilities/objects/is-object-like';
-import { computed, inject, type InjectionKey, provide, ref, toRaw, toValue } from 'vue';
+import { inject, type InjectionKey, provide, ref, toRaw, toValue } from 'vue';
 import type { FormInstance, FormValues } from '../types/form';
 
 
@@ -20,14 +19,10 @@ export const FormSymbol = Symbol('form') as InjectionKey<FormInstance>;
  * @private
  */
 export function createFormInstance(): FormInstance {
-  // const PrimeFormSymbol   = '$pcForm' as unknown as InjectionKey<PrimeFormInstance>;
-  // const primeFormInstance = inject(PrimeFormSymbol);
-
   return {
     hasSubmitted : ref(false),
     isSubmitting : ref(false),
     isDisabled   : ref(false),
-    // isValid      : computed(() => primeFormInstance?.valid ?? true),
   };
 }
 

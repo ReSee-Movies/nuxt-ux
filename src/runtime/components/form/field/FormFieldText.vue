@@ -37,11 +37,10 @@
 
 
 <script setup lang="ts">
-  import { toInteger } from '@resee-movies/utilities/numbers/to-integer';
   import PrimeInputText from 'primevue/inputtext';
-  import type { ZodMiniType } from 'zod/mini';
-  import * as z from 'zod/mini';
+  import { computed } from 'vue';
   import FormField from '../FormField.vue';
+  import { createTextValidator } from '../../../utils/validation';
 
   const props = withDefaults(
     defineProps<FormFieldTextProps>(),
@@ -54,44 +53,12 @@
 
   const formFieldProps = useFormFieldProps(props);
 
-
-  function validatorFunction(_value: unknown, _label: string) {
-    let validator: ZodMiniType = z.string({ error: 'Required' }).check(z.trim());
-
-    if (props.required) {
-      validator = validator.check(
-        z.minLength(1, { error: 'Required' }),
-      );
-    }
-
-    if (props.type === 'email') {
-      validator = validator.check(
-        z.email({ error: 'A valid email address is required' }),
-      );
-    }
-    else if (props.type === 'url') {
-      validator = validator.check(
-        z.url({ error: 'A valid URL (https://...) is required' }),
-      );
-    }
-    else {
-      if (props.minLength) {
-        validator = validator.check(
-          z.minLength(toInteger(props.minLength), { error: `Must have at least ${ props.minLength } character(s)` }),
-        );
-      }
-
-      if (props.maxLength) {
-        validator = validator.check(
-          z.maxLength(toInteger(props.maxLength), { error: `Cannot have more than ${ props.maxLength } character(s)` }),
-        );
-      }
-    }
-
-    if (!props.required) {
-      validator = z.union([z.null({ error: 'Required' }), validator]);
-    }
-
-    return validator;
-  }
+  const validatorFunction = computed(() => {
+    return () => createTextValidator({
+      required  : props.required,
+      type      : props.type,
+      minLength : props.minLength,
+      maxLength : props.maxLength,
+    });
+  });
 </script>

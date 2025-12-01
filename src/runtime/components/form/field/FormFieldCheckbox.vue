@@ -26,7 +26,9 @@
 
 
 <script lang="ts">
+  import { computed } from 'vue';
   import type { FormFieldProps } from '../FormField.vue';
+  import { createBooleanValidator } from '../../../utils/validation';
 
   export interface FormFieldCheckboxProps extends Omit<FormFieldProps, 'validator'> {
     value?      : unknown;
@@ -39,7 +41,6 @@
 
 <script setup lang="ts">
   import PrimeCheckbox from 'primevue/checkbox';
-  import * as z from 'zod/mini';
   import FormField, { useFormFieldProps } from '../FormField.vue';
 
   const props = withDefaults(
@@ -49,20 +50,14 @@
       value        : undefined,
       trueValue    : () => true,
       falseValue   : () => false,
-      binary       : true,
+      binary       : () => true,
       initialValue : () => false,
     },
   );
 
   const formFieldProps = useFormFieldProps(props);
 
-
-  function validatorFunction(_value: unknown, _label: string) {
-    if (props.required) {
-      // Validate to something truthy, doesn't matter what exactly.
-      return z.coerce.boolean().check(z.refine(val => val === true, { error: 'Required' }));
-    }
-
-    return undefined;
-  }
+  const validatorFunction = computed(() => {
+    return () => createBooleanValidator({ required: props.required });
+  });
 </script>

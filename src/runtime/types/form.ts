@@ -16,7 +16,6 @@ export interface FormInstance {
   hasSubmitted : Ref<boolean>;
   isSubmitting : Ref<boolean>;
   isDisabled   : Ref<boolean>;
-  // isValid      : Ref<boolean>;
 }
 
 
