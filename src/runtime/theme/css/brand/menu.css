@@ -1,0 +1,78 @@
+@layer components {
+  .menu {
+    border           : solid 1px var(--color-global-background-accent);
+    border-radius    : var(--radius-md);
+    background-color : var(--color-background-scale-a);
+    box-shadow       : var(--shadow-heavy);
+    margin-block     : --spacing(1);
+    padding          : --spacing(1);
+    max-width        : --spacing(80);
+
+    li[role="separator"] {
+      border-bottom : solid 1px var(--color-global-background-accent);
+      margin-block  : --spacing(1);
+    }
+
+    /* Sublevel headings */
+    li[role="none"] {
+      user-select : none;
+      padding     : --spacing(1) --spacing(2);
+      font-weight : var(--font-weight-semibold);
+    }
+
+    li[role="menuitem"], li[role="option"] {
+      user-select         : none;
+      cursor              : pointer;
+      border-radius       : var(--radius-md);
+      transition          : background-color;
+      transition-duration : var(--default-transition-duration);
+
+      /* Callback Function Items, or select options */
+      > :only-child:not(:has(> a:only-child)) {
+        display : block;
+        padding : --spacing(1) --spacing(2);
+      }
+
+      /* Anchor Items in the Menu component */
+      > :only-child:has(> a:only-child) > a {
+        display : block;
+        padding : --spacing(1) --spacing(2);
+      }
+
+      &[aria-disabled="true"] {
+        cursor : not-allowed;
+        color  : var(--color-global-foreground-accent);
+      }
+    }
+
+    /*
+     The `data-p-focused` attr is driven internally by the Primevue component,
+     and responds to keyboard interaction. It only occurs when the list is focused
+     though - and there are several ways for it to lose focus. If both the :hover
+     and attr approaches are used together, it can sometimes appear if two options
+     are selected if the cursor sits right at the boundary of those options. So,
+     its either one or the other, but not both.
+     */
+    ul:not(:focus) li:is([role="menuitem"], [role="option"]):not([aria-disabled="true"]):hover,
+    li:is([role="menuitem"], [role="option"])[data-p-focused="true"]:not([aria-disabled="true"]) {
+      background-color: var(--color-background-scale-c);
+    }
+
+    /*
+     The .menu-prefix and .menu-suffix classes can be used to style content blocks
+     that come before and/or after the menu's `ul` element.
+     */
+
+    .menu-prefix {
+      padding       : 0 --spacing(2) --spacing(1);
+      margin-bottom : --spacing(1);
+      border-bottom : solid 1px var(--color-global-background-accent);
+    }
+
+    .menu-suffix {
+      padding    : --spacing(1) --spacing(2) 0;
+      margin-top : --spacing(1);
+      border-top : solid 1px var(--color-global-background-accent);
+    }
+  }
+}
