@@ -9,11 +9,13 @@
   >
     <FormLabelInputPair
       :input-id       = "inputId"
+      :label-id       = "labelId"
       :label-text     = "labelText"
       :label-position = "props.labelPosition"
       :label-sr-only  = "props.labelSrOnly"
       :disabled       = "props.disabled"
       :required       = "props.required"
+      :faux-label     = "props.fauxLabel"
     >
       <template #label>
         <slot name="label" />
@@ -22,7 +24,10 @@
       <template #input>
         <slot
           name        = "default"
+          :input-name = "props.name"
           :input-id   = "inputId"
+          :label-id   = "labelId"
+          :label-text = "labelText"
           :message-id = "$field.error ? messageId : undefined"
           :disabled   = "isDisabled"
           :readonly   = "isReadonly"
@@ -54,6 +59,7 @@
     required?      : boolean;
     disabled?      : boolean;
     readonly?      : boolean;
+    fauxLabel?     : boolean;
     labelSrOnly?   : boolean;
     labelPosition? : FormLabelInputPairProps['labelPosition'];
     validator?     : (value: unknown, label: string) => undefined | ZodMiniType;
@@ -90,6 +96,7 @@
 
   const formState  = injectFormInstance();
   const inputId    = useId();
+  const labelId    = `${ inputId }_label`;
   const messageId  = `${ inputId }_message`;
   const labelText  = computed(() => props.label ?? humanize(props.name));
   const isDisabled = computed(() => props.disabled || formState.isDisabled.value);
