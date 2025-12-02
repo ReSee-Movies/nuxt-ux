@@ -4,9 +4,19 @@
     class   = "grid grid-cols-2 gap-x-6 gap-y-8"
     @submit = "handleFormSubmit"
   >
-    <UiFormFieldText name="foggle" required min-length="2" max-length="5" />
-    <UiFormFieldToggleSwitch name="toggle" class="col-span-2" required />
-    <UiFormFieldCheckbox name="check" class="col-span-2" required />
+    <UiFormFieldText name="foggle" />
+
+    <UiFormFieldSelect
+      name        = "countries"
+      class       = "col-span-2"
+      :required   = "true"
+      :options    = "['Option A', 'Option B', 'Option C']"
+      placeholder = "Hello World"
+
+    />
+
+    <UiFormFieldToggleSwitch name="toggle" class="col-span-2" />
+    <UiFormFieldCheckbox name="check" class="col-span-2" />
 
     <div>
       <FormSubmitButton />
@@ -24,6 +34,7 @@
   import UiFormFieldCheckbox from '#resee-ux/components/form/FormFieldCheckbox.vue';
   import UiFormFieldText from '#resee-ux/components/form/FormFieldText.vue';
   import UiFormFieldToggleSwitch from '#resee-ux/components/form/FormFieldToggleSwitch.vue';
+  import UiFormFieldSelect from '#resee-ux/components/form/FormFieldSelect.vue';
   import FormSubmitButton from '#resee-ux/components/form/FormSubmitButton.vue';
   import { sleep } from '@resee-movies/utilities/timers/sleep';
 

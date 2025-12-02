@@ -70,6 +70,50 @@
 
 
   /**
+   * Dedicated input-control styling, regardless of where it appears or
+   * what it is inside of.
+   */
+  .input-control {
+    flex-grow : 1;
+    padding   : --spacing(2) --spacing(3);
+
+    &::placeholder, .placeholder {
+      color: var(--color-global-foreground-accent);
+    }
+  }
+
+
+  /**
+   * Dedicated input-group styling, regardless of where it appears or what it is inside
+   * of. The input-group class name is to be used on a container element - most
+   * typically a div - that contains an <input> and optionally one or more
+   * .input-group-addon styled elements (or various other elements that Primevue throws
+   * into the mix, but serve a similar purpose).
+   */
+  .input-group {
+    display     : flex;
+    align-items : center;
+
+    &.input-group-loading {
+      cursor: wait;
+    }
+
+    .input-group-addon {
+      padding : 0 --spacing(2);
+      color   : var(--color-global-foreground-accent);
+    }
+
+    button.input-group-addon {
+      cursor: pointer;
+    }
+
+    .input-control {
+      outline: none;
+    }
+  }
+
+
+  /**
    * The base styles of things that look like an input field.
    */
   .input-group,
@@ -100,37 +144,6 @@
         box-shadow       : var(--shadow-heavy);
         background-color : var(--color-background-scale-b);
       }
-    }
-  }
-
-
-  /**
-   * Dedicated input-control styling, regardless of where it appears or
-   * what it is inside of.
-   */
-  .input-control {
-    flex-grow : 1;
-    padding   : --spacing(2) --spacing(3);
-  }
-
-
-  /**
-   * Dedicated input-group styling, regardless of where it appears or what it is inside
-   * of. The input-group class name is to be used on a container element - most
-   * typically a div - that contains an <input> and optionally one or more
-   * .input-group-addon styled elements (or various other elements that Primevue throws
-   * into the mix, but serve a similar purpose).
-   */
-  .input-group {
-    display     : flex;
-    align-items : center;
-
-    &.input-group-loading {
-      cursor: wait;
-    }
-
-    .input-control {
-      outline: none;
     }
   }
 

@@ -35,6 +35,7 @@ export function importModules(nuxt: Nuxt) {
       'Menu',
       'ProgressBar',
       'ProgressSpinner',
+      'Select',
       'Tag',
       'Toast',
       'ToggleSwitch',

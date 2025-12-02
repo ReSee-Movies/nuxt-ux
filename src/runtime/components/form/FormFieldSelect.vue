@@ -1,0 +1,115 @@
+<template>
+  <FormField v-bind="props" :validator="validatorFunction">
+    <template #label>
+      <slot name="label" />
+    </template>
+
+    <template #default="{ inputName, inputId, labelId, messageId, disabled, readonly }">
+      <PrimeSelect
+        :name                  = "inputName"
+        :input-id              = "inputId"
+        :disabled              = "disabled"
+        :readonly              = "readonly"
+        :class                 = "['input-group']"
+        :options               = "processedOptions"
+        :option-label          = "props.optionLabel"
+        :option-value          = "props.optionValue"
+        :option-disabled       = "props.optionDisabled"
+        :option-group-label    = "props.optionGroups ? props.optionGroupLabel : undefined"
+        :option-group-children = "props.optionGroups ? props.optionGroupChildren : undefined"
+        :data-key              = "props.dataKey ?? props.optionValue"
+        :placeholder           = "props.placeholder"
+        :show-clear            = "props.showClear"
+        :pt:transition:name    = "'fade'"
+        :pt:overlay:class      = "['menu']"
+        :pt:dropdown:class     = "['input-group-addon']"
+        :pt:label              = "{
+          'aria-describedby' : messageId,
+          'aria-labelledby'  : labelId,
+          'class'            : 'input-control',
+        }"
+      >
+        <template #value="{ value, placeholder }">
+          <span :class="['select-none', value ? undefined : 'placeholder']">
+            {{ value ?? placeholder }}
+          </span>
+        </template>
+
+        <template #loadingicon>
+          <ProgressSpinner />
+        </template>
+
+        <template #dropdownicon>
+          <Icon name="i-ph-caret-down-bold" />
+        </template>
+
+        <template #clearicon="{ clearCallback }">
+          <Button
+            severity = "unset"
+            icon     = "i-ph-x"
+            class    = "input-group-addon"
+            @click   = "clearCallback"
+          />
+        </template>
+      </PrimeSelect>
+    </template>
+  </FormField>
+</template>
+
+
+<script lang="ts">
+  import { type FormFieldProps } from './FormField.vue';
+
+  export interface FormFieldSelectProps extends Omit<FormFieldProps, 'validator'> {
+    options?             : unknown[];
+    optionLabel?         : string;
+    optionValue?         : string;
+    optionDisabled?      : string;
+    optionGroups?        : boolean;
+    optionGroupLabel?    : string;
+    optionGroupChildren? : string;
+    dataKey?             : string;
+    placeholder?         : string;
+    showClear?           : boolean;
+  }
+</script>
+
+
+<script setup lang="ts">
+  import { isObjectLike } from '@resee-movies/utilities/objects/is-object-like';
+  import PrimeSelect from 'primevue/select';
+  import { computed } from 'vue';
+  import { createBooleanValidator } from '../../utils/validation';
+  import Button from '../Button.vue';
+  import Icon from '../Icon.vue';
+  import ProgressSpinner from '../ProgressSpinner.vue';
+  import FormField from './FormField.vue';
+
+  const props = withDefaults(
+    defineProps<FormFieldSelectProps>(),
+    {
+      fauxLabel           : true,
+      optionLabel         : 'label',
+      optionValue         : 'value',
+      optionDisabled      : 'disabled',
+      optionGroups        : false,
+      optionGroupLabel    : 'label',
+      optionGroupChildren : 'items',
+      dataKey             : undefined,
+      placeholder         : undefined,
+      showClear           : true,
+    },
+  );
+
+  const processedOptions = computed(
+    () => Array.isArray(props.options) ? props.options.map(toOption) : undefined,
+  );
+
+  function toOption(item: unknown) {
+    return isObjectLike(item) ? item : { [props.optionLabel]: item, [props.optionValue]: item };
+  }
+
+  const validatorFunction = computed(() => {
+    return () => createBooleanValidator({ required: props.required });
+  });
+</script>
