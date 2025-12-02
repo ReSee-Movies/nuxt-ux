@@ -8,8 +8,7 @@
       <PrimeSelect
         :name                     = "inputName"
         :input-id                 = "inputId"
-        :disabled                 = "disabled"
-        :readonly                 = "readonly"
+        :disabled                 = "disabled || readonly"
         :class                    = "['input-group']"
         :options                  = "processedOptions"
         :option-label             = "props.optionLabel"
@@ -29,8 +28,13 @@
         :pt:listContainer:class   = "['overflow-y-auto styled-scroll']"
         :pt:pcFilterContainer     = "{ root: { class: 'input-menu-filter' } }"
         :pt:pcFilterIconContainer = "{ root: { class: 'input-group-addon' } }"
-        :pt:label                 = "{ 'aria-describedby': messageId, 'aria-labelledby': labelId, 'class': 'input-control' }"
         :pt:emptyMessage          = "{ 'aria-disabled': 'true' }"
+        :pt:label                 = "{
+          'aria-describedby' : messageId,
+          'aria-labelledby'  : labelId,
+          'class'            : 'input-control',
+          'aria-readonly'    : readonly,
+        }"
       >
         <template #value="{ value, placeholder }">
           <span :class="['select-none', value ? undefined : 'placeholder']">

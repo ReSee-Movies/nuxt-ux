@@ -126,23 +126,29 @@
     transition          : color, background-color, outline-color, box-shadow;
     transition-duration : calc(var(--default-transition-duration) * 2);
 
-    &:is(:disabled, [aria-disabled="true"]),
-    &:has(:disabled, [aria-disabled="true"]) {
-      cursor  : not-allowed;
-      opacity : 0.6;
-    }
-
     /**
-     * Focus effects. Checkbox inputs receive a more subtle treatment than text inputs.
+     * To explain the "has aria-disabled if not aria-readonly" stuff below.
+     * Some controls, like the Select, are completely custom widgets that don't
+     * have a separate idea of "readonly" that can be toggled when the form is
+     * submitted. This gives us a way to co-opt the disabled "you can't interact
+     * with this right now" logic, and combine it with readonly styling.
      */
-    &:not(:disabled, [aria-disabled="true"], :has(:disabled, [aria-disabled="true"])) {
-      &:hover, &:focus-within {
-        outline-color: var(--color-global-foreground-accent);
+
+    &:not(:is(input[readonly]), :has(input[readonly], [aria-readonly="true"])) {
+      &:is(:disabled, :has(:disabled, [aria-disabled="true"])) {
+        cursor  : not-allowed;
+        opacity : 0.6;
       }
 
-      &:not(:has(> input[type="checkbox"])):focus-within {
-        box-shadow       : var(--shadow-heavy);
-        background-color : var(--color-background-scale-b);
+      &:not(:disabled, :has(:disabled, [aria-disabled="true"])) {
+        &:hover, &:focus-within {
+          outline-color: var(--color-global-foreground-accent);
+        }
+
+        &:not(:has(> input[type="checkbox"])):focus-within {
+          box-shadow       : var(--shadow-heavy);
+          background-color : var(--color-background-scale-b);
+        }
       }
     }
   }
@@ -175,7 +181,7 @@
       z-index    : 10;
       opacity    : 0;
 
-      &:not(:disabled) {
+      &:not(:disabled, [readonly]) {
         cursor: pointer;
       }
     }

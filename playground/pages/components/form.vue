@@ -9,10 +9,8 @@
     <UiFormFieldSelect
       name        = "countries"
       class       = "col-span-2"
-      :required   = "true"
       :options    = "selectOptions"
       placeholder = "Select an option"
-
     />
 
     <UiFormFieldToggleSwitch name="toggle" class="col-span-2" />
@@ -44,7 +42,7 @@
 
   async function handleFormSubmit(event: FormSubmitEvent) {
     console.log(event.values);
-    await sleep(5000);
+    await sleep(500000);
   }
 
   const selectOptions = Array.from({ length: 300 }, (_, idx) => `Option ${ idx + 1 }`);

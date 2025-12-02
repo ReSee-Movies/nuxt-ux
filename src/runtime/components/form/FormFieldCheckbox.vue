@@ -12,7 +12,7 @@
         :false-value      = "props.falseValue"
         :binary           = "props.binary"
         :aria-describedby = "messageId"
-        :disabled         = "disabled"
+        :disabled         = "disabled || readonly"
         :readonly         = "readonly"
         class             = "input-group"
       />

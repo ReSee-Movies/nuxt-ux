@@ -8,7 +8,7 @@
       <PrimeToggleSwitch
         :input-id         = "inputId"
         :aria-describedby = "messageId"
-        :disabled         = "disabled"
+        :disabled         = "disabled || readonly"
         :readonly         = "readonly"
         class             = "input-group toggle-switch"
         pt:slider:class   = "slider"
