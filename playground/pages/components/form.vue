@@ -10,8 +10,8 @@
       name        = "countries"
       class       = "col-span-2"
       :required   = "true"
-      :options    = "['Option A', 'Option B', 'Option C']"
-      placeholder = "Hello World"
+      :options    = "selectOptions"
+      placeholder = "Select an option"
 
     />
 
@@ -46,4 +46,6 @@
     console.log(event.values);
     await sleep(5000);
   }
+
+  const selectOptions = Array.from({ length: 300 }, (_, idx) => `Option ${ idx + 1 }`);
 </script>

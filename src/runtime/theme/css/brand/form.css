@@ -215,4 +215,30 @@
       }
     }
   }
+
+
+  /**
+   * Input menu filters appear above option lists for components like Select
+   * and MultiSelect.
+   */
+  .input-menu-filter {
+    display     : flex;
+    align-items : center;
+    color       : var(--color-global-foreground-accent);
+    transition  : color var(--default-transition-duration) var(--default-transition-timing-function);
+
+    input {
+      outline   : none;
+      flex-grow : 1;
+      padding   : --spacing(0.5) 0;
+
+      &::placeholder {
+        color: var(--color-global-foreground-accent);
+      }
+    }
+
+    &:focus-within {
+      color: var(--color-global-foreground);
+    }
+  }
 }

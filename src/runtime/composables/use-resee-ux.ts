@@ -9,11 +9,17 @@ const Localization = reactive({
     tooFewChars  : 'Must have at least {count} character(s)',
     tooManyChars : 'Cannot have more than {count} character(s)',
   },
+
+  form: {
+    filterPlaceholder  : 'Search',
+    filterNoResults    : 'No Results Found',
+    noOptionsAvailable : 'No Options Available',
+  },
 });
 
 
 /**
- * Provides the ability to mangement runtime configuration of the ReSee UX
+ * Provides the ability to manage runtime configuration of the ReSee UX
  * module.
  */
 export function useReseeUx() {

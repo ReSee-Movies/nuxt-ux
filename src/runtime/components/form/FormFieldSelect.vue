@@ -6,28 +6,31 @@
 
     <template #default="{ inputName, inputId, labelId, messageId, disabled, readonly }">
       <PrimeSelect
-        :name                  = "inputName"
-        :input-id              = "inputId"
-        :disabled              = "disabled"
-        :readonly              = "readonly"
-        :class                 = "['input-group']"
-        :options               = "processedOptions"
-        :option-label          = "props.optionLabel"
-        :option-value          = "props.optionValue"
-        :option-disabled       = "props.optionDisabled"
-        :option-group-label    = "props.optionGroups ? props.optionGroupLabel : undefined"
-        :option-group-children = "props.optionGroups ? props.optionGroupChildren : undefined"
-        :data-key              = "props.dataKey ?? props.optionValue"
-        :placeholder           = "props.placeholder"
-        :show-clear            = "props.showClear"
-        :pt:transition:name    = "'fade'"
-        :pt:overlay:class      = "['menu']"
-        :pt:dropdown:class     = "['input-group-addon']"
-        :pt:label              = "{
-          'aria-describedby' : messageId,
-          'aria-labelledby'  : labelId,
-          'class'            : 'input-control',
-        }"
+        :name                     = "inputName"
+        :input-id                 = "inputId"
+        :disabled                 = "disabled"
+        :readonly                 = "readonly"
+        :class                    = "['input-group']"
+        :options                  = "processedOptions"
+        :option-label             = "props.optionLabel"
+        :option-value             = "props.optionValue"
+        :option-disabled          = "props.optionDisabled"
+        :option-group-label       = "props.optionGroups ? props.optionGroupLabel : undefined"
+        :option-group-children    = "props.optionGroups ? props.optionGroupChildren : undefined"
+        :data-key                 = "props.dataKey ?? props.optionValue"
+        :placeholder              = "props.placeholder"
+        :show-clear               = "props.showClear"
+        :filter                   = "props.showOptionFilter ?? (processedOptions?.length ?? 0) > 20"
+        :filter-placeholder       = "props.filterPlaceholder ?? locale.form.filterPlaceholder"
+        :pt:transition:name       = "'fade'"
+        :pt:header:class          = "['menu-prefix']"
+        :pt:overlay:class         = "['menu input-menu']"
+        :pt:dropdown:class        = "['input-group-addon']"
+        :pt:listContainer:class   = "['overflow-y-auto styled-scroll']"
+        :pt:pcFilterContainer     = "{ root: { class: 'input-menu-filter' } }"
+        :pt:pcFilterIconContainer = "{ root: { class: 'input-group-addon' } }"
+        :pt:label                 = "{ 'aria-describedby': messageId, 'aria-labelledby': labelId, 'class': 'input-control' }"
+        :pt:emptyMessage          = "{ 'aria-disabled': 'true' }"
       >
         <template #value="{ value, placeholder }">
           <span :class="['select-none', value ? undefined : 'placeholder']">
@@ -51,6 +54,18 @@
             @click   = "clearCallback"
           />
         </template>
+
+        <template #filtericon>
+          <Icon name="i-ph-magnifying-glass" />
+        </template>
+
+        <template #emptyfilter>
+          <span>{{ locale.form.filterNoResults }}</span>
+        </template>
+
+        <template #empty>
+          <span>{{ locale.form.noOptionsAvailable }}</span>
+        </template>
       </PrimeSelect>
     </template>
   </FormField>
@@ -71,6 +86,8 @@
     dataKey?             : string;
     placeholder?         : string;
     showClear?           : boolean;
+    showOptionFilter?    : boolean;
+    filterPlaceholder?   : string;
   }
 </script>
 
@@ -79,6 +96,7 @@
   import { isObjectLike } from '@resee-movies/utilities/objects/is-object-like';
   import PrimeSelect from 'primevue/select';
   import { computed } from 'vue';
+  import { useReseeUx } from '../../composables/use-resee-ux';
   import { createBooleanValidator } from '../../utils/validation';
   import Button from '../Button.vue';
   import Icon from '../Icon.vue';
@@ -98,8 +116,12 @@
       dataKey             : undefined,
       placeholder         : undefined,
       showClear           : true,
+      showOptionFilter    : undefined,
+      filterPlaceholder   : undefined,
     },
   );
+
+  const { locale } = useReseeUx();
 
   const processedOptions = computed(
     () => Array.isArray(props.options) ? props.options.map(toOption) : undefined,

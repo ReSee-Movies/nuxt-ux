@@ -27,3 +27,17 @@
     background-color : transparent;
   }
 }
+
+/**
+ * Blends scrollbars in with the color-scheme a bit better than most defaults.
+ */
+@utility styled-scroll {
+  scrollbar-width  : thin;
+  scrollbar-color  : color-mix(in srgb-linear, transparent 75%, var(--color-global-foreground-accent)) transparent;
+  transition       : scrollbar-color 400ms ease-out;
+
+  &:hover, &:focus-visible, &:focus-within {
+    scrollbar-color  : var(--color-global-foreground-accent) transparent;
+    transition-delay : 0ms;
+  }
+}
