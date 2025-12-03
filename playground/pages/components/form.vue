@@ -11,6 +11,8 @@
       class       = "col-span-2"
       :options    = "selectOptions"
       placeholder = "Select an option"
+
+      multiple
     />
 
     <UiFormFieldToggleSwitch name="toggle" class="col-span-2" />
@@ -45,5 +47,5 @@
     await sleep(500000);
   }
 
-  const selectOptions = Array.from({ length: 300 }, (_, idx) => `Option ${ idx + 1 }`);
+  const selectOptions = Array.from({ length: 25 }, (_, idx) => `Option ${ idx + 1 }`);
 </script>

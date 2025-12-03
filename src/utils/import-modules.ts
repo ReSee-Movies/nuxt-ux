@@ -33,6 +33,7 @@ export function importModules(nuxt: Nuxt) {
       'InputText',
       'Message',
       'Menu',
+      'MultiSelect',
       'ProgressBar',
       'ProgressSpinner',
       'Select',
