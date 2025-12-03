@@ -7,12 +7,12 @@
     <UiFormFieldText name="foggle" />
 
     <UiFormFieldSelect
-      name        = "countries"
-      class       = "col-span-2"
-      :options    = "selectOptions"
-      placeholder = "Select an option"
-
-      multiple
+      name         = "countries"
+      class        = "col-span-2"
+      :options     = "selectOptions"
+      placeholder  = "Select an option"
+      option-label = "label"
+      :multiple    = "true"
     />
 
     <UiFormFieldToggleSwitch name="toggle" class="col-span-2" />
@@ -47,5 +47,8 @@
     await sleep(500000);
   }
 
-  const selectOptions = Array.from({ length: 25 }, (_, idx) => `Option ${ idx + 1 }`);
+  const selectOptions = Array.from({ length: 25 }, (_, idx) => ({
+    label : `Option ${ idx + 1 } with a very, very long label that really shouldn't be so long but just keeps going on and on and on`,
+    value : { index: idx + 1 } }),
+  );
 </script>

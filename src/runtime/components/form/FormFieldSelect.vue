@@ -13,13 +13,10 @@
         :readonly              = "readonly"
         :aria-describedby      = "messageId"
         :multiple              = "props.multiple"
-        :options               = "processedOptions"
+        :options               = "props.options"
         :option-label          = "props.optionLabel"
         :option-value          = "props.optionValue"
         :option-disabled       = "props.optionDisabled"
-        :option-groups         = "props.optionGroups"
-        :option-group-label    = "props.optionGroupLabel"
-        :option-group-children = "props.optionGroupChildren"
         :data-key              = "props.dataKey"
         :placeholder           = "props.placeholder"
         :show-clear            = "props.showClear"
@@ -40,9 +37,6 @@
     optionLabel?         : string;
     optionValue?         : string;
     optionDisabled?      : string;
-    optionGroups?        : boolean;
-    optionGroupLabel?    : string;
-    optionGroupChildren? : string;
     dataKey?             : string;
     placeholder?         : string;
     showClear?           : boolean;
@@ -55,7 +49,6 @@
 
 
 <script setup lang="ts">
-  import { isObjectLike } from '@resee-movies/utilities/objects/is-object-like';
   import { computed } from 'vue';
   import { createBooleanValidator } from '../../utils/validation';
   import FormField from './FormField.vue';
@@ -64,29 +57,12 @@
   const props = withDefaults(
     defineProps<FormFieldSelectProps>(),
     {
-      fauxLabel           : true,
-      optionLabel         : 'label',
-      optionValue         : 'value',
-      optionDisabled      : 'disabled',
-      optionGroups        : false,
-      optionGroupLabel    : 'label',
-      optionGroupChildren : 'items',
-      dataKey             : undefined,
-      placeholder         : undefined,
-      showClear           : true,
-      showOptionFilter    : undefined,
-      filterPlaceholder   : undefined,
-      multiple            : false,
+      fauxLabel        : true,
+      showClear        : true,
+      showOptionFilter : undefined,
+      multiple         : false,
     },
   );
-
-  const processedOptions = computed(
-    () => Array.isArray(props.options) ? props.options.map(toOption) : undefined,
-  );
-
-  function toOption(item: unknown) {
-    return isObjectLike(item) ? item : { [props.optionLabel]: item, [props.optionValue]: item };
-  }
 
   const validatorFunction = computed(() => {
     return () => createBooleanValidator({ required: props.required });

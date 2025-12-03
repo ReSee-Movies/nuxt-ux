@@ -1,28 +1,29 @@
 <template>
   <Component
-    :is                    = "props.multiple ? PrimeMultiSelect : PrimeSelect"
-    :name                  = "props.name"
-    :input-id              = "props.inputId"
-    :disabled              = "props.disabled || props.readonly"
-    :class                 = "['input-group']"
-    :options               = "props.options"
-    :option-label          = "props.optionLabel"
-    :option-value          = "props.optionValue"
-    :option-disabled       = "props.optionDisabled"
-    :option-group-label    = "props.optionGroups ? props.optionGroupLabel : undefined"
-    :option-group-children = "props.optionGroups ? props.optionGroupChildren : undefined"
-    :data-key              = "props.dataKey ?? (isString(props.optionValue) ? props.optionValue : undefined)"
-    :placeholder           = "props.placeholder"
-    :show-clear            = "props.showClear"
-    :show-toggle-all       = "showSelectAllCheckbox"
-    :filter                = "showFilter"
-    :filter-placeholder    = "props.filterPlaceholder ?? locale.form.filterPlaceholder"
-    :loading               = "props.loading"
-    :pt                    = "props.multiple ? multiSelectPassthroughProps : selectPassthroughProps"
+    :is                 = "props.multiple ? PrimeMultiSelect : PrimeSelect"
+    :name               = "props.name"
+    :input-id           = "props.inputId"
+    :disabled           = "props.disabled || props.readonly"
+    :class              = "['input-group']"
+    :options            = "props.options"
+    :option-label       = "props.optionLabel"
+    :option-value       = "props.optionValue"
+    :option-disabled    = "props.optionDisabled"
+    :placeholder        = "props.placeholder"
+    :show-clear         = "props.showClear"
+    :show-toggle-all    = "showSelectAllCheckbox"
+    :filter             = "showFilter"
+    :filter-placeholder = "props.filterPlaceholder ?? locale.form.filterPlaceholder"
+    :loading            = "props.loading"
+    :pt                 = "props.multiple ? multiSelectPassthroughProps : selectPassthroughProps"
   >
     <template #value="{ value, placeholder }">
-      <span :class="['select-none', value ? undefined : 'placeholder']">
-        {{ value ?? placeholder ?? '&nbsp;' }}
+      <template v-if="value">
+        {{ toLabel(value) }}
+      </template>
+
+      <span v-else class="placeholder">
+        {{ placeholder || '&ZeroWidthSpace;' }}
       </span>
     </template>
 
@@ -61,10 +62,9 @@
 <script lang="ts">
   import { type SelectProps as PrimeSelectProps } from 'primevue/select';
 
-  export interface FormElementSelectOptionsProps extends Omit<PrimeSelectProps, 'inputId' | 'labelId'> {
+  export interface FormElementSelectOptionsProps extends Omit<PrimeSelectProps, 'inputId' | 'labelId' | 'optionGroupLabel' | 'optionGroupChildren'> {
     inputId?          : string;
     labelId?          : string;
-    optionGroups?     : boolean;
     multiple?         : boolean;
     readonly?         : boolean;
     showOptionFilter? : boolean;
@@ -74,7 +74,7 @@
 
 
 <script setup lang="ts">
-  import { isString } from '@resee-movies/utilities/strings/is-string';
+  import { equals, resolveFieldData } from '@primeuix/utils/object';
   import PrimeMultiSelect from 'primevue/multiselect';
   import PrimeSelect from 'primevue/select';
   import { computed } from 'vue';
@@ -86,16 +86,10 @@
   const props = withDefaults(
     defineProps<FormElementSelectOptionsProps>(),
     {
-      optionGroups        : false,
-      multiple            : false,
-      readonly            : false,
-      optionLabel         : 'label',
-      optionValue         : 'value',
-      optionDisabled      : 'disabled',
-      optionGroupLabel    : 'label',
-      optionGroupChildren : 'items',
-      showClear           : true,
-      showOptionFilter    : undefined,
+      multiple         : false,
+      readonly         : false,
+      showClear        : true,
+      showOptionFilter : undefined,
     },
   );
 
@@ -125,7 +119,7 @@
       ...sharedPassthroughProps,
 
       label: {
-        'class'            : 'input-control',
+        'class'            : 'input-control min-w-0 select-none truncate',
         'aria-describedby' : props.ariaDescribedby,
         'aria-labelledby'  : props.labelId,
         'aria-readonly'    : props.readonly,
@@ -138,7 +132,11 @@
       ...sharedPassthroughProps,
 
       labelContainer: {
-        class: 'input-control',
+        class: 'input-control min-w-0',
+      },
+
+      label: {
+        class: 'select-none truncate',
       },
 
       hiddenInput: {
@@ -165,4 +163,39 @@
       },
     };
   });
+
+
+  function getOptionValue(option: unknown): unknown {
+    return props.optionValue ? resolveFieldData(option, props.optionValue) : option;
+  }
+
+  function getOptionLabel(option: unknown): unknown {
+    return props.optionLabel ? resolveFieldData(option, props.optionLabel) : option;
+  }
+
+  function findOptionByValue(value: unknown) {
+    return props.options?.find(
+      (option) => equals(getOptionValue(option), value, props.optionValue ? undefined : props.dataKey),
+    );
+  }
+
+  function toLabel(value: unknown) {
+    if (!value) {
+      return undefined;
+    }
+
+    if (!Array.isArray(value)) {
+      return getOptionLabel(findOptionByValue(value));
+    }
+
+    if (value.length === 0) {
+      return undefined;
+    }
+
+    if (value.length === 1) {
+      return getOptionLabel(findOptionByValue(value[0]));
+    }
+
+    return `${ value.length } items selected`;
+  }
 </script>
