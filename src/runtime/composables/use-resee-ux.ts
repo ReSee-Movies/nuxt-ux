@@ -14,6 +14,8 @@ const Localization = reactive({
     filterPlaceholder  : 'Search',
     filterNoResults    : 'No Results Found',
     noOptionsAvailable : 'No Options Available',
+    selectAllOptions   : 'Select All',
+    numOptionsSelected : '{count} Item(s) Selected',
   },
 });
 

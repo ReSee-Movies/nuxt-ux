@@ -79,6 +79,7 @@
   import PrimeSelect from 'primevue/select';
   import { computed } from 'vue';
   import { useReseeUx } from '../../../composables/use-resee-ux';
+  import { swapStringPlaceholders } from '../../../utils/string';
   import Button from '../../Button.vue';
   import Icon from '../../Icon.vue';
   import ProgressSpinner from '../../ProgressSpinner.vue';
@@ -152,7 +153,7 @@
 
         input: {
           'id'         : `${ props.inputId }_select_all`,
-          'aria-label' : 'Select All',
+          'aria-label' : locale.form.selectAllOptions,
         },
       },
 
@@ -196,6 +197,6 @@
       return getOptionLabel(findOptionByValue(value[0]));
     }
 
-    return `${ value.length } items selected`;
+    return swapStringPlaceholders(locale.form.numOptionsSelected, { count: value.length });
   }
 </script>

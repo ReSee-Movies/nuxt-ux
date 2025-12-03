@@ -2,34 +2,19 @@ import { toInteger } from '@resee-movies/utilities/numbers/to-integer';
 import * as z from 'zod/mini';
 import type { core } from 'zod/mini';
 import { useReseeUx } from '../composables/use-resee-ux';
+import { swapStringPlaceholders } from './string';
 
 
-/**
- * Replaces any substrings within `str` of the form "{placeholder_key}" with
- * the value provided via the `placeholders` object.
- *
- * @private
- */
 export function toValidationError(str: string, placeholders?: Record<string, string | number>) {
-  return {
-    error: placeholders
-      ? str.replace(/\{\s*(\w+?)\s*}/g, (_, token) => String(placeholders[token] || ''))
-      : str,
-  };
+  return { error: swapStringPlaceholders(str, placeholders) };
 }
 
 
-/**
- *
- */
 export type BooleanInputRequirements = {
   required?: boolean;
 }
 
 
-/**
- *
- */
 export function createBooleanValidator(requirements: BooleanInputRequirements) {
   const { locale } = useReseeUx();
 
@@ -39,9 +24,6 @@ export function createBooleanValidator(requirements: BooleanInputRequirements) {
 }
 
 
-/**
- *
- */
 export type TextInputRequirements = {
   required?  : boolean;
   type?      : 'text' | 'email' | 'url';
@@ -50,9 +32,6 @@ export type TextInputRequirements = {
 }
 
 
-/**
- *
- */
 export function createTextValidator(requirements: TextInputRequirements) {
   const { locale } = useReseeUx();
   const checkFns   = [] as core.$ZodCheck<unknown>[];
