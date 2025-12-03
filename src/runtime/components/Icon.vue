@@ -4,12 +4,17 @@
     :mode   = "props.transitionMode"
     :appear = "props.transitionOnAppear"
   >
-    <span v-if="props.loading" class="icon">
+    <span
+      v-if   = "props.loading"
+      v-bind = "$attrs"
+      class  = "icon"
+    >
       <ProgressSpinner :size="props.size" />
     </span>
 
     <span
       v-else-if = "props.name"
+      v-bind    = "$attrs"
       role      = "presentation"
       :class    = "['icon', props.size]"
     >
@@ -32,6 +37,10 @@
 
 <script setup lang="ts">
   import ProgressSpinner from './ProgressSpinner.vue';
+
+  defineOptions({
+    inheritAttrs: false,
+  });
 
   const props = withDefaults(
     defineProps<IconProps>(),

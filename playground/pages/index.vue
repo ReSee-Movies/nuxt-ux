@@ -1,10 +1,10 @@
 <template>
-  <div class="columns-2 *:block *:mb-2">
+  <div class="sm:columns-2 *:block *:mb-4 sm:*:mb-2">
     <NuxtLink
       v-for = "page of pages"
       :key  = "page.route"
       :to   = "{ name: page.route }"
-      class = "a"
+      class = "a text-lg sm:text-base"
     >
       <IconTextPair :text="page.label" :icon="page.icon" />
     </NuxtLink>

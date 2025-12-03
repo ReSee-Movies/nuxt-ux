@@ -55,8 +55,8 @@
       text                   : undefined,
       icon                   : undefined,
       trailingIcon           : undefined,
-      iconSize               : 'md',
-      trailingIconSize       : 'md',
+      iconSize               : undefined,
+      trailingIconSize       : undefined,
       layout                 : undefined,
       spacing                : undefined,
       loading                : false,
@@ -83,32 +83,32 @@
 
     display     : inline;
     align-items : baseline;
+  }
 
-    &.spacing-none {
-      --element-spacing: 0;
-    }
+  .pair.spacing-none {
+    --element-spacing: 0;
+  }
 
-    &.spacing-wide {
-      --element-spacing: --spacing(2);
-    }
+  .pair.spacing-wide {
+    --element-spacing: --spacing(2);
+  }
 
-    .leading-icon > * {
-      margin-inline-end: var(--element-spacing);
-    }
+  .pair :deep(.leading-icon) > * {
+    margin-inline-end: var(--element-spacing);
+  }
 
-    .trailing-icon > * {
-      margin-inline-start: var(--element-spacing);
-    }
+  .pair :deep(.trailing-icon) > * {
+    margin-inline-start: var(--element-spacing);
+  }
 
-    @variant max-md {
-      &:is(.responsive-shrink .pair) {
-        .leading-icon > * {
-          margin-inline-end: 0;
-        }
+  @variant max-md {
+    .pair:is(.responsive-shrink .pair) {
+      :deep(.leading-icon) > * {
+        margin-inline-end: 0;
+      }
 
-        .trailing-icon > * {
-          margin-inline-start: 0;
-        }
+      :deep(.trailing-icon) > * {
+        margin-inline-start: 0;
       }
     }
   }
