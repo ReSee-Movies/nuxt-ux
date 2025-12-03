@@ -99,5 +99,17 @@
     .trailing-icon > * {
       margin-inline-start: var(--element-spacing);
     }
+
+    @variant max-md {
+      &:is(.responsive-shrink .pair) {
+        .leading-icon > * {
+          margin-inline-end: 0;
+        }
+
+        .trailing-icon > * {
+          margin-inline-start: 0;
+        }
+      }
+    }
   }
 </style>
