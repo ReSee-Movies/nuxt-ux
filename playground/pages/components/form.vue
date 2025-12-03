@@ -49,7 +49,7 @@
   }
 
   const selectOptions = Array.from({ length: 25 }, (_, idx) => ({
-    label : `Option ${ idx + 1 } with a very, very long label that really shouldn't be so long but just keeps going on and on and on`,
+    label : `Option ${ idx + 1 }`,
     value : { index: idx + 1 } }),
   );
 </script>

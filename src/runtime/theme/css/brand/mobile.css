@@ -41,6 +41,7 @@
       border-bottom-width        : 0;
       box-shadow                 : var(--shadow-heavy-top);
       max-height                 : 70vh;
+      font-size                  : var(--text-lg);
 
       .menu-list {
         max-height: unset !important;

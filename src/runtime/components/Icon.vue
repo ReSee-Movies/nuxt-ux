@@ -38,7 +38,7 @@
     {
       name               : undefined,
       loading            : false,
-      size               : 'md',
+      size               : undefined,
       colorCycle         : false,
       transitionName     : 'fade',
       transitionMode     : 'out-in',
