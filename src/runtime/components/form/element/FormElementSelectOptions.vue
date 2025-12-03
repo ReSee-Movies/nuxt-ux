@@ -17,6 +17,7 @@
     :filter-placeholder = "props.filterPlaceholder ?? locale.form.filterPlaceholder"
     :loading            = "props.loading"
     :pt                 = "props.multiple ? multiSelectPassthroughProps : selectPassthroughProps"
+    :append-to          = "TeleportId"
   >
     <template #value="{ value, placeholder }">
       <template v-if="value">
@@ -77,10 +78,13 @@
 
 <script setup lang="ts">
   import { equals, resolveFieldData } from '@primeuix/utils/object';
+  import { useBreakpoints, breakpointsTailwind } from '@vueuse/core';
   import PrimeMultiSelect from 'primevue/multiselect';
   import PrimeSelect from 'primevue/select';
+  import { blockBodyScroll, unblockBodyScroll } from 'primevue/utils';
   import { computed } from 'vue';
   import { useReseeUx } from '../../../composables/use-resee-ux';
+  import { TeleportId } from '../../../constants';
   import { swapStringPlaceholders } from '../../../utils/string';
   import Button from '../../Button.vue';
   import Icon from '../../Icon.vue';
@@ -97,7 +101,8 @@
     },
   );
 
-  const { locale } = useReseeUx();
+  const { locale }   = useReseeUx();
+  const isSmallBreak = useBreakpoints(breakpointsTailwind).smallerOrEqual('sm');
 
   const showFilter = computed(() => {
     return props.showOptionFilter ?? (props.options?.length ?? 0) > 20;
@@ -107,20 +112,27 @@
     return props.multiple ? showFilter.value : undefined;
   });
 
-  const sharedPassthroughProps = {
-    header                : { class: 'menu-prefix input-menu-header' },
-    overlay               : { class: 'menu input-menu' },
-    dropdown              : { class: 'input-group-addon' },
-    listContainer         : { class: 'overflow-y-auto styled-scroll' },
-    pcFilterContainer     : { root: { class: 'input-menu-filter' } },
-    pcFilterIconContainer : { root: { class: 'input-group-addon' } },
-    emptyMessage          : { 'aria-disabled': 'true' },
-    transition            : { name: 'fade' },
-  };
+  const sharedPassthroughProps = computed(() => {
+    return {
+      header                : { class: 'menu-prefix input-menu-header' },
+      overlay               : { class: 'menu input-menu' },
+      dropdown              : { class: 'input-group-addon' },
+      listContainer         : { class: 'menu-list' },
+      pcFilterContainer     : { root: { class: 'input-menu-filter' } },
+      pcFilterIconContainer : { root: { class: 'input-group-addon' } },
+      emptyMessage          : { 'aria-disabled': 'true' },
+
+      transition: {
+        name          : isSmallBreak.value ? 'slide-in-bottom' : 'fade',
+        onBeforeEnter : () => blockBodyScroll(),
+        onAfterLeave  : () => unblockBodyScroll(),
+      },
+    };
+  });
 
   const selectPassthroughProps = computed(() => {
     return {
-      ...sharedPassthroughProps,
+      ...sharedPassthroughProps.value,
 
       label: {
         'class'            : 'input-control min-w-0 select-none truncate',
@@ -133,7 +145,7 @@
 
   const multiSelectPassthroughProps = computed(() => {
     return {
-      ...sharedPassthroughProps,
+      ...sharedPassthroughProps.value,
 
       labelContainer: {
         class: 'input-control min-w-0',

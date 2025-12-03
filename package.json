@@ -35,7 +35,7 @@
     "dist"
   ],
   "scripts": {
-    "dev": "npm run dev:prepare && nuxi dev playground",
+    "dev": "npm run dev:prepare && nuxi dev playground --host",
     "dev:build": "nuxi build playground",
     "dev:preview": "nuxi preview playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",

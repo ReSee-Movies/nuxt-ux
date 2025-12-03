@@ -24,7 +24,7 @@
     </div>
 
     <div class="col-span-2">
-      <pre class="pre mt-8">{{ JSON.stringify(state, null, 2) }}</pre>
+      <pre class="pre mt-8 overflow-x-auto">{{ JSON.stringify(state, null, 2) }}</pre>
     </div>
   </UiForm>
 </template>

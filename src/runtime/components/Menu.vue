@@ -7,15 +7,14 @@
   />
 
   <PrimeMenu
-    ref    = "menu"
-    v-bind = "attrs"
-    :model = "props.model"
-    :popup = "true"
-    :id    = "menuId"
-    class  = "menu"
-    :pt    = "passthroughProps"
-    @show  = "visible = true"
-    @hide  = "visible = false"
+    ref        = "menu"
+    v-bind     = "attrs"
+    :model     = "props.model"
+    :popup     = "true"
+    :id        = "menuId"
+    class      = "menu"
+    :pt        = "passthroughProps"
+    :append-to = "TeleportId"
   >
     <template v-if="slots.prefix || props.prefixText" #start>
       <slot name="prefix">
@@ -80,9 +79,12 @@
 
 <script setup lang="ts">
   import { isString } from '@resee-movies/utilities/strings/is-string';
+  import { useBreakpoints, breakpointsTailwind } from '@vueuse/core';
   import PrimeMenu, { type MenuMethods as PrimeMenuMethods } from 'primevue/menu';
+  import { blockBodyScroll, unblockBodyScroll } from 'primevue/utils';
   import { computed, ref, useAttrs, useId, useSlots } from 'vue';
   import IconTextPair from './IconTextPair.vue';
+  import { TeleportId } from '../constants';
 
   defineOptions({
     inheritAttrs: false,
@@ -93,6 +95,8 @@
   const menuId  = useId();
   const menu    = ref<PrimeMenuMethods>();
   const visible = ref(false);
+  const breaks  = useBreakpoints(breakpointsTailwind);
+  const isSmall = breaks.smallerOrEqual('sm');
 
   const props = withDefaults(
     defineProps<MenuProps>(),
@@ -110,17 +114,28 @@
 
   const passthroughProps = computed(() => {
     return {
-      start: {
-        class: 'menu-prefix',
-      },
+      start : { class: 'menu-prefix' },
+      end   : { class: 'menu-suffix' },
+      list  : { class: 'menu-list' },
 
-      end: {
-        class: 'menu-suffix',
-      },
-
-      transition: {
-        name: 'fade',
+      transition : {
+        name          : isSmall.value ? 'slide-in-bottom' : 'fade',
+        onBeforeEnter : () => handleShowEvent(),
+        onAfterLeave  : () => handleHideEvent(),
       },
     };
   });
+
+  function handleShowEvent() {
+    visible.value = true;
+
+    if (isSmall.value) {
+      blockBodyScroll();
+    }
+  }
+
+  function handleHideEvent() {
+    visible.value = false;
+    unblockBodyScroll();
+  }
 </script>

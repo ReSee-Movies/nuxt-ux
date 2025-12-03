@@ -1,0 +1,50 @@
+@layer utilities {
+  /**
+   * This element is added via a plugin included in this package. There are specific
+   * ways that we want this to behave - particularly on mobile - but we don't want
+   * to step on the toes of anything else that might wind up using the default
+   * #teleport element.
+   */
+
+  #resee-ux-teleport:has(:nth-child(1):not(script)) {
+    @variant max-sm {
+      position : fixed;
+      inset    : 0;
+
+      @apply occlude-background;
+    }
+  }
+
+  /**
+   * Causes the menu flyout to appear in the bottom half of the viewport. It pairs
+   * nicely with the slide-up transition (indeed).
+   *
+   * Several !important flags - I know - are used here because we need to override
+   * inline styles the Primevue applies directly to the target element.
+   */
+
+  @variant max-sm {
+    .menu {
+      top                        : unset !important;
+      inset-inline-start         : 0 !important;
+      left                       : 0;
+      right                      : 0;
+      bottom                     : 0;
+      margin-block               : 0;
+      margin-top                 : 0 !important;
+      min-width                  : 0 !important;
+      max-width                  : unset;
+      border-bottom-left-radius  : 0;
+      border-bottom-right-radius : 0;
+      border-left-width          : 0;
+      border-right-width         : 0;
+      border-bottom-width        : 0;
+      box-shadow                 : var(--shadow-heavy-top);
+      max-height                 : 70vh;
+
+      .menu-list {
+        max-height: unset !important;
+      }
+    }
+  }
+}

@@ -13,3 +13,6 @@ export const StatusLevelIcons: Record<HintedString<StyleStatusLevel>, string> = 
   default  : 'i-ph-info',
   inverted : 'i-ph-info',
 };
+
+
+export const TeleportId = '#resee-ux-teleport';

@@ -10,6 +10,10 @@
       />
     </template>
   </UiMenu>
+
+  <hr class="hr">
+
+  <UiLorem type="paragraphs" min="10" />
 </template>
 
 
