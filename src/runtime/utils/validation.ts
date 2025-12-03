@@ -63,11 +63,47 @@ export function createTextValidator(requirements: TextInputRequirements) {
     }
   }
 
-  const stringSchema = z.string(
-    toValidationError(locale.validation.required),
-  ).check(z.trim(), ...checkFns);
+  const stringSchema = z
+    .string(toValidationError(locale.validation.required))
+    .check(z.trim(), ...checkFns);
 
   return requirements.required
     ? stringSchema
-    : z.union([z.null({ error: locale.validation.required }), stringSchema]);
+    : z.union([z.null(), stringSchema]);
+}
+
+
+export type ListInputRequirements = {
+  required?    : boolean;
+  minRequired? : string | number;
+  maxRequired? : string | number;
+}
+
+
+export function createListValidator(requirements: ListInputRequirements) {
+  const { locale } = useReseeUx();
+  const checkFns   = [] as core.$ZodCheck<unknown>[];
+
+  const minRequired = toInteger(requirements.minRequired) || (requirements.required ? 1 : undefined);
+  const maxRequired = toInteger(requirements.maxRequired);
+
+  if (minRequired) {
+    checkFns.push(
+      z.minLength(minRequired, toValidationError(locale.validation.tooFewOptions, { count: minRequired })),
+    );
+  }
+
+  if (maxRequired) {
+    checkFns.push(
+      z.maxLength(maxRequired, toValidationError(locale.validation.tooManyOptions, { count: maxRequired })),
+    );
+  }
+
+  const arraySchema = z
+    .array(z.unknown(), toValidationError(locale.validation.required))
+    .check(...checkFns);
+
+  return requirements.required
+    ? arraySchema
+    : z.union([z.null(), arraySchema]);
 }

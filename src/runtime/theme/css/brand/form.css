@@ -259,6 +259,14 @@
       svg {
         margin-left: 0.125rem;
       }
+
+      [aria-disabled="true"] &:hover, [aria-disabled="true"] &:focus-within {
+        outline-color: var(--color-background-scale-e) !important;
+
+        input {
+          cursor: not-allowed !important;
+        }
+      }
     }
   }
 

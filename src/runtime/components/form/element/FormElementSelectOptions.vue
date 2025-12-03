@@ -10,6 +10,7 @@
     :option-value       = "props.optionValue"
     :option-disabled    = "props.optionDisabled"
     :placeholder        = "props.placeholder"
+    :selection-limit    = "props.multiple ? props.selectionLimit : undefined"
     :show-clear         = "props.showClear"
     :show-toggle-all    = "showSelectAllCheckbox"
     :filter             = "showFilter"
@@ -69,6 +70,7 @@
     readonly?         : boolean;
     showOptionFilter? : boolean;
     ariaDescribedby?  : string;
+    selectionLimit?   : string | number;
   }
 </script>
 
@@ -91,6 +93,7 @@
       readonly         : false,
       showClear        : true,
       showOptionFilter : undefined,
+      selectionLimit   : undefined,
     },
   );
 

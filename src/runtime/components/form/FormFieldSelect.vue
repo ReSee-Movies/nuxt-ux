@@ -23,6 +23,7 @@
         :show-option-footer    = "props.showOptionFilter"
         :filter-placeholder    = "props.filterPlaceholder"
         :loading               = "props.loading"
+        :selection-limit       = "props.maxRequired"
       />
     </template>
   </FormField>
@@ -33,24 +34,26 @@
   import { type FormFieldProps } from './FormField.vue';
 
   export interface FormFieldSelectProps extends Omit<FormFieldProps, 'validator'> {
-    options?             : unknown[];
-    optionLabel?         : string;
-    optionValue?         : string;
-    optionDisabled?      : string;
-    dataKey?             : string;
-    placeholder?         : string;
-    showClear?           : boolean;
-    showOptionFilter?    : boolean;
-    filterPlaceholder?   : string;
-    loading?             : boolean;
-    multiple?            : boolean;
+    options?           : unknown[];
+    optionLabel?       : string;
+    optionValue?       : string;
+    optionDisabled?    : string;
+    dataKey?           : string;
+    placeholder?       : string;
+    showClear?         : boolean;
+    showOptionFilter?  : boolean;
+    filterPlaceholder? : string;
+    loading?           : boolean;
+    multiple?          : boolean;
+    minRequired?       : string | number;
+    maxRequired?       : string | number;
   }
 </script>
 
 
 <script setup lang="ts">
   import { computed } from 'vue';
-  import { createBooleanValidator } from '../../utils/validation';
+  import { createBooleanValidator, createListValidator } from '../../utils/validation';
   import FormField from './FormField.vue';
   import FormElementSelectOptions from './element/FormElementSelectOptions.vue';
 
@@ -65,6 +68,14 @@
   );
 
   const validatorFunction = computed(() => {
-    return () => createBooleanValidator({ required: props.required });
+    return props.multiple
+      ? () => createListValidator({
+        required    : props.required,
+        minRequired : props.minRequired,
+        maxRequired : props.maxRequired,
+      })
+      : () => createBooleanValidator({
+        required: props.required,
+      });
   });
 </script>

@@ -7,12 +7,13 @@
     <UiFormFieldText name="foggle" />
 
     <UiFormFieldSelect
-      name         = "countries"
-      class        = "col-span-2"
-      :options     = "selectOptions"
-      placeholder  = "Select an option"
-      option-label = "label"
-      :multiple    = "true"
+      name          = "countries"
+      class         = "col-span-2"
+      :options      = "selectOptions"
+      placeholder   = "Select an option"
+      option-label  = "label"
+      :multiple     = "true"
+      :max-required = "2"
     />
 
     <UiFormFieldToggleSwitch name="toggle" class="col-span-2" />
@@ -44,7 +45,7 @@
 
   async function handleFormSubmit(event: FormSubmitEvent) {
     console.log(event.values);
-    await sleep(500000);
+    await sleep(5000);
   }
 
   const selectOptions = Array.from({ length: 25 }, (_, idx) => ({
