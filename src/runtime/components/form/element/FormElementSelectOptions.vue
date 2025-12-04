@@ -39,10 +39,11 @@
 
     <template #clearicon="{ clearCallback }">
       <Button
-        severity = "unset"
-        icon     = "i-ph-x"
-        class    = "input-group-addon"
-        @click   = "clearCallback"
+        severity         = "unset"
+        icon             = "i-ph-x"
+        class            = "input-group-addon"
+        @click           = "clearCallback"
+        :data-pc-section = "'clearicon' /* used internally by Primevue. No idea why they offer the slot like this. */"
       />
     </template>
 
