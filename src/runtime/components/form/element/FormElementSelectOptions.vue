@@ -82,10 +82,10 @@
   import { useBreakpoints, breakpointsTailwind } from '@vueuse/core';
   import PrimeMultiSelect from 'primevue/multiselect';
   import PrimeSelect from 'primevue/select';
-  import { blockBodyScroll, unblockBodyScroll } from 'primevue/utils';
   import { computed } from 'vue';
   import { useReseeUx } from '../../../composables/use-resee-ux';
   import { TeleportId } from '../../../constants';
+  import { blockBodyScroll, unblockBodyScroll } from '../../../utils/dom';
   import { swapStringPlaceholders } from '../../../utils/string';
   import Button from '../../Button.vue';
   import Icon from '../../Icon.vue';
@@ -102,8 +102,8 @@
     },
   );
 
-  const { locale }   = useReseeUx();
-  const isSmallBreak = useBreakpoints(breakpointsTailwind).smallerOrEqual('sm');
+  const { locale } = useReseeUx();
+  const isSmall    = useBreakpoints(breakpointsTailwind).smallerOrEqual('sm');
 
   const showFilter = computed(() => {
     return props.showOptionFilter ?? (props.options?.length ?? 0) > 20;
@@ -112,6 +112,8 @@
   const showSelectAllCheckbox = computed(() => {
     return props.multiple ? showFilter.value : undefined;
   });
+
+  let unblockScroll: (() => void) | undefined = undefined;
 
   const sharedPassthroughProps = computed(() => {
     return {
@@ -124,9 +126,18 @@
       emptyMessage          : { 'aria-disabled': 'true' },
 
       transition: {
-        name          : isSmallBreak.value ? 'slide-in-bottom' : 'fade',
-        onBeforeEnter : () => blockBodyScroll(),
-        onAfterLeave  : () => unblockBodyScroll(),
+        name: isSmall.value ? 'slide-in-bottom' : 'fade',
+
+        onBeforeEnter() {
+          if (isSmall.value) {
+            unblockScroll = blockBodyScroll();
+          }
+        },
+
+        onAfterLeave() {
+          unblockScroll?.();
+          unblockScroll = undefined;
+        },
       },
     };
   });

@@ -81,8 +81,8 @@
   import { isString } from '@resee-movies/utilities/strings/is-string';
   import { useBreakpoints, breakpointsTailwind } from '@vueuse/core';
   import PrimeMenu, { type MenuMethods as PrimeMenuMethods } from 'primevue/menu';
-  import { blockBodyScroll, unblockBodyScroll } from 'primevue/utils';
   import { computed, ref, useAttrs, useId, useSlots } from 'vue';
+  import { blockBodyScroll } from '../utils/dom';
   import IconTextPair from './IconTextPair.vue';
   import { TeleportId } from '../constants';
 
@@ -95,8 +95,7 @@
   const menuId  = useId();
   const menu    = ref<PrimeMenuMethods>();
   const visible = ref(false);
-  const breaks  = useBreakpoints(breakpointsTailwind);
-  const isSmall = breaks.smallerOrEqual('sm');
+  const isSmall = useBreakpoints(breakpointsTailwind).smallerOrEqual('sm');
 
   const props = withDefaults(
     defineProps<MenuProps>(),
@@ -112,30 +111,31 @@
     menuId   : menuId,
   });
 
+  let unblockScroll: (() => void) | undefined = undefined;
+
   const passthroughProps = computed(() => {
     return {
       start : { class: 'menu-prefix' },
       end   : { class: 'menu-suffix' },
       list  : { class: 'menu-list' },
 
-      transition : {
-        name          : isSmall.value ? 'slide-in-bottom' : 'fade',
-        onBeforeEnter : () => handleShowEvent(),
-        onAfterLeave  : () => handleHideEvent(),
+      transition: {
+        name: isSmall.value ? 'slide-in-bottom' : 'fade',
+
+        onBeforeEnter() {
+          visible.value = true;
+
+          if (isSmall.value) {
+            unblockScroll = blockBodyScroll();
+          }
+        },
+
+        onAfterLeave() {
+          visible.value = false;
+          unblockScroll?.();
+          unblockScroll = undefined;
+        },
       },
     };
   });
-
-  function handleShowEvent() {
-    visible.value = true;
-
-    if (isSmall.value) {
-      blockBodyScroll();
-    }
-  }
-
-  function handleHideEvent() {
-    visible.value = false;
-    unblockBodyScroll();
-  }
 </script>

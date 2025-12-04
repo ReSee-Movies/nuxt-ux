@@ -1,15 +1,33 @@
 <template>
-  <UiMenu :model="menuItems" prefix-text="Some Prefix Text" suffix-text="Some Suffix Text">
-    <template #control="{ toggle, menuId, expanded }">
-      <UiButton
-        text           = "Show"
-        :aria-controls = "menuId"
-        aria-haspopup  = "true"
-        :aria-expanded = "expanded.toString()"
-        @click         = "toggle"
-      />
-    </template>
-  </UiMenu>
+  <div class="flex gap-4">
+    <UiMenu :model="menuItems" prefix-text="Some Prefix Text" suffix-text="Some Suffix Text">
+      <template #control="{ toggle, menuId, expanded }">
+        <UiButton
+          text           = "Show"
+          :aria-controls = "menuId"
+          aria-haspopup  = "true"
+          :aria-expanded = "expanded.toString()"
+          @click         = "toggle"
+        />
+      </template>
+    </UiMenu>
+
+    <UiButton text="Open Drawer" @click="showDrawer = true" />
+  </div>
+
+  <UiDrawer v-model:visible="showDrawer" position="right" header="Menu Flyout Test">
+    <UiMenu :model="menuItems">
+      <template #control="{ toggle, menuId, expanded }">
+        <UiButton
+          text           = "Show Menu"
+          :aria-controls = "menuId"
+          aria-haspopup  = "true"
+          :aria-expanded = "expanded.toString()"
+          @click         = "toggle"
+        />
+      </template>
+    </UiMenu>
+  </UiDrawer>
 
   <hr class="hr">
 
@@ -18,11 +36,16 @@
 
 
 <script setup lang="ts">
-  import type { MenuItem } from '#resee-ux/components/Menu.vue';
+  import UiButton from '#resee-ux/components/Button.vue';
+  import UiDrawer from '#resee-ux/components/Drawer.vue';
+  import UiMenu, { type MenuItem } from '#resee-ux/components/Menu.vue';
+  import { ref } from 'vue';
 
   definePageMeta({
     heading: 'Menu',
   });
+
+  const showDrawer = ref(false);
 
   const menuItems: MenuItem[] = [
     { label: 'Item 1', icon: 'i-ph-x' },

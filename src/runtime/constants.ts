@@ -15,4 +15,6 @@ export const StatusLevelIcons: Record<HintedString<StyleStatusLevel>, string> = 
 };
 
 
-export const TeleportId = '#resee-ux-teleport';
+export const TeleportId             = '#resee-ux-teleport';
+export const OverflowHiddenClass    = 'p-overflow-hidden';
+export const ScrollbarWidthPropName = '--p-scrollbar-width';
