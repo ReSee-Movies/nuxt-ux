@@ -1,3 +1,5 @@
+import devtoolsJson from 'vite-plugin-devtools-json';
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-08-12',
 
@@ -19,5 +21,11 @@ export default defineNuxtConfig({
     rootAttrs: {
       id: 'app-root',
     },
+  },
+
+  vite: {
+    plugins: [
+      devtoolsJson({}),
+    ],
   },
 });
