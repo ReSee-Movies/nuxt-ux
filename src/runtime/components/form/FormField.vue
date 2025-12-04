@@ -5,7 +5,7 @@
     :name          = "props.name"
     :resolver      = "validatorFunction"
     :initial-value = "props.initialValue"
-    :class         = "['input-field', { disabled: isDisabled, readonly: isReadonly, required: props.required }]"
+    :class         = "['input-field', props.class, { disabled: isDisabled, readonly: isReadonly, required: props.required }]"
   >
     <FormLabelInputPair
       :input-id       = "inputId"
