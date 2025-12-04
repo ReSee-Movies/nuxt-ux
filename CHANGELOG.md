@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.5.0](///compare/0.4.1...0.5.0) (2025-12-04)
+
+### Features
+
+* basic support for an optional header in the LayoutPageContainer component 0639804
+* mobile menus and lists appear on top of drawers/ dialogs, and disable body scrolling 30991df
+
+### Bug Fixes
+
+* add type="button" attribute to buttons by default, to avoid bad behavior inside forms 225f310
+* added `data-pc-section="clearicon"` to the Select/MultiSelect clear button, as Primevue uses it internally to drive specific behavior a1f8d20
+* apply externally provided classname values to the FormField component 9597f4d
+* correct typing of the Message component `severity` prop feda14b
+* just the `value` prop is extracted from each state entry processed by getValuesFromFormState aaad7e9
+
 ## [0.4.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.4.0...0.4.1) (2025-11-20)
 
 ### Bug Fixes
