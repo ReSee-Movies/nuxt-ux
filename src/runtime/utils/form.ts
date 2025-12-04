@@ -58,7 +58,7 @@ export function getValuesFromFormState<T extends FormValues = FormValues>(state:
   const result = {} as T;
 
   for (const [key, value] of Object.entries(state)) {
-    const rawValue = toRaw(toValue(value));
+    const rawValue = toRaw(toValue(value.value));
 
     let processed;
 
@@ -72,7 +72,7 @@ export function getValuesFromFormState<T extends FormValues = FormValues>(state:
       processed = rawValue;
     }
 
-    Object.defineProperty(result, key, { value: processed });
+    Object.defineProperty(result, key, { value: processed, enumerable: true });
   }
 
   return result;
