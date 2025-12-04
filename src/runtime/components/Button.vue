@@ -3,6 +3,7 @@
     :is         = "props.is"
     :aria-label = "shrink ? props.text : undefined"
     :disabled   = "props.disabled"
+    :type       = "props.type"
     :class      = "[
       props.severity === 'unset' ? undefined : props.variant,
       {
@@ -66,6 +67,7 @@
     tooltip?         : string;
     disabledTooltip? : string;
     onClick?         : ((evt: Event) => void | Promise<void>) | ((evt: Event) => void | Promise<void>)[];
+    type?            : 'button' | 'submit' | 'reset';
   }
 </script>
 
@@ -90,6 +92,7 @@
       loading         : false,
       tooltip         : undefined,
       disabledTooltip : undefined,
+      type            : 'button',
     },
   );
 
