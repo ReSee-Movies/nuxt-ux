@@ -145,10 +145,10 @@
     const optionValue = getOptionValue(option);
 
     if (Array.isArray(value.value)) {
-      return value.value.findIndex((entry) => equals(getOptionValue(entry), optionValue, equalityKey));
+      return value.value.findIndex((entry) => equals(entry, optionValue, equalityKey));
     }
 
-    return equals(getOptionValue(value.value), optionValue, equalityKey) ? 0 : -1;
+    return equals(value.value, optionValue, equalityKey) ? 0 : -1;
   }
 
 

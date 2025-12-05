@@ -21,10 +21,11 @@
     <UiFormFieldSelectButton
       name            = "journeyType"
       option-label    = "label"
+      option-value    = "label"
       option-disabled = "disabled"
       option-icon     = "icon"
       :icon-only      = "true"
-      :multiple       = "true"
+      :multiple       = "false"
       :options        = "[
         { label: 'One Way', icon: 'i-ph-arrow-right' },
         { label: 'Round Trip', icon: 'i-ph-arrows-left-right' },
