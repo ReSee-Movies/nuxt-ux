@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.6.0](///compare/0.5.0...0.6.0) (2025-12-05)
+
+### Features
+
+* added additional onBlur, onChange, and onInput methods to the default slot of the FormField component so custom controls can be wired f6326c6
+* added an [#option](undefined/undefined/undefined/issues/option) slot to the FormFieldSelect component so that options can be customized beyond a string label d75284d
+* introduce FormFieldSelectButton component e4ef641
+* introduce ToggleButton component 54661cc
+* introduced a debounced "onChange" callback to the Form component b6d60d9
+
+### Bug Fixes
+
+* do not execute onSubmit if a form is disabled ca7c3b1
+* make toggle buttons disabled in the FormElementSelectButton component if it is made readonly 1552e41
+* submit button is disabled if form is 7d2e8f2
+* usage of :deep() css Vue pseudo for the IconTextPair component 371b415
+* use custom check icon to avoid Vue warning coming from the Primevue CheckIcon component about a duplicate label prop and computed getter 85a36c1
+
 ## [0.5.0](///compare/0.4.1...0.5.0) (2025-12-04)
 
 ### Features
