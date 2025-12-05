@@ -59,6 +59,10 @@
     <template #empty>
       <span>{{ locale.form.noOptionsAvailable }}</span>
     </template>
+
+    <template #option="{ option, selected, index }" v-if="slots.option">
+      <slot name="option" :option="option" :selected="selected" :index="index" />
+    </template>
   </Component>
 </template>
 
@@ -83,7 +87,7 @@
   import { useBreakpoints, breakpointsTailwind } from '@vueuse/core';
   import PrimeMultiSelect from 'primevue/multiselect';
   import PrimeSelect from 'primevue/select';
-  import { computed } from 'vue';
+  import { computed, useSlots } from 'vue';
   import { useReseeUx } from '../../../composables/use-resee-ux';
   import { TeleportId } from '../../../constants';
   import { blockBodyScroll } from '../../../utils/dom';
@@ -103,8 +107,11 @@
     },
   );
 
+  const slots = useSlots();
+
   const { locale } = useReseeUx();
-  const isSmall    = useBreakpoints(breakpointsTailwind).smallerOrEqual('sm');
+
+  const isSmall = useBreakpoints(breakpointsTailwind).smallerOrEqual('sm');
 
   const showFilter = computed(() => {
     return props.showOptionFilter ?? (props.options?.length ?? 0) > 20;

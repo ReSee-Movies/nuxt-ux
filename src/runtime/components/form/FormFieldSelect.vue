@@ -24,7 +24,16 @@
         :filter-placeholder    = "props.filterPlaceholder"
         :loading               = "props.loading"
         :selection-limit       = "props.maxRequired"
-      />
+      >
+        <template #option="{ option, selected, index }" v-if="slots.option">
+          <slot
+            name      = "option"
+            :option   = "option as T"
+            :selected = "selected"
+            :index    = "index"
+          />
+        </template>
+      </FormElementSelectOptions>
     </template>
   </FormField>
 </template>
@@ -33,8 +42,8 @@
 <script lang="ts">
   import { type FormFieldProps } from './FormField.vue';
 
-  export interface FormFieldSelectProps extends Omit<FormFieldProps, 'validator'> {
-    options?           : unknown[];
+  export interface FormFieldSelectProps<T = unknown> extends Omit<FormFieldProps, 'validator'> {
+    options?           : T[];
     optionLabel?       : string;
     optionValue?       : string;
     optionDisabled?    : string;
@@ -51,14 +60,14 @@
 </script>
 
 
-<script setup lang="ts">
-  import { computed } from 'vue';
+<script setup lang="ts" generic="T">
+  import { computed, useSlots } from 'vue';
   import { createBooleanValidator, createListValidator } from '../../utils/validation';
   import FormField from './FormField.vue';
   import FormElementSelectOptions from './element/FormElementSelectOptions.vue';
 
   const props = withDefaults(
-    defineProps<FormFieldSelectProps>(),
+    defineProps<FormFieldSelectProps<T>>(),
     {
       fauxLabel        : true,
       showClear        : true,
@@ -66,6 +75,8 @@
       multiple         : false,
     },
   );
+
+  const slots = useSlots();
 
   const validatorFunction = computed(() => {
     return props.multiple
