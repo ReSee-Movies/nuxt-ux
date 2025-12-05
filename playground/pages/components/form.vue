@@ -1,9 +1,10 @@
 <template>
   <UiForm
-    v-slot    = "{ state }"
+    v-slot    = "$form"
     class     = "grid sm:grid-cols-2 gap-y-6 gap-x-4"
     :disabled = "false"
     @submit   = "handleFormSubmit"
+    @change   = "(values) => console.log(values)"
   >
     <UiFormFieldText name="firstName" />
     <UiFormFieldText name="surname" />
@@ -56,7 +57,7 @@
 
       <hr class="hr">
 
-      <pre class="pre overflow-x-auto">{{ JSON.stringify(state, null, 2) }}</pre>
+      <pre class="pre overflow-x-auto">{{ JSON.stringify($form, null, 2) }}</pre>
     </div>
   </UiForm>
 
