@@ -12,7 +12,6 @@
         :text       = "props.iconOnly ? undefined : getOptionLabel(option)"
         :icon       = "getOptionIcon(option)"
         :disabled   = "getOptionDisabled(option)"
-        :readonly   = "readonly"
         :aria-label = "props.iconOnly ? getOptionLabel(option) : undefined"
         :tooltip    = "props.iconOnly ? getOptionLabel(option) : undefined"
         @click      = "(pressed) => handleToggleChange(option, pressed)"
@@ -93,7 +92,7 @@
    */
   function getOptionDisabled(option: unknown): boolean {
     // The entire control is disabled
-    if (props.disabled) {
+    if (props.disabled || props.readonly) {
       return true;
     }
 
