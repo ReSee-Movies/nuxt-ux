@@ -18,6 +18,7 @@
     :loading            = "props.loading"
     :pt                 = "props.multiple ? multiSelectPassthroughProps : selectPassthroughProps"
     :append-to          = "TeleportId"
+    checkbox-icon       = "i-ph-check-bold"
   >
     <template #value="{ value, placeholder }">
       <template v-if="value">
@@ -85,7 +86,7 @@
   import { computed } from 'vue';
   import { useReseeUx } from '../../../composables/use-resee-ux';
   import { TeleportId } from '../../../constants';
-  import { blockBodyScroll, unblockBodyScroll } from '../../../utils/dom';
+  import { blockBodyScroll } from '../../../utils/dom';
   import { swapStringPlaceholders } from '../../../utils/string';
   import Button from '../../Button.vue';
   import Icon from '../../Icon.vue';

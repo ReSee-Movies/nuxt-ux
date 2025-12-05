@@ -15,7 +15,11 @@
         :disabled         = "disabled || readonly"
         :readonly         = "readonly"
         class             = "input-group"
-      />
+      >
+        <template #icon="{ checked }">
+          <Icon v-if="checked" name="i-ph-check-bold" />
+        </template>
+      </PrimeCheckbox>
     </template>
   </FormField>
 </template>
@@ -38,6 +42,7 @@
   import PrimeCheckbox from 'primevue/checkbox';
   import { createBooleanValidator } from '../../utils/validation';
   import FormField from './FormField.vue';
+  import Icon from '../Icon.vue';
 
   const props = withDefaults(
     defineProps<FormFieldCheckboxProps>(),
