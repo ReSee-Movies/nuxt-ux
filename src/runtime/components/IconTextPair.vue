@@ -103,11 +103,11 @@
 
   @variant max-md {
     .pair:is(.responsive-shrink .pair) {
-      :deep(.leading-icon) > * {
+      &:deep(.leading-icon) > * {
         margin-inline-end: 0;
       }
 
-      :deep(.trailing-icon) > * {
+      &:deep(.trailing-icon) > * {
         margin-inline-start: 0;
       }
     }
