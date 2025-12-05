@@ -13,6 +13,7 @@ const Localization = reactive({
   },
 
   form: {
+    submitButtonLabel  : 'Submit',
     filterPlaceholder  : 'Search',
     filterNoResults    : 'No Results Found',
     noOptionsAvailable : 'No Options Available',
