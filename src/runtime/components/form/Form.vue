@@ -59,6 +59,10 @@
    * form use to augment their own behavior.
    */
   async function handleFormSubmit (event: PrimeFormSubmitEvent) {
+    if (props.disabled) {
+      return;
+    }
+
     formInstance.hasSubmitted.value = true;
 
     if (!event.valid) {
