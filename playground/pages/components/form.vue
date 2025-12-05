@@ -15,6 +15,24 @@
       option-value = "value"
     />
 
+    <UiFormFieldSelectButton
+      name            = "journeyType"
+      option-label    = "label"
+      option-disabled = "disabled"
+      option-icon     = "icon"
+      :icon-only      = "true"
+      :multiple       = "true"
+      :required       = "true"
+      :disabled       = "false"
+      :min-required   = "2"
+      :max-required   = "2"
+      :options        = "[
+        { label: 'One Way', icon: 'i-ph-arrow-right' },
+        { label: 'Round Trip', icon: 'i-ph-arrows-left-right' },
+        { label: 'Multi-City', icon: 'i-ph-dots-nine' },
+      ]"
+    />
+
     <UiFormFieldToggleSwitch
       name  = "notifications"
       label = "Allow Notifications"
@@ -29,7 +47,7 @@
 
     <div class="sm:col-span-2">
       <div class="text-right">
-        <FormSubmitButton />
+        <UiFormSubmitButton />
       </div>
 
       <hr class="hr">
@@ -57,7 +75,7 @@
         option-value = "value"
       />
 
-      <FormSubmitButton />
+      <UiFormSubmitButton />
     </UiForm>
   </UiDrawer>
 </template>
@@ -71,7 +89,8 @@
   import UiFormFieldText from '#resee-ux/components/form/FormFieldText.vue';
   import UiFormFieldToggleSwitch from '#resee-ux/components/form/FormFieldToggleSwitch.vue';
   import UiFormFieldSelect from '#resee-ux/components/form/FormFieldSelect.vue';
-  import FormSubmitButton from '#resee-ux/components/form/FormSubmitButton.vue';
+  import UiFormSubmitButton from '#resee-ux/components/form/FormSubmitButton.vue';
+  import UiFormFieldSelectButton from '#resee-ux/components/form/FormFieldSelectButton.vue';
   import { useNotification } from '#resee-ux/composables/use-notification';
   import { sleep } from '@resee-movies/utilities/timers/sleep';
   import { getRegionalIndicatorUnicodeSymbol } from '@resee-movies/utilities/geo/get-regional-indicator-unicode-symbol';
@@ -86,15 +105,20 @@
   const showDrawer = ref(false);
 
   const countryOptions = [
+    { label: `${ getRegionalIndicatorUnicodeSymbol('au') } Australia`, value: 'AU' },
     { label: `${ getRegionalIndicatorUnicodeSymbol('ca') } Canada`, value: 'CA' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('fr') } France`, value: 'FR' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('de') } Germany`, value: 'DE' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('jp') } Japan`, value: 'JP' },
     { label: `${ getRegionalIndicatorUnicodeSymbol('mx') } Mexico`, value: 'MX' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('gb') } United Kingdom`, value: 'GB' },
     { label: `${ getRegionalIndicatorUnicodeSymbol('us') } United States`, value: 'US' },
   ];
 
   async function handleFormSubmit(event: FormSubmitEvent) {
     await sleep(3000);
 
-    notifySuccess(JSON.stringify(event.values, null, 2), { headline: 'Form Submitted', lifetime: 0 });
+    notifySuccess(JSON.stringify(event.values, null, 2), { headline: 'Form Submitted' });
 
     if (showDrawer.value) {
       showDrawer.value = false;

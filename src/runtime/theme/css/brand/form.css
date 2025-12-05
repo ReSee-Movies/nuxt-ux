@@ -156,7 +156,7 @@
       :is(input[readonly]),
       :has(input[readonly]:where(:not(.p-hidden-accessible input)), [aria-readonly="true"])
     ) {
-      &:is(:disabled, :has(:disabled, [aria-disabled="true"])) {
+      &:is(:disabled, :has(:disabled:not(button), [aria-disabled="true"]:not(button))) {
         cursor  : not-allowed;
         opacity : 0.6;
       }
@@ -166,8 +166,12 @@
           outline-color: var(--color-global-foreground-accent);
         }
 
-        &:not(:has(> input[type="checkbox"])):focus-within {
-          box-shadow       : var(--shadow-heavy);
+        &:focus-within {
+          box-shadow: var(--shadow-heavy);
+        }
+
+        /* Don't style the backgrounds of some controls */
+        &:not(:has(> input[type="checkbox"]), .input-button-bar):focus-within {
           background-color : var(--color-background-scale-b);
         }
       }
@@ -299,6 +303,51 @@
 
       &:focus-within {
         color: var(--color-global-foreground);
+      }
+    }
+  }
+
+
+  /**
+   * Button bars
+   */
+  .input-button-bar {
+    width   : fit-content;
+    padding : --spacing(0.5);
+    gap     : --spacing(0.5);
+
+    button {
+      padding    : --spacing(1.5) --spacing(2);
+      cursor     : pointer;
+      transition : background-color var(--default-transition-duration) var(--default-transition-timing-function);
+
+      &:disabled {
+        cursor  : not-allowed;
+        opacity : 0.6;
+      }
+
+      &:not(:disabled) {
+        &[aria-pressed="true"] {
+          background-color: var(--color-background-scale-e);
+        }
+
+        &:hover, &:focus-visible {
+          background-color: var(--color-background-scale-b);
+
+          &[aria-pressed="true"] {
+            background-color: var(--color-background-scale-e);
+          }
+        }
+      }
+
+      &:first-child {
+        border-top-left-radius    : var(--radius-sm);
+        border-bottom-left-radius : var(--radius-sm);
+      }
+
+      &:last-child {
+        border-top-right-radius    : var(--radius-sm);
+        border-bottom-right-radius : var(--radius-sm);
       }
     }
   }
