@@ -13,7 +13,7 @@
       :label-text     = "labelText"
       :label-position = "props.labelPosition"
       :label-sr-only  = "props.labelSrOnly"
-      :disabled       = "props.disabled"
+      :disabled       = "isDisabled && !isReadonly"
       :required       = "props.required"
       :faux-label     = "props.fauxLabel"
     >
