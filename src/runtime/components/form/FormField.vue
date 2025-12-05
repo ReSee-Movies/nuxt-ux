@@ -31,6 +31,11 @@
           :message-id = "$field.error ? messageId : undefined"
           :disabled   = "isDisabled"
           :readonly   = "isReadonly"
+          :invalid    = "$field.invalid"
+          :on-blur    = "$field.props.onBlur"
+          :on-change  = "$field.props.onChange"
+          :on-input   = "$field.props.onInput"
+          :on-invalid = "$field.props.onInvalid"
         />
       </template>
     </FormLabelInputPair>
