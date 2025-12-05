@@ -1,8 +1,9 @@
 <template>
   <UiForm
-    v-slot  = "{ state }"
-    class   = "grid sm:grid-cols-2 gap-y-6 gap-x-4"
-    @submit = "handleFormSubmit"
+    v-slot    = "{ state }"
+    class     = "grid sm:grid-cols-2 gap-y-6 gap-x-4"
+    :disabled = "false"
+    @submit   = "handleFormSubmit"
   >
     <UiFormFieldText name="firstName" />
     <UiFormFieldText name="surname" />
@@ -13,6 +14,7 @@
       placeholder  = "Select an option"
       option-label = "label"
       option-value = "value"
+      :multiple    = "true"
     />
 
     <UiFormFieldSelectButton
@@ -22,10 +24,6 @@
       option-icon     = "icon"
       :icon-only      = "true"
       :multiple       = "true"
-      :required       = "true"
-      :disabled       = "false"
-      :min-required   = "2"
-      :max-required   = "2"
       :options        = "[
         { label: 'One Way', icon: 'i-ph-arrow-right' },
         { label: 'Round Trip', icon: 'i-ph-arrows-left-right' },
@@ -116,7 +114,7 @@
   ];
 
   async function handleFormSubmit(event: FormSubmitEvent) {
-    await sleep(3000);
+    await sleep(300000);
 
     notifySuccess(JSON.stringify(event.values, null, 2), { headline: 'Form Submitted' });
 

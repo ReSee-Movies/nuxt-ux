@@ -144,24 +144,27 @@
     /**
      * Readonly
      */
-    &:is(input[readonly]),
-    &:has(input[readonly]:where(:not(.p-hidden-accessible input)), [aria-readonly="true"]) {
+    &:where(.readonly, [readonly]:not(.p-hidden-accessible input), :is(.readonly &)) {
       cursor: default;
     }
 
     /**
-     * Disabled
+     * Not Readonly
      */
-    &:not(
-      :is(input[readonly]),
-      :has(input[readonly]:where(:not(.p-hidden-accessible input)), [aria-readonly="true"])
-    ) {
-      &:is(:disabled, :has(:disabled:not(button), [aria-disabled="true"]:not(button))) {
+    &:not(:where(.readonly, [readonly]:not(.p-hidden-accessible input), :is(.readonly &))) {
+
+      /**
+       * Disabled
+       */
+      &:where(.disabled, :disabled:not(.p-hidden-accessible input), :is(.disabled &)) {
         cursor  : not-allowed;
         opacity : 0.6;
       }
 
-      &:not(:disabled, :has(:disabled, [aria-disabled="true"])) {
+      /**
+       * Not Disabled
+       */
+      &:not(:where(.disabled, :disabled:not(.p-hidden-accessible input), :is(.disabled &))) {
         &:hover, &:focus-within {
           outline-color: var(--color-global-foreground-accent);
         }
@@ -321,22 +324,22 @@
       cursor     : pointer;
       transition : background-color var(--default-transition-duration) var(--default-transition-timing-function);
 
-      &:disabled {
+      &[aria-pressed="true"] {
+        background-color: var(--color-background-scale-f);
+      }
+
+      &:where(.readonly button) {
+        cursor: default;
+      }
+
+      &:disabled:not(:where(.readonly button)) {
         cursor  : not-allowed;
         opacity : 0.6;
       }
 
-      &:not(:disabled) {
-        &[aria-pressed="true"] {
-          background-color: var(--color-background-scale-e);
-        }
-
+      &:not(:disabled, :where(.readonly button), [aria-pressed="true"]) {
         &:hover, &:focus-visible {
           background-color: var(--color-background-scale-b);
-
-          &[aria-pressed="true"] {
-            background-color: var(--color-background-scale-e);
-          }
         }
       }
 
