@@ -1,11 +1,10 @@
 <template>
   <PrimeFormField
-    v-slot         = "$field"
-    :as            = "props.is"
-    :name          = "props.name"
-    :resolver      = "validatorFunction"
-    :initial-value = "props.initialValue"
-    :class         = "['input-field', props.class, { disabled: isDisabled, readonly: isReadonly, required: props.required }]"
+    v-slot    = "$field"
+    :as       = "props.is"
+    :name     = "props.name"
+    :resolver = "validatorFunction"
+    :class    = "['input-field', props.class, { disabled: isDisabled, readonly: isReadonly, required: props.required }]"
   >
     <FormLabelInputPair
       :input-id       = "inputId"
@@ -60,7 +59,6 @@
     name           : string;
     label?         : string;
     is?            : HintedString<'div'>;
-    initialValue?  : unknown;
     required?      : boolean;
     disabled?      : boolean;
     readonly?      : boolean;

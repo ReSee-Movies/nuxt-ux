@@ -7,7 +7,7 @@
     :validate-on-submit       = "true"
     :validate-on-value-update = "true"
     :validate-on-blur         = "false"
-    :initial-values           = "props.initialValues"
+    :initial-values           = "values"
     :aria-disabled            = "props.disabled"
     @submit                   = "handleFormSubmit"
   >
@@ -23,11 +23,9 @@
   export * from '../../types/form';
 
   export interface FormProps<T extends FormValues = FormValues> {
-    disabled?         : boolean;
-    initialValues?    : Record<string, unknown>;
-    onSubmit?         : FormSubmitHandler<T> | FormSubmitHandler<T>[];
-    onChange?         : (values: T | null) => void;
-    onChangeDebounce? : number,
+    disabled? : boolean;
+    onSubmit? : FormSubmitHandler<T> | FormSubmitHandler<T>[];
+    onChange? : (values: T | null) => void;
   }
 </script>
 
@@ -36,16 +34,18 @@
   import PrimeForm, { type FormInstance } from '@primevue/forms/form';
   import { toNonNullableArray } from '@resee-movies/utilities/arrays/to-non-nullable-array';
   import { isPromiseLike } from '@resee-movies/utilities/objects/is-promise-like';
-  import { syncRefs, watchDebounced } from '@vueuse/core';
-  import { useTemplateRef, watchEffect } from 'vue';
+  import { syncRefs, useDebounceFn } from '@vueuse/core';
+  import { useTemplateRef } from 'vue';
+  import { useReactiveObjectsSync } from '../../composables/use-reactive-objects-sync';
   import { provideFormInstance, getValuesFromFormState } from '../../utils/form';
 
   const props = withDefaults(
     defineProps<FormProps<T>>(),
-    {
-      onChangeDebounce: 32,
-    },
+    {},
   );
+
+  const form   = useTemplateRef<FormInstance>('form');
+  const values = defineModel<Partial<T> | undefined>('values', { default: undefined });
 
   defineEmits<{
     (e: 'submit', evt: FormSubmitEvent<T>): (void | Promise<void>);
@@ -56,42 +56,44 @@
   syncRefs(() => props.disabled, formInstance.isDisabled);
 
 
+  const emitOnChange = useDebounceFn(() => {
+    const state = form.value?.states;
+
+    if (state) {
+      props.onChange?.(getValuesFromFormState<T>(state));
+    }
+  }, 1);
+
+
   /**
-   * The following bit implements an `onChange` event for the form, which is
-   * designed to fire any time that the values of the form fields are altered.
-   *
-   * Primevue doesn't provide direct access to the watchers that it sets up
-   * for itself, unfortunately, so we're tracking the reactive `states` object
-   * that it creates. This is a very chatty object, since it carries a lot more
-   * than just the field values, so we're trying to be as efficient as is practical
-   * with the whole thing.
+   * The following bit implements a custom kind of v-model support for forms,
+   * by binding the properties of the external reactive object with those
+   * of the form's `states` object.
    */
-  const form = useTemplateRef<FormInstance>('form');
+  useReactiveObjectsSync({
+    left      : () => form.value?.states,
+    right     : () => values.value,
+    keySource : 'left',
 
-  // Watching reactive objects means that we cannot use the newValue/oldValue arguments
-  // of the callback, because they both point to the same thing.
-  let oldValues: string | undefined = undefined;
+    leftOptions: {
+      onChange: () => emitOnChange(),
 
-  const changeHandles = watchDebounced(
-    () => form.value?.states,
-    (newState) => {
-      const newValues = newState ? getValuesFromFormState<T>(newState) : null;
-      const stringify = JSON.stringify(newValues);
+      getter(obj, key) {
+        return obj[key]?.value;
+      },
 
-      if (stringify !== oldValues) {
-        props.onChange?.(newValues);
-        oldValues = stringify;
-      }
+      setter(obj, key, val) {
+        if (obj[key]) {
+          obj[key].value = val ?? null;
+        }
+      },
     },
-    {
-      debounce : props.onChangeDebounce,
-      deep     : 2,
-    },
-  );
 
-  watchEffect(() => {
-    changeHandles[props.onChange ? 'resume' : 'pause']();
+    rightOptions: {
+      onChange: () => emitOnChange(),
+    },
   });
+
 
   /**
    * This internal event handler takes the value from Primevue's form component

@@ -16,37 +16,68 @@ export type SyncObject = Record<string | number | symbol, unknown>;
 
 export type KeyOf<S extends SyncObject> = keyof S;
 
-export type Getter<S extends SyncObject> = <R>(obj: S | undefined, key: KeyOf<S>) => R;
+export type Getter<S extends SyncObject> = <R>(obj: S, key: KeyOf<S>) => R;
 
-export type Setter<S extends SyncObject> = (val: unknown, obj: S | undefined, key: KeyOf<S>) => void;
+export type Setter<S extends SyncObject> = (obj: S, key: KeyOf<S>, value: unknown) => void;
 
-export type Side = 'left' | 'right';
-
-export type SyncHandle = {
-  leftRef  : WritableComputedRef<unknown>;
-  rightRef : WritableComputedRef<unknown>;
-  stopSync : () => void;
+export type ComputedReadWriteOptions<S extends SyncObject> = {
+  getter?   : Getter<S>;
+  setter?   : Setter<S>;
+  onChange? : (key: KeyOf<S>, value: unknown) => void;
 };
 
 export type UseReactiveObjectsSyncOptions<
   L extends SyncObject,
   R extends SyncObject,
 > = {
-  left       : MaybeRefOrGetter<L | undefined>,
-  right      : MaybeRefOrGetter<R | undefined>,
-  getLeft?   : Getter<L>;
-  setLeft?   : Setter<L>;
-  getRight?  : Getter<R>;
-  setRight?  : Setter<R>;
-  keySource? : Side | (KeyOf<L> | KeyOf<R>)[];
-  onChange?  : (side: Side, key: unknown, value: unknown) => void;
+  left          : MaybeRefOrGetter<L | undefined>,
+  right         : MaybeRefOrGetter<R | undefined>,
+  keySource?    : 'left' | 'right' | (KeyOf<L> | KeyOf<R>)[];
+  leftOptions?  : ComputedReadWriteOptions<L>;
+  rightOptions? : ComputedReadWriteOptions<R>;
 };
 
-export type ComputedReadWriteOptions<S extends SyncObject> = {
-  getter?   : Getter<S>;
-  setter?   : Setter<S>;
-  onChange? : (side: Side, key: unknown, value: unknown) => void;
+type SyncHandle = {
+  leftRef  : WritableComputedRef<unknown>;
+  rightRef : WritableComputedRef<unknown>;
+  stopSync : () => void;
 };
+
+
+export function useReactiveObjectsSync<
+  L extends SyncObject,
+  R extends SyncObject,
+>(options: UseReactiveObjectsSyncOptions<L, R>) {
+  const { left, right } = options;
+
+  const watchKeys  = aggregateKeys(options);
+  const syncHandle = new Map<KeyOf<L> | KeyOf<R>, SyncHandle>();
+
+  watch(watchKeys, (newKeys, oldKeys) => {
+    // Remove old keys
+    for (const key of oldKeys.difference(newKeys)) {
+      const handle = syncHandle.get(key);
+
+      if (handle) {
+        syncHandle.delete(key);
+        handle.stopSync();
+      }
+    }
+
+    // Add new keys
+    for (const key of newKeys) {
+      if (syncHandle.has(key)) {
+        continue;
+      }
+
+      const leftRef  = computedReadWrite(left, key, options?.leftOptions);
+      const rightRef = computedReadWrite(right, key, options?.rightOptions);
+      const stopSync = syncRef(leftRef, rightRef);
+
+      syncHandle.set(key, { leftRef, rightRef, stopSync });
+    }
+  });
+}
 
 
 /**
@@ -97,84 +128,38 @@ function aggregateKeys<
 
 /**
  * Creates a read/writable computed instance for interacting with the property
- * of name `key` on the reactive `source` object. Optional `getter` and
- * `setter` methods can be provided to further augment behavior.
+ * of name `key` on the reactive `source` object. Optional `getter` and `setter`
+ * methods can be provided to further augment behavior.
  */
 function computedReadWrite<S extends SyncObject>(
   source   : MaybeRefOrGetter<S | undefined>,
   key      : KeyOf<S>,
-  side     : 'left' | 'right',
   options? : ComputedReadWriteOptions<S>,
 ) {
   return computed({
     get() {
-      return options?.getter
-        ? options?.getter(toValue(source), key)
-        : toValue(source)?.[key];
+      const target = toValue(source);
+
+      if (target) {
+        return options?.getter ? options.getter(target, key) : target[key];
+      }
+
+      return undefined;
     },
 
     set(val: any) {
-      options?.onChange?.(side, key, val);
+      const target = toValue(source);
 
-      if (options?.setter) {
-        options.setter(val, toValue(source), key);
-      }
-      else {
-        const target = toValue(source);
-
-        if (target) {
+      if (target) {
+        if (options?.setter) {
+          options.setter(target, key, val);
+        }
+        else {
           target[key] = val;
         }
+
+        options?.onChange?.(key, val);
       }
     },
-  });
-}
-
-
-/**
- *
- */
-export function useReactiveObjectsSync<
-  L extends SyncObject,
-  R extends SyncObject,
->(options: UseReactiveObjectsSyncOptions<L, R>) {
-  const { left, right } = options;
-
-  const watchKeys  = aggregateKeys(options);
-  const syncHandle = new Map<KeyOf<L> | KeyOf<R>, SyncHandle>();
-
-  watch(watchKeys, (newKeys, oldKeys) => {
-    // Remove old keys
-    for (const key of oldKeys.difference(newKeys)) {
-      const handle = syncHandle.get(key);
-
-      if (handle) {
-        syncHandle.delete(key);
-        handle.stopSync();
-      }
-    }
-
-    // Add new keys
-    for (const key of newKeys) {
-      if (syncHandle.has(key)) {
-        continue;
-      }
-
-      const leftRef  = computedReadWrite(left, key, 'left', {
-        getter   : options.getLeft,
-        setter   : options.setLeft,
-        onChange : options.onChange,
-      });
-
-      const rightRef = computedReadWrite(right, key, 'right', {
-        getter   : options.getRight,
-        setter   : options.setRight,
-        onChange : options.onChange,
-      });
-
-      const stopSync = syncRef(leftRef, rightRef);
-
-      syncHandle.set(key, { leftRef, rightRef, stopSync });
-    }
   });
 }

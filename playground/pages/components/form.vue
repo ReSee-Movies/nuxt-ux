@@ -1,12 +1,12 @@
 <template>
   <UiForm
-    v-slot    = "$form"
-    class     = "grid sm:grid-cols-2 gap-y-6 gap-x-4"
-    :disabled = "false"
-    @submit   = "handleFormSubmit"
-    @change   = "(values) => console.log(values)"
+    v-slot         = "$form"
+    class          = "grid sm:grid-cols-2 gap-y-6 gap-x-4"
+    :disabled      = "false"
+    @submit        = "handleFormSubmit"
+    v-model:values = "values"
   >
-    <UiFormFieldText name="firstName" />
+    <UiFormFieldText name="firstName" required />
     <UiFormFieldText name="surname" />
 
     <UiFormFieldSelect
@@ -45,6 +45,13 @@
       class = "sm:col-span-2"
     />
 
+    <UiFormFieldCheckbox
+      v-if  = "$form.state.termsOfService?.value"
+      name  = "confirmTermsOfService"
+      label = "You're sure about that?"
+      class = "sm:col-span-2"
+    />
+
     <div class="sm:col-span-2">
       <div class="text-right">
         <UiFormSubmitButton />
@@ -58,6 +65,12 @@
 
       <hr class="hr">
 
+      <h2 class="h3">Bound Model</h2>
+      <pre class="pre overflow-x-auto">{{ JSON.stringify(values, null, 2) }}</pre>
+
+      <hr class="hr">
+
+      <h2 class="h3">Form State</h2>
       <pre class="pre overflow-x-auto">{{ JSON.stringify($form, null, 2) }}</pre>
     </div>
   </UiForm>
@@ -94,7 +107,7 @@
   import { useNotification } from '#resee-ux/composables/use-notification';
   import { sleep } from '@resee-movies/utilities/timers/sleep';
   import { getRegionalIndicatorUnicodeSymbol } from '@resee-movies/utilities/geo/get-regional-indicator-unicode-symbol';
-  import { ref } from 'vue';
+  import { ref, reactive } from 'vue';
 
   definePageMeta({
     heading: 'Form',
@@ -103,6 +116,11 @@
   const { notifySuccess } = useNotification();
 
   const showDrawer = ref(false);
+
+  const values = reactive({
+    firstName : 'Bob',
+    surname   : 'Loblaw',
+  });
 
   const countryOptions = [
     { label: `${ getRegionalIndicatorUnicodeSymbol('au') } Australia`, value: 'AU' },
