@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.7.0](///compare/0.6.0...0.7.0) (2025-12-06)
+
+### Features
+
+* added support for `v-model:values` on a Form instance, which binds to that form's internal state b601f69
+* introduce useReactiveObjectsSync composable - a first pass at being able to selectively synchronize the properties of two reactive objects ae570ad
+
+### Bug Fixes
+
+* properly compare values in the ForElementSelectButton component when an optionValue field is provided 4d6ebd4
+
 ## [0.6.0](///compare/0.5.0...0.6.0) (2025-12-05)
 
 ### Features
