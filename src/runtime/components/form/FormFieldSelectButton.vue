@@ -4,8 +4,9 @@
       <slot name="label" />
     </template>
 
-    <template #default="{ labelId, messageId, invalid, disabled, readonly, onChange, onBlur }">
+    <template #default="{ value, labelId, messageId, invalid, disabled, readonly, onChange, onBlur }">
       <FormElementSelectButton
+        :value            = "value"
         :aria-labelledby  = "labelId"
         :aria-describedby = "messageId"
         :aria-invalid     = "invalid"

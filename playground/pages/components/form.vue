@@ -118,8 +118,9 @@
   const showDrawer = ref(false);
 
   const values = reactive({
-    firstName : 'Bob',
-    surname   : 'Loblaw',
+    firstName   : 'Bob',
+    surname     : 'Loblaw',
+    journeyType : 'Round Trip',
   });
 
   const countryOptions = [

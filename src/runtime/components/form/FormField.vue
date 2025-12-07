@@ -30,6 +30,7 @@
           :message-id = "$field.error ? messageId : undefined"
           :disabled   = "isDisabled"
           :readonly   = "isReadonly"
+          :value      = "$field.value"
           :invalid    = "$field.invalid"
           :on-blur    = "$field.props.onBlur"
           :on-change  = "$field.props.onChange"
