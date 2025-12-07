@@ -273,7 +273,7 @@
     background-image : linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.15) 80%, transparent);
   }
 
-  .image .icon {
+  .image :deep(.icon) {
     color     : var(--color-global-background-accent);
     position  : absolute;
     top       : 50%;
