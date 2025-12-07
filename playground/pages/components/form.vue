@@ -52,6 +52,11 @@
       class = "sm:col-span-2"
     />
 
+    <UiFormFieldTextarea
+      name  = "additionalInfo"
+      class = "sm:col-span-2"
+    />
+
     <div class="sm:col-span-2">
       <div class="text-right">
         <UiFormSubmitButton />
@@ -104,6 +109,7 @@
   import UiFormFieldSelect from '#resee-ux/components/form/FormFieldSelect.vue';
   import UiFormSubmitButton from '#resee-ux/components/form/FormSubmitButton.vue';
   import UiFormFieldSelectButton from '#resee-ux/components/form/FormFieldSelectButton.vue';
+  import UiFormFieldTextarea from '#resee-ux/components/form/FormFieldTextarea.vue';
   import { useNotification } from '#resee-ux/composables/use-notification';
   import { sleep } from '@resee-movies/utilities/timers/sleep';
   import { getRegionalIndicatorUnicodeSymbol } from '@resee-movies/utilities/geo/get-regional-indicator-unicode-symbol';
@@ -118,9 +124,10 @@
   const showDrawer = ref(false);
 
   const values = reactive({
-    firstName   : 'Bob',
-    surname     : 'Loblaw',
-    journeyType : 'Round Trip',
+    firstName      : 'Bob',
+    surname        : 'Loblaw',
+    journeyType    : 'Round Trip',
+    additionalInfo : 'Hello World',
   });
 
   const countryOptions = [
@@ -135,7 +142,7 @@
   ];
 
   async function handleFormSubmit(event: FormSubmitEvent) {
-    await sleep(300000);
+    await sleep(3000);
 
     notifySuccess(JSON.stringify(event.values, null, 2), { headline: 'Form Submitted' });
 

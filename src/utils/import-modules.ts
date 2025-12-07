@@ -38,6 +38,7 @@ export function importModules(nuxt: Nuxt) {
       'ProgressSpinner',
       'Select',
       'Tag',
+      'Textarea',
       'Toast',
       'ToggleSwitch',
       ...(primeOptions?.includeComponents ?? []),
