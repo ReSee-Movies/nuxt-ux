@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](///compare/0.7.0...0.7.1) (2025-12-07)
+
+### Bug Fixes
+
+* a better check for selected values that a label can be shown for in the FormElementSelectOptions component ae03231
+* styles requiring the :deep pseudo helper in Image component eefba49
+
 ## [0.7.0](///compare/0.6.0...0.7.0) (2025-12-06)
 
 ### Features
