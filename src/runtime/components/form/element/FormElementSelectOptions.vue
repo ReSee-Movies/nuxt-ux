@@ -21,8 +21,10 @@
     checkbox-icon       = "i-ph-check-bold"
   >
     <template #value="{ value, placeholder }">
-      <template v-if="value">
-        {{ toLabel(value) }}
+      <template v-if="value && (Array.isArray(value) ? value.length : true)">
+        <slot name="label">
+          {{ toLabel(value) || '&ZeroWidthSpace;' }}
+        </slot>
       </template>
 
       <span v-else class="placeholder">
