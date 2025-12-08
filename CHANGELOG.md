@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.8.0](///compare/0.7.1...0.8.0) (2025-12-08)
+
+### Features
+
+* introduce FormFieldTextarea component 6ca7e99
+* introduce FormFieldTurnstile component a18bc24
+
+### Bug Fixes
+
+* the FormElementSelectButton form component has its initial value set, if provided 84135e5
+
 ## [0.7.1](///compare/0.7.0...0.7.1) (2025-12-07)
 
 ### Bug Fixes
