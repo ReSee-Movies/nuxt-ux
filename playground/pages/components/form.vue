@@ -110,6 +110,7 @@
   import UiFormSubmitButton from '#resee-ux/components/form/FormSubmitButton.vue';
   import UiFormFieldSelectButton from '#resee-ux/components/form/FormFieldSelectButton.vue';
   import UiFormFieldTextarea from '#resee-ux/components/form/FormFieldTextarea.vue';
+  import UiFormFieldTurnstile from '#resee-ux/components/form/FormFieldTurnstile.vue';
   import { useNotification } from '#resee-ux/composables/use-notification';
   import { sleep } from '@resee-movies/utilities/timers/sleep';
   import { getRegionalIndicatorUnicodeSymbol } from '@resee-movies/utilities/geo/get-regional-indicator-unicode-symbol';
