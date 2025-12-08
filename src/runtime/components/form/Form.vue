@@ -11,14 +11,21 @@
     :aria-disabled            = "props.disabled"
     @submit                   = "handleFormSubmit"
   >
-    <slot :state="$form" />
+    <slot name="before" :state="$form" />
+
+    <slot name="default" :state="$form">
+      <FormFieldBuilder v-if="props.fields?.length" :fields="props.fields" />
+    </slot>
+
+    <slot name="after" :state="$form" />
   </PrimeForm>
 </template>
 
 
 <script lang="ts">
   import type { FormSubmitEvent as PrimeFormSubmitEvent } from '@primevue/forms';
-  import type { FormValues, FormSubmitHandler, FormSubmitEvent } from '../../types/form';
+  import type { FormSubmitEvent, FormSubmitHandler, FormValues } from '../../types/form';
+  import type { FormFieldBuilderOption } from './FormFieldBuilder.vue';
 
   export * from '../../types/form';
 
@@ -26,6 +33,7 @@
     disabled? : boolean;
     onSubmit? : FormSubmitHandler<T> | FormSubmitHandler<T>[];
     onChange? : (values: T | null) => void;
+    fields?   : FormFieldBuilderOption[];
   }
 </script>
 
@@ -36,12 +44,18 @@
   import { isPromiseLike } from '@resee-movies/utilities/objects/is-promise-like';
   import { syncRefs, useDebounceFn } from '@vueuse/core';
   import { useTemplateRef } from 'vue';
+  import FormFieldBuilder from './FormFieldBuilder.vue';
   import { useReactiveObjectsSync } from '../../composables/use-reactive-objects-sync';
   import { provideFormInstance, getValuesFromFormState } from '../../utils/form';
 
   const props = withDefaults(
     defineProps<FormProps<T>>(),
-    {},
+    {
+      disabled : false,
+      onSubmit : undefined,
+      onChange : undefined,
+      fields   : undefined,
+    },
   );
 
   const form   = useTemplateRef<FormInstance>('form');

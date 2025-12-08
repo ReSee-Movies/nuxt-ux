@@ -11,7 +11,7 @@
 
 <script lang="ts">
   import type { TurnstileRenderOptions } from '../../../composables/use-cloudflare-turnstile';
-  export interface FormFieldTurnstileProps extends TurnstileRenderOptions {}
+  export interface FormElementTurnstileProps extends TurnstileRenderOptions {}
 </script>
 
 
@@ -20,7 +20,7 @@
   import { useCloudflareTurnstile, type Turnstile } from '../../../composables/use-cloudflare-turnstile';
 
   const props = withDefaults(
-    defineProps<FormFieldTurnstileProps>(),
+    defineProps<FormElementTurnstileProps>(),
     {
       'size'            : 'flexible',
       'retry'           : 'auto',

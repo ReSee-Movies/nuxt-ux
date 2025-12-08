@@ -1,100 +1,31 @@
 <template>
-  <UiForm
-    v-slot         = "$form"
-    class          = "grid sm:grid-cols-2 gap-y-6 gap-x-4"
-    :disabled      = "false"
-    @submit        = "handleFormSubmit"
-    v-model:values = "values"
-  >
-    <UiFormFieldText name="firstName" required />
-    <UiFormFieldText name="surname" />
+  <UiForm v-model:values="values" :fields="formFields" @submit="handleFormSubmit">
+    <template #after="$form">
+      <div>
+        <hr class="hr">
 
-    <UiFormFieldSelect
-      name         = "country"
-      :options     = "countryOptions"
-      placeholder  = "Select an option"
-      option-label = "label"
-      option-value = "value"
-      :multiple    = "true"
-    />
+        <div class="text-right">
+          <UiButton text="Flyout Form" @click="showDrawer = true" />
+        </div>
 
-    <UiFormFieldSelectButton
-      name            = "journeyType"
-      option-label    = "label"
-      option-value    = "label"
-      option-disabled = "disabled"
-      option-icon     = "icon"
-      :icon-only      = "true"
-      :multiple       = "false"
-      :options        = "[
-        { label: 'One Way', icon: 'i-ph-arrow-right' },
-        { label: 'Round Trip', icon: 'i-ph-arrows-left-right' },
-        { label: 'Multi-City', icon: 'i-ph-dots-nine' },
-      ]"
-    />
+        <hr class="hr">
 
-    <UiFormFieldToggleSwitch
-      name  = "notifications"
-      label = "Allow Notifications"
-      class = "sm:col-span-2"
-    />
+        <h2 class="h3">Bound Model</h2>
+        <pre class="pre overflow-x-auto">{{ JSON.stringify(values, null, 2) }}</pre>
 
-    <UiFormFieldCheckbox
-      name  = "termsOfService"
-      label = "I agree to the terms of service"
-      class = "sm:col-span-2"
-    />
+        <hr class="hr">
 
-    <UiFormFieldCheckbox
-      v-if  = "$form.state.termsOfService?.value"
-      name  = "confirmTermsOfService"
-      label = "You're sure about that?"
-      class = "sm:col-span-2"
-    />
-
-    <UiFormFieldTextarea
-      name  = "additionalInfo"
-      class = "sm:col-span-2"
-    />
-
-    <div class="sm:col-span-2">
-      <div class="text-right">
-        <UiFormSubmitButton />
+        <h2 class="h3">Form State</h2>
+        <pre class="pre overflow-x-auto">{{ JSON.stringify($form, null, 2) }}</pre>
       </div>
-
-      <hr class="hr">
-
-      <div class="text-right">
-        <UiButton text="Flyout Form" @click="showDrawer = true" />
-      </div>
-
-      <hr class="hr">
-
-      <h2 class="h3">Bound Model</h2>
-      <pre class="pre overflow-x-auto">{{ JSON.stringify(values, null, 2) }}</pre>
-
-      <hr class="hr">
-
-      <h2 class="h3">Form State</h2>
-      <pre class="pre overflow-x-auto">{{ JSON.stringify($form, null, 2) }}</pre>
-    </div>
+    </template>
   </UiForm>
 
+
   <UiDrawer v-model:visible="showDrawer" position="right" header="Flyout Form">
-    <UiForm class="flex flex-col gap-6 px-1" @submit="handleFormSubmit">
-      <UiFormFieldText name="optionA" />
-      <UiFormFieldText name="optionB" />
-
-      <UiFormFieldSelect
-        name         = "optionC"
-        :options     = "countryOptions"
-        placeholder  = "Select an option"
-        option-label = "label"
-        option-value = "value"
-      />
-
-      <UiFormSubmitButton />
-    </UiForm>
+    <div class="px-1">
+      <UiForm :fields="formFields" @submit="handleFormSubmit" />
+    </div>
   </UiDrawer>
 </template>
 
@@ -103,18 +34,11 @@
   import UiButton from '#resee-ux/components/Button.vue';
   import UiDrawer from '#resee-ux/components/Drawer.vue';
   import UiForm, { type FormSubmitEvent } from '#resee-ux/components/form/Form.vue';
-  import UiFormFieldCheckbox from '#resee-ux/components/form/FormFieldCheckbox.vue';
-  import UiFormFieldText from '#resee-ux/components/form/FormFieldText.vue';
-  import UiFormFieldToggleSwitch from '#resee-ux/components/form/FormFieldToggleSwitch.vue';
-  import UiFormFieldSelect from '#resee-ux/components/form/FormFieldSelect.vue';
-  import UiFormSubmitButton from '#resee-ux/components/form/FormSubmitButton.vue';
-  import UiFormFieldSelectButton from '#resee-ux/components/form/FormFieldSelectButton.vue';
-  import UiFormFieldTextarea from '#resee-ux/components/form/FormFieldTextarea.vue';
-  import UiFormFieldTurnstile from '#resee-ux/components/form/FormFieldTurnstile.vue';
+  import type { FormFieldBuilderOption } from '#resee-ux/components/form/FormFieldBuilder.vue';
   import { useNotification } from '#resee-ux/composables/use-notification';
-  import { sleep } from '@resee-movies/utilities/timers/sleep';
   import { getRegionalIndicatorUnicodeSymbol } from '@resee-movies/utilities/geo/get-regional-indicator-unicode-symbol';
-  import { ref, reactive } from 'vue';
+  import { sleep } from '@resee-movies/utilities/timers/sleep';
+  import { reactive, ref } from 'vue';
 
   definePageMeta({
     heading: 'Form',
@@ -132,15 +56,75 @@
   });
 
   const countryOptions = [
-    { label: `${ getRegionalIndicatorUnicodeSymbol('au') } Australia`, value: 'AU' },
-    { label: `${ getRegionalIndicatorUnicodeSymbol('ca') } Canada`, value: 'CA' },
-    { label: `${ getRegionalIndicatorUnicodeSymbol('fr') } France`, value: 'FR' },
-    { label: `${ getRegionalIndicatorUnicodeSymbol('de') } Germany`, value: 'DE' },
-    { label: `${ getRegionalIndicatorUnicodeSymbol('jp') } Japan`, value: 'JP' },
-    { label: `${ getRegionalIndicatorUnicodeSymbol('mx') } Mexico`, value: 'MX' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('au') } Australia`,      value: 'AU' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('ca') } Canada`,         value: 'CA' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('fr') } France`,         value: 'FR' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('de') } Germany`,        value: 'DE' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('jp') } Japan`,          value: 'JP' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('mx') } Mexico`,         value: 'MX' },
     { label: `${ getRegionalIndicatorUnicodeSymbol('gb') } United Kingdom`, value: 'GB' },
-    { label: `${ getRegionalIndicatorUnicodeSymbol('us') } United States`, value: 'US' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('us') } United States`,  value: 'US' },
   ];
+
+  const journeyTypes = [
+    { label: 'One Way',    icon: 'i-ph-arrow-right' },
+    { label: 'Round Trip', icon: 'i-ph-arrows-left-right' },
+    { label: 'Multi-City', icon: 'i-ph-dots-nine' },
+  ];
+
+  const formFields: FormFieldBuilderOption[] = [
+    {
+      fieldType : 'text',
+      name      : 'firstName',
+      required  : true,
+      width     : 'half',
+    },
+    {
+      fieldType : 'text',
+      name      : 'surname',
+      required  : true,
+      width     : 'half',
+    },
+    {
+      fieldType   : 'select',
+      name        : 'country',
+      options     : countryOptions,
+      placeholder : 'Select an option',
+      optionLabel : 'label',
+      optionValue : 'value',
+      multiple    : true,
+      maxRequired : 2,
+      width       : 'half',
+    },
+    {
+      fieldType      : 'select-button',
+      name           : 'journeyType',
+      options        : journeyTypes,
+      optionLabel    : 'label',
+      optionValue    : 'label',
+      optionDisabled : 'disabled',
+      optionIcon     : 'icon',
+      iconOnly       : true,
+      multiple       : false,
+      width          : 'half',
+    },
+    {
+      fieldType : 'toggle',
+      name      : 'notifications',
+      label     : 'Allow Notifications',
+    },
+    {
+      fieldType : 'checkbox',
+      name      : 'termsOfService',
+      label     : 'I agree to the terms of service',
+      required  : true,
+    },
+    {
+      fieldType : 'textarea',
+      name      : 'additionalInfo',
+    },
+  ];
+
 
   async function handleFormSubmit(event: FormSubmitEvent) {
     await sleep(3000);
