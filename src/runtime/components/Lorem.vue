@@ -25,8 +25,8 @@
 </script>
 
 <script setup lang="ts">
-  import { useId, useState } from '#imports';
-  import { computed } from 'vue';
+  import { useState } from '#imports';
+  import { computed, useId } from 'vue';
 
   const props = withDefaults(
     defineProps<LoremProps>(),
@@ -42,37 +42,6 @@
       maxWordCount      : 25,
     },
   );
-
-
-  const values = computed(() => {
-    const { min, max, type } = props;
-
-    const minWord = toInteger((type === 'words' && min), props.minWordCount) ?? 5;
-    const maxWord = toInteger((type === 'words' && max), props.maxWordCount, minWord + 20) ?? 25;
-
-    if (props.type === 'words') {
-      return getWords(minWord, maxWord);
-    }
-
-    const minSent = toInteger((type === 'sentences' && min), props.minSentenceCount) ?? 1;
-    const maxSent = toInteger((type === 'sentences' && max), props.maxSentenceCount, minSent + 3) ?? 4;
-
-    if (props.type === 'sentences') {
-      return getSentences(minSent, maxSent, minWord, maxWord);
-    }
-
-    const minPara = toInteger((type === 'paragraphs' && min), props.minParagraphCount) ?? 1
-    const maxPara = toInteger((type === 'paragraphs' && max), props.maxParagraphCount, minPara + 3) ?? 4;
-
-    if (props.type === 'paragraphs') {
-      return getParagraphs(minPara, maxPara, minSent, maxSent, minWord, maxWord);
-    }
-
-    return [];
-  });
-
-
-  const lorem = useState(useId(), () => values);
 
 
   /**
@@ -104,6 +73,42 @@
     'libero', 'justo, ', 'diam, ', 'rhoncus, ', 'felis, ', 'et, ', 'mauris, ', 'ante', 'metus, ', 'commodo, ',
     'velit, ', 'non, ', 'tellus, ', 'purus, ', 'rutrum', 'fermentum, ', 'pretium, ', 'elit, ', 'vehicula',
   ];
+
+
+  const uid    = useId();
+  const values = useState(uid, () => generate());
+  const lorem  = computed(() => values.value ?? generate());
+
+
+  /**
+   * Generate strings of lorem configured to the component's props.
+   */
+  function generate() {
+    const { min, max, type } = props;
+
+    const minWord = toInteger((type === 'words' && min), props.minWordCount) ?? 5;
+    const maxWord = toInteger((type === 'words' && max), props.maxWordCount, minWord + 20) ?? 25;
+
+    if (props.type === 'words') {
+      return getWords(minWord, maxWord);
+    }
+
+    const minSent = toInteger((type === 'sentences' && min), props.minSentenceCount) ?? 1;
+    const maxSent = toInteger((type === 'sentences' && max), props.maxSentenceCount, minSent + 3) ?? 4;
+
+    if (props.type === 'sentences') {
+      return getSentences(minSent, maxSent, minWord, maxWord);
+    }
+
+    const minPara = toInteger((type === 'paragraphs' && min), props.minParagraphCount) ?? 1
+    const maxPara = toInteger((type === 'paragraphs' && max), props.maxParagraphCount, minPara + 3) ?? 4;
+
+    if (props.type === 'paragraphs') {
+      return getParagraphs(minPara, maxPara, minSent, maxSent, minWord, maxWord);
+    }
+
+    return [];
+  }
 
 
   /**
