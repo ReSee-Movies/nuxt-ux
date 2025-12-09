@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.10.0](///compare/0.9.0...0.10.0) (2025-12-09)
+
+### Features
+
+* introduce FormFieldRadioGroup component ca58023
+
 ## [0.9.0](///compare/0.8.0...0.9.0) (2025-12-09)
 
 ### Features
