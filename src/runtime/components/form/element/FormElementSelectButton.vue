@@ -5,16 +5,16 @@
     :aria-labelledby  = "props.ariaLabelledby"
     :aria-describedby = "props.ariaDescribedby"
   >
-    <template v-for="(option, index) of props.options" :key="getOptionRenderKey(option) ?? index">
+    <template v-for="(option, index) of props.options" :key="utils.getOptionRenderKey(option) ?? index">
       <ToggleButton
         class       = "input-button"
         severity    = "unset"
-        :pressed    = "getSelectedOptionIndex(option) !== -1"
-        :text       = "props.iconOnly ? undefined : getOptionLabel(option)"
-        :icon       = "getOptionIcon(option)"
+        :pressed    = "utils.getOptionIndex(option, value) !== -1"
+        :text       = "props.iconOnly ? undefined : utils.getOptionLabel(option)"
+        :icon       = "utils.getOptionIcon(option)"
         :disabled   = "getOptionDisabled(option)"
-        :aria-label = "props.iconOnly ? getOptionLabel(option) : undefined"
-        :tooltip    = "props.iconOnly ? getOptionLabel(option) : undefined"
+        :aria-label = "props.iconOnly ? utils.getOptionLabel(option) : undefined"
+        :tooltip    = "props.iconOnly ? utils.getOptionLabel(option) : undefined"
         @click      = "(pressed) => handleToggleChange(option, pressed)"
       />
     </template>
@@ -51,10 +51,9 @@
 
 
 <script setup lang="ts">
-  import { equals, resolveFieldData } from '@primeuix/utils/object';
-  import { isNumber } from '@resee-movies/utilities/numbers/is-number';
-  import { isString } from '@resee-movies/utilities/strings/is-string';
+  import { useOptionListMethods } from '../../../utils/form';
   import ToggleButton from '../../ToggleButton.vue';
+
 
   const props = withDefaults(
     defineProps<FormElementSelectButtonProps>(),
@@ -71,37 +70,14 @@
   }>();
 
   const value = defineModel<unknown | unknown[]>('value', { default: null });
+  const utils = useOptionListMethods(props);
 
 
-  function getOptionLabel(option: unknown): string {
-    return String(props.optionLabel ? resolveFieldData(option, props.optionLabel) : option);
-  }
-
-
-  function getOptionValue(option: unknown): unknown {
-    return props.optionValue ? resolveFieldData(option, props.optionValue) : option;
-  }
-
-
-  function getOptionIcon(option: unknown): string | undefined {
-    return props.optionIcon ? String(resolveFieldData(option, props.optionIcon)) : undefined;
-  }
-
-
-  /**
-   *
-   */
   function getOptionDisabled(option: unknown): boolean {
-    // The entire control is disabled
-    if (props.disabled || props.readonly) {
+    // The entire control, or the individual option, is explicitly disabled
+    if (props.disabled || props.readonly || utils.value.getOptionDisabled(option)) {
       return true;
     }
-
-    // The individual option is disabled
-    if (props.optionDisabled && resolveFieldData(option, props.optionDisabled)) {
-      return true;
-    }
-
 
     // The control's selection limit has been reached,
     // and the given option is not in the list
@@ -109,7 +85,7 @@
       const limit  = props.selectionLimit ?? Number.POSITIVE_INFINITY;
       const length = Array.isArray(value.value) ? value.value.length : 0;
 
-      if (limit <= length && getSelectedOptionIndex(option) === -1) {
+      if (limit <= length && utils.value.getOptionIndex(option, value) === -1) {
         return true;
       }
     }
@@ -118,51 +94,13 @@
   }
 
 
-  /**
-   * Attempts to return a suitable value for the provided option argument that can
-   * be used as that option's `key` in the template's for loop.
-   */
-  function getOptionRenderKey(option: unknown): string | number | undefined {
-    const result = props.optionDataKey
-      ? resolveFieldData(option, props.optionDataKey)
-      : getOptionLabel(option);
-
-    return isString(result) || isNumber(result) ? result : undefined;
-  }
-
-
-  /**
-   * Finds the index of the provided option in the selected options array. This
-   * will always return a number, even if no options have been selected and `value`
-   * is null (-1), or the control is in single selection mode and so `value` is
-   * not an array (0 if matched, -1 if not).
-   */
-  function getSelectedOptionIndex(option: unknown): number {
-    if (!value.value) {
-      return -1;
-    }
-
-    const equalityKey = props.optionValue ? undefined : props.optionDataKey;
-    const optionValue = getOptionValue(option);
-
-    if (Array.isArray(value.value)) {
-      return value.value.findIndex((entry) => equals(entry, optionValue, equalityKey));
-    }
-
-    return equals(value.value, optionValue, equalityKey) ? 0 : -1;
-  }
-
-
-  /**
-   * The onclick handler for individual toggle buttons.
-   */
   function handleToggleChange(option: unknown, pressed: boolean) {
     if (props.multiple) {
-      const selectedIndex = getSelectedOptionIndex(option);
+      const selectedIndex = utils.value.getOptionIndex(option, value);
       const selectedItems = Array.isArray(value.value) ? [...value.value] : [];
 
       if (selectedIndex === -1) {
-        selectedItems.push(getOptionValue(option));
+        selectedItems.push(utils.value.getOptionValue(option));
       }
       else {
         selectedItems.splice(selectedIndex, 1);
@@ -171,7 +109,7 @@
       value.value = selectedItems.length === 0 ? null : selectedItems;
     }
     else {
-      value.value = pressed ? getOptionValue(option) : null;
+      value.value = pressed ? utils.value.getOptionValue(option) : null;
     }
 
     emits('change', new ChangeEvent(value.value));

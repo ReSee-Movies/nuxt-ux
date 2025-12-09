@@ -14,7 +14,7 @@
     :show-clear         = "props.showClear"
     :show-toggle-all    = "showSelectAllCheckbox"
     :filter             = "showFilter"
-    :filter-placeholder = "props.filterPlaceholder ?? locale.form.filterPlaceholder"
+    :filter-placeholder = "props.filterPlaceholder ?? reseeUx.locale.form.filterPlaceholder"
     :loading            = "props.loading"
     :pt                 = "props.multiple ? multiSelectPassthroughProps : selectPassthroughProps"
     :append-to          = "TeleportId"
@@ -55,11 +55,11 @@
     </template>
 
     <template #emptyfilter>
-      <span>{{ locale.form.filterNoResults }}</span>
+      <span>{{ reseeUx.locale.form.filterNoResults }}</span>
     </template>
 
     <template #empty>
-      <span>{{ locale.form.noOptionsAvailable }}</span>
+      <span>{{ reseeUx.locale.form.noOptionsAvailable }}</span>
     </template>
 
     <template #option="{ option, selected, index }" v-if="slots.option">
@@ -85,14 +85,14 @@
 
 
 <script setup lang="ts">
-  import { equals, resolveFieldData } from '@primeuix/utils/object';
-  import { useBreakpoints, breakpointsTailwind } from '@vueuse/core';
+  import { breakpointsTailwind, useBreakpoints } from '@vueuse/core';
   import PrimeMultiSelect from 'primevue/multiselect';
   import PrimeSelect from 'primevue/select';
   import { computed, useSlots } from 'vue';
   import { useReseeUx } from '../../../composables/use-resee-ux';
   import { TeleportId } from '../../../constants';
   import { blockBodyScroll } from '../../../utils/dom';
+  import { useOptionListMethods } from '../../../utils/form';
   import { swapStringPlaceholders } from '../../../utils/string';
   import Button from '../../Button.vue';
   import Icon from '../../Icon.vue';
@@ -109,10 +109,9 @@
     },
   );
 
-  const slots = useSlots();
-
-  const { locale } = useReseeUx();
-
+  const slots   = useSlots();
+  const utils   = useOptionListMethods(props);
+  const reseeUx = useReseeUx();
   const isSmall = useBreakpoints(breakpointsTailwind).smallerOrEqual('sm');
 
   const showFilter = computed(() => {
@@ -190,7 +189,7 @@
 
         input: {
           'id'         : `${ props.inputId }_select_all`,
-          'aria-label' : locale.form.selectAllOptions,
+          'aria-label' : reseeUx.locale.form.selectAllOptions,
         },
       },
 
@@ -202,28 +201,13 @@
     };
   });
 
-
-  function getOptionValue(option: unknown): unknown {
-    return props.optionValue ? resolveFieldData(option, props.optionValue) : option;
-  }
-
-  function getOptionLabel(option: unknown): unknown {
-    return props.optionLabel ? resolveFieldData(option, props.optionLabel) : option;
-  }
-
-  function findOptionByValue(value: unknown) {
-    return props.options?.find(
-      (option) => equals(getOptionValue(option), value, props.optionValue ? undefined : props.dataKey),
-    );
-  }
-
   function toLabel(value: unknown) {
     if (!value) {
       return undefined;
     }
 
     if (!Array.isArray(value)) {
-      return getOptionLabel(findOptionByValue(value));
+      return utils.value.getOptionLabel(utils.value.getOptionByValue(value, props.options));
     }
 
     if (value.length === 0) {
@@ -231,9 +215,9 @@
     }
 
     if (value.length === 1) {
-      return getOptionLabel(findOptionByValue(value[0]));
+      return utils.value.getOptionLabel(utils.value.getOptionByValue(value[0], props.options));
     }
 
-    return swapStringPlaceholders(locale.form.numOptionsSelected, { count: value.length });
+    return swapStringPlaceholders(reseeUx.locale.form.numOptionsSelected, { count: value.length });
   }
 </script>
