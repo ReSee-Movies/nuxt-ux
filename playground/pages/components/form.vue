@@ -123,6 +123,9 @@
       fieldType : 'textarea',
       name      : 'additionalInfo',
     },
+    {
+      fieldType: 'submit',
+    },
   ];
 
 

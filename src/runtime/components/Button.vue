@@ -31,7 +31,9 @@
       :icon-transition-mode      = "props.iconTransitionMode"
       :icon-transition-on-appear = "props.iconTransitionOnAppear"
     >
-      <slot />
+      <template #default v-if="slots.default">
+        <slot />
+      </template>
     </IconTextPair>
   </Component>
 </template>

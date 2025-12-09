@@ -7,6 +7,7 @@
   >
     <template v-for="(option, index) of props.options" :key="getOptionRenderKey(option) ?? index">
       <ToggleButton
+        class       = "input-button"
         severity    = "unset"
         :pressed    = "getSelectedOptionIndex(option) !== -1"
         :text       = "props.iconOnly ? undefined : getOptionLabel(option)"

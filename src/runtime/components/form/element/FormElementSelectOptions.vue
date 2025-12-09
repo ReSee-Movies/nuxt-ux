@@ -44,7 +44,7 @@
       <Button
         severity         = "unset"
         icon             = "i-ph-x"
-        class            = "input-group-addon"
+        class            = "input-button input-group-addon"
         @click           = "clearCallback"
         :data-pc-section = "'clearicon' /* used internally by Primevue. No idea why they offer the slot like this. */"
       />
@@ -129,7 +129,7 @@
     return {
       header                : { class: 'menu-prefix input-menu-header' },
       overlay               : { class: 'menu input-menu' },
-      dropdown              : { class: 'input-group-addon' },
+      dropdown              : { class: 'input-group-addon input-button' },
       listContainer         : { class: 'menu-list' },
       pcFilterContainer     : { root: { class: 'input-menu-filter' } },
       pcFilterIconContainer : { root: { class: 'input-group-addon' } },
