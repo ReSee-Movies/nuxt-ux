@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.9.0](///compare/0.8.0...0.9.0) (2025-12-09)
+
+### Features
+
+* introduce FormFieldBuilder component, and the ability to pass a field configuration array to the form instead of defining each field in markup 2b9b43a
+* the LayoutPageContainer component now supports subheader text and an actions bar, as well as being able to designate it a prose container for typography styling 0bd455b
+
+### Bug Fixes
+
+* hydration mismatch when the Lorem component is SSR dcbd12b
+
 ## [0.8.0](///compare/0.7.1...0.8.0) (2025-12-08)
 
 ### Features
