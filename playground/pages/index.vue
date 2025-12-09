@@ -20,6 +20,7 @@
   });
 
   const pages = [
+    { label: 'Layout',           icon: 'i-ph-ruler',               route: 'layout' },
     { label: 'Typography',       icon: 'i-ph-text-aa',             route: 'typography' },
     { label: 'Button',           icon: 'i-ph-radio-button',        route: 'components-button' },
     { label: 'Card',             icon: 'i-ph-bounding-box',        route: 'components-card' },

@@ -1,3 +1,8 @@
+/**
+ * Button styling. Styles are applied to any element with the `.btn` class,
+ * or to buttons within `.prose` blocks that are not otherwise styled (have
+ * some other class name).
+ */
 @layer components {
   @property --btn-background-color {
     syntax        : "<color>";
@@ -7,8 +12,8 @@
 
   .btn,
   .btn.default,
-  .prose button,
-  .prose-container button {
+  .prose button:not([class]),
+  .prose-container button:not([class]) {
     --btn-border-width: 2px;
 
     --btn-background-color       : var(--color-background-scale-a);
@@ -39,8 +44,8 @@
 
 
   .btn,
-  .prose button,
-  .prose-container button {
+  .prose button:not([class]),
+  .prose-container button:not([class]) {
     display                    : inline-block;
     cursor                     : pointer;
     padding                    : --spacing(1) --spacing(5);

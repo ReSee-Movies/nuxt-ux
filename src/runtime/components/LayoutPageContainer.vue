@@ -1,31 +1,52 @@
 <template>
   <Component
     :is    = "props.is"
-    :class = "['page-container', props.glassEffect ? 'glass-effect' : undefined]"
+    :class = "['page-container', { 'glass-effect': props.glassEffect }]"
   >
-    <div v-if="props.headingText || slots.heading" class="mb-6">
-      <slot name="heading">
-        <Heading :text="props.headingText" />
-      </slot>
+    <div
+      v-if   = "showTitleBar"
+      :class = "['mb-6', { 'prose-layout-container': props.prose, 'sm': props.prose === 'sm' }]"
+    >
+      <div v-if="showHeading || slots.actions" class="flex gap-4 items-center">
+        <slot name="heading">
+          <Heading :text="props.headingText" class="grow" />
+        </slot>
+
+        <div v-if="slots.actions">
+          <slot name="actions" />
+        </div>
+      </div>
+
+      <div v-if="showSubheading">
+        <slot name="subheading">
+          <p class="text-global-foreground-accent">{{ props.subheadingText }}</p>
+        </slot>
+      </div>
     </div>
 
-    <slot name="default" />
+    <div :class="{ 'prose-container': props.prose, 'sm': props.prose === 'sm' }">
+      <slot name="default" />
+    </div>
   </Component>
 </template>
+
 
 <script lang="ts">
   import type { HintedString } from '../types';
 
   export interface LayoutPageContainerProps {
-    is?          : HintedString<'div' | 'main' | 'section' | 'article' | 'nav'>;
-    glassEffect? : boolean;
-    accentColor? : string;
-    headingText? : string;
+    is?             : HintedString<'div' | 'main' | 'section' | 'article' | 'nav'>;
+    glassEffect?    : boolean;
+    accentColor?    : string;
+    headingText?    : string;
+    subheadingText? : string;
+    prose?          : boolean | 'md' | 'sm';
   }
 </script>
 
+
 <script setup lang="ts">
-  import { useSlots } from 'vue';
+  import { computed, useSlots } from 'vue';
   import Heading from './Heading.vue';
 
   const slots = useSlots();
@@ -33,13 +54,28 @@
   const props = withDefaults(
     defineProps<LayoutPageContainerProps>(),
     {
-      is          : 'div',
-      glassEffect : false,
-      accentColor : undefined,
-      headingText : undefined,
+      is             : 'div',
+      glassEffect    : false,
+      accentColor    : undefined,
+      headingText    : undefined,
+      subheadingText : undefined,
+      prose          : false,
     },
   );
+
+  const showSubheading = computed(
+    () => !!(props.subheadingText || slots.subheading),
+  );
+
+  const showHeading = computed(
+    () => !!(props.headingText || slots.heading),
+  );
+
+  const showTitleBar = computed(
+    () => showHeading.value || showSubheading.value || !!slots.actions,
+  );
 </script>
+
 
 <style scoped>
   @reference "tailwindcss";
@@ -81,6 +117,15 @@
       padding-left  : var(--page-column-gutter);
       padding-right : var(--page-column-gutter);
       box-shadow    : none;
+    }
+
+    /**
+     * Specifically targets a .page-container that is the child of
+     * a .page-column which does not have the .layout-vista class,
+     * and that is not preceded by another .page-container.
+     */
+    .page-container:not(.page-container + .page-container):where(.page-column:not(.layout-vista) > .page-container) {
+      border-top: none;
     }
   }
 </style>

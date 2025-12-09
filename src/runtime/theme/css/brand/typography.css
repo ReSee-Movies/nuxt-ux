@@ -1,3 +1,22 @@
+/*
+ Content containers for typographic content. Text is most easily read
+ in narrow columns, which this provides.
+ */
+@utility prose-layout-container {
+  width        : 100%;
+  max-width    : var(--container-3xl);
+  margin-left  : auto;
+  margin-right : auto;
+
+  &.sm {
+    max-width: var(--container-md);
+  }
+}
+
+
+/**
+ Typographic components.
+ */
 @layer components {
   :root {
     /*
@@ -48,14 +67,11 @@
   }
 
   /*
-   Content containers for typographic content. Text is most easily read
-   in narrow columns, which these provide.
+   The .prose-container class applies both the sizing of a .prose-layout-container
+   to the block element, and .prose typo styles to any descendants.
    */
-  .prose-container, .prose-layout-container {
-    width        : 100%;
-    max-width    : var(--breakpoint-md);
-    margin-left  : auto;
-    margin-right : auto;
+  .prose-container {
+    @apply prose-layout-container;
   }
 
   /*
@@ -64,12 +80,21 @@
    the blog where HTML content is not managed by Nuxt.
    */
   .prose, .prose-container {
-    &:first-child > :first-child {
-      margin-block-start: 0;
+    /**
+     * Drop the block start margin from the first element of a prose container, only if
+     * it is not preceded by another container.
+     */
+    &:where(:not(.prose + &, .prose-container + &)) {
+      > :first-child,
+      > :first-child > :first-child {
+        margin-block-start: 0;
+      }
     }
 
-    &:last-child > :last-child,
-    :is(section:last-child, th, td, td ol, td ul, figure, figcaption, .grid > *) > :last-child {
+    /**
+     * Drop the block end margin from the last element of a prose container.
+     */
+    > :last-child, > :last-child > :last-child {
       margin-block-end: 0;
     }
   }
@@ -249,6 +274,11 @@
       background-color : var(--color-background-scale-c);
       text-align       : start;
       letter-spacing   : 0.1em;
+      font-weight      : var(--font-weight-normal);
+    }
+
+    td > :last-child {
+      margin-block-end: 0;
     }
   }
 
@@ -337,6 +367,10 @@
 
       & > * {
         font-size: 0.85rem;
+      }
+
+      > :last-child {
+        margin-block-end: 0;
       }
     }
   }

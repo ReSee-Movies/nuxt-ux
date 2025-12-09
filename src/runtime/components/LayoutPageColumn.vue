@@ -8,15 +8,15 @@
 </template>
 
 <script lang="ts">
-  export interface LayoutPageColumn {
+  export interface LayoutPageColumnProps {
     is?     : string;
     layout? : 'main' | 'vista';
-  };
+  }
 </script>
 
 <script setup lang="ts">
   const props = withDefaults(
-    defineProps<LayoutPageColumn>(),
+    defineProps<LayoutPageColumnProps>(),
     {
       is     : 'div',
       layout : undefined,
@@ -48,7 +48,7 @@
     }
   }
 
-  @variant md {
+  @variant sm {
     .page-column {
       max-width: var(--container-3xl);
 
