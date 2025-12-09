@@ -1,9 +1,9 @@
 <template>
   <div :class="['input-label-pair', `label-${ props.labelPosition }`]">
     <Component
-      :is    = "props.fauxLabel ? 'span' : 'label'"
+      :is    = "labelTagName"
       :id    = "props.labelId"
-      :for   = "props.fauxLabel ? undefined : props.inputId"
+      :for   = "labelTagName === 'label' ? props.inputId : undefined"
       :class = "[
         'input-label',
         {
@@ -26,12 +26,15 @@
 
 
 <script lang="ts">
+  import type { HintedString } from '../../types';
+
   export interface FormLabelInputPairProps {
     inputId?       : string;
     labelId?       : string;
     labelText?     : string;
     labelPosition? : 'above' | 'below' | 'before' | 'after';
     labelSrOnly?   : boolean;
+    labelIs?       : HintedString<'label' | 'legend' | 'span'>;
     required?      : boolean;
     disabled?      : boolean;
     fauxLabel?     : boolean;
@@ -40,14 +43,21 @@
 
 
 <script setup lang="ts">
+  import { computed } from 'vue';
+
   const props = withDefaults(
     defineProps<FormLabelInputPairProps>(),
     {
       labelPosition : 'above',
       labelSrOnly   : false,
+      labelIs       : undefined,
       required      : false,
       disabled      : false,
       fauxLabel     : false,
     },
+  );
+
+  const labelTagName = computed(
+    () => props.labelIs ?? (props.fauxLabel ? 'span' : 'label'),
   );
 </script>

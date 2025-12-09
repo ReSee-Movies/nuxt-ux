@@ -4,10 +4,20 @@
     :as       = "props.is"
     :name     = "props.name"
     :resolver = "validatorFunction"
-    :class    = "['input-field', props.class, { disabled: isDisabled, readonly: isReadonly, required: props.required }]"
+    :class    = "[
+      props.class,
+      {
+        'input-field'    : props.is !== 'fieldset',
+        'input-fieldset' : props.is === 'fieldset',
+        disabled         : isDisabled,
+        readonly         : isReadonly,
+        required         : props.required,
+      },
+    ]"
   >
     <FormLabelInputPair
       :input-id       = "inputId"
+      :label-is       = "props.is === 'fieldset' ? 'legend' : undefined"
       :label-id       = "labelId"
       :label-text     = "labelText"
       :label-position = "props.labelPosition"
