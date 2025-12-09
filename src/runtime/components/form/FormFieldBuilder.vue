@@ -1,12 +1,12 @@
 <template>
   <div class="@container">
-    <div class="grid grid-cols-1 gap-x-4 gap-y-6 @lg:grid-cols-2 @lg:gap-y-7">
+    <div class="grid grid-cols-1 gap-x-4 gap-y-6 sm:@lg:grid-cols-2 sm:@lg:gap-y-7">
       <template v-for="(field, index) of props.fields" :key="field.name ?? index">
         <Component
           :is    = "getComponent(field)"
           v-bind = "field"
           :class = "{
-            '@lg:col-span-2': field.width !== 'half',
+            'sm:@lg:col-span-2': field.width !== 'half',
           }"
         />
       </template>
@@ -17,6 +17,7 @@
 
 <script lang="ts">
   import type { FormFieldCheckboxProps } from './FormFieldCheckbox.vue';
+  import type { FormFieldRadioGroupProps } from './FormFieldRadioGroup.vue';
   import type { FormFieldSelectProps } from './FormFieldSelect.vue';
   import type { FormFieldSelectButtonProps } from './FormFieldSelectButton.vue';
   import type { FormFieldTextProps } from './FormFieldText.vue';
@@ -39,6 +40,10 @@
 
   export interface SelectButtonField extends FormFieldSelectButtonProps, CommonOptions {
     fieldType: 'select-button';
+  }
+
+  export interface RadioGroup extends FormFieldRadioGroupProps, CommonOptions {
+    fieldType: 'radio';
   }
 
   export interface TextField extends FormFieldTextProps, CommonOptions {
@@ -65,6 +70,7 @@
     = CheckboxField
     | SelectField
     | SelectButtonField
+    | RadioGroup
     | TextField
     | TextareaField
     | ToggleSwitchField
@@ -84,6 +90,7 @@
   import SelectField from './FormFieldSelect.vue';
   import SelectButtonField from './FormFieldSelectButton.vue';
   import SubmitButton from './FormSubmitButton.vue';
+  import RadioGroup from './FormFieldRadioGroup.vue';
   import TextField from './FormFieldText.vue';
   import TextareaField from './FormFieldTextarea.vue';
   import ToggleSwitchField from './FormFieldToggleSwitch.vue';
@@ -96,6 +103,7 @@
       case 'checkbox'      : return CheckboxField;
       case 'select'        : return SelectField;
       case 'select-button' : return SelectButtonField;
+      case 'radio'         : return RadioGroup;
       case 'text'          : return TextField;
       case 'textarea'      : return TextareaField;
       case 'toggle'        : return ToggleSwitchField;

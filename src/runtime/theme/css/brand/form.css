@@ -17,6 +17,13 @@
       opacity : 0.6;
       cursor  : not-allowed;
     }
+
+    &:not(fieldset .input-label, .label-before .input-label, .label-after .input-label),
+    &:where(fieldset legend.input-label) {
+      letter-spacing : 0.11rem;
+      font-variant   : small-caps;
+      font-size      : var(--text-lg)
+    }
   }
 
 
@@ -128,6 +135,10 @@
     transition-duration : calc(var(--default-transition-duration) * 2);
     cursor              : pointer;
 
+    &:where(input[type="text"], textarea) {
+      cursor: text;
+    }
+
     /**
      * To explain all of the "is disabled and if not readonly" stuff below.
      * Some controls, like the Select, are completely custom widgets that don't
@@ -183,16 +194,45 @@
 
 
   /**
-   * Checkboxes
+   * Radios and checkboxes
    */
-  .input-group:where(:has(input[type="checkbox"])) {
+  .input-group:where(:has(input[type="checkbox"])),
+  .input-group:where(:has(input[type="radio"])) {
     position    : relative;
     user-select : none;
     flex-shrink : 0;
     width       : 1.5rem;
     height      : 1.5rem;
 
-    /* !important is to overwrite what gets attached to i-* icons in the utility layer */
+    /**
+     * Radio buttons.
+     */
+    &:has(input[type="radio"]) {
+      border-radius : var(--radius-full);
+      width         : 1.2rem;
+      height        : 1.2rem;
+
+      > div {
+        position            : absolute;
+        height              : 0.7rem;
+        width               : 0.7rem;
+        top                 : 0.25rem;
+        left                : 0.25rem;
+        border-radius       : var(--radius-full);
+        transition          : box-shadow, background-color;
+        transition-duration : var(--default-transition-duration);
+      }
+
+      &:has(:checked) > div {
+        background-color : var(--color-global-foreground);
+        box-shadow       : var(--shadow-md);
+      }
+    }
+
+    /**
+     * checkbox checked icons. !important is to overwrite
+     * what gets attached to i-* icons in the utility layer
+     */
     svg, span[class^="i-"] {
       display     : block !important;
       line-height : 1;

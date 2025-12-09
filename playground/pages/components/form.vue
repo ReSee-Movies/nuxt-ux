@@ -53,6 +53,7 @@
     surname        : 'Loblaw',
     journeyType    : 'Round Trip',
     additionalInfo : 'Hello World',
+    toppings       : undefined,
   });
 
   const countryOptions = [
@@ -107,6 +108,11 @@
       iconOnly       : true,
       multiple       : false,
       width          : 'half',
+    },
+    {
+      fieldType : 'radio',
+      name      : 'toppings',
+      options   : ['Mushrooms', 'Onions', 'Sprouts', 'Pineapple'],
     },
     {
       fieldType : 'toggle',
