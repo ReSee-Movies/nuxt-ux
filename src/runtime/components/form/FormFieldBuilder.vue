@@ -108,7 +108,7 @@
       case 'textarea'      : return TextareaField;
       case 'toggle'        : return ToggleSwitchField;
       case 'turnstile'     : return TurnstileField;
-      case 'submit'        : return h(EmptyDiv, { class: 'text-end' }, h(SubmitButton));
+      case 'submit'        : return h(EmptyDiv, { class: 'text-end' }, { default: () => h(SubmitButton) });
       default              : return 'div';
     }
   }
