@@ -79,9 +79,9 @@
 
 <script setup lang="ts">
   import { isString } from '@resee-movies/utilities/strings/is-string';
-  import { useBreakpoints, breakpointsTailwind } from '@vueuse/core';
   import PrimeMenu, { type MenuMethods as PrimeMenuMethods } from 'primevue/menu';
   import { computed, ref, useAttrs, useId, useSlots } from 'vue';
+  import { useReseeBreakpoints } from '../composables/use-resee-breakpoints';
   import { blockBodyScroll } from '../utils/dom';
   import IconTextPair from './IconTextPair.vue';
   import { TeleportId } from '../constants';
@@ -95,7 +95,7 @@
   const menuId  = useId();
   const menu    = ref<PrimeMenuMethods>();
   const visible = ref(false);
-  const isSmall = useBreakpoints(breakpointsTailwind).smallerOrEqual('sm');
+  const isSmall = useReseeBreakpoints().smallerOrEqual('sm');
 
   const props = withDefaults(
     defineProps<MenuProps>(),

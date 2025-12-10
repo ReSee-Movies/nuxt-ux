@@ -85,10 +85,10 @@
 
 
 <script setup lang="ts">
-  import { breakpointsTailwind, useBreakpoints } from '@vueuse/core';
   import PrimeMultiSelect from 'primevue/multiselect';
   import PrimeSelect from 'primevue/select';
   import { computed, useSlots } from 'vue';
+  import { useReseeBreakpoints } from '../../../composables/use-resee-breakpoints';
   import { useReseeUx } from '../../../composables/use-resee-ux';
   import { TeleportId } from '../../../constants';
   import { blockBodyScroll } from '../../../utils/dom';
@@ -112,7 +112,7 @@
   const slots   = useSlots();
   const utils   = useOptionListMethods(props);
   const reseeUx = useReseeUx();
-  const isSmall = useBreakpoints(breakpointsTailwind).smallerOrEqual('sm');
+  const isSmall = useReseeBreakpoints().smallerOrEqual('sm');
 
   const showFilter = computed(() => {
     return props.showOptionFilter ?? (props.options?.length ?? 0) > 20;

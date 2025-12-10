@@ -9,6 +9,8 @@ import type { ModuleOptions } from '../runtime/types';
 export function importModules(nuxt: Nuxt) {
   const NuxtFonts: ModuleDependencies['@nuxt/fonts'] = {
     defaults: {
+      provider: 'google',
+
       families: [
         {
           name     : 'Archivo',
@@ -93,5 +95,6 @@ export function importModules(nuxt: Nuxt) {
   return {
     '@nuxt/fonts': NuxtFonts,
     '@primevue/nuxt-module': Primevue,
+    '@nuxtjs/device': {},
   };
 }
