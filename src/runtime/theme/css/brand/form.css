@@ -20,9 +20,7 @@
 
     &:not(fieldset .input-label, .label-before .input-label, .label-after .input-label),
     &:where(fieldset legend.input-label) {
-      letter-spacing : 0.11rem;
-      font-variant   : small-caps;
-      font-size      : var(--text-lg)
+      font-size: var(--text-lg);
     }
   }
 
@@ -135,7 +133,7 @@
     transition-duration : calc(var(--default-transition-duration) * 2);
     cursor              : pointer;
 
-    &:where(input[type="text"], textarea) {
+    &:where(input[type="text"], input[type="email"], input[type="url"], textarea) {
       cursor: text;
     }
 
