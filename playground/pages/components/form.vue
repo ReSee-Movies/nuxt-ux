@@ -36,25 +36,25 @@
   import UiForm, { type FormSubmitEvent } from '#resee-ux/components/form/Form.vue';
   import type { FormFieldBuilderOption } from '#resee-ux/components/form/FormFieldBuilder.vue';
   import { useNotification } from '#resee-ux/composables/use-notification';
+  import { useQueryParameters } from '#resee-ux/composables/use-query-parameters';
   import { getRegionalIndicatorUnicodeSymbol } from '@resee-movies/utilities/geo/get-regional-indicator-unicode-symbol';
   import { sleep } from '@resee-movies/utilities/timers/sleep';
-  import { reactive, ref } from 'vue';
+  import { ref } from 'vue';
 
   definePageMeta({
     heading: 'Form',
   });
 
+  const values = useQueryParameters({
+    firstName   : { type: String, persist: true },
+    surname     : { type: String },
+    country     : { type: [String], persist: true },
+    journeyType : { type: String },
+  });
+
   const { notifySuccess } = useNotification();
 
   const showDrawer = ref(false);
-
-  const values = reactive({
-    firstName      : 'Bob',
-    surname        : 'Loblaw',
-    journeyType    : 'Round Trip',
-    additionalInfo : 'Hello World',
-    toppings       : undefined,
-  });
 
   const countryOptions = [
     { label: `${ getRegionalIndicatorUnicodeSymbol('au') } Australia`,      value: 'AU' },
