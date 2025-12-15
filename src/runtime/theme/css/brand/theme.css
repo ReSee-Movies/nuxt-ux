@@ -421,4 +421,18 @@
   --shadow-heavy-right : var(--shadow-heavy-right-lite);
   --shadow-heavy-left  : var(--shadow-heavy-left-lite);
   --shadow-heavy-top   : var(--shadow-heavy-top-lite);
+
+
+
+  /* *********************** *
+     Gradient directions
+   * *********************** */
+  --gradient-direction-to-t  : to top;
+  --gradient-direction-to-tr : to top right;
+  --gradient-direction-to-r  : to right;
+  --gradient-direction-to-br : to bottom right;
+  --gradient-direction-to-b  : to b;
+  --gradient-direction-to-bl : to bottom left;
+  --gradient-direction-to-l  : to left;
+  --gradient-direction-to-tl : to top left;
 }

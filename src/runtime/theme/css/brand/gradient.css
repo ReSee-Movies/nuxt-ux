@@ -1,53 +1,62 @@
-@layer utilities {
-  /*
-   Apply ReSee color gradients as a text mask.
-   */
-  .text-resee-linear-gradient, .text-resee-linear-step-gradient {
-    color           : transparent;
-    background-clip : text;
-    text-shadow     : none;
+/**
+ * Utilities for applying pre-canned gradients.
+ */
+
+
+/**
+ * Clip a background to some text content. Use this alongside .resee-bg-*** for
+ * a wacky effect.
+ */
+@utility resee-text-mask {
+  color           : transparent;
+  background-clip : text;
+  text-shadow     : none;
+}
+
+
+/**
+ * Applies the linear gradient background. The angle is set in one of two ways.
+ * Either "resee-bg-linear-to-{side}", where side is one of:
+ *
+ * - t  : top
+ * - tr : top right
+ * - r  : right
+ * - br : bottom right
+ * - b  : bottom
+ * - bl : bottom left
+ * - l  : left
+ * - tl : top left
+ *
+ * or an arbitrary integer can be provided, which will be interpreted
+ * in degree angles, e.g. "resee-bg-linear-227" which will set the
+ * gradient angle to 227deg.
+ */
+/* noinspection CssOverwrittenProperties */
+@utility resee-bg-linear-* {
+  --resee-angle    : calc(--value(integer) * 1deg);
+  --resee-angle    : --value(--gradient-direction-*);
+  --resee-gradient : var(--colorscale-resee-linear);
+
+  background-image: linear-gradient(var(--resee-angle), var(--resee-gradient));
+
+  @variant dark {
+    --resee-gradient: var(--colorscale-resee-lite-linear);
   }
+}
 
-  .text-resee-linear-gradient {
-    background-image: linear-gradient(to left, var(--colorscale-resee-linear));
 
-    @variant dark {
-      background-image: linear-gradient(to left, var(--colorscale-resee-lite-linear));
-    }
-  }
+/**
+ * Applies the radial gradient background. The angle is set by affixing an
+ * arbitrary integer which will be interpreted in degree angles, e.g.
+ * "resee-bg-conic-227" which will set the gradient angle to 227deg.
+ */
+@utility resee-bg-conic-* {
+  --resee-angle    : from calc(--value(integer) * 1deg);
+  --resee-gradient : var(--colorscale-resee-conic);
 
-  .text-resee-linear-step-gradient {
-    background-image: linear-gradient(to left, var(--colorscale-resee-linear-step));
+  background-image: conic-gradient(var(--resee-angle), var(--resee-gradient));
 
-    @variant dark {
-      background-image: linear-gradient(to left, var(--colorscale-resee-lite-linear-step));
-    }
-  }
-
-  /*
-   Apply ReSee color gradients as a background.
-   */
-  .resee-linear-gradient {
-    background-image: linear-gradient(to left, var(--colorscale-resee-linear));
-  }
-
-  .resee-linear-step-gradient {
-    background-image: linear-gradient(to left, var(--colorscale-resee-linear-step));
-  }
-
-  .resee-light-linear-gradient {
-    background-image: linear-gradient(to left, var(--colorscale-resee-lite-linear));
-  }
-
-  .resee-light-linear-step-gradient {
-    background-image: linear-gradient(to left, var(--colorscale-resee-lite-linear-step));
-  }
-
-  .resee-conic-gradient {
-    background-image: conic-gradient(from 0deg, var(--colorscale-resee-conic));
-  }
-
-  .resee-light-conic-gradient {
-    background-image: conic-gradient(from 0deg, var(--colorscale-resee-lite-conic));
+  @variant dark {
+    --resee-gradient: var(--colorscale-resee-lite-conic);
   }
 }
