@@ -17,7 +17,7 @@ export function useQueryParameters<D extends QueryParamDefinitionMap>(params: D)
 
   for (const [name, definition] of Object.entries(params)) {
     refs[name] = getQueryRef({
-      slug         : slugify(name),
+      slug         : slugify(name, { decamelize: true }),
       type         : definition.type,
       setCallback  : queue.add,
       defaultValue : definition.defaultValue,
