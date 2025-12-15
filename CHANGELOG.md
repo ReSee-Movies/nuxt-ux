@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.12.0](///compare/0.11.1...0.12.0) (2025-12-15)
+
+### Features
+
+* added `chip` toggle to Tag component for styling as an outlined rectangle or not c3783ec
+
+### Bug Fixes
+
+* icons in inverted status indicators can now be seen c8ca735
+
 ## [0.11.1](///compare/0.11.0...0.11.1) (2025-12-15)
 
 ### Bug Fixes
