@@ -72,43 +72,45 @@
 <style scoped>
   @reference "tailwindcss";
 
-  /**
+  @layer components {
+    /**
    * We are intentionally targeting the immediate child of the icon component
    * to apply a margin to so that the icon can animated in/out via its size
    * and that extra bit of space included.
    */
 
-  .pair {
-    --element-spacing: --spacing(1);
+    .pair {
+      --element-spacing: --spacing(1);
 
-    display     : inline;
-    align-items : baseline;
-  }
+      display     : inline;
+      align-items : baseline;
+    }
 
-  .pair.spacing-none {
-    --element-spacing: 0;
-  }
+    .pair.spacing-none {
+      --element-spacing: 0;
+    }
 
-  .pair.spacing-wide {
-    --element-spacing: --spacing(2);
-  }
+    .pair.spacing-wide {
+      --element-spacing: --spacing(2);
+    }
 
-  .pair :deep(.leading-icon) > * {
-    margin-inline-end: var(--element-spacing);
-  }
+    .pair :deep(.leading-icon) > * {
+      margin-inline-end: var(--element-spacing);
+    }
 
-  .pair :deep(.trailing-icon) > * {
-    margin-inline-start: var(--element-spacing);
-  }
+    .pair :deep(.trailing-icon) > * {
+      margin-inline-start: var(--element-spacing);
+    }
 
-  @variant max-md {
-    .pair:is(.responsive-shrink .pair) {
-      &:deep(.leading-icon) > * {
-        margin-inline-end: 0;
-      }
+    @variant max-md {
+      .pair:is(.responsive-shrink .pair) {
+        &:deep(.leading-icon) > * {
+          margin-inline-end: 0;
+        }
 
-      &:deep(.trailing-icon) > * {
-        margin-inline-start: 0;
+        &:deep(.trailing-icon) > * {
+          margin-inline-start: 0;
+        }
       }
     }
   }

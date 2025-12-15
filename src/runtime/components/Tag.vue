@@ -45,21 +45,23 @@
 <style scoped>
   @reference "tailwindcss";
 
-  .tag {
-    padding     : --spacing(0.5) --spacing(1);
-    user-select : all;
-    cursor      : default;
-  }
+  @layer components {
+    .tag {
+      padding     : --spacing(0.5) --spacing(1);
+      user-select : all;
+      cursor      : default;
+    }
 
-  .tag.sm {
-    font-size: 0.85rem;
-  }
+    .tag.sm {
+      font-size: 0.85rem;
+    }
 
-  .tag.lg {
-    font-size: 1.1rem;
-  }
+    .tag.lg {
+      font-size: 1.1rem;
+    }
 
-  .tag.has-tooltip {
-    cursor: help;
+    .tag.has-tooltip {
+      cursor: help;
+    }
   }
 </style>

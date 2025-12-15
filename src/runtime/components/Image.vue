@@ -241,43 +241,45 @@
 <style scoped>
   @reference "tailwindcss";
 
-  .image {
-    background-color : white;
-    position         : relative;
-    overflow         : clip;
-    width            : 100%;
-    max-width        : fit-content;
+  @layer components {
+    .image {
+      background-color : white;
+      position         : relative;
+      overflow         : clip;
+      width            : 100%;
+      max-width        : fit-content;
 
-    @variant dark {
-      background-color: black;
+      @variant dark {
+        background-color: black;
+      }
+
+      &.bordered {
+        border: solid 2px var(--color-global-background-accent);
+      }
+
+      &.beveled {
+        border-top-right-radius   : var(--radius-xl);
+        border-bottom-left-radius : var(--radius-xl);
+      }
+
+      &.raised {
+        box-shadow: var(--shadow-heavy);
+      }
     }
 
-    &.bordered {
-      border: solid 2px var(--color-global-background-accent);
+    .image.glass::after {
+      content          : var(--zero-width-space);
+      position         : absolute;
+      inset            : 0;
+      background-image : linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.15) 80%, transparent);
     }
 
-    &.beveled {
-      border-top-right-radius   : var(--radius-xl);
-      border-bottom-left-radius : var(--radius-xl);
+    .image :deep(.icon) {
+      color     : var(--color-global-background-accent);
+      position  : absolute;
+      top       : 50%;
+      left      : 50%;
+      transform : translateX(-50%) translateY(-50%);
     }
-
-    &.raised {
-      box-shadow: var(--shadow-heavy);
-    }
-  }
-
-  .image.glass::after {
-    content          : var(--zero-width-space);
-    position         : absolute;
-    inset            : 0;
-    background-image : linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.15) 80%, transparent);
-  }
-
-  .image :deep(.icon) {
-    color     : var(--color-global-background-accent);
-    position  : absolute;
-    top       : 50%;
-    left      : 50%;
-    transform : translateX(-50%) translateY(-50%);
   }
 </style>

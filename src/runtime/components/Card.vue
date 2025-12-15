@@ -36,27 +36,29 @@
 <style scoped>
   @reference "tailwindcss";
 
-  .card {
-    border                    : solid 2px var(--color-background-scale-c);
-    overflow                  : clip;
-    border-top-right-radius   : --spacing(2);
-    border-bottom-left-radius : --spacing(2);
-  }
+  @layer components {
+    .card {
+      border                    : solid 2px var(--color-background-scale-c);
+      overflow                  : clip;
+      border-top-right-radius   : --spacing(2);
+      border-bottom-left-radius : --spacing(2);
+    }
 
-  .card .content {
-    padding: --spacing(1.5);
-  }
+    .card .content {
+      padding: --spacing(1.5);
+    }
 
-  .card.interactive {
-    user-select                : none;
-    transition-property        : border-color, border-radius, box-shadow;
-    transition-duration        : 500ms;
-    transition-timing-function : var(--default-transition-timing-function);
+    .card.interactive {
+      user-select                : none;
+      transition-property        : border-color, border-radius, box-shadow;
+      transition-duration        : 500ms;
+      transition-timing-function : var(--default-transition-timing-function);
 
-    &:focus-within, &:hover {
-      border-color  : var(--color-background-scale-f);
-      border-radius : 0;
-      box-shadow    : var(--shadow-heavy);
+      &:focus-within, &:hover {
+        border-color  : var(--color-background-scale-f);
+        border-radius : 0;
+        box-shadow    : var(--shadow-heavy);
+      }
     }
   }
 </style>

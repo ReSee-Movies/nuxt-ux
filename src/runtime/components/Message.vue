@@ -70,25 +70,27 @@
 <style scoped>
   @reference "tailwindcss";
 
-  .message {
-    &:deep(.content) {
-      display     : flex;
-      align-items : center;
-      gap         : --spacing(2.5);
-      padding     : --spacing(2) --spacing(2.5);
-    }
+  @layer components {
+    .message {
+      &:deep(.content) {
+        display     : flex;
+        align-items : center;
+        gap         : --spacing(2.5);
+        padding     : --spacing(2) --spacing(2.5);
+      }
 
-    &:deep(.icon) {
-      flex-shrink : 0;
-      font-size   : 1.25rem;
-    }
+      &:deep(.icon) {
+        flex-shrink : 0;
+        font-size   : 1.25rem;
+      }
 
-    &:deep(.text) {
-      flex-grow: 1;
-    }
+      &:deep(.text) {
+        flex-grow: 1;
+      }
 
-    &:deep(.close) {
-      align-self: start;
+      &:deep(.close) {
+        align-self: start;
+      }
     }
   }
 </style>

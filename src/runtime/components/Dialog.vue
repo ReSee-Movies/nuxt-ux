@@ -117,50 +117,52 @@
 <style>
   @reference "tailwindcss";
 
-  .dialog {
-    width  : 100%;
-    margin : --spacing(2);
+  @layer components {
+    .dialog {
+      width  : 100%;
+      margin : --spacing(2);
 
-    .header {
-      display        : flex;
-      align-items    : center;
-      gap            : --spacing(3);
-      padding-bottom : --spacing(3);
+      .header {
+        display        : flex;
+        align-items    : center;
+        gap            : --spacing(3);
+        padding-bottom : --spacing(3);
 
-      .title {
-        flex-grow : 1;
-        font-size : var(--text-lg);
+        .title {
+          flex-grow : 1;
+          font-size : var(--text-lg);
+        }
+      }
+
+      .content {
+        overflow-y: auto;
       }
     }
 
-    .content {
-      overflow-y: auto;
-    }
-  }
+    .dialog.dialog-styles {
+      height           : calc(100% - --spacing(4));
+      border           : solid 1px var(--color-global-background-accent);
+      border-radius    : var(--radius-md);
+      background-color : var(--color-global-background);
+      overflow         : clip;
 
-  .dialog.dialog-styles {
-    height           : calc(100% - --spacing(4));
-    border           : solid 1px var(--color-global-background-accent);
-    border-radius    : var(--radius-md);
-    background-color : var(--color-global-background);
-    overflow         : clip;
-
-    @variant sm {
-      box-shadow : var(--shadow-heavy);
-      height     : auto;
-    }
-
-    .header {
-      margin-inline : --spacing(3);
-      margin-top    : --spacing(3);
-
-      &.header-styles {
-        border-bottom: solid 1px var(--color-global-background-accent);
+      @variant sm {
+        box-shadow : var(--shadow-heavy);
+        height     : auto;
       }
-    }
 
-    .content {
-      padding: --spacing(3);
+      .header {
+        margin-inline : --spacing(3);
+        margin-top    : --spacing(3);
+
+        &.header-styles {
+          border-bottom: solid 1px var(--color-global-background-accent);
+        }
+      }
+
+      .content {
+        padding: --spacing(3);
+      }
     }
   }
 </style>
