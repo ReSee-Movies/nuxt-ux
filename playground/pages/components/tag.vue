@@ -1,7 +1,17 @@
 <template>
-  <UiTag text="Hello" tooltip="Here is some more information" />
-  <br>
-  <UiTag text="World" icon="i-ph-chart-bar" severity="help" />
+  <div class="flex gap-4 mb-4">
+    <UiTag text="Default" tooltip="This is a default tag" />
+    <UiTag text="Inverted" severity="inverted" tooltip="This is an inverted tag" />
+    <UiTag text="Info" severity="info" tooltip="This is an info tag" />
+    <UiTag text="Help" severity="help" tooltip="This is a help tag" />
+  </div>
+
+  <div class="flex gap-4">
+    <UiTag text="Default" icon="i-ph-person-simple-bike" tooltip="This is a default tag" />
+    <UiTag text="Inverted" icon="i-ph-person-simple-swim" severity="inverted" tooltip="This is an inverted tag" />
+    <UiTag text="Info" icon="i-ph-person-simple-run" severity="info" tooltip="This is an info tag" />
+    <UiTag text="Help" icon="i-ph-person-simple-ski" severity="help" tooltip="This is a help tag" />
+  </div>
 </template>
 
 <script setup lang="ts">

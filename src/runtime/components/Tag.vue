@@ -14,12 +14,12 @@
 </template>
 
 <script lang="ts">
-  import type { StatusLevel } from '../types';
+  import type { StyleStatusLevel } from '../types';
 
   export interface TagProps {
     text?     : string;
     icon?     : string;
-    severity? : StatusLevel;
+    severity? : StyleStatusLevel;
     size?     : 'sm' | 'md' | 'lg';
     tooltip?  : string;
   }

@@ -10,7 +10,7 @@
     color         : var(--text-color);
 
     &.inverted {
-      --border-color     : var(--color-invert-global-background);
+      --border-color     : transparent;
       --background-color : var(--color-invert-global-background);
       --text-color       : var(--color-invert-global-foreground);
     }
@@ -88,6 +88,10 @@
   .status-indicating-accent .icon,
   .status-indicating-accent .headline {
     color: var(--border-color);
+  }
+
+  .status-indicating.inverted .icon {
+    color: currentColor;
   }
 
 
