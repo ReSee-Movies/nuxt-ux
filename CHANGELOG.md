@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.11.1](///compare/0.11.0...0.11.1) (2025-12-15)
+
+### Bug Fixes
+
+* only hide the label for a responsive button... not... everything 8d5b8f5
+* put component scoped styles in the component layer so utilities can still take precedence 5099aeb
+* put LayoutPageContainer scoped styles in the component layer so utilities can still take precedence be6a3fa
+
 ## [0.11.0](///compare/0.10.0...0.11.0) (2025-12-15)
 
 ### Features
