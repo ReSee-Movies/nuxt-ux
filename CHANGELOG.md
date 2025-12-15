@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.11.0](///compare/0.10.0...0.11.0) (2025-12-15)
+
+### Features
+
+* introduce useQueryParameters composable 05b2219
+* introduce useReseeBreakpoints composable, which uses nuxtjs/device under the hood to help sus out the current break for SSR f0eb430
+
+### Bug Fixes
+
+* warning "Non-function value encountered for default slot" from FormFieldBuilder 967babb
+
 ## [0.10.0](///compare/0.9.0...0.10.0) (2025-12-09)
 
 ### Features
