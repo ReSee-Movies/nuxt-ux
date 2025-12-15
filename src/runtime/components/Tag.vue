@@ -2,10 +2,12 @@
   <PrimeTag
     :class="[
       'tag',
-      'status-indicating',
       props.severity,
       props.size,
-      props.tooltip ? 'has-tooltip' : undefined
+      {
+        'status-indicating' : props.chip,
+        'has-tooltip'       : props.tooltip,
+      },
     ]"
     v-prime-tooltip.top="{ value: props.tooltip, showDelay: 500 }"
   >
@@ -22,6 +24,7 @@
     severity? : StyleStatusLevel;
     size?     : 'sm' | 'md' | 'lg';
     tooltip?  : string;
+    chip?     : boolean;
   }
 </script>
 
@@ -38,6 +41,7 @@
       severity : undefined,
       size     : 'sm',
       tooltip  : undefined,
+      chip     : true,
     },
   );
 </script>
