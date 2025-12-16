@@ -57,6 +57,16 @@ export default defineNuxtModule<ModuleOptions>({
     });
 
 
+    const inlineStyles = nuxt.options.app.head.style ?? [];
+
+    inlineStyles.push({
+      tagPriority : 'critical',
+      textContent : '@layer properties, theme, base, components, utilities;',
+    });
+
+    nuxt.options.app.head.style = inlineStyles;
+
+
     // ----------------------------
     // Primevue Passthrough
     // ----------------------------
