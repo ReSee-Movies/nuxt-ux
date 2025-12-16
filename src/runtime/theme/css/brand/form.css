@@ -80,6 +80,7 @@
    * what it is inside of.
    */
   .input-control {
+    display   : block;
     flex-grow : 1;
     padding   : --spacing(2) --spacing(3);
 

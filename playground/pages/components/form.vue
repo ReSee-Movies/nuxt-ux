@@ -1,5 +1,11 @@
 <template>
-  <UiForm v-model:values="values" :fields="formFields" @submit="handleFormSubmit">
+  <UiForm
+    :values         = "queryParams"
+    :fields         = "formFields"
+    :change-delay   = "1200"
+    @submit         = "handleFormSubmit"
+    @change         = "handleFormChange"
+  >
     <template #after="$form">
       <div>
         <hr class="hr">
@@ -11,7 +17,7 @@
         <hr class="hr">
 
         <h2 class="h3">Bound Model</h2>
-        <pre class="pre overflow-x-auto">{{ JSON.stringify(values, null, 2) }}</pre>
+        <pre class="pre overflow-x-auto">{{ JSON.stringify(queryParams, null, 2) }}</pre>
 
         <hr class="hr">
 
@@ -33,7 +39,7 @@
 <script setup lang="ts">
   import UiButton from '#resee-ux/components/Button.vue';
   import UiDrawer from '#resee-ux/components/Drawer.vue';
-  import UiForm, { type FormSubmitEvent } from '#resee-ux/components/form/Form.vue';
+  import UiForm, { type FormChangeState, type FormSubmitEvent } from '#resee-ux/components/form/Form.vue';
   import type { FormFieldBuilderOption } from '#resee-ux/components/form/FormFieldBuilder.vue';
   import { useNotification } from '#resee-ux/composables/use-notification';
   import { useQueryParameters } from '#resee-ux/composables/use-query-parameters';
@@ -45,7 +51,7 @@
     heading: 'Form',
   });
 
-  const values = useQueryParameters({
+  const queryParams = useQueryParameters({
     firstName   : { type: String, persist: true },
     surname     : { type: String },
     country     : { type: [String], persist: true },
@@ -134,6 +140,9 @@
     },
   ];
 
+  async function handleFormChange(state: FormChangeState) {
+    await sleep(300000);
+  }
 
   async function handleFormSubmit(event: FormSubmitEvent) {
     await sleep(3000);
