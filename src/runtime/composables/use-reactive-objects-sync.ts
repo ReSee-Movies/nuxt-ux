@@ -1,4 +1,3 @@
-import { syncRef } from '@vueuse/core';
 import {
   type MaybeRefOrGetter,
   toValue,
@@ -10,20 +9,27 @@ import {
   shallowRef,
   type ComputedRef,
 } from 'vue';
+import { useDebouncedSyncRef, type UseDebouncedSyncRefOptions, type Side } from './use-debounced-sync-ref';
 
 
 export type SyncObject = Record<string | number | symbol, unknown>;
 
 export type KeyOf<S extends SyncObject> = keyof S;
 
+export type KeyOfSide<
+  S extends Side,
+  L extends SyncObject,
+  R extends SyncObject,
+> = S extends 'left' ? KeyOf<L> : KeyOf<R>;
+
 export type Getter<S extends SyncObject> = <R>(obj: S, key: KeyOf<S>) => R;
 
 export type Setter<S extends SyncObject> = (obj: S, key: KeyOf<S>, value: unknown) => void;
 
+
 export type ComputedReadWriteOptions<S extends SyncObject> = {
-  getter?   : Getter<S>;
-  setter?   : Setter<S>;
-  onChange? : (key: KeyOf<S>, value: unknown) => void;
+  getter? : Getter<S>;
+  setter? : Setter<S>;
 };
 
 export type UseReactiveObjectsSyncOptions<
@@ -32,11 +38,11 @@ export type UseReactiveObjectsSyncOptions<
 > = {
   left          : MaybeRefOrGetter<L | undefined>,
   right         : MaybeRefOrGetter<R | undefined>,
-  keySource?    : 'left' | 'right' | (KeyOf<L> | KeyOf<R>)[];
-  immediate?    : boolean;
+  keySource?    : Side | (KeyOf<L> | KeyOf<R>)[];
+  onChange?     : <S extends Side>(side: S, key: KeyOfSide<S, L, R>, value: unknown) => void;
   leftOptions?  : ComputedReadWriteOptions<L>;
   rightOptions? : ComputedReadWriteOptions<R>;
-};
+} & Omit<UseDebouncedSyncRefOptions, 'onChange'>;
 
 type SyncHandle = {
   leftRef  : WritableComputedRef<unknown>;
@@ -45,6 +51,9 @@ type SyncHandle = {
 };
 
 
+/**
+ * Provides two-way binding between a pair of reactive objects.
+ */
 export function useReactiveObjectsSync<
   L extends SyncObject,
   R extends SyncObject,
@@ -73,9 +82,19 @@ export function useReactiveObjectsSync<
 
       const leftRef  = computedReadWrite(left, key, options?.leftOptions);
       const rightRef = computedReadWrite(right, key, options?.rightOptions);
-      const stopSync = syncRef(leftRef, rightRef, { immediate: options.immediate ?? false });
 
-      syncHandle.set(key, { leftRef, rightRef, stopSync });
+      const handles = useDebouncedSyncRef(leftRef, rightRef, {
+        direction     : options?.direction,
+        debounceMs    : options?.debounceMs,
+        debounceMsLtr : options?.debounceMsLtr,
+        debounceMsRtl : options?.debounceMsRtl,
+
+        onChange(side, value) {
+          options?.onChange?.(side, key, value);
+        },
+      });
+
+      syncHandle.set(key, { leftRef, rightRef, stopSync: handles.stop });
     }
   });
 }
@@ -158,8 +177,6 @@ function computedReadWrite<S extends SyncObject>(
         else {
           target[key] = val;
         }
-
-        options?.onChange?.(key, val);
       }
     },
   });

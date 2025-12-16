@@ -7,7 +7,7 @@
     :validate-on-submit       = "true"
     :validate-on-value-update = "true"
     :validate-on-blur         = "false"
-    :initial-values           = "values"
+    :initial-values           = "props.initialValues ?? values"
     :aria-disabled            = "props.disabled"
     @submit                   = "handleFormSubmit"
   >
@@ -24,16 +24,18 @@
 
 <script lang="ts">
   import type { FormSubmitEvent as PrimeFormSubmitEvent } from '@primevue/forms';
-  import type { FormSubmitEvent, FormSubmitHandler, FormValues } from '../../types/form';
+  import type { FormChangeHandler, FormSubmitEvent, FormSubmitHandler, FormValues } from '../../types/form';
   import type { FormFieldBuilderOption } from './FormFieldBuilder.vue';
 
   export * from '../../types/form';
 
   export interface FormProps<T extends FormValues = FormValues> {
-    disabled? : boolean;
-    onSubmit? : FormSubmitHandler<T> | FormSubmitHandler<T>[];
-    onChange? : (values: T | null) => void;
-    fields?   : FormFieldBuilderOption[];
+    disabled?      : boolean;
+    onSubmit?      : FormSubmitHandler<T> | FormSubmitHandler<T>[];
+    onChange?      : FormChangeHandler<T> | FormChangeHandler<T>[];
+    changeDelay?   : number;
+    initialValues? : Partial<T>;
+    fields?        : FormFieldBuilderOption[];
   }
 </script>
 
@@ -44,6 +46,7 @@
   import { isPromiseLike } from '@resee-movies/utilities/objects/is-promise-like';
   import { syncRefs, useDebounceFn } from '@vueuse/core';
   import { useTemplateRef } from 'vue';
+  import type { FormChangeEvent } from '../../types/form';
   import FormFieldBuilder from './FormFieldBuilder.vue';
   import { useReactiveObjectsSync } from '../../composables/use-reactive-objects-sync';
   import { provideFormInstance, getValuesFromFormState } from '../../utils/form';
@@ -51,10 +54,12 @@
   const props = withDefaults(
     defineProps<FormProps<T>>(),
     {
-      disabled : false,
-      onSubmit : undefined,
-      onChange : undefined,
-      fields   : undefined,
+      disabled      : false,
+      onSubmit      : undefined,
+      onChange      : undefined,
+      changeDelay   : 1,
+      initialValues : undefined,
+      fields        : undefined,
     },
   );
 
@@ -63,20 +68,11 @@
 
   defineEmits<{
     (e: 'submit', evt: FormSubmitEvent<T>): (void | Promise<void>);
-    (e: 'change', values: T): void;
+    (e: 'change', evt: FormChangeEvent<T>): (void | Promise<void>);
   }>();
 
   const formInstance = provideFormInstance();
   syncRefs(() => props.disabled, formInstance.isDisabled);
-
-
-  const emitOnChange = useDebounceFn(() => {
-    const state = form.value?.states;
-
-    if (state) {
-      props.onChange?.(getValuesFromFormState<T>(state));
-    }
-  }, 1);
 
 
   /**
@@ -85,13 +81,13 @@
    * of the form's `states` object.
    */
   useReactiveObjectsSync({
-    left      : () => form.value?.states,
-    right     : () => values.value,
-    keySource : 'left',
+    left          : () => form.value?.states,
+    right         : () => values.value,
+    keySource     : 'left',
+    debounceMsLtr : props.changeDelay,
+    onChange      : () => handleOnChange(),
 
     leftOptions: {
-      onChange: () => emitOnChange(),
-
       getter(obj, key) {
         return obj[key]?.value;
       },
@@ -102,15 +98,38 @@
         }
       },
     },
-
-    rightOptions: {
-      onChange: () => emitOnChange(),
-    },
   });
 
 
   /**
-   * This internal event handler takes the value from Primevue's form component
+   * Similar to `handleFormSubmit` below, but called for every change of the form's value.
+   * This method is intended to be utilized in scenarios like live filtering, where having
+   * a dedicated submit button isn't desired. If a promise is returned, the form will
+   * temporarily disable itself until settled.
+   */
+  async function handleOnChange() {
+    const state = form.value?.states;
+
+    if (state && props.onChange) {
+      const newEvent = {
+        values : getValuesFromFormState<T>(state),
+        valid  : form.value?.valid ?? true,
+      };
+
+      const results = toNonNullableArray(props.onChange)
+        .map((handler) => handler(newEvent));
+
+      if (!!results.find((result) => isPromiseLike(result))) {
+        formInstance.isSubmitting.value = true;
+        await Promise.allSettled(results);
+        formInstance.isSubmitting.value = false;
+      }
+    }
+  }
+
+
+  /**
+   * This internal event handler takes the value from the Primevue form component
    * and performs some additional processing, because, at the time of writing,
    * the setting of `initial-value` directly on FormField instances produces some
    * really weird behavior wherein the event's `values` winds up just being whatever

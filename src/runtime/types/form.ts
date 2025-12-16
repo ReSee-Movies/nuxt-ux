@@ -20,13 +20,29 @@ export interface FormInstance {
 
 
 /**
- * The event argument of a Form's `onsubmit` callback.
+ * The event argument of a Form's `onSubmit` callback.
  */
 export type FormSubmitEvent<T extends FormValues = FormValues> = PrimeFormSubmitEvent<T>;
 
 
 /**
- * The `onsubmit` callback method of a Form.
+ * The `onSubmit` callback method of a Form.
  */
 export type FormSubmitHandler<T extends FormValues = FormValues>
   = (event: FormSubmitEvent<T>) => void | Promise<void>;
+
+
+/**
+ * The event argument of a Form's `onChange` callback.
+ */
+export type FormChangeEvent<T extends FormValues = FormValues> = {
+  values : T | null;
+  valid  : boolean;
+};
+
+
+/**
+ * The `onChange` callback method of a Form.
+ */
+export type FormChangeHandler<T extends FormValues = FormValues>
+  = (event: FormChangeEvent<T>) => void | Promise<void>;
