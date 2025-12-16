@@ -33,6 +33,7 @@ export type UseReactiveObjectsSyncOptions<
   left          : MaybeRefOrGetter<L | undefined>,
   right         : MaybeRefOrGetter<R | undefined>,
   keySource?    : 'left' | 'right' | (KeyOf<L> | KeyOf<R>)[];
+  immediate?    : boolean;
   leftOptions?  : ComputedReadWriteOptions<L>;
   rightOptions? : ComputedReadWriteOptions<R>;
 };
@@ -72,7 +73,7 @@ export function useReactiveObjectsSync<
 
       const leftRef  = computedReadWrite(left, key, options?.leftOptions);
       const rightRef = computedReadWrite(right, key, options?.rightOptions);
-      const stopSync = syncRef(leftRef, rightRef);
+      const stopSync = syncRef(leftRef, rightRef, { immediate: options.immediate ?? false });
 
       syncHandle.set(key, { leftRef, rightRef, stopSync });
     }
