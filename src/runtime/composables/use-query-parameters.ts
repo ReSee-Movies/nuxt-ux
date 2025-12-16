@@ -9,9 +9,14 @@ import type { LocationQueryValueRaw, Router } from 'vue-router';
 /**
  * Two-way bind to URL query parameters.
  */
-export function useQueryParameters<D extends QueryParamDefinitionMap>(params: D): UseQueryParametersReturn<D> {
+export function useQueryParameters<
+  D extends QueryParamDefinitionMap,
+>(
+  params   : D,
+  options? : UseQueryParametersOptions,
+): UseQueryParametersReturn<D> {
   const router = useRouter();
-  const queue  = getQueueForRouter(router);
+  const queue  = getQueueForRouter(router, options?.mode);
 
   const refs = {} as Record<string, unknown>;
 
@@ -26,6 +31,15 @@ export function useQueryParameters<D extends QueryParamDefinitionMap>(params: D)
 
   return reactive(refs) as UseQueryParametersReturn<D>;
 }
+
+
+/**
+ * Configuration for the {@link useQueryParameters} composable.
+ */
+export type UseQueryParametersOptions = {
+  /* How parameters will be added to the route. "replace" results in no history being created. */
+  mode?: 'replace' | 'push';
+};
 
 
 /**
@@ -113,7 +127,7 @@ const _queue = new WeakMap<Router, Map<string, unknown>>();
  *
  * Internally, updates are batched together after `nextTick`.
  */
-function getQueueForRouter(router: Router) {
+function getQueueForRouter(router: Router, mode: 'push' | 'replace' = 'push') {
   if (!_queue.has(router)) {
     _queue.set(router, new Map());
   }
@@ -134,7 +148,7 @@ function getQueueForRouter(router: Router) {
 
     const { params, query, hash } = router.currentRoute.value;
 
-    await router.replace({
+    await router[mode]({
       params,
       query: { ...query, ...newValues },
       hash,
