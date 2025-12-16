@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.13.0](///compare/0.12.0...0.13.0) (2025-12-16)
+
+### Features
+
+* added ability to control whether query values are added via push or replace in useQueryParameters 5aef6c5
+* added the `initialValues` and `changeDelay` props to the Form component, modified the signature of `onChange` 493115f
+* introduced useDebouncedSyncRef composable 51fc29b
+
+### Bug Fixes
+
+* do not immediately try to sync left and right reactive objects when useReactiveObjectsSync is called 76efd39
+* inject CSS (at)layer ordering very early on so loading order doesn't mess it up bddf43b
+* the query param name created by useQueryParameters is now kebab cased 668553f
+
 ## [0.12.0](///compare/0.11.1...0.12.0) (2025-12-15)
 
 ### Features
