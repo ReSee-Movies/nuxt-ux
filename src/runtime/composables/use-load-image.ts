@@ -20,6 +20,9 @@ export type LoadImageOptions = {
   type?           : MaybeRefOrGetter<LoadImageType>;
   reseeConfig?    : MaybeRefOrGetter<MediaAssetTransformConfig | undefined>;
   deferLoad?      : Ref<boolean>;
+  onLoading?      : (isLoading: boolean) => void;
+  onLoad?         : (src: string | undefined) => void;
+  onError?        : (err: unknown) => void;
 };
 
 
@@ -59,6 +62,9 @@ export function useLoadImage(
         src.value   = toValue(config.errorSrc);
         key.value   = src.value;
         error.value = new Error('"src" is not defined');
+
+        config.onLoading?.(false);
+        config.onError?.(error.value);
         return;
       }
 
@@ -92,6 +98,10 @@ export function useLoadImage(
 
         loading.value = true;
         key.value = sourceUnwrapped;
+
+        config.onLoading?.(true);
+        config.onLoad?.(src.value);
+
         return;
       }
 
@@ -136,6 +146,10 @@ export function useLoadImage(
         loading.value   = false;
         bgLoading.value = false;
         error.value     = undefined;
+
+        config.onLoading?.(false);
+        config.onLoad?.(src.value);
+
         return;
       }
 
@@ -153,6 +167,7 @@ export function useLoadImage(
       loading.value   = !pendingSource;
       bgLoading.value = !!pendingSource;
 
+      config.onLoading?.(true);
 
       pendingLoader.then(
         (loadedSrc) => {
@@ -161,6 +176,9 @@ export function useLoadImage(
           loading.value   = false;
           bgLoading.value = false;
           error.value     = undefined;
+
+          config.onLoading?.(false);
+          config.onLoad?.(src.value);
         },
 
         (e) => {
@@ -169,6 +187,9 @@ export function useLoadImage(
           loading.value   = false;
           bgLoading.value = false;
           error.value     = e;
+
+          config.onLoading?.(false);
+          config.onError?.(e);
         },
       );
     },
