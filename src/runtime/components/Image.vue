@@ -1,12 +1,18 @@
 <template>
-  <div
-    :class = "['image', {
-      loading  : isImgLoading || props.showLoading,
-      glass    : props.glassy && (!(imgHasError || isImgLoading || props.showLoading)),
-      bordered : props.bordered,
-      beveled  : props.beveled,
-      raised   : props.raised,
-    }]"
+  <Card
+    :is          = "props.is"
+    :interactive = "props.interactive"
+    :colorful    = "props.colorful"
+    :beveled     = "props.beveled"
+    :raised      = "props.raised"
+    :bordered    = "props.bordered"
+    :class       = "[
+      'image',
+      {
+        loading  : isImgLoading || props.showLoading,
+        glass    : props.glassy && (!(imgHasError || isImgLoading || props.showLoading)),
+      },
+    ]"
   >
     <Icon
       v-if     = "props.defaultIcon && imgHasError"
@@ -32,46 +38,40 @@
       @load         = "() => imgHasError = null"
       @error        = "(err) => imgHasError = err"
     />
-  </div>
+  </Card>
 </template>
 
 
 <script lang="ts">
+  import type { CardProps } from './Card.vue';
   import type { IconProps } from './Icon.vue';
   import type { ImageBaseProps } from './ImageBase.vue';
 
-  export interface ImageProps extends ImageBaseProps {
+  export interface ImageProps extends ImageBaseProps, CardProps {
     defaultIcon? : string;
     iconSize?    : IconProps['size'];
     glassy?      : boolean;
-    bordered?    : boolean;
-    beveled?     : boolean;
-    raised?      : boolean;
   }
 </script>
 
 
 <script setup lang="ts">
   import { ref } from 'vue';
+  import Card from './Card.vue';
   import Icon from './Icon.vue';
   import ImageBase from './ImageBase.vue';
 
   const props = withDefaults(
     defineProps<ImageProps>(),
     {
-      defaultIcon    : 'i-ph-image-thin',
-      iconSize       : 'xl',
-      glassy         : false,
-      bordered       : false,
-      beveled        : false,
-      raised         : false,
+      defaultIcon : 'i-ph-image-thin',
+      iconSize    : 'xl',
+      glassy      : false,
     },
   );
 
   const isImgLoading = ref(true);
   const imgHasError  = ref<unknown>(null);
-
-
 </script>
 
 
@@ -106,19 +106,6 @@
         animation-timing-function : ease-out;
         animation-fill-mode       : both;
         animation-iteration-count : infinite;
-      }
-
-      &.bordered {
-        border: solid 2px var(--color-global-background-accent);
-      }
-
-      &.beveled {
-        border-top-right-radius   : var(--radius-xl);
-        border-bottom-left-radius : var(--radius-xl);
-      }
-
-      &.raised {
-        box-shadow: var(--shadow-heavy);
       }
     }
 
