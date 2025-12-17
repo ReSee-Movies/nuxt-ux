@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.14.0](///compare/0.13.1...0.14.0) (2025-12-17)
+
+### Features
+
+* split the Image component into Image and ImageBase, which is just the <img> tag and associated loading logic 7845559
+
 ## [0.13.1](///compare/0.13.0...0.13.1) (2025-12-17)
 
 ### Bug Fixes
