@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.13.1](///compare/0.13.0...0.13.1) (2025-12-17)
+
+### Bug Fixes
+
+* the <Transition> component, when given the `appear` prop - doesn't matter if true/false/undefined - was causing icon render to be delayed 56cf7f5
+
 ## [0.13.0](///compare/0.12.0...0.13.0) (2025-12-16)
 
 ### Features
