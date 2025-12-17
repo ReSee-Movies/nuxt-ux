@@ -1,57 +1,26 @@
 <template>
-  <Transition
-    :name   = "props.transitionName"
-    :mode   = "props.transitionMode"
-    :appear = "props.transitionOnAppear"
-  >
-    <span
-      v-if   = "props.loading"
-      v-bind = "$attrs"
-      class  = "icon"
-    >
-      <ProgressSpinner :size="props.size" />
-    </span>
-
-    <span
-      v-else-if = "props.name"
-      v-bind    = "$attrs"
-      role      = "presentation"
-      :class    = "['icon', props.size]"
-    >
-      <span :class="[props.name, { 'color-cycle': props.colorCycle }]" />
-    </span>
-  </Transition>
+  <span role="presentation" :class="['icon', props.size]">
+    <slot>
+      <span :class="props.name" />
+    </slot>
+  </span>
 </template>
+
 
 <script lang="ts">
   export interface IconProps {
-    name?               : string;
-    loading?            : boolean;
-    size?               : 'sm' | 'md' | 'lg' | 'xl';
-    colorCycle?         : boolean;
-    transitionName?     : string;
-    transitionMode?     : 'out-in' | 'in-out';
-    transitionOnAppear? : boolean;
+    name? : string;
+    size? : 'sm' | 'md' | 'lg' | 'xl';
   }
 </script>
 
+
 <script setup lang="ts">
-  import ProgressSpinner from './ProgressSpinner.vue';
-
-  defineOptions({
-    inheritAttrs: false,
-  });
-
   const props = withDefaults(
     defineProps<IconProps>(),
     {
-      name               : undefined,
-      loading            : false,
-      size               : undefined,
-      colorCycle         : false,
-      transitionName     : 'fade',
-      transitionMode     : 'out-in',
-      transitionOnAppear : false,
+      name : undefined,
+      size : undefined,
     },
   );
 </script>
@@ -66,42 +35,42 @@
         content: var(--zero-width-space);
       }
 
-      &.sm {
-        font-size: var(--icon-size-small);
+      /**
+       * The base 1em height/width is the same that gets written in by the Tailwind
+       * icon plugin, and is provided here as well just in case the stylesheet loading
+       * is delayed for whatever reason.
+       *
+       * The usage of important isn't fantastic, but needed as the icon plugin writes
+       * to the utilities layer, which takes precedence over components. The styles are
+       * only applied if providing a `size="**"` prop, so shouldn't interfere with
+       * any other custom solutions that involve providing other styles/classnames.
+       */
+
+      & > span {
+        height  : 1em;
+        width   : 1em;
+        display : inline-block;
       }
 
-      &.md {
-        font-size: var(--icon-size-medium);
+      &.sm > span {
+        height : var(--icon-size-small) !important;
+        width  : var(--icon-size-small) !important;
       }
 
-      &.lg {
-        font-size: var(--icon-size-large);
+      &.md > span {
+        height : var(--icon-size-medium) !important;
+        width  : var(--icon-size-medium) !important;
       }
 
-      &.xl {
-        font-size: var(--icon-size-jumbo);
+      &.lg > span {
+        height : var(--icon-size-large) !important;
+        width  : var(--icon-size-large) !important;
       }
 
-      &.color-cycle {
-        --resee-color-cycle-timing: cubic-bezier(0,.5,1,.5);
-
-        animation-name            : resee-color-cycle;
-        animation-duration        : 8s;
-        animation-iteration-count : infinite;
+      &.xl > span {
+        height : var(--icon-size-jumbo) !important;
+        width  : var(--icon-size-jumbo) !important;
       }
-    }
-
-    @keyframes resee-color-cycle {
-      0%     { color: var(--color-resee-red);     animation-timing-function: var(--resee-color-cycle-timing); }
-      6.25%  { color: var(--color-resee-orange);  animation-timing-function: var(--resee-color-cycle-timing); }
-      18.75% { color: var(--color-resee-yellow);  animation-timing-function: var(--resee-color-cycle-timing); }
-      31.25% { color: var(--color-resee-green);   animation-timing-function: var(--resee-color-cycle-timing); }
-      43.75% { color: var(--color-resee-seaweed); animation-timing-function: var(--resee-color-cycle-timing); }
-      56.25% { color: var(--color-resee-aqua);    animation-timing-function: var(--resee-color-cycle-timing); }
-      68.75% { color: var(--color-resee-blue);    animation-timing-function: var(--resee-color-cycle-timing); }
-      81.25% { color: var(--color-resee-indigo);  animation-timing-function: var(--resee-color-cycle-timing); }
-      93.75% { color: var(--color-resee-violet);  animation-timing-function: var(--resee-color-cycle-timing); }
-      100%   { color: var(--color-resee-red);     animation-timing-function: var(--resee-color-cycle-timing); }
     }
   }
 </style>

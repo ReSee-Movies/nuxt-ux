@@ -140,8 +140,8 @@
     },
   ];
 
-  async function handleFormChange(state: FormChangeState) {
-    await sleep(300000);
+  async function handleFormChange(_state: FormChangeState) {
+    await sleep(3000);
   }
 
   async function handleFormSubmit(event: FormSubmitEvent) {

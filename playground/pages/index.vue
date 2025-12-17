@@ -27,6 +27,7 @@
     { label: 'Dialog',           icon: 'i-ph-box-arrow-up',        route: 'components-dialog' },
     { label: 'Drawer',           icon: 'i-ph-arrow-line-left',     route: 'components-drawer' },
     { label: 'Form',             icon: 'i-ph-textbox',             route: 'components-form' },
+    { label: 'Icon',             icon: 'i-ph-mask-happy',          route: 'components-icon' },
     { label: 'Image',            icon: 'i-ph-image',               route: 'components-image' },
     { label: 'Menu',             icon: 'i-ph-list',                route: 'components-menu' },
     { label: 'Message',          icon: 'i-ph-chat-centered-text',  route: 'components-message' },

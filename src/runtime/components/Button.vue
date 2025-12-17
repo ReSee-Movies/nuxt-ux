@@ -21,16 +21,16 @@
     @click              = "handleButtonClick"
   >
     <IconTextPair
-      :text                      = "props.text"
-      :icon                      = "props.icon"
-      :icon-size                 = "props.iconSize ?? props.size"
-      :trailing-icon             = "props.trailingIcon"
-      :spacing                   = "props.spacing ?? (iconOnly ? 'none' : 'wide')"
-      :loading                   = "showLoading"
-      :icon-transition-name      = "props.iconTransitionName"
-      :icon-transition-mode      = "props.iconTransitionMode"
-      :icon-transition-on-appear = "props.iconTransitionOnAppear"
+      :text          = "props.text"
+      :icon          = "props.icon"
+      :icon-size     = "props.iconSize ?? props.size"
+      :trailing-icon = "props.trailingIcon"
+      :spacing       = "props.spacing ?? (iconOnly ? 'none' : 'wide')"
     >
+      <template #leading="{ slotProps }">
+        <IconTransition v-bind="slotProps" :loading="showLoading" />
+      </template>
+
       <template #default v-if="slots.default">
         <slot />
       </template>
@@ -76,6 +76,7 @@
 <script setup lang="ts">
   import vPrimeTooltip from 'primevue/tooltip';
   import IconTextPair from './IconTextPair.vue';
+  import IconTransition from './IconTransition.vue';
 
   defineEmits<{
     (e: 'click', evt: Event): (void | Promise<void>);

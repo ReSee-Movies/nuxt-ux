@@ -1,11 +1,10 @@
 <template>
   <Button
-    type                 = "submit"
-    :text                = "props.text ?? locale.form.submitButtonLabel"
-    :loading             = "formState.isSubmitting.value"
-    :disabled            = "formState.isDisabled.value"
-    :bordered            = "props.bordered"
-    icon-transition-name = "grow-x"
+    type      = "submit"
+    :text     = "props.text ?? locale.form.submitButtonLabel"
+    :loading  = "formState.isSubmitting.value"
+    :disabled = "formState.isDisabled.value"
+    :bordered = "props.bordered"
   />
 </template>
 
