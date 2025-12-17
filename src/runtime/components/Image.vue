@@ -2,18 +2,21 @@
   <div
     ref    = "container"
     :class = "['image', {
-      loading  : imgLoading || imgBgLoading || props.showLoading,
-      glass    : props.glassy,
+      loading  : imgLoading || props.showLoading,
+      glass    : props.glassy && (!(imgError || imgLoading || props.showLoading)),
       bordered : props.bordered,
       beveled  : props.beveled,
       raised   : props.raised,
     }]"
   >
     <Icon
-      v-if         = "props.defaultIcon && (!imgSrc || imgError || imgLoading || props.showLoading)"
-      :name        = "props.defaultIcon"
-      :size        = "props.iconSize"
-      :color-cycle = "imgLoading || props.showLoading"
+      v-if     = "props.defaultIcon && imgError"
+      :name    = "props.defaultIcon"
+      :size    = "props.iconSize"
+      class    = "transition-opacity duration-300"
+      :class   = "{
+        'opacity-0': imgLoading || props.showLoading
+      }"
     />
 
     <img
@@ -24,7 +27,7 @@
       :loading = "props.loading"
       class    = "transition-opacity duration-300"
       :class   = "[aspectRatioClass, objectFitClass, {
-        'opacity-0': (!imgSrc || imgLoading)
+        'opacity-0': (!imgSrc || imgLoading || props.showLoading)
       }]"
     >
   </div>
@@ -37,26 +40,24 @@
   import type { MediaAssetTransformConfig } from '@resee-movies/utilities/resee/get-media-asset-url';
   import type { TmdbImageSize } from '@resee-movies/utilities/tmdb/get-tmdb-image-url';
   import type { LoadImageType } from '../composables/use-load-image';
-  import type { HTMLElementClassNames } from '../types';
   import type { IconProps } from './Icon.vue';
 
   export interface ImageProps {
-    src             : ImageFileDescriptor | null | undefined;
-    alt?            : string | null | ((error: unknown) => string);
-    type?           : LoadImageType;
-    width?          : TmdbImageSize | string | number;
-    height?         : string | number;
-    aspect?         : AspectRatio | 'auto';
-    fit?            : MediaAssetTransformConfig['fit'];
-    showLoading?    : boolean;
-    defaultIcon?    : string;
-    iconSize?       : IconProps['size'];
-    loading?        : 'lazy' | 'eager';
-    glassy?         : boolean;
-    bordered?       : boolean;
-    beveled?        : boolean;
-    raised?         : boolean;
-    overlayClasses? : HTMLElementClassNames;
+    src          : ImageFileDescriptor | null | undefined;
+    alt?         : string | null | ((error: unknown) => string);
+    type?        : LoadImageType;
+    width?       : TmdbImageSize | string | number;
+    height?      : string | number;
+    aspect?      : AspectRatio | 'auto';
+    fit?         : MediaAssetTransformConfig['fit'];
+    showLoading? : boolean;
+    defaultIcon? : string;
+    iconSize?    : IconProps['size'];
+    loading?     : 'lazy' | 'eager';
+    glassy?      : boolean;
+    bordered?    : boolean;
+    beveled?     : boolean;
+    raised?      : boolean;
   }
 
   export const AspectRatioClassNames = {
@@ -96,7 +97,6 @@
       height         : undefined,
       aspect         : undefined,
       fit            : 'cover',
-      bgColor        : 'bg-black',
       showLoading    : false,
       defaultIcon    : 'i-ph-image-thin',
       iconClasses    : 'text-global-foreground-accent',
@@ -106,7 +106,6 @@
       bordered       : false,
       beveled        : false,
       raised         : false,
-      overlayClasses : undefined,
     },
   );
 
@@ -184,10 +183,9 @@
   );
 
   const {
-    src       : imgSrc,
-    loading   : imgLoading,
-    bgLoading : imgBgLoading,
-    error     : imgError,
+    src     : imgSrc,
+    loading : imgLoading,
+    error   : imgError,
   } = imgLoadInfo;
 
   /**
@@ -242,15 +240,33 @@
   @reference "tailwindcss";
 
   @layer components {
+    @keyframes color-pulse {
+      0% { background-color: var(--bg-color-1); }
+      50% { background-color: var(--bg-color-2); }
+      100% { background-color: var(--bg-color-1); }
+    }
+
     .image {
-      background-color : white;
+      --bg-color-1: rgb(255, 255, 255);
+      --bg-color-2: rgb(240, 240, 240);
+
+      background-color : var(--bg-color-1);
       position         : relative;
       overflow         : clip;
       width            : 100%;
       max-width        : fit-content;
 
       @variant dark {
-        background-color: black;
+        --bg-color-1: rgb(0, 0, 0);
+        --bg-color-2: rgb(15, 15, 15);
+      }
+
+      &.loading {
+        animation-name            : color-pulse;
+        animation-duration        : 2.5s;
+        animation-timing-function : ease-out;
+        animation-fill-mode       : both;
+        animation-iteration-count : infinite;
       }
 
       &.bordered {
