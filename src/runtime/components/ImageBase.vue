@@ -5,9 +5,7 @@
     :alt     = "altText"
     :width   = "dimensions.width"
     :height  = "dimensions.height"
-    :loading = "props.loading"
-    class    = "transition-opacity duration-300"
-    :class   = "[aspectRatioClass, objectFitClass, { 'opacity-0': (!imgSrc || imgLoading || props.showLoading) }]"
+    :loading = "props.loadStyle"
   >
 </template>
 
@@ -27,8 +25,7 @@
     height?      : string | number;
     aspect?      : AspectRatio | 'auto';
     fit?         : MediaAssetTransformConfig['fit'];
-    showLoading? : boolean;
-    loading?     : 'lazy' | 'eager';
+    loadStyle?   : 'lazy' | 'eager';
   }
 
   export const AspectRatioClassNames = {
@@ -73,12 +70,12 @@
   );
 
   const emits = defineEmits<{
-    (e: 'loading', isLoading: boolean): void;
+    (e: 'loading'): void;
     (e: 'load', src: string | undefined): void;
     (e: 'error', err: unknown): void;
   }>();
 
-  const deferLoad = ref(props.loading === 'lazy');
+  const deferLoad = ref(props.loadStyle === 'lazy');
   const container = ref();
 
   /**
@@ -135,14 +132,14 @@
   /**
    * Implementation of `useLoadImage`.
    */
-  const imgLoadInfo = useLoadImage(
+  const { src: imgSrc, error: imgError } = useLoadImage(
     () => normalizedSource.value.identifier,
     {
       deferLoad    : deferLoad,
       type         : () => normalizedSource.value.sourceType,
       width        : () => props.width,
       friendlyName : () => normalizedSource.value.friendlyName,
-      onLoading    : (isLoading) => emits('loading', isLoading),
+      onLoading    : () => emits('loading'),
       onLoad       : (src) => emits('load', src),
       onError      : (err) => emits('error', err),
       reseeConfig  : () => ({
@@ -153,11 +150,6 @@
     },
   );
 
-  const {
-    src     : imgSrc,
-    loading : imgLoading,
-    error   : imgError,
-  } = imgLoadInfo;
 
   /**
    * If deferred, wait until the container enters the viewport.

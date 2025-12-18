@@ -1,6 +1,7 @@
 <template>
   <Card
     :is          = "props.is"
+    :loading     = "isImgLoading || props.loading"
     :interactive = "props.interactive"
     :colorful    = "props.colorful"
     :beveled     = "props.beveled"
@@ -9,34 +10,34 @@
     :class       = "[
       'image',
       {
-        loading  : isImgLoading || props.showLoading,
-        glass    : props.glassy && (!(imgHasError || isImgLoading || props.showLoading)),
+        glass : props.glassy && (!(imgHasError || isImgLoading || props.loading)),
+        scale : props.scaleToParent,
       },
     ]"
   >
     <Icon
-      v-if     = "props.defaultIcon && imgHasError"
-      :name    = "props.defaultIcon"
-      :size    = "props.iconSize"
-      class    = "transition-opacity duration-300"
-      :class   = "{
-        'opacity-0': isImgLoading || props.showLoading
-      }"
+      v-if   = "props.defaultIcon && imgHasError"
+      :name  = "props.defaultIcon"
+      :size  = "props.iconSize"
+      class  = "transition-opacity duration-300"
+      :class = "{ 'opacity-0': isImgLoading || props.loading }"
     />
 
     <ImageBase
-      :src          = "props.src"
-      :type         = "props.type"
-      :alt          = "props.alt"
-      :width        = "props.width"
-      :height       = "props.height"
-      :aspect       = "props.aspect"
-      :fit          = "props.fit"
-      :loading      = "props.loading"
-      :show-loading = "props.showLoading"
-      @loading      = "(state) => isImgLoading = state"
-      @load         = "() => imgHasError = null"
-      @error        = "(err) => imgHasError = err"
+      :src         = "props.src"
+      :type        = "props.type"
+      :alt         = "props.alt"
+      :width       = "props.width"
+      :height      = "props.height"
+      :aspect      = "props.aspect"
+      :fit         = "props.fit"
+      :loadStyle   = "props.loadStyle"
+      class        = "transition-opacity duration-300"
+      :class       = "{ 'opacity-0': isImgLoading || props.loading || imgHasError }"
+      :aria-hidden = "imgHasError ? 'true' : 'false'"
+      @loading     = "handleLoading"
+      @load        = "handleLoaded"
+      @error       = "handleError"
     />
   </Card>
 </template>
@@ -48,9 +49,10 @@
   import type { ImageBaseProps } from './ImageBase.vue';
 
   export interface ImageProps extends ImageBaseProps, CardProps {
-    defaultIcon? : string;
-    iconSize?    : IconProps['size'];
-    glassy?      : boolean;
+    defaultIcon?   : string;
+    iconSize?      : IconProps['size'];
+    glassy?        : boolean;
+    scaleToParent? : boolean;
   }
 </script>
 
@@ -64,49 +66,44 @@
   const props = withDefaults(
     defineProps<ImageProps>(),
     {
-      defaultIcon : 'i-ph-image-thin',
-      iconSize    : 'xl',
-      glassy      : false,
+      defaultIcon   : 'i-ph-image-thin',
+      iconSize      : 'xl',
+      glassy        : false,
+      scaleToParent : true,
     },
   );
 
+  // Purposefully set this to true so there aren't
+  // any content flashes as the image goes from
+  // not loaded -> loading -> loaded. Instead, always
+  // assume loading... at least its consistent.
   const isImgLoading = ref(true);
-  const imgHasError  = ref<unknown>(null);
+
+  const imgHasError = ref<unknown>(null);
+
+  function handleLoading() {
+    isImgLoading.value = true;
+  }
+
+  function handleLoaded(src: string | undefined) {
+    isImgLoading.value = false;
+    imgHasError.value  = null;
+  }
+
+  function handleError(err: unknown) {
+    isImgLoading.value = false;
+    imgHasError.value  = err;
+  }
 </script>
 
 
 <style scoped>
-  @reference "tailwindcss";
-
   @layer components {
-    @keyframes color-pulse {
-      0% { background-color: var(--bg-color-1); }
-      50% { background-color: var(--bg-color-2); }
-      100% { background-color: var(--bg-color-1); }
-    }
-
     .image {
-      --bg-color-1: rgb(255, 255, 255);
-      --bg-color-2: rgb(240, 240, 240);
-
-      background-color : var(--bg-color-1);
-      position         : relative;
-      overflow         : clip;
-      width            : 100%;
-      max-width        : fit-content;
-
-      @variant dark {
-        --bg-color-1: rgb(0, 0, 0);
-        --bg-color-2: rgb(15, 15, 15);
-      }
-
-      &.loading {
-        animation-name            : color-pulse;
-        animation-duration        : 2.5s;
-        animation-timing-function : ease-out;
-        animation-fill-mode       : both;
-        animation-iteration-count : infinite;
-      }
+      position  : relative;
+      overflow  : clip;
+      display   : block;
+      max-width : fit-content;
     }
 
     .image.glass::after {
@@ -122,6 +119,14 @@
       top       : 50%;
       left      : 50%;
       transform : translateX(-50%) translateY(-50%);
+    }
+
+    .image.scale {
+      max-width: unset;
+    }
+
+    .image.scale :deep(img) {
+      min-width: 100%;
     }
   }
 </style>
