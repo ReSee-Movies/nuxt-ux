@@ -1,7 +1,11 @@
 <template>
-  <PrimeMessage :severity="props.severity" class="message" :pt="passthroughProps">
-    <template #icon>
-      <Icon :name="props.icon" :size="props.iconSize" />
+  <PrimeMessage
+    class     = "message"
+    :severity = "props.severity"
+    :pt       = "passthroughProps"
+  >
+    <template #icon v-if="displayIcon">
+      <Icon :name="displayIcon" :size="props.iconSize" />
     </template>
 
     <template #default>
@@ -11,24 +15,27 @@
 </template>
 
 <script lang="ts">
-  import { computed } from 'vue';
-  import type { StyleStatusLevel } from '../types';
+  import type { HTMLElementClassNames, StyleStatusLevel } from '../types';
   import type { IconProps } from './Icon.vue';
 
   export interface MessageProps {
-    severity? : StyleStatusLevel;
-    text?     : string;
-    class?    : string;
-    style?    : string;
-    accented? : boolean;
-    icon?     : IconProps['name'];
-    iconSize? : IconProps['size'];
+    severity?       : StyleStatusLevel;
+    text?           : string;
+    class?          : HTMLElementClassNames;
+    style?          : string;
+    accented?       : boolean;
+    icon?           : IconProps['name'] | false;
+    iconSize?       : IconProps['size'];
+    scrollIntoView? : boolean;
   }
 </script>
 
 <script setup lang="ts">
+  import { useCurrentElement } from '@vueuse/core';
   import PrimeMessage from 'primevue/message';
+  import { computed, onMounted } from 'vue';
   import Icon from './Icon.vue';
+  import { StatusLevelIcons } from '../constants';
 
   /*
    * Placing the visual design tokens such as the `status-indicating` classname,
@@ -38,7 +45,27 @@
    * sure that things like margins are included as part of that calculation.
    */
 
-  const props = defineProps<MessageProps>();
+  const props = withDefaults(
+    defineProps<MessageProps>(),
+    {
+      severity       : 'default',
+      text           : undefined,
+      class          : undefined,
+      style          : undefined,
+      accented       : false,
+      icon           : undefined,
+      iconSize       : undefined,
+      scrollIntoView : false,
+    },
+  );
+
+  const element = useCurrentElement();
+
+  onMounted(() => {
+    if (props.scrollIntoView && element.value instanceof HTMLElement) {
+      element.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
 
   const passthroughProps = computed(() => {
     return {
@@ -64,6 +91,14 @@
         appear : false,
       },
     };
+  });
+
+  const displayIcon = computed(() => {
+    if (props.icon === false) {
+      return undefined;
+    }
+
+    return props.icon ?? StatusLevelIcons[props.severity];
   });
 </script>
 
