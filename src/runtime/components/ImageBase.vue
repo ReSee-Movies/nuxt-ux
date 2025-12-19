@@ -6,6 +6,7 @@
     :width   = "dimensions.width"
     :height  = "dimensions.height"
     :loading = "props.loadStyle"
+    :class   = "[aspectRatioClass, objectFitClass]"
   >
 </template>
 

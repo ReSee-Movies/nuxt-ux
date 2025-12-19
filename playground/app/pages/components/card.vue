@@ -1,30 +1,28 @@
 <template>
   <div class="grid grid-cols-3 gap-4 mb-4">
     <UiCard
+      class        = "p-3"
       :interactive = "showInteractive"
       :colorful    = "showColorful"
       :beveled     = "showBevel"
       :bordered    = "showBorder"
       :raised      = "showRaised"
     >
-      <template #content>
-        <UiLorem type="sentences" min="5" />
-      </template>
+      <UiLorem type="sentences" min="5" />
     </UiCard>
 
     <UiCard
       :is          = "NuxtLink"
       to           = "/"
+      class        = "p-3"
       :interactive = "showInteractive"
       :colorful    = "showColorful"
       :beveled     = "showBevel"
       :bordered    = "showBorder"
       :raised      = "showRaised"
     >
-      <template #content>
-        <p>As a hyperlink to the homepage.</p>
-        <UiLorem type="sentences" min="5" />
-      </template>
+      <p>As a hyperlink to the homepage.</p>
+      <UiLorem type="sentences" min="5" />
     </UiCard>
   </div>
 

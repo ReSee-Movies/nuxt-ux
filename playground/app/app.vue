@@ -1,5 +1,7 @@
 <template>
   <div>
+    <NuxtLoadingIndicator :color="false" class="resee-bg-linear-to-r" />
+
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
