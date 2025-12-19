@@ -1,10 +1,9 @@
 <template>
   <UiForm
-    :values         = "queryParams"
-    :fields         = "formFields"
-    :change-delay   = "1200"
-    @submit         = "handleFormSubmit"
-    @change         = "handleFormChange"
+    :values      = "queryParams"
+    :fields      = "formFields"
+    success-text = "Thank you for the feedback"
+    @submit      = "handleFormSubmit"
   >
     <template #after="$form">
       <div>
@@ -27,7 +26,6 @@
     </template>
   </UiForm>
 
-
   <UiDrawer v-model:visible="showDrawer" position="right" header="Flyout Form">
     <div class="px-1">
       <UiForm :fields="formFields" @submit="handleFormSubmit" />
@@ -39,7 +37,7 @@
 <script setup lang="ts">
   import UiButton from '#resee-ux/components/Button.vue';
   import UiDrawer from '#resee-ux/components/Drawer.vue';
-  import UiForm, { type FormChangeState, type FormSubmitEvent } from '#resee-ux/components/form/Form.vue';
+  import UiForm, { type FormSubmitEvent } from '#resee-ux/components/form/Form.vue';
   import type { FormFieldBuilderOption } from '#resee-ux/components/form/FormFieldBuilder.vue';
   import { useNotification } from '#resee-ux/composables/use-notification';
   import { useQueryParameters } from '#resee-ux/composables/use-query-parameters';
@@ -58,7 +56,7 @@
     journeyType : { type: String },
   });
 
-  const { notifySuccess } = useNotification();
+  const { notifyInfo } = useNotification();
 
   const showDrawer = ref(false);
 
@@ -83,13 +81,11 @@
     {
       fieldType : 'text',
       name      : 'firstName',
-      required  : true,
       width     : 'half',
     },
     {
       fieldType : 'text',
       name      : 'surname',
-      required  : true,
       width     : 'half',
     },
     {
@@ -140,17 +136,21 @@
     },
   ];
 
-  async function handleFormChange(_state: FormChangeState) {
-    await sleep(3000);
-  }
-
   async function handleFormSubmit(event: FormSubmitEvent) {
-    await sleep(3000);
+    await sleep(1000);
 
-    notifySuccess(JSON.stringify(event.values, null, 2), { headline: 'Form Submitted' });
+    if (event.values.firstName?.toLowerCase() === 'danger') {
+      throw new Error('Well that was not suppose to happen.');
+    }
+
+    notifyInfo(JSON.stringify(event.values, null, 2), {
+      headline: 'Submitted Information',
+    });
 
     if (showDrawer.value) {
-      showDrawer.value = false;
+      setTimeout(() => {
+        showDrawer.value = false;
+      }, 5000);
     }
   }
 </script>

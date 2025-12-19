@@ -6,11 +6,11 @@
       <NuxtPage />
     </NuxtLayout>
 
-    <NotificationContainer />
+    <LazyNotificationContainer />
   </div>
 </template>
 
 
 <script setup lang="ts">
-  import NotificationContainer from '#resee-ux/components/NotificationContainer.vue';
+  import LazyNotificationContainer from '#resee-ux/components/NotificationContainer.vue';
 </script>

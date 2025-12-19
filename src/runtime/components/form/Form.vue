@@ -1,24 +1,47 @@
 <template>
-  <PrimeForm
-    v-slot                    = "$form"
-    ref                       = "form"
-    novalidate                = "true"
-    :validate-on-mount        = "true"
-    :validate-on-submit       = "true"
-    :validate-on-value-update = "true"
-    :validate-on-blur         = "false"
-    :initial-values           = "props.initialValues ?? values"
-    :aria-disabled            = "props.disabled"
-    @submit                   = "handleFormSubmit"
+  <Transition
+    leave-active-class = "transition-opacity duration-300"
+    leave-to-class     = "opacity-0"
   >
-    <slot name="before" :state="$form" />
+    <LazySuccessSplash
+      v-if  = "props.successText && success"
+      :text = "props.successText"
+    />
 
-    <slot name="default" :state="$form">
-      <FormFieldBuilder v-if="props.fields?.length" :fields="props.fields" />
-    </slot>
+    <div v-else>
+      <LazyMessage
+        v-if              = "errors?.length"
+        severity          = "error"
+        class             = "mb-6"
+        :scroll-into-view = "true"
+      >
+        <slot name="error" :errors="errors">
+          {{ errors.join(' ') }}
+        </slot>
+      </LazyMessage>
 
-    <slot name="after" :state="$form" />
-  </PrimeForm>
+      <PrimeForm
+        v-slot                    = "$form"
+        ref                       = "form"
+        novalidate                = "true"
+        :validate-on-mount        = "true"
+        :validate-on-submit       = "true"
+        :validate-on-value-update = "true"
+        :validate-on-blur         = "false"
+        :initial-values           = "props.initialValues ?? values"
+        :aria-disabled            = "props.disabled"
+        @submit                   = "handleFormSubmit"
+      >
+        <slot name="before" :state="$form" />
+
+        <slot name="default" :state="$form">
+          <FormFieldBuilder v-if="props.fields?.length" :fields="props.fields" />
+        </slot>
+
+        <slot name="after" :state="$form" />
+      </PrimeForm>
+    </div>
+  </Transition>
 </template>
 
 
@@ -36,6 +59,7 @@
     changeDelay?   : number;
     initialValues? : Partial<T>;
     fields?        : FormFieldBuilderOption[];
+    successText?   : string;
   }
 </script>
 
@@ -44,10 +68,12 @@
   import PrimeForm, { type FormInstance } from '@primevue/forms/form';
   import { toNonNullableArray } from '@resee-movies/utilities/arrays/to-non-nullable-array';
   import { isPromiseLike } from '@resee-movies/utilities/objects/is-promise-like';
-  import { syncRefs, useDebounceFn } from '@vueuse/core';
-  import { useTemplateRef } from 'vue';
+  import { syncRefs } from '@vueuse/core';
+  import { ref, useTemplateRef } from 'vue';
   import type { FormChangeEvent } from '../../types/form';
   import FormFieldBuilder from './FormFieldBuilder.vue';
+  import LazySuccessSplash from '../SuccessSplash.vue';
+  import LazyMessage from '../Message.vue';
   import { useReactiveObjectsSync } from '../../composables/use-reactive-objects-sync';
   import { provideFormInstance, getValuesFromFormState } from '../../utils/form';
 
@@ -60,11 +86,14 @@
       changeDelay   : 1,
       initialValues : undefined,
       fields        : undefined,
+      successText   : undefined,
     },
   );
 
-  const form   = useTemplateRef<FormInstance>('form');
-  const values = defineModel<Partial<T> | undefined>('values', { default: undefined });
+  const form    = useTemplateRef<FormInstance>('form');
+  const values  = defineModel<Partial<T> | undefined>('values', { default: undefined });
+  const success = ref(false);
+  const errors  = ref<unknown[]>();
 
   defineEmits<{
     (e: 'submit', evt: FormSubmitEvent<T>): (void | Promise<void>);
@@ -157,7 +186,19 @@
 
       if (!!results.find((result) => isPromiseLike(result))) {
         formInstance.isSubmitting.value = true;
-        await Promise.allSettled(results);
+
+        const result = await Promise.allSettled(results);
+
+        if (!result.find((entry) => entry.status === 'rejected')) {
+          success.value = true;
+          errors.value  = undefined;
+        }
+        else {
+          errors.value = result
+            .filter((entry) => entry.status === 'rejected')
+            .map((entry) => entry.reason);
+        }
+
         formInstance.isSubmitting.value = false;
       }
     }
