@@ -69,7 +69,7 @@ export function createTextValidator(requirements: TextInputRequirements) {
 
   return requirements.required
     ? stringSchema
-    : z.union([z.null(), stringSchema]);
+    : z.union([z.undefined(), z.null(), stringSchema]);
 }
 
 
@@ -105,5 +105,5 @@ export function createListValidator(requirements: ListInputRequirements) {
 
   return requirements.required
     ? arraySchema
-    : z.union([z.null(), arraySchema]);
+    : z.union([z.undefined(), z.null(), arraySchema]);
 }
