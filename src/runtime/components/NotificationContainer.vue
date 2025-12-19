@@ -1,5 +1,5 @@
 <template>
-  <PrimeToast :pt="passthroughProps">
+  <PrimeToast :pt="passthroughProps" position="bottom-center">
     <template #messageicon="iconProps">
       <span v-bind="iconProps" />
     </template>
@@ -53,6 +53,7 @@
       display        : flex;
       flex-direction : column;
       gap            : --spacing(2);
+      transform      : translateX(-50%);
 
       /* The magic number 40px is 2x the inset value that Primevue applies. */
       width: min(calc(100vw - 40px), --spacing(92));
