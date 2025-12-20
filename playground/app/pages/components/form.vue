@@ -1,9 +1,10 @@
 <template>
   <UiForm
-    :values      = "queryParams"
-    :fields      = "formFields"
-    success-text = "Thank you for the feedback"
-    @submit      = "handleFormSubmit"
+    :values       = "queryParams"
+    :fields       = "formFields"
+    :change-delay = "1300"
+    success-text  = "Thank you for the feedback"
+    @submit       = "handleFormSubmit"
   >
     <template #after="$form">
       <div>
@@ -28,7 +29,11 @@
 
   <UiDrawer v-model:visible="showDrawer" position="right" header="Flyout Form">
     <div class="px-1">
-      <UiForm :fields="formFields" @submit="handleFormSubmit" />
+      <UiForm
+        :fields      = "formFields"
+        success-text = "Thank you for the feedback"
+        @submit      = "handleFormSubmit"
+      />
     </div>
   </UiDrawer>
 </template>
