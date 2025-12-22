@@ -29,9 +29,9 @@
 
 <script setup lang="ts">
   import { computed, ref } from 'vue';
-  import CloseButton from '../CloseButton.vue';
-  import LayoutPageColumn from '../LayoutPageColumn.vue';
-  import { useReseeUx } from '../../composables/use-resee-ux';
+  import CloseButton from './CloseButton.vue';
+  import LayoutPageColumn from './LayoutPageColumn.vue';
+  import { useReseeUx } from '../composables/use-resee-ux';
 
   const props = withDefaults(
     defineProps<GlobalHeaderAnnouncementProps>(),

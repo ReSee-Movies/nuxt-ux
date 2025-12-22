@@ -32,8 +32,8 @@
 <script setup lang="ts">
   import { ref, useSlots, watch } from 'vue';
   import { useElementSize, useWindowScroll } from '@vueuse/core';
-  import { useGlobalHeaderState } from '../../composables/use-global-header-state';
-  import { useTwoFrameRefToggle } from '../../composables/use-two-frame-ref-toggle';
+  import { useGlobalHeaderState } from '../composables/use-global-header-state';
+  import { useTwoFrameRefToggle } from '../composables/use-two-frame-ref-toggle';
 
   defineOptions({
     inheritAttrs: false,
