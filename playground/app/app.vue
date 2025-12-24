@@ -1,16 +1,27 @@
 <template>
-  <div>
-    <NuxtLoadingIndicator :color="false" class="resee-bg-linear-to-r" />
+  <LayoutPageRoot>
+    <template #header>
+      <NuxtLink to="/" aria-label="Home">
+        <ReseeWordLogo />
+      </NuxtLink>
+    </template>
 
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+    <template #default>
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </template>
 
-    <LazyNotificationContainer />
-  </div>
+    <template #footer>
+      <NuxtLink to="/" aria-label="Home">
+        <ReseeWordLogo size="sm" />
+      </NuxtLink>
+    </template>
+  </LayoutPageRoot>
 </template>
 
 
 <script setup lang="ts">
-  import LazyNotificationContainer from '#resee-ux/components/NotificationContainer.vue';
+  import LayoutPageRoot from '#resee-ux/components/LayoutPageRoot.vue';
+  import ReseeWordLogo from '#resee-ux/components/ReseeWordLogo.vue';
 </script>
