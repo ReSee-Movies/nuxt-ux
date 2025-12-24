@@ -10,12 +10,19 @@
       'header-hidden'  : hideDrawerContent,
     }"
   >
-    <div ref="drawerElement">
-      <slot />
+    <div
+      ref    = "drawerElement"
+      :class = "slots.subheader ? 'border-b border-b-global-background-accent' : undefined"
+    >
+      <LayoutPageColumn>
+        <slot name="default" />
+      </LayoutPageColumn>
     </div>
 
-    <div v-if="slots.subheader">
-      <slot name="subheader" />
+    <div v-if="slots.subheader" ref="subheadElement">
+      <LayoutPageColumn>
+        <slot name="subheader" />
+      </LayoutPageColumn>
     </div>
   </header>
 </template>
@@ -34,6 +41,7 @@
   import { useElementSize, useWindowScroll } from '@vueuse/core';
   import { useGlobalHeaderState } from '../composables/use-global-header-state';
   import { useTwoFrameRefToggle } from '../composables/use-two-frame-ref-toggle';
+  import LayoutPageColumn from './LayoutPageColumn.vue';
 
   defineOptions({
     inheritAttrs: false,
@@ -48,13 +56,15 @@
 
   const slots = useSlots();
 
-  const rulerElement  = ref<HTMLElement>();
-  const headerElement = ref<HTMLElement>();
-  const drawerElement = ref<HTMLElement>();
+  const rulerElement   = ref<HTMLElement>();
+  const headerElement  = ref<HTMLElement>();
+  const drawerElement  = ref<HTMLElement>();
+  const subheadElement = ref<HTMLElement>();
 
-  const { height: headerHeight } = useElementSize(headerElement);
-  const { height: drawerHeight } = useElementSize(drawerElement);
-  const { y: windowScrollY }     = useWindowScroll();
+  const { height: headerHeight }  = useElementSize(headerElement);
+  const { height: drawerHeight }  = useElementSize(drawerElement);
+  const { height: subheadHeight } = useElementSize(subheadElement);
+  const { y: windowScrollY }      = useWindowScroll();
 
   const [isHeaderAffixed, doTransitions, updateAffixState] = useTwoFrameRefToggle();
   const hideDrawerContent = ref(false);
@@ -111,7 +121,7 @@
   const headerState = useGlobalHeaderState();
 
   watch(
-    [() => props.drawer, headerHeight, hideDrawerContent, isHeaderAffixed],
+    [() => props.drawer, headerHeight, subheadHeight, hideDrawerContent, isHeaderAffixed],
     () => {
       if (props.drawer) {
         resume();
@@ -123,6 +133,7 @@
 
       headerState.isHeaderDrawerEnabled.value = props.drawer;
       headerState.headerHeight.value          = headerHeight.value;
+      headerState.subheaderHeight.value       = subheadHeight.value;
       headerState.isHeaderPulledDown.value    = isHeaderAffixed.value && !hideDrawerContent.value;
     },
     { immediate: true },

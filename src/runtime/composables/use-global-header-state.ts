@@ -6,6 +6,12 @@ import { computed, ref } from 'vue';
 const headerHeight = ref(0);
 
 /**
+ * The height of the subheader portion of the top navbar, that remains
+ * visible on scroll.
+ */
+const subheaderHeight = ref(0);
+
+/**
  * Whether the header will behave like an opening drawer when scrolling
  * upward. Also see {@link isHeaderPulledDown} to determine if this
  * behavior is currently active.
@@ -36,5 +42,11 @@ const offsetFromHeaderStyles = computed(() => {
  * Stateful information about the GlobalHeader component.
  */
 export function useGlobalHeaderState() {
-  return { headerHeight, isHeaderDrawerEnabled, isHeaderPulledDown, offsetFromHeaderStyles };
+  return {
+    headerHeight,
+    subheaderHeight,
+    isHeaderDrawerEnabled,
+    isHeaderPulledDown,
+    offsetFromHeaderStyles,
+  };
 }
