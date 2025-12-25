@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.15.0](///compare/0.14.0...0.15.0) (2025-12-25)
+
+### Features
+
+* expose GlobalHeader subheader height in useGlobalHeaderState composable 257bfe9
+* introduce CardScroller component ccbb69e
+* introduce GlobalHeader component e45cfbf
+* introduce GlobalHeaderAnnouncement component 95cfcc1
+* introduce LayoutPageRoot component 29e1c00
+* introduce ReseeWordLogo component 46f5363
+* introduce ScrollPinnedContainer component f330fd5
+* introduce SuccessSplash component 60cc60c
+* provide default icons for the Message component, and provide the option to scroll it into view on mount 4025236
+* the Form component can now conditionally render submit success/error states a4c4b3e
+
+### Bug Fixes
+
+* include z.undefined in union types for optional values fae2556
+
 ## [0.14.0](///compare/0.13.1...0.14.0) (2025-12-17)
 
 ### Features
