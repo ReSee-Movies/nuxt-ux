@@ -1,5 +1,5 @@
 <template>
-  <div ref="pinnedElement" class="pinned">
+  <div :class="{ pinned: !props.disabled }">
     <slot />
   </div>
 </template>
@@ -7,25 +7,23 @@
 
 <script lang="ts">
   export interface ScrollPinnedContainerProps {
-    top?: number;
+    top?      : number;
+    disabled? : boolean;
   }
 </script>
 
 
 <script setup lang="ts">
-  import { computed, ref } from 'vue';
+  import { computed } from 'vue';
   import { useGlobalHeaderState } from '../composables/use-global-header-state';
-  import { useMutableIntersectionObserver } from '../composables/use-mutable-intersection-observer';
 
   const props = withDefaults(
     defineProps<ScrollPinnedContainerProps>(),
     {
-      top: 24,
+      top      : 24,
+      disabled : false,
     },
   );
-
-  const pinnedElement = ref<HTMLElement>();
-  const isPinned      = ref(false);
 
   const {
     headerHeight,
@@ -34,20 +32,14 @@
   } = useGlobalHeaderState();
 
   const topOffset = computed(() => {
+    if (props.disabled) {
+      return 0;
+    }
+
     return isHeaderPulledDown.value
       ? headerHeight.value + props.top
       : subheaderHeight.value + props.top;
   });
-
-
-  useMutableIntersectionObserver(
-    pinnedElement,
-    (entries) => { isPinned.value = !entries[0]?.isIntersecting; },
-    {
-      rootMargin : () => `-${ topOffset.value + 1 }px`,
-      threshold  : 1,
-    },
-  );
 </script>
 
 
