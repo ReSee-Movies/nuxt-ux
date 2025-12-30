@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.16.0](///compare/0.15.0...0.16.0) (2025-12-30)
+
+### Features
+
+* adds an optional "xl" width to the LayoutPageColumn component that can be opted into by placing a `.page-column-xl` class name on an ancestor element 4af6f60
+* optionally configure whether the CardScroller component tweens the opacity and/or scale of cards as scrolling occurs 5533125
+
+### Bug Fixes
+
+* bind extraneous attrs to the Form element 4159923
+
 ## [0.15.0](///compare/0.14.0...0.15.0) (2025-12-25)
 
 ### Features
