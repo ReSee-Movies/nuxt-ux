@@ -67,6 +67,8 @@
     centerAlign?         : boolean;
     toPageContainerEdge? : boolean;
     styleWhenTransiting? : 'left' | 'right' | 'both';
+    transitOpacity?      : boolean;
+    transitScale?        : boolean;
   };
 
 
@@ -120,6 +122,8 @@
       centerAlign         : false,
       toPageContainerEdge : true,
       styleWhenTransiting : 'right',
+      transitOpacity      : true,
+      transitScale        : true,
     },
   );
 
@@ -196,7 +200,10 @@
   /**
    * Reset the scroll position of the container when its size changes.
    */
-  watchDebounced([displayBounds], () => {
+  const {
+    pause  : pauseScrollReset,
+    resume : resumeScrollReset,
+  } = watchDebounced([displayBounds], () => {
     scrollBox.value?.scrollTo({ left: 0, behavior: 'instant' });
   }, { debounce: 500 });
 
@@ -214,47 +221,107 @@
    */
   const scrollState = useScroll(scrollBox,);
 
-  watch([scrollState.x, displayBounds], () => {
-    queueStyleChanges();
-    debouncedQueueStyleChanges();
+  const {
+    pause  : pauseStyleChanges,
+    resume : resumeStyleChanges,
+  } = watch([scrollState.x, displayBounds], () => {
+    queueStyleChanges(props.styleWhenTransiting, props.transitOpacity, props.transitScale);
+    debouncedQueueStyleChanges(props.styleWhenTransiting, props.transitOpacity, props.transitScale);
   }, { flush: 'sync' });
 
 
-  const debouncedQueueStyleChanges = useDebounceFn(() => queueStyleChanges(), 100);
+  /**
+   * Disable unneeded (and expensive) behavior if not needed.
+   */
+  watch(
+    [() => props.transitOpacity, () => props.transitScale],
+    ([styleOpacity, styleScale]) => {
+      const areAnyDisabled = !(styleOpacity && styleScale);
+      const areAllDisabled = !(styleOpacity || styleScale);
+
+      if (areAnyDisabled) {
+        removeStyleChanges(styleOpacity, styleScale);
+      }
+      else {
+        debouncedQueueStyleChanges(props.styleWhenTransiting, styleOpacity, styleScale);
+      }
+
+      if (areAllDisabled) {
+        pauseScrollReset();
+        pauseStyleChanges();
+      }
+      else {
+        resumeScrollReset();
+        resumeStyleChanges();
+      }
+    },
+  );
+
+
+  const debouncedQueueStyleChanges = useDebounceFn(queueStyleChanges, 100);
 
   let queuedFrame: number | undefined = undefined;
 
-  function queueStyleChanges() {
+  function queueStyleChanges(
+    transiting   : 'left' | 'right' | 'both',
+    styleOpacity : boolean,
+    styleScale   : boolean,
+  ) {
     if (queuedFrame) {
       cancelAnimationFrame(queuedFrame);
       queuedFrame = undefined;
     }
 
     queuedFrame = requestAnimationFrame(() => {
-      applyStyleChanges();
+      applyStyleChanges(transiting, styleOpacity, styleScale);
       queuedFrame = undefined;
     });
   }
 
 
-  function applyStyleChanges() {
-    const styleLeft  = props.styleWhenTransiting === 'left' || props.styleWhenTransiting === 'both';
-    const styleRight = props.styleWhenTransiting === 'right' || props.styleWhenTransiting === 'both';
+  function applyStyleChanges(
+    transiting   : 'left' | 'right' | 'both',
+    styleOpacity : boolean,
+    styleScale   : boolean,
+  ) {
+    const styleLeft  = transiting === 'both' || transiting === 'left';
+    const styleRight = transiting === 'both' || transiting === 'right';
 
     for (const element of scrollItemElements.value) {
       const [percentage, direction] = percentInBounds(element, displayBounds.value);
 
       if (direction === 'none') {
-        element.style.opacity = '1';
-        element.style.scale   = '1';
+        if (styleOpacity) {
+          element.style.opacity = '1';
+        }
+
+        if (styleScale) {
+          element.style.scale = '1';
+        }
       }
       else if ((direction === 'left' && styleLeft) || (direction === 'right' && styleRight)) {
-        element.style.opacity = percentage.toString();
+        if (styleOpacity) {
+          element.style.opacity = percentage.toString();
+        }
 
-        if (element.firstElementChild instanceof HTMLElement) {
+        if (styleScale && element.firstElementChild instanceof HTMLElement) {
           element.firstElementChild.style.transformOrigin = `center ${ direction === 'left' ? 'right' : 'left' }`;
           element.firstElementChild.style.scale           = (1 - (0.2 * (1 - percentage))).toString();
         }
+      }
+    }
+  }
+
+
+  function removeStyleChanges(styleOpacity: boolean, styleScale: boolean) {
+    for (const element of scrollItemElements.value) {
+      if (!styleOpacity) {
+        element.style.opacity = '';
+      }
+
+      if (!styleScale && element.firstElementChild instanceof HTMLElement) {
+        element.firstElementChild.style.transformOrigin = '';
+        element.firstElementChild.style.scale           = '';
       }
     }
   }
