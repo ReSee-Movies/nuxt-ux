@@ -22,6 +22,7 @@
 
       <PrimeForm
         v-slot                    = "$form"
+        v-bind                    = "$attrs"
         ref                       = "form"
         novalidate                = "true"
         :validate-on-mount        = "true"
@@ -76,6 +77,10 @@
   import LazyMessage from '../Message.vue';
   import { useReactiveObjectsSync } from '../../composables/use-reactive-objects-sync';
   import { provideFormInstance, getValuesFromFormState } from '../../utils/form';
+
+  defineOptions({
+    inheritAttrs: false,
+  });
 
   const props = withDefaults(
     defineProps<FormProps<T>>(),
