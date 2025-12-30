@@ -74,6 +74,14 @@
       }
     }
 
+    :global(.page-column-xl) {
+      @variant xl {
+        .page-column {
+          max-width: var(--container-7xl);
+        }
+      }
+    }
+
     @variant portrait {
       /*
        * The lesser of either 13rem, or 110px smaller than the height of a 16/9 "box"
