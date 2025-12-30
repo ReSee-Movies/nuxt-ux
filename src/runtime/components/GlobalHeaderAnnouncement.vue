@@ -76,7 +76,7 @@
     padding-bottom: 6px;
 
     &.dismissable > div {
-      padding-right: 12rem;
+      padding-right: --spacing(12);
     }
   }
 </style>
