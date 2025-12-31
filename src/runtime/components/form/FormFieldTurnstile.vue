@@ -4,8 +4,9 @@
       <slot name="label" />
     </template>
 
-    <template #default="{ inputName, onChange }">
+    <template #default="{ inputId, inputName, onChange }">
       <FormElementTurnstile
+        :id                  = "inputId"
         :sitekey             = "props.sitekey"
         :response-field-name = "inputName"
         :callback            = "(token) => onChange({ value: token })"

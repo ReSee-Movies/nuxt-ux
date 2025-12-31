@@ -21,8 +21,9 @@ export const FormSymbol = Symbol('form') as InjectionKey<FormInstance>;
  *
  * @private
  */
-export function createFormInstance(): FormInstance {
+export function createFormInstance(uid?: string): FormInstance {
   return {
+    formUid      : uid,
     hasSubmitted : ref(false),
     isSubmitting : ref(false),
     isDisabled   : ref(false),
@@ -36,8 +37,8 @@ export function createFormInstance(): FormInstance {
  *
  * @private
  */
-export function provideFormInstance(): FormInstance {
-  const instance = createFormInstance();
+export function provideFormInstance(uid?: string): FormInstance {
+  const instance = createFormInstance(uid);
   provide(FormSymbol, instance);
   return instance;
 }
@@ -49,8 +50,8 @@ export function provideFormInstance(): FormInstance {
  *
  * @private
  */
-export function injectFormInstance(): FormInstance {
-  return inject(FormSymbol, () => createFormInstance(), true);
+export function injectFormInstance(uid?: string): FormInstance {
+  return inject(FormSymbol, () => createFormInstance(uid), true);
 }
 
 

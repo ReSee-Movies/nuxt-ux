@@ -42,10 +42,10 @@
           :readonly   = "isReadonly"
           :value      = "$field.value"
           :invalid    = "$field.invalid"
-          :on-blur    = "$field.props.onBlur"
-          :on-change  = "$field.props.onChange"
-          :on-input   = "$field.props.onInput"
-          :on-invalid = "$field.props.onInvalid"
+          :on-blur    = "$field.props?.onBlur"
+          :on-change  = "$field.props?.onChange"
+          :on-input   = "$field.props?.onInput"
+          :on-invalid = "$field.props?.onInvalid"
         />
       </template>
     </FormLabelInputPair>
@@ -109,9 +109,9 @@
   );
 
   const formState  = injectFormInstance();
-  const inputId    = useId();
-  const labelId    = `${ inputId }_label`;
-  const messageId  = `${ inputId }_message`;
+  const inputId    = computed(() => `${ formState.formUid }_${ props.name }_field`);
+  const labelId    = computed(() => `${ formState.formUid }_${ props.name }_label`);
+  const messageId  = computed(() => `${ formState.formUid }_${ props.name }_message`);
   const labelText  = computed(() => props.label ?? humanize(props.name));
   const isDisabled = computed(() => props.disabled || formState.isDisabled.value);
   const isReadonly = computed(() => props.readonly || formState.isSubmitting.value);

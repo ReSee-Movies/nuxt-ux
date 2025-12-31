@@ -23,6 +23,7 @@
       <PrimeForm
         v-slot                    = "$form"
         v-bind                    = "$attrs"
+        :id                       = "formUid"
         ref                       = "form"
         novalidate                = "true"
         :validate-on-mount        = "true"
@@ -70,7 +71,7 @@
   import { toNonNullableArray } from '@resee-movies/utilities/arrays/to-non-nullable-array';
   import { isPromiseLike } from '@resee-movies/utilities/objects/is-promise-like';
   import { syncRefs } from '@vueuse/core';
-  import { ref, useTemplateRef } from 'vue';
+  import { ref, useId, useTemplateRef } from 'vue';
   import type { FormChangeEvent } from '../../types/form';
   import FormFieldBuilder from './FormFieldBuilder.vue';
   import LazySuccessSplash from '../SuccessSplash.vue';
@@ -99,13 +100,14 @@
   const values  = defineModel<Partial<T> | undefined>('values', { default: undefined });
   const success = ref(false);
   const errors  = ref<unknown[]>();
+  const formUid = useId();
 
   defineEmits<{
     (e: 'submit', evt: FormSubmitEvent<T>): (void | Promise<void>);
     (e: 'change', evt: FormChangeEvent<T>): (void | Promise<void>);
   }>();
 
-  const formInstance = provideFormInstance();
+  const formInstance = provideFormInstance(formUid);
   syncRefs(() => props.disabled, formInstance.isDisabled);
 
 

@@ -11,7 +11,10 @@
 
 <script lang="ts">
   import type { TurnstileRenderOptions } from '../../../composables/use-cloudflare-turnstile';
-  export interface FormElementTurnstileProps extends TurnstileRenderOptions {}
+
+  export interface FormElementTurnstileProps extends TurnstileRenderOptions {
+    id?: string;
+  }
 </script>
 
 
@@ -33,7 +36,7 @@
     },
   );
 
-  const widgetId = useId();
+  const widgetId = props.id ?? useId();
   const { onReady } = useCloudflareTurnstile();
 
   let turnstile: Turnstile | undefined = undefined;

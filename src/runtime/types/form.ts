@@ -13,6 +13,7 @@ export type FormValues = Record<string, any>;
  * injected into descendent components.
  */
 export interface FormInstance {
+  formUid      : string | undefined;
   hasSubmitted : Ref<boolean>;
   isSubmitting : Ref<boolean>;
   isDisabled   : Ref<boolean>;
