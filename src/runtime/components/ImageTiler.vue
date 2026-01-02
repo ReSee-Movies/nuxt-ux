@@ -1,5 +1,5 @@
 <template>
-  <div class="tiler">
+  <div :class="['tiler', props.maskPreset]">
     <div v-for="(entry, idx) of displayArray" :key="idx">
       <ImageBase
         :src     = "entry.source"
@@ -61,6 +61,13 @@
     gapY? : number;
   };
 
+  export type ImageMaskPreset
+    = 'image-mask-washout'
+    | 'image-mask-gradient-washout'
+    | 'image-mask-gradient-washout-lite'
+    | 'image-mask-gradient-opacity'
+    | 'image-mask-hero';
+
   export const DefaultImageTilerGridSizeFallback = {
     cols : 5,
     rows : 8,
@@ -87,6 +94,7 @@
     switchTime?   : ValueOrRange;
     switchDelay?  : ValueOrRange;
     imageClass?   : HTMLElementClassNames;
+    maskPreset?   : ImageMaskPreset | ImageMaskPreset[];
   }
 
   type ImageDisplayInfo = ShallowReactive<{
@@ -119,7 +127,7 @@
       turnoverRate : () => [2000, 6000],
       switchTime   : () => [1200, 1800],
       switchDelay  : () => [0, 500],
-      imageClass   : 'shadow-heavy rounded',
+      imageClass   : undefined,
     },
   );
 

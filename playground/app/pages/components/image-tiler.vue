@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UiImageTiler class="bg-global-background" :images="posters" />
+    <UiImageTiler :images="posters" />
   </div>
 </template>
 

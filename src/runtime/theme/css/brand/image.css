@@ -1,0 +1,101 @@
+@layer base {
+  :root {
+    --image-mask-gradient-opacity-dir  : to bottom;
+    --image-mask-gradient-opacity-stop : 85%;
+    --image-mask-gradient-dir          : to bottom;
+    --image-mask-gradient-stop         : 80%;
+    --image-mask-color                 : var(--color-global-background);
+    --image-mask-alpha-percent         : 85%;
+  }
+}
+
+
+/**
+ * Uses a semi-transparent overlay of the primary background color
+ * to drastically "fade" the content of the target.
+ */
+@utility image-mask-washout {
+  @apply relative before:z-1 before:absolute before:inset-0;
+
+  &::before {
+    background: --alpha(var(--image-mask-color) / var(--image-mask-alpha-percent));
+  }
+}
+
+
+/**
+ * Similar to .image-mask-washout, however the overlay is applied
+ * as a gradient instead of a solid color.
+ */
+@utility image-mask-gradient-washout {
+  @apply relative before:z-1 before:absolute before:inset-0;
+
+  &::before {
+    background: linear-gradient(
+      var(--image-mask-gradient-dir),
+      --alpha(var(--image-mask-color) / var(--image-mask-alpha-percent)) var(--image-mask-gradient-stop),
+      var(--image-mask-color)
+    );
+  }
+}
+
+
+/**
+ * Similar to .image-mash-gradient-washout, but with a much higher
+ * transparency applied to the overlay so that the fading out of
+ * the target is not as dramatic.
+ */
+@utility image-mask-gradient-washout-lite {
+  @apply relative before:z-1 before:absolute before:inset-0;
+
+  --image-mask-alpha-percent : 10%;
+  --image-mask-gradient-stop : 30%;
+
+  &::before {
+    background: linear-gradient(
+      var(--image-mask-gradient-dir),
+      --alpha(var(--image-mask-color) / var(--image-mask-alpha-percent)) var(--image-mask-gradient-stop),
+      var(--image-mask-color)
+    );
+  }
+}
+
+
+/**
+ * Adds an opacity gradient that blends the target into whatever is
+ * behind it.
+ */
+@utility image-mask-gradient-opacity {
+  mask-image: linear-gradient(
+    var(--image-mask-gradient-opacity-dir),
+    rgba(0, 0, 0, 1) var(--image-mask-gradient-opacity-stop),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+
+/**
+ * Adds an opacity gradient from left to right, making the left side of the target
+ * somewhere over which text can be safely placed and remain readable.
+ */
+@utility image-mask-hero {
+  @apply relative before:z-1 before:absolute before:inset-0;
+
+  --image-mask-color: white;
+
+  @variant dark {
+    --image-mask-color: black;
+  }
+
+  &::before {
+    background: --alpha(var(--image-mask-color) / 75%);
+
+    @variant sm {
+      background: linear-gradient(
+        to right,
+        --alpha(var(--image-mask-color) / 90%) 35%,
+        --alpha(var(--image-mask-color) / 15%)
+      );
+    }
+  }
+}
