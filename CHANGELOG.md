@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.17.0](///compare/0.16.0...0.17.0) (2026-01-02)
+
+### Features
+
+* introduce ImageTiler component 00da5f0
+* introduce InlineStatsList component f2b34c2
+* introduce TableOfContents component 97ca413
+
+### Bug Fixes
+
+* huge amount of padding between GlobalHeaderAnnouncement dismiss button and other content 6152e61
+* useId hydration mismatch in form controls when the form is wrapped in a Transition. d194a3b
+
 ## [0.16.0](///compare/0.15.0...0.16.0) (2025-12-30)
 
 ### Features
