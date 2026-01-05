@@ -38,8 +38,9 @@
 
 <script setup lang="ts">
   import { ref, useSlots, watch } from 'vue';
-  import { useElementSize, useWindowScroll } from '@vueuse/core';
+  import { useElementSize } from '@vueuse/core';
   import { useGlobalHeaderState } from '../composables/use-global-header-state';
+  import { useReseeWindowScroll } from '../composables/use-resee-window-scroll';
   import { useTwoFrameRefToggle } from '../composables/use-two-frame-ref-toggle';
   import LayoutPageColumn from './LayoutPageColumn.vue';
 
@@ -64,7 +65,11 @@
   const { height: headerHeight }  = useElementSize(headerElement);
   const { height: drawerHeight }  = useElementSize(drawerElement);
   const { height: subheadHeight } = useElementSize(subheadElement);
-  const { y: windowScrollY }      = useWindowScroll();
+
+  const {
+    y      : windowScrollY,
+    source : windowScrollSource,
+  } = useReseeWindowScroll();
 
   const [isHeaderAffixed, doTransitions, updateAffixState] = useTwoFrameRefToggle();
   const hideDrawerContent = ref(false);
@@ -96,6 +101,14 @@
 
     if (!isHeaderAffixed.value && newScrollY > (scrollCeiling + rawDrawerHeight)) {
       return enableAffix();
+    }
+
+    // If the scroll was initiated by a non-user interaction, then we don't want to
+    // consider its delta in whether the header should be displayed.
+    if (!windowScrollSource.value) {
+      hideDrawerContent.value = true;
+      backscrollCounter       = 0;
+      return;
     }
 
     const scrollDelta     = newScrollY - oldScrollY;
