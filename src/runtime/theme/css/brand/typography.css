@@ -106,9 +106,10 @@
    */
   :where(.prose-container, .prose) :where(h1, h2, h3, h4, h5, h6),
   :where(.h1, .h2, .h3, .h4, .h5, .h6).prose {
-    margin-block-start : 0.9lh;
-    margin-block-end   : 0.4lh;
-    text-wrap          : pretty;
+    margin-block-start        : 0.9lh;
+    margin-block-end          : 0.4lh;
+    text-wrap                 : pretty;
+    scroll-margin-block-start : --spacing(6);
   }
 
   /*
