@@ -61,7 +61,7 @@
     min-height: 100vh;
 
     @variant sm {
-      background-size     : 160px 80px;
+      background-size     : 160px 74px;
       background-position : top center;
       transition          : --background-grid-line-color;
       transition-duration : var(--default-transition-duration);

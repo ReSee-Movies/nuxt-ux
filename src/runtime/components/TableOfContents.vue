@@ -8,12 +8,12 @@
       >
         <a
           v-html = "entry.text"
-          :class = "{ active: mounted && areRoutesStrictEqual(config.route, route) }"
+          :class = "[props.linkClass, { active: mounted && areRoutesStrictEqual(config.route, route) }]"
           :href  = "config.href"
         />
       </NuxtLink>
 
-      <TableOfContents v-if="entry.children.length" :toc="entry.children" />
+      <TableOfContents v-if="entry.children?.length" :toc="entry.children" />
     </li>
   </ol>
 </template>
@@ -23,9 +23,16 @@
   import type {
     TableOfContents as TableOfContentsOptions,
   } from '@resee-movies/utilities/dom/generate-table-of-contents';
+  import type { HTMLElementClassNames } from '../types';
+
+  export type TableOfContentsItem = Partial<TableOfContentsOptions> & {
+    text : string;
+    slug : string;
+  };
 
   export type UiTableOfContentsProps = {
-    toc: TableOfContentsOptions[] | null | undefined;
+    toc        : TableOfContentsItem[] | null | undefined;
+    linkClass? : HTMLElementClassNames;
   };
 </script>
 

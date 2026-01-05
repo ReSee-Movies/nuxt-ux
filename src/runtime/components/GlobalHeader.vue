@@ -12,16 +12,22 @@
   >
     <div
       ref    = "drawerElement"
-      :class = "slots.subheader ? 'border-b border-b-global-background-accent' : undefined"
+      :class = "renderSubheader ? 'border-b border-b-global-background-accent' : undefined"
     >
       <LayoutPageColumn>
         <slot name="default" />
       </LayoutPageColumn>
     </div>
 
-    <div v-if="slots.subheader" ref="subheadElement">
-      <LayoutPageColumn>
-        <slot name="subheader" />
+    <div v-if="renderSubheader" ref="subheadElement" class="subheader">
+      <LayoutPageColumn class="overflow-x-auto styled-scroll">
+        <slot name="subheader">
+          <TableOfContents
+            :toc       = "props.subheaderToc ?? headerState.subheaderToc.value"
+            class      = "flex items-center flex-nowrap"
+            link-class = "btn small borderless text-nowrap"
+          />
+        </slot>
       </LayoutPageColumn>
     </div>
   </header>
@@ -29,20 +35,33 @@
 
 
 <script lang="ts">
+  import type { TableOfContentsItem } from './TableOfContents.vue';
+
   export interface GlobalHeaderProps {
-    /* Whether the header will act like a flyout drawer when scrolling upward on the page. */
+    /**
+     * Whether the header will act like a flyout drawer when
+     * scrolling upward on the page.
+     */
     drawer?: boolean;
+
+    /**
+     * Table of contents objects for the global subheader which
+     * will be turned into anchor links.
+     */
+    subheaderToc?: TableOfContentsItem[];
   }
 </script>
 
 
 <script setup lang="ts">
-  import { ref, useSlots, watch } from 'vue';
+  import { useHead } from '#imports';
+  import { computed, ref, useSlots, watch } from 'vue';
   import { useElementSize } from '@vueuse/core';
   import { useGlobalHeaderState } from '../composables/use-global-header-state';
   import { useReseeWindowScroll } from '../composables/use-resee-window-scroll';
   import { useTwoFrameRefToggle } from '../composables/use-two-frame-ref-toggle';
   import LayoutPageColumn from './LayoutPageColumn.vue';
+  import TableOfContents from './TableOfContents.vue';
 
   defineOptions({
     inheritAttrs: false,
@@ -51,7 +70,8 @@
   const props = withDefaults(
     defineProps<GlobalHeaderProps>(),
     {
-      drawer: true,
+      drawer         : true,
+      subheaderItems : undefined,
     },
   );
 
@@ -73,6 +93,20 @@
 
   const [isHeaderAffixed, doTransitions, updateAffixState] = useTwoFrameRefToggle();
   const hideDrawerContent = ref(false);
+
+  const headerState = useGlobalHeaderState();
+
+  const renderSubheader = computed(() => {
+    return !!(slots.subheader || props.subheaderToc?.length || headerState.subheaderToc.value?.length);
+  });
+
+  useHead({
+    bodyAttrs: {
+      style: () => ({
+        '--extra-scroll-margin': subheadHeight.value ? `${ subheadHeight.value }px` : '',
+      }),
+    },
+  })
 
 
   // --------------------------
@@ -131,8 +165,6 @@
   // --------------------------
   // Provide External State
   // --------------------------
-  const headerState = useGlobalHeaderState();
-
   watch(
     [() => props.drawer, headerHeight, subheadHeight, hideDrawerContent, isHeaderAffixed],
     () => {
@@ -177,6 +209,19 @@
     &.header-hidden {
       transform  : translateY(calc(v-bind(drawerHeight) * -1px));
       box-shadow : none;
+    }
+  }
+
+  .subheader {
+    :deep(.btn) {
+      background                 : transparent;
+      transition                 : background-color;
+      transition-duration        : var(--default-transition-duration);
+      transition-timing-function : var(--default-transition-timing-function);
+
+      &.active {
+        background: var(--color-global-background-accent);
+      }
     }
   }
 </style>

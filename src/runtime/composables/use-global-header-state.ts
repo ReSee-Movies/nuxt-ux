@@ -1,4 +1,6 @@
-import { computed, ref } from 'vue';
+import { computed, type MaybeRefOrGetter, onScopeDispose, ref, toValue, watch } from 'vue';
+import type { TableOfContentsItem } from '../components/TableOfContents.vue';
+
 
 /**
  * The height of the primary navbar at the top of the application.
@@ -37,14 +39,54 @@ const offsetFromHeaderStyles = computed(() => {
   ];
 });
 
+/**
+ * Table of content entries for the global subheader. This ref should not be
+ * used directly. Instead, use the {@link tableOfContents} method that is
+ * returned by {@link useGlobalHeaderState}.
+ */
+const subheaderToc = ref<TableOfContentsItem[]>([]);
+
+/**
+ *
+ */
+function tableOfContents(toc: UseGlobalHeaderStateOptions['tableOfContents']) {
+  onScopeDispose(() => {
+    subheaderToc.value.length = 0;
+  }, true);
+
+  watch(
+    () => toValue(toc),
+    (entries) => {
+      subheaderToc.value.push(
+        ...(entries?.filter((entry) => !!entry) ?? []),
+      );
+    },
+    { immediate: true },
+  );
+}
+
+
+/**
+ * Configuration for the {@link useGlobalHeaderState} composable.
+ */
+export type UseGlobalHeaderStateOptions = {
+  tableOfContents?: MaybeRefOrGetter<(TableOfContentsItem | undefined)[] | undefined>;
+};
+
 
 /**
  * Stateful information about the GlobalHeader component.
  */
-export function useGlobalHeaderState() {
+export function useGlobalHeaderState(options?: UseGlobalHeaderStateOptions) {
+  if (options?.tableOfContents) {
+    tableOfContents(options.tableOfContents);
+  }
+
   return {
     headerHeight,
     subheaderHeight,
+    subheaderToc,
+    tableOfContents,
     isHeaderDrawerEnabled,
     isHeaderPulledDown,
     offsetFromHeaderStyles,
