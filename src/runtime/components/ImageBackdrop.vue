@@ -98,6 +98,7 @@
       top        : 0;
       width      : 100%;
       max-height : calc(99vh - v-bind(headerOffset));
+      overflow   : clip;
     }
   }
 </style>

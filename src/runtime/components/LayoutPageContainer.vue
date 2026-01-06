@@ -126,7 +126,7 @@
     @variant sm {
       .page-container.glass-effect {
         backdrop-filter  : blur(var(--blur-sm));
-        background-color : color-mix(in srgb-linear, transparent 40%, var(--color-global-background));
+        background-color : color-mix(in srgb-linear, transparent 20%, var(--color-global-background));
       }
     }
 
