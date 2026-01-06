@@ -53,3 +53,15 @@ export type StatusLevel = 'info' | 'help' | 'success' | 'warn' | 'error';
  * separately.
  */
 export type StyleStatusLevel = 'default' | 'inverted' | StatusLevel;
+
+/**
+ * CSS classnames that apply pre-configured gradients over their target
+ * element. As the type's name suggest, these are intended to be used
+ * with images.
+ */
+export type ImageMaskPreset
+  = 'image-mask-washout'
+  | 'image-mask-gradient-washout'
+  | 'image-mask-gradient-washout-lite'
+  | 'image-mask-gradient-opacity'
+  | 'image-mask-hero';

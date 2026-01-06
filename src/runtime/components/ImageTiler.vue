@@ -49,7 +49,7 @@
   } from '@resee-movies/utilities/images/normalize-image-file-descriptor';
   import type { ShallowReactive } from 'vue';
   import type { BreakpointSettings } from '../composables/use-settings-for-breakpoint';
-  import type { HTMLElementClassNames } from '../types';
+  import type { HTMLElementClassNames, ImageMaskPreset } from '../types';
 
   export type ValueOrRange = string | number | [min: number, max: number];
 
@@ -60,13 +60,6 @@
     gapX? : number;
     gapY? : number;
   };
-
-  export type ImageMaskPreset
-    = 'image-mask-washout'
-    | 'image-mask-gradient-washout'
-    | 'image-mask-gradient-washout-lite'
-    | 'image-mask-gradient-opacity'
-    | 'image-mask-hero';
 
   export const DefaultImageTilerGridSizeFallback = {
     cols : 5,
