@@ -41,7 +41,7 @@ export type UseUrlHashUpdateOptions = {
  */
 export type UseUrlHashReturn = {
   value  : Readonly<Ref<string | undefined>>;
-  update : (newHash: string | undefined, options?: UseUrlHashUpdateOptions) => void;
+  update : (newHash: string | undefined, options?: UseUrlHashUpdateOptions) => boolean;
 };
 
 
@@ -64,19 +64,21 @@ export function useUrlHash(): UseUrlHashReturn {
 
     const { path, query, hash } = router.currentRoute.value;
 
-    if (normalizedHash === hash) {
-      return;
+    if (normalizedHash && hash && normalizedHash === hash) {
+      return false;
     }
 
     if (options?.scrollTo === true) {
       (options?.mode === 'push' ? router.push : router.replace)({ path, query, hash: normalizedHash });
-      return;
+      return true;
     }
 
     const newRoute = router.resolve({ path, query, hash: normalizedHash });
     router.currentRoute.value = newRoute as RouteLocationResolvedGenericWithNonNullableName;
 
     window.history[options?.mode === 'push' ? 'pushState' : 'replaceState'](null, '', normalizedHash);
+
+    return true;
   };
 
   return { value, update };
