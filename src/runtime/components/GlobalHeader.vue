@@ -10,13 +10,15 @@
       'header-hidden'  : hideDrawerContent,
     }"
   >
-    <div
-      ref    = "drawerElement"
-      :class = "renderSubheader ? 'border-b border-b-global-background-accent' : undefined"
-    >
+    <div ref="drawerElement">
       <LayoutPageColumn>
         <slot name="default" />
       </LayoutPageColumn>
+
+      <div
+        v-if  = "renderSubheader"
+        class = "border-b border-b-global-background-accent"
+      />
     </div>
 
     <div v-if="renderSubheader" ref="subheadElement" class="subheader">
@@ -26,6 +28,8 @@
             :toc       = "props.subheaderToc ?? headerState.subheaderToc.value"
             class      = "flex items-center flex-nowrap"
             link-class = "btn small borderless text-nowrap"
+            :min-depth = "2"
+            :max-depth = "2"
           />
         </slot>
       </LayoutPageColumn>
