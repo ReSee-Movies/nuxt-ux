@@ -1,20 +1,28 @@
 <template>
   <ol v-if="props.toc?.length">
-    <li v-for="entry of props.toc" :key="entry.slug">
-      <NuxtLink
-        v-slot  = "config"
-        :href   = "`#${ entry.slug }`"
-        :custom = "true"
-      >
-        <a
-          v-html = "entry.text"
-          :class = "[props.linkClass, { active: mounted && areRoutesStrictEqual(config.route, route) }]"
-          :href  = "config.href"
-        />
-      </NuxtLink>
+    <template v-for="entry of props.toc" :key="entry.slug">
+      <li v-if="shouldRenderLevel(entry.level)">
+        <NuxtLink
+          v-slot  = "config"
+          :href   = "`#${ entry.slug }`"
+          :custom = "true"
+        >
+          <a
+            v-html = "entry.text"
+            :class = "[props.linkClass, { active: mounted && areRoutesStrictEqual(config.route, route) }]"
+            :href  = "config.href"
+          />
+        </NuxtLink>
 
-      <TableOfContents v-if="entry.children?.length" :toc="entry.children" />
-    </li>
+        <TableOfContents
+          v-if        = "entry.children?.length && shouldRenderLevel((entry.level ?? 1) + 1)"
+          :toc        = "entry.children"
+          :link-class = "props.linkClass"
+          :min-depth  = "props.minDepth"
+          :max-depth  = "props.maxDepth"
+        />
+      </li>
+    </template>
   </ol>
 </template>
 
@@ -32,6 +40,8 @@
 
   export type UiTableOfContentsProps = {
     toc        : TableOfContentsItem[] | null | undefined;
+    minDepth?  : number;
+    maxDepth?  : number;
     linkClass? : HTMLElementClassNames;
   };
 </script>
@@ -48,10 +58,20 @@
   const route   = useRoute();
   const mounted = ref(false);
 
+
   // The `active` class name on links can only be applied client-side because
   // hashes are not send to the server along with the rest of the URL. Not doing
   // this would cause a hydration mismatch.
   onMounted(() => {
     mounted.value = true;
   });
+
+
+  function shouldRenderLevel(level: number | undefined) {
+    if (!level) {
+      return true;
+    }
+
+    return (!props.minDepth || props.minDepth <= level) && (!props.maxDepth || props.maxDepth >= level);
+  }
 </script>
