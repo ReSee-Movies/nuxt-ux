@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.18.0](///compare/0.17.0...0.18.0) (2026-01-06)
+
+### Features
+
+* ability to pass table of contents options to the global subheader, and have those links rendered 28d7216
+* added minDepth and maxDepth props to the TableOfContents component to control the render depth independent of the options provided 636f7f0
+* introduce areRoutesStrictEqual utility, to compare paths including hash values 8d0d38c
+* introduce useReseeWindowScroll composable, used in the GlobalHeader component for better slide in/out behavior on scrolling 1637f65
+* introduce useUrlHash composable ac79e38
+* updated the TableOfContents component to mark the current anchor with and .active class name 1887ea9
+* updated the useUrlHash composable to return a boolean indicating whether the hash has been changed 176ee9f
+
+### Bug Fixes
+
+* limit the depth of subheadings that will be rendered in the GlobalHeader component cb68433
+
 ## [0.17.0](///compare/0.16.0...0.17.0) (2026-01-02)
 
 ### Features
