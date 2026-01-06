@@ -195,12 +195,16 @@
     height: calc(v-bind(headerHeight) * 1px);
   }
 
+  header {
+    position : relative;
+    z-index  : 100;
+  }
+
   .header-affixed {
     position   : fixed;
     top        : 0;
     left       : 0;
     right      : 0;
-    z-index    : 100;
     transform  : translateY(0px);
     box-shadow : var(--shadow-heavy);
 
