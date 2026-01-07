@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.19.0](///compare/0.18.0...0.19.0) (2026-01-07)
+
+### Features
+
+* **ImageBackdrop:** added default implementations for the Image, Tiler, and MotionArt backdrops 0fa9157
+* **ImageBackdrop:** introduced ImageBackdrop component, for placing a background image, or image, tiles, behind some other content a052ae5
+* **Image:** re-emit the loading, load, and error events from the underlying BaseImage instance for further use b2d649d
+* **MotionArt:** introduce MotionArt component 855bb45
+
+### Bug Fixes
+
+* **GlobalHeader:** apply a small z-index even when not pinned to the viewport so other content can be positioned underneath e6d166a
+
 ## [0.18.0](///compare/0.17.0...0.18.0) (2026-01-06)
 
 ### Features
