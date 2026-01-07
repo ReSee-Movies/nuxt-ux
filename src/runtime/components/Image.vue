@@ -73,6 +73,13 @@
     },
   );
 
+  const emits = defineEmits<{
+    (e: 'loading'): void;
+    (e: 'load', src: string | undefined): void;
+    (e: 'error', err: unknown): void;
+  }>();
+
+
   // Purposefully set this to true so there aren't
   // any content flashes as the image goes from
   // not loaded -> loading -> loaded. Instead, always
@@ -83,16 +90,21 @@
 
   function handleLoading() {
     isImgLoading.value = true;
+    emits('loading');
   }
 
   function handleLoaded(src: string | undefined) {
     isImgLoading.value = false;
     imgHasError.value  = null;
+
+    emits('load', src);
   }
 
   function handleError(err: unknown) {
     isImgLoading.value = false;
     imgHasError.value  = err;
+
+    emits('error', err);
   }
 </script>
 
