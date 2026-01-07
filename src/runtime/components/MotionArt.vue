@@ -19,9 +19,9 @@
   withDefaults(
     defineProps<MotionArtProps>(),
     {
-      primaryColor   : 'var(--color-resee-violet)',
-      secondaryColor : 'var(--color-resee-orange)',
-      tertiaryColor  : 'var(--color-resee-aqua)',
+      primaryColor   : 'var(--color-resee-indigo)',
+      secondaryColor : 'initial',
+      tertiaryColor  : 'initial',
     },
   );
 </script>
@@ -31,6 +31,12 @@
   @reference "tailwindcss";
 
   .motion-art {
+    --motion-art-color-1       : v-bind(primaryColor);
+    --motion-art-color-2-bound : v-bind(secondaryColor);
+    --motion-art-color-2       : var(--motion-art-color-2-bound, oklch(from var(--motion-art-color-1) l c calc(h + 135)));
+    --motion-art-color-3-bound : v-bind(tertiaryColor);
+    --motion-art-color-3       : var(--motion-art-color-3-bound, oklch(from var(--motion-art-color-1) l c calc(h + 270)));
+
     container-type: size;
   }
 
@@ -89,9 +95,9 @@
     --size      : 20vw;
     --speed     : 50s;
     --direction : alternate;
-    --color     : v-bind(primaryColor);
-    --color-2   : v-bind(secondaryColor);
-    --color-3   : v-bind(tertiaryColor);
+    --color     : var(--motion-art-color-1);
+    --color-2   : var(--motion-art-color-2);
+    --color-3   : var(--motion-art-color-3);
     --delay-x   : -7s;
     --delay-y   : -8s;
   }
@@ -100,9 +106,9 @@
     --size      : 10vw;
     --speed     : 40s;
     --direction : alternate;
-    --color     : v-bind(secondaryColor);
-    --color-2   : v-bind(primaryColor);
-    --color-3   : v-bind(tertiaryColor);
+    --color     : var(--motion-art-color-2);
+    --color-2   : var(--motion-art-color-1);
+    --color-3   : var(--motion-art-color-3);
     --delay-x   : -30s;
     --delay-y   : -1s;
   }
@@ -111,9 +117,9 @@
     --size      : 30vw;
     --speed     : 60s;
     --direction : alternate-reverse;
-    --color     : v-bind(tertiaryColor);
-    --color-2   : v-bind(primaryColor);
-    --color-3   : v-bind(secondaryColor);
+    --color     : var(--motion-art-color-3);
+    --color-2   : var(--motion-art-color-1);
+    --color-3   : var(--motion-art-color-2);
     --delay-x   : -13s;
     --delay-y   : 0;
   }
