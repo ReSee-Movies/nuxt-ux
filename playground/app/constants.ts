@@ -1,3 +1,11 @@
+export const TmdbBackgrounds = [
+  '/u4WxJSTx4P0aQdOZNNZGRt2DO73.jpg',
+  '/95sdBy1vBKI3Ci20UAW5ynqLar.jpg',
+  '/mkjdussWOjts0Se6hEwfTQdwCv2.jpg',
+  '/zraKvIIJwespqmn0nvDDaKrCjDg.jpg',
+  '/s94NjfKkcSczZ1FembwmQZwsuwY.jpg',
+];
+
 export const TmdbPosters = [
   '/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg',
   '/vQWk5YBFWF4bZaofAbv0tShwBvQ.jpg',

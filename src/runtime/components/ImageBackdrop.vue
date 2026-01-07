@@ -5,23 +5,23 @@
         <Transition name="fade" mode="out-in">
           <LazyImage
             v-if    = "props.src && !Array.isArray(props.src)"
+            v-bind  = "props.singleImageOptions"
             :src    = "props.src"
-            :type   = "props.singleImage?.type"
-            :width  = "props.singleImage?.width ?? 'original'"
-            :height = "props.singleImage?.height"
-            :aspect = "props.singleImage?.aspect ?? 'video'"
-            :fit    = "props.singleImage?.fit"
+            :width  = "props.singleImageOptions?.width ?? 'original'"
+            :aspect = "props.singleImageOptions?.aspect ?? 'video'"
           />
 
           <LazyImageTiler
-            v-else-if      = "Array.isArray(props.src)"
-            :images        = "props.src"
-            :play          = "props.multiImage?.play"
-            :grid-settings = "props.multiImage?.gridSettings"
-            :turnover-rate = "props.multiImage?.turnoverRate"
-            :switch-time   = "props.multiImage?.switchTime"
-            :switch-delay  = "props.multiImage?.switchDelay"
-            :image-class   = "props.multiImage?.imageClass"
+            v-else-if = "Array.isArray(props.src)"
+            v-bind    = "props.multiImageOptions"
+            :images   = "props.src"
+            class     = "bg-global-background"
+          />
+
+          <LazyMotionArt
+            v-else-if = "(!props.src && props.motionArt)"
+            v-bind    = "props.motionArtOptions"
+            class     = "aspect-video sm:aspect-auto sm:h-screen"
           />
         </Transition>
       </slot>
@@ -37,19 +37,25 @@
 <script lang="ts">
   import type { ImageFileDescriptor } from '@resee-movies/utilities/images/normalize-image-file-descriptor';
   import type { ImageMaskPreset } from '../types';
+  import type { ImageProps } from './Image.vue';
   import type { ImageBaseProps } from './ImageBase.vue';
   import type { ImageTilerProps } from './ImageTiler.vue';
+  import type { MotionArtProps } from './MotionArt.vue';
 
-  export type SingleImageProps = Omit<ImageBaseProps, 'src' | 'alt' | 'loadStyle'>;
+  export type SingleImageProps
+    = Omit<ImageBaseProps, 'src' | 'alt' | 'loadStyle'>
+    & Pick<ImageProps, 'defaultIcon' | 'iconSize'>;
 
   export type MultiImageProps = Omit<ImageTilerProps, 'images' | 'maskPreset'>;
 
   export interface ImageBackdropProps {
-    src?          : ImageFileDescriptor | ImageFileDescriptor[] | null | undefined;
-    behindHeader? : boolean;
-    maskPreset?   : ImageMaskPreset | ImageMaskPreset[];
-    singleImage?  : SingleImageProps;
-    multiImage?   : MultiImageProps;
+    src?                : ImageFileDescriptor | ImageFileDescriptor[] | null | undefined;
+    behindHeader?       : boolean;
+    motionArt?          : boolean;
+    maskPreset?         : ImageMaskPreset | ImageMaskPreset[];
+    singleImageOptions? : SingleImageProps;
+    multiImageOptions?  : MultiImageProps;
+    motionArtOptions?   : MotionArtProps;
   }
 </script>
 
@@ -59,15 +65,18 @@
   import { useGlobalHeaderState } from '../composables/use-global-header-state';
   import LazyImage from './Image.vue';
   import LazyImageTiler from './ImageTiler.vue';
+  import LazyMotionArt from './MotionArt.vue';
 
   const props = withDefaults(
     defineProps<ImageBackdropProps>(),
     {
-      src          : undefined,
-      behindHeader : true,
-      maskPreset   : undefined,
-      singleImage  : undefined,
-      multiImage   : undefined,
+      src                : undefined,
+      behindHeader       : true,
+      motionArt          : true,
+      motionArtOnError   : false,
+      maskPreset         : undefined,
+      singleImageOptions : undefined,
+      multiImageOptions  : undefined,
     },
   );
 
