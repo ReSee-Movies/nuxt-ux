@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.20.0](///compare/0.19.1...0.20.0) (2026-01-07)
+
+### Features
+
+* **MotionArt:** the secondary and tertiary colors are computed as a triad of the primary color if not explicitly provided f63564b
+
+### Bug Fixes
+
+* **Button:** allow the "type" prop to be unset by making it equal to null 685abf8
+* **Image:** only apply "aria-hidden=true", not "aria-hidden=false" for accessibility 48ef035
+
 ## [0.19.1](///compare/0.19.0...0.19.1) (2026-01-07)
 
 ### Bug Fixes
