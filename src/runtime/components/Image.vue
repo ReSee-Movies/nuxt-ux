@@ -34,7 +34,7 @@
       :loadStyle   = "props.loadStyle"
       class        = "transition-opacity duration-300"
       :class       = "{ 'opacity-0': isImgLoading || props.loading || imgHasError }"
-      :aria-hidden = "imgHasError ? 'true' : 'false'"
+      :aria-hidden = "imgHasError ? 'true' : undefined"
       @loading     = "handleLoading"
       @load        = "handleLoaded"
       @error       = "handleError"
