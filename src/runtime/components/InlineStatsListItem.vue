@@ -19,9 +19,9 @@
 
 <script lang="ts">
   export interface InlineStatsListItemProps {
-    label       : string;
-    description : string;
-    icon?       : string;
+    label        : string;
+    description? : string;
+    icon?        : string;
   }
 </script>
 
