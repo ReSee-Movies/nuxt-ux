@@ -69,7 +69,7 @@
     tooltip?         : string;
     disabledTooltip? : string;
     onClick?         : ((evt: Event) => void | Promise<void>) | ((evt: Event) => void | Promise<void>)[];
-    type?            : 'button' | 'submit' | 'reset';
+    type?            : 'button' | 'submit' | 'reset' | null;
   }
 </script>
 
