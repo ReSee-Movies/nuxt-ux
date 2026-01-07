@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.19.1](///compare/0.19.0...0.19.1) (2026-01-07)
+
+### Bug Fixes
+
+* **InlineStatsListItem:** made the "description" prop optional so as not to conflict with the possibility of it being defined via the default or description slots e79bd34
+
 ## [0.19.0](///compare/0.18.0...0.19.0) (2026-01-07)
 
 ### Features
