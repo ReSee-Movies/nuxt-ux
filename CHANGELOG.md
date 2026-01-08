@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.20.1](///compare/0.20.0...0.20.1) (2026-01-08)
+
+### Bug Fixes
+
+* **CardScroller:** apply the scale=1 style to the correct element 9a209e2
+* **GlobalHeaderAnnouncement:** added z-index equal to the GlobalHeader a37556e
+* **GlobalHeader:** moved around transition CSS so the drop shadow removal is tweened as the header docks at the top of the page 6b6491f
+* **ImageBackdrop:** ability to opt-out of fixed positioning for the subset of use-cases that need it d22e7cc
+* **ImageBackdrop:** changed from absolute to fixed positioning to keep background images from blowing out the bottom of the page when the top offset isn't correctly applied f492f83
+* **ImageBackdrop:** only apply animation-timeline rules if supported dfd86e1
+
 ## [0.20.0](///compare/0.19.1...0.20.0) (2026-01-07)
 
 ### Features
