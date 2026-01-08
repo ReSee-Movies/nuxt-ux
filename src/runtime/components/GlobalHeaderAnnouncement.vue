@@ -65,6 +65,9 @@
   .announcement {
     --announcement-bg-color: white;
 
+    position : relative;
+    z-index  : 100;
+
     @variant dark {
       --announcement-bg-color: black;
     }
@@ -76,7 +79,7 @@
     padding-bottom: 6px;
 
     &.dismissable > div {
-      padding-right: --spacing(12);
+      padding-right: --spacing(16);
     }
   }
 </style>
