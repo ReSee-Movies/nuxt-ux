@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.20.2](///compare/0.20.1...0.20.2) (2026-01-08)
+
+### Bug Fixes
+
+* **GlobalHeader:** account for scrollbar space when it is removed for things like Dialogs, so the background image doesn't visibly shift to fill the space 228d812
+* **ImageBackdrop:** account for scrollbar space when it is removed for things like Dialogs, so the background image doesn't visibly shift to fill the space dad8eb9
+* **Tooltip:** remove extraneous padding from around tooltips that caused their content and arrows to become detached when near the edge of the viewport 05f6b53
+
 ## [0.20.1](///compare/0.20.0...0.20.1) (2026-01-08)
 
 ### Bug Fixes
