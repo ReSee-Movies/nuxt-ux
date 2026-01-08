@@ -207,7 +207,7 @@
     position   : fixed;
     top        : 0;
     left       : 0;
-    right      : 0;
+    right      : var(--p-scrollbar-width, 0);
     transform  : translateY(0px);
     box-shadow : var(--shadow-heavy);
 
