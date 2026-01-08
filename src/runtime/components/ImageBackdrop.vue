@@ -1,6 +1,6 @@
 <template>
   <div class="image-backdrop">
-    <div :class="['background', props.maskPreset]">
+    <div :class="['background', { 'fixed-position': props.fixedPosition }, props.maskPreset, props.backgroundClass]">
       <slot name="background">
         <Transition name="fade" mode="out-in">
           <LazyImage
@@ -35,7 +35,7 @@
 
 <script lang="ts">
   import type { ImageFileDescriptor } from '@resee-movies/utilities/images/normalize-image-file-descriptor';
-  import type { ImageMaskPreset } from '../types';
+  import type { HTMLElementClassNames, ImageMaskPreset } from '../types';
   import type { ImageProps } from './Image.vue';
   import type { ImageBaseProps } from './ImageBase.vue';
   import type { ImageTilerProps } from './ImageTiler.vue';
@@ -49,11 +49,13 @@
 
   export interface ImageBackdropProps {
     src?                : ImageFileDescriptor | ImageFileDescriptor[] | null | undefined;
+    fixedPosition?      : boolean;
     motionArt?          : boolean;
     maskPreset?         : ImageMaskPreset | ImageMaskPreset[];
     singleImageOptions? : SingleImageProps;
     multiImageOptions?  : MultiImageProps;
     motionArtOptions?   : MotionArtProps;
+    backgroundClass?    : HTMLElementClassNames;
   }
 </script>
 
@@ -67,6 +69,7 @@
     defineProps<ImageBackdropProps>(),
     {
       src                : undefined,
+      fixedPosition      : true,
       motionArt          : true,
       maskPreset         : undefined,
       singleImageOptions : undefined,
@@ -99,12 +102,16 @@
   }
 
   .image-backdrop .background {
-    position : fixed;
+    position : absolute;
     z-index  : 0;
     top      : 0;
     left     : 0;
     right    : 0;
     overflow : clip;
+  }
+
+  .image-backdrop .background.fixed-position {
+    position: fixed;
 
     &:has(.image) {
       left  : -20px;
