@@ -1,7 +1,7 @@
 @layer base {
   :root {
     --image-mask-gradient-opacity-dir  : to bottom;
-    --image-mask-gradient-opacity-stop : 85%;
+    --image-mask-gradient-opacity-stop : 50%;
     --image-mask-gradient-dir          : to bottom;
     --image-mask-gradient-stop         : 80%;
     --image-mask-color                 : var(--color-global-background);
