@@ -10,8 +10,8 @@
     :class       = "[
       'image',
       {
-        glass : props.glassy && (!(imgHasError || isImgLoading || props.loading)),
-        scale : props.scaleToParent,
+        'glass-effect'    : props.glassy && (!(imgHasError || isImgLoading || props.loading)),
+        'scale-to-parent' : props.scaleToParent,
       },
     ]"
   >
@@ -118,7 +118,7 @@
       max-width : fit-content;
     }
 
-    .image.glass::after {
+    .image.glass-effect::after {
       content          : var(--zero-width-space);
       position         : absolute;
       inset            : 0;
@@ -133,11 +133,11 @@
       transform : translateX(-50%) translateY(-50%);
     }
 
-    .image.scale {
+    .image.scale-to-parent {
       max-width: unset;
     }
 
-    .image.scale :deep(img) {
+    .image.scale-to-parent :deep(img) {
       min-width: 100%;
     }
   }
