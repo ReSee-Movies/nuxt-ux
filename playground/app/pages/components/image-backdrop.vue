@@ -1,7 +1,7 @@
 <template>
   <UiImageBackdrop
     :src         = "backgroundSrc"
-    :mask-preset = "[]"
+    :mask-preset = "['image-mask-gradient-opacity']"
   >
     <template #default>
       <UiLayoutPageColumn layout="vista">
@@ -9,12 +9,20 @@
           heading-text  = "Image Backdrop"
           :glass-effect = "true"
         >
-          <p class="p mb-6">Currently Showing: {{ backgroundName }}</p>
+          <div class="flex flex-col gap-6">
+            <p class="p">Currently Showing: {{ backgroundName }}</p>
 
-          <UiButton
-            text   = "Cycle Background Type"
-            @click = "cycleBackgroundSource()"
-          />
+            <div>
+              <UiButton
+                text   = "Cycle Background Type"
+                @click = "cycleBackgroundSource()"
+              />
+            </div>
+
+            <div class="prose">
+              <UiLorem type="paragraphs" min="20" />
+            </div>
+          </div>
         </UiLayoutPageContainer>
       </UiLayoutPageColumn>
     </template>

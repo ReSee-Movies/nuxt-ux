@@ -1,5 +1,5 @@
 <template>
-  <div class="image-backdrop" :style="offsetStyles">
+  <div class="image-backdrop">
     <div :class="['background', props.maskPreset]">
       <slot name="background">
         <Transition name="fade" mode="out-in">
@@ -15,7 +15,6 @@
             v-else-if = "Array.isArray(props.src)"
             v-bind    = "props.multiImageOptions"
             :images   = "props.src"
-            class     = "bg-global-background"
           />
 
           <LazyMotionArt
@@ -50,7 +49,6 @@
 
   export interface ImageBackdropProps {
     src?                : ImageFileDescriptor | ImageFileDescriptor[] | null | undefined;
-    behindHeader?       : boolean;
     motionArt?          : boolean;
     maskPreset?         : ImageMaskPreset | ImageMaskPreset[];
     singleImageOptions? : SingleImageProps;
@@ -61,8 +59,6 @@
 
 
 <script setup lang="ts">
-  import { computed } from 'vue';
-  import { useGlobalHeaderState } from '../composables/use-global-header-state';
   import LazyImage from './Image.vue';
   import LazyImageTiler from './ImageTiler.vue';
   import LazyMotionArt from './MotionArt.vue';
@@ -71,43 +67,62 @@
     defineProps<ImageBackdropProps>(),
     {
       src                : undefined,
-      behindHeader       : true,
       motionArt          : true,
-      motionArtOnError   : false,
       maskPreset         : undefined,
       singleImageOptions : undefined,
       multiImageOptions  : undefined,
     },
   );
-
-  const headerState = useGlobalHeaderState();
-
-  const offsetStyles = computed(() => {
-    return props.behindHeader ? headerState.offsetFromHeaderStyles.value : undefined;
-  });
-
-  const headerOffset = computed(() => {
-    return props.behindHeader ? `0px` : `${ headerState.headerHeight.value }px`;
-  });
 </script>
 
 
 <style scoped>
+  @reference "tailwindcss";
+
   .image-backdrop {
     position: relative;
+  }
 
-    .foreground {
-      position : relative;
-      z-index  : 1;
+  .image-backdrop .foreground {
+    position : relative;
+    z-index  : 1;
+  }
+
+  @keyframes shrink-image {
+    0%   { left: -20px; right: -20px }
+    100% { left: 0;     right: 0 }
+  }
+
+  @keyframes fade-image {
+      0% { opacity: 1 }
+    100% { opacity: 0.7 }
+  }
+
+  .image-backdrop .background {
+    position : fixed;
+    z-index  : 0;
+    top      : 0;
+    left     : 0;
+    right    : 0;
+    overflow : clip;
+
+    &:has(.image) {
+      left      : -20px;
+      right     : -20px;
+      animation : shrink-image linear forwards, fade-image linear forwards;
     }
 
-    .background {
-      position   : absolute;
-      z-index    : 0;
-      top        : 0;
-      width      : 100%;
-      max-height : calc(99vh - v-bind(headerOffset));
-      overflow   : clip;
+    &:has(.tiler) {
+      animation: fade-image linear forwards;
+    }
+
+    &:has(.image, .tiler) {
+      animation-timeline : scroll();
+      animation-range    : 0 calc(calc(100vw * 0.5625) - 110px);
+
+      @variant sm {
+        animation-range: 0 150px;
+      }
     }
   }
 </style>

@@ -6,6 +6,10 @@
       </NuxtLink>
     </template>
 
+    <template #announcement>
+      This is a test announcement.
+    </template>
+
     <template #default>
       <NuxtLayout>
         <NuxtPage />
