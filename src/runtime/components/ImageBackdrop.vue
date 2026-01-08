@@ -92,8 +92,15 @@
   }
 
   @keyframes shrink-image {
-    0%   { left: -20px; right: -20px }
-    100% { left: 0;     right: 0 }
+    0%   {
+      left  : var(--offset-left-overflow);
+      right : var(--offset-right-overflow);
+    }
+
+    100% {
+      left  : var(--offset-left-base);
+      right : var(--offset-right-base);
+    }
   }
 
   @keyframes fade-image {
@@ -102,11 +109,14 @@
   }
 
   .image-backdrop .background {
+    --offset-left-base  : 0;
+    --offset-right-base : var(--p-scrollbar-width, 0);
+
     position : absolute;
     z-index  : 0;
     top      : 0;
-    left     : 0;
-    right    : 0;
+    left     : var(--offset-left-base);
+    right    : var(--offset-right-base);
     overflow : clip;
   }
 
@@ -114,8 +124,11 @@
     position: fixed;
 
     &:has(.image) {
-      left  : -20px;
-      right : -20px;
+      --offset-left-overflow  : -20px;
+      --offset-right-overflow : calc(-20px + var(--p-scrollbar-width));
+
+      left  : var(--offset-left-overflow);
+      right : var(--offset-right-overflow);
     }
 
     @variant supports-animation-timeline {

@@ -12,11 +12,20 @@
           <div class="flex flex-col gap-6">
             <p class="p">Currently Showing: {{ backgroundName }}</p>
 
-            <div>
+            <div class="flex gap-3">
               <UiButton
                 text   = "Cycle Background Type"
                 @click = "cycleBackgroundSource()"
               />
+
+              <UiButton
+                text   = "Show Dialog"
+                @click = "displayDialog = true"
+              />
+
+              <UiDialog v-model:visible="displayDialog" header="Dialog">
+                The scrollbar should now be gone.
+              </UiDialog>
             </div>
 
             <div class="prose">
@@ -32,6 +41,7 @@
 
 <script setup lang="ts">
   import UiButton from '#resee-ux/components/Button.vue';
+  import UiDialog from '#resee-ux/components/Dialog.vue';
   import UiImageBackdrop from '#resee-ux/components/ImageBackdrop.vue';
   import UiLayoutPageColumn from '#resee-ux/components/LayoutPageColumn.vue';
   import UiLayoutPageContainer from '#resee-ux/components/LayoutPageContainer.vue';
@@ -47,7 +57,7 @@
 
   const backgroundName = ref<string>();
   const backgroundSrc  = ref<string | string[]>();
-
+  const displayDialog  = ref(false);
 
   function cycleBackgroundSource() {
     if (isString(backgroundSrc.value)) {
