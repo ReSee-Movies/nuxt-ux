@@ -110,7 +110,7 @@
         '--extra-scroll-margin': subheadHeight.value ? `${ subheadHeight.value }px` : '',
       }),
     },
-  })
+  });
 
 
   // --------------------------
@@ -198,6 +198,9 @@
   header {
     position : relative;
     z-index  : 100;
+    transition-property        : box-shadow;
+    transition-duration        : calc(var(--default-transition-duration) * 2);
+    transition-timing-function : var(--default-transition-timing-function);
   }
 
   .header-affixed {
@@ -209,9 +212,7 @@
     box-shadow : var(--shadow-heavy);
 
     &.header-transit {
-      transition-property        : transform, box-shadow;
-      transition-duration        : calc(var(--default-transition-duration) * 2);
-      transition-timing-function : var(--default-transition-timing-function);
+      transition-property: transform, box-shadow;
     }
 
     &.header-hidden {
