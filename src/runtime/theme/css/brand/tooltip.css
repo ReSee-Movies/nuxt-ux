@@ -2,7 +2,6 @@
   .tooltip {
     position  : absolute;
     animation : show-tooltip calc(var(--default-transition-duration) * 2) none var(--default-transition-timing-function);
-    padding   : --spacing(4);
 
     .content {
       padding       : --spacing(3) --spacing(1.5);
