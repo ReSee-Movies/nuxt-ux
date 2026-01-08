@@ -1,9 +1,18 @@
 <template>
-  <UiButton text="Open" @click="showDialog = true" />
+  <div class="flex flex-col gap-6">
+    <div class="flex gap-3">
+      <UiButton
+        text   = "Open"
+        @click = "showTopDialog = true"
+      />
+    </div>
 
-  <UiLorem type="paragraphs" min="20" />
+    <div class="prose">
+      <UiLorem type="paragraphs" min="20" />
+    </div>
+  </div>
 
-  <UiDialog v-model:visible="showDialog" header="Dialog Header">
+  <UiDialog v-model:visible="showTopDialog" header="Top Dialog Header">
     <UiLorem type="paragraphs" min="4" />
   </UiDialog>
 </template>
@@ -15,5 +24,5 @@
     heading: 'Dialog',
   });
 
-  const showDialog = ref(false);
+  const showTopDialog = ref(false);
 </script>

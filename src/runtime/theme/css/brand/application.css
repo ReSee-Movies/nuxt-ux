@@ -19,16 +19,13 @@
 
   html {
     scroll-behavior: smooth;
+    scrollbar-color: var(--color-global-foreground-accent) var(--color-global-background-accent);
   }
 
   @media screen and (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
-  }
-
-  html:has(body.p-overflow-hidden) {
-    scrollbar-color: transparent var(--color-global-background);
   }
 
   body {
@@ -59,6 +56,17 @@
    */
   #app-root {
     min-height: 100vh;
+
+    &:is(.p-overflow-hidden #app-root)::after {
+      content    : "";
+      position   : fixed;
+      z-index    : 110;
+      right      : 0;
+      top        : 0;
+      height     : 100vh;
+      width      : var(--p-scrollbar-width);
+      background : var(--color-global-background-accent);
+    }
 
     @variant sm {
       background-size     : 160px 74px;
