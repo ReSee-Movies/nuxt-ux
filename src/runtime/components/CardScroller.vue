@@ -123,7 +123,7 @@
       toPageContainerEdge : true,
       styleWhenTransiting : 'right',
       transitOpacity      : true,
-      transitScale        : true,
+      transitScale        : false,
     },
   );
 
@@ -295,8 +295,8 @@
           element.style.opacity = '1';
         }
 
-        if (styleScale) {
-          element.style.scale = '1';
+        if (styleScale && element.firstElementChild instanceof HTMLElement) {
+          element.firstElementChild.style.scale = '1';
         }
       }
       else if ((direction === 'left' && styleLeft) || (direction === 'right' && styleRight)) {
