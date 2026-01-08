@@ -107,21 +107,26 @@
     overflow : clip;
 
     &:has(.image) {
-      left      : -20px;
-      right     : -20px;
-      animation : shrink-image linear forwards, fade-image linear forwards;
+      left  : -20px;
+      right : -20px;
     }
 
-    &:has(.tiler) {
-      animation: fade-image linear forwards;
-    }
+    @variant supports-animation-timeline {
+      &:has(.image) {
+        animation : shrink-image linear forwards, fade-image linear forwards;
+      }
 
-    &:has(.image, .tiler) {
-      animation-timeline : scroll();
-      animation-range    : 0 calc(calc(100vw * 0.5625) - 110px);
+      &:has(.tiler) {
+        animation: fade-image linear forwards;
+      }
 
-      @variant sm {
-        animation-range: 0 150px;
+      &:has(.image, .tiler) {
+        animation-timeline : scroll();
+        animation-range    : 0 calc(calc(100vw * 0.5625) - 110px);
+
+        @variant sm {
+          animation-range: 0 150px;
+        }
       }
     }
   }
