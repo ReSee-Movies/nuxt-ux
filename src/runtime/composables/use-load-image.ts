@@ -9,31 +9,6 @@ import { isPromiseLike } from '@resee-movies/utilities/objects/is-promise-like';
 import { type MaybeRefOrGetter, ref, type Ref, toRef, toValue, watch } from 'vue';
 
 
-// /**
-//  * Load an image asset. In client environments, where `Image` is available, this
-//  * method will return a promise that resolves when the file is loaded (and decoded),
-//  * and rejects on any error encountered. In server environments, the value of `src`
-//  * is resolved immediately.
-//  */
-// export function loadImage(src: string) {
-//   // If running in a server context, Image will not be defined.
-//   try {
-//     if (Image) { /* No-op */ }
-//   }
-//   catch {
-//     return Promise.resolve(src);
-//   }
-//
-//   return new Promise<string>((resolve, reject) => {
-//     const img   = new Image();
-//     img.src     = src;
-//     img.onerror = (ev) => { console.log('OnError Called', ev); reject(ev) };
-//     img.onload  = (...args) => { console.log('OnLoad Called', args); img.decode().then(() => resolve(src)) };
-//   });
-// }
-
-
-
 export type LoadImageType = NormalizedFileDescriptorSource;
 
 export type LoadImageOptions = {
@@ -45,7 +20,8 @@ export type LoadImageOptions = {
   reseeConfig?    : MaybeRefOrGetter<MediaAssetTransformConfig | undefined>;
   deferLoad?      : Ref<boolean>;
   onLoading?      : () => void;
-  onLoad?         : (src: string | undefined) => void;
+  onBgLoading?    : () => void;
+  onLoad?         : (src: string | undefined, key: string | undefined) => void;
   onError?        : (err: unknown) => void;
 };
 
@@ -157,11 +133,17 @@ export function useLoadImage(
       error.value     = undefined;
 
       if (!promise) {
-        config.onLoad?.(src.value);
+        config.onLoad?.(src.value, key.value);
         return;
       }
 
-      config.onLoading?.();
+      if (bgLoading.value) {
+        config.onBgLoading?.();
+        config.onLoad?.(src.value, key.value);
+      }
+      else {
+        config.onLoading?.();
+      }
 
       promise.then(
         (loadedSrc) => {
@@ -171,7 +153,7 @@ export function useLoadImage(
           bgLoading.value = false;
           error.value     = undefined;
 
-          config.onLoad?.(src.value);
+          config.onLoad?.(src.value, key.value);
         },
 
         (e) => {

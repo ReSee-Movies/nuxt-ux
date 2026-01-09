@@ -75,7 +75,7 @@
 
   const emits = defineEmits<{
     (e: 'loading'): void;
-    (e: 'load', src: string | undefined): void;
+    (e: 'load', src: string | undefined, key: string | undefined): void;
     (e: 'error', err: unknown): void;
   }>();
 
@@ -93,11 +93,11 @@
     emits('loading');
   }
 
-  function handleLoaded(src: string | undefined) {
+  function handleLoaded(src: string | undefined, key: string | undefined) {
     isImgLoading.value = false;
     imgHasError.value  = null;
 
-    emits('load', src);
+    emits('load', src, key);
   }
 
   function handleError(err: unknown) {

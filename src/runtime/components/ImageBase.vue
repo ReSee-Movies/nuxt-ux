@@ -72,7 +72,7 @@
 
   const emits = defineEmits<{
     (e: 'loading'): void;
-    (e: 'load', src: string | undefined): void;
+    (e: 'load', src: string | undefined, key: string | undefined): void;
     (e: 'error', err: unknown): void;
   }>();
 
@@ -141,7 +141,7 @@
       width        : () => props.width,
       friendlyName : () => normalizedSource.value.friendlyName,
       onLoading    : () => emits('loading'),
-      onLoad       : (src) => emits('load', src),
+      onLoad       : (src, key) => emits('load', src, key),
       onError      : (err) => emits('error', err),
       reseeConfig  : () => ({
         width  : dimensions.value.width,
