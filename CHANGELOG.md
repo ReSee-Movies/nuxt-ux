@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.20.3](///compare/0.20.2...0.20.3) (2026-01-19)
+
+### Bug Fixes
+
+* **useLoadImage,ImageBase,Image:** tweak behavior to support background loading a higher resolution image without displaying a load indicator 0ad2af1
+
 ## [0.20.2](///compare/0.20.1...0.20.2) (2026-01-08)
 
 ### Bug Fixes
