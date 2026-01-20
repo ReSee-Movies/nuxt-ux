@@ -11,11 +11,14 @@
             :aspect = "props.singleImageOptions?.aspect ?? 'video'"
           />
 
-          <LazyImageTiler
-            v-else-if = "Array.isArray(props.src)"
-            v-bind    = "props.multiImageOptions"
-            :images   = "props.src"
-          />
+          <div v-else-if="Array.isArray(props.src)">
+            <ClientOnly >
+              <LazyImageTiler
+                v-bind  = "props.multiImageOptions"
+                :images = "props.src"
+              />
+            </ClientOnly>
+          </div>
 
           <LazyMotionArt
             v-else-if = "(!props.src && props.motionArt)"
