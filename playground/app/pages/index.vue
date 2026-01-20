@@ -25,6 +25,7 @@
     { label: 'Button',            icon: 'i-ph-radio-button',         route: 'components-button' },
     { label: 'Card',              icon: 'i-ph-bounding-box',         route: 'components-card' },
     { label: 'Card Scroller',     icon: 'i-ph-hand-swipe-right',     route: 'components-card-scroller' },
+    { label: 'Continue Reading',  icon: 'i-ph-mouse-scroll',         route: 'components-continue-reading-container' },
     { label: 'Dialog',            icon: 'i-ph-box-arrow-up',         route: 'components-dialog' },
     { label: 'Drawer',            icon: 'i-ph-arrow-line-left',      route: 'components-drawer' },
     { label: 'Form',              icon: 'i-ph-textbox',              route: 'components-form' },
