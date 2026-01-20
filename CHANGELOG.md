@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.21.0](///compare/0.20.3...0.21.0) (2026-01-20)
+
+### Features
+
+* **ContinueReadingContainer:** introduce new ContinueReadingContainer component 3859809
+
+### Bug Fixes
+
+* made the ImageTiler usage in the ImageBackdrop component client-only until a better hydration solution can be worked out 4dc6ec5
+
 ## [0.20.3](///compare/0.20.2...0.20.3) (2026-01-19)
 
 ### Bug Fixes
