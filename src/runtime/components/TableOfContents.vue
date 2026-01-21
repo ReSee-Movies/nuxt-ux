@@ -3,15 +3,10 @@
     <template v-for="entry of props.toc" :key="entry.slug">
       <li v-if="shouldRenderLevel(entry.level)">
         <NuxtLink
-          v-slot  = "config"
-          :href   = "`#${ entry.slug }`"
-          :custom = "true"
+          :href  = "`#${ entry.slug }`"
+          :class = "[props.linkClass, { active: doesRouteHaveHash(route, entry.slug) }]"
         >
-          <a
-            v-html = "entry.text"
-            :class = "[props.linkClass, { active: mounted && areRoutesStrictEqual(config.route, route) }]"
-            :href  = "config.href"
-          />
+          <span v-html="entry.text" />
         </NuxtLink>
 
         <TableOfContents
@@ -51,7 +46,7 @@
   import { NuxtLink } from '#components';
   import { useRoute } from '#imports';
   import { onMounted, ref } from 'vue';
-  import { areRoutesStrictEqual } from '../utils/routing';
+  import type { RouteLocationGeneric } from 'vue-router';
   import TableOfContents from './TableOfContents.vue';
 
   const props   = defineProps<UiTableOfContentsProps>();
@@ -73,5 +68,10 @@
     }
 
     return (!props.minDepth || props.minDepth <= level) && (!props.maxDepth || props.maxDepth >= level);
+  }
+
+
+  function doesRouteHaveHash(route: RouteLocationGeneric, hash: string | null | undefined) {
+    return hash && route.hash === `#${ hash }`;
   }
 </script>
