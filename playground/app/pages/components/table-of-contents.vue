@@ -20,6 +20,10 @@
           titles of the text's sections, sometimes with descriptions.
         </p>
 
+        <div>
+          <UiButton text="Toggle Query Param" @click="queryParams.toggle = !queryParams.toggle" />
+        </div>
+
         <h2>History</h2>
 
         <p>
@@ -157,5 +161,9 @@
     return originalContent.value
       ? generateTableOfContents(originalContent.value)
       : undefined;
+  });
+
+  const queryParams = useQueryParameters({
+    toggle: { type: Boolean },
   });
 </script>

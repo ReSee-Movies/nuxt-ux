@@ -18,14 +18,7 @@
 
 
   html {
-    scroll-behavior: smooth;
     scrollbar-color: var(--color-global-foreground-accent) var(--color-global-background-accent);
-  }
-
-  @media screen and (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
   }
 
   body {

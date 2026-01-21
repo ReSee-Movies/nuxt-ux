@@ -15,6 +15,23 @@
 
 
 /**
+ Add a top scroll margin to any element that will offset it below the subheader, if present.
+ */
+@utility scroll-target {
+  scroll-margin-block-start : var(--extra-scroll-margin, 0px);
+}
+
+
+/**
+ The same behavior as .scroll-target, however this also adds some additional padding
+ equal to the top padding of a page container. Useful for lining things up nicely.
+ */
+@utility padded-scroll-target {
+  scroll-margin-block-start : calc(var(--page-container-pad-y) + var(--extra-scroll-margin, 0px));
+}
+
+
+/**
  Typographic components.
  */
 @layer components {
@@ -115,7 +132,7 @@
     margin-block-start        : 0.9lh;
     margin-block-end          : 0.4lh;
     text-wrap                 : pretty;
-    scroll-margin-block-start : calc(--spacing(6) + var(--extra-scroll-margin, 0px));
+    scroll-margin-block-start : calc(var(--page-container-pad-y) + var(--extra-scroll-margin, 0px));
   }
 
   /*
