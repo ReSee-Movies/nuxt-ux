@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.22.1](///compare/0.22.0...0.22.1) (2026-01-21)
+
+### Bug Fixes
+
+* wait for the page transition to complete before trying to scroll b928e42
+
 ## [0.22.0](///compare/0.21.0...0.22.0) (2026-01-21)
 
 ### Features
