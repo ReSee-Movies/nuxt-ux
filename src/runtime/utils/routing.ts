@@ -1,4 +1,7 @@
-import type { RouteLocationGeneric, RouterScrollBehavior } from 'vue-router';
+import { useNuxtApp } from '#app';
+import { isChangingPage } from '#app/components/utils';
+import { appPageTransition as defaultPageTransition } from '#build/nuxt.config.mjs';
+import type { RouteLocationGeneric, RouteLocationNormalizedGeneric, RouterScrollBehavior } from 'vue-router';
 
 
 /**
@@ -36,6 +39,8 @@ export function areRoutesStrictEqual(
 }
 
 
+type ScrollPosition = Awaited<ReturnType<RouterScrollBehavior>>;
+
 /**
  * An implementation of Vue Router's RouterScrollBehavior interface, custom tailored
  * for ReSee.
@@ -52,19 +57,19 @@ export function areRoutesStrictEqual(
  * ```
  */
 export const reseeScrollBehavior: RouterScrollBehavior = (to, from, savedPosition) => {
-  // Return a saved position as-is.
-  if (savedPosition) {
-    return savedPosition;
+  let position: ScrollPosition = savedPosition || undefined;
+
+  const routeAllowsScrollToTop = typeof to.meta.scrollToTop === 'function'
+    ? to.meta.scrollToTop(to, from)
+    : to.meta.scrollToTop;
+
+  if (!position && from && to && routeAllowsScrollToTop !== false && isChangingPage(to, from)) {
+    position = { left: 0, top: 0 };
   }
 
-  // If a hash is present, and it differs from the previous hash value,
-  // then we will scroll to it. Checking that the hash has changed here
-  // is important. If the user were to follow a hash link, scroll away,
-  // and then do something else that changed the URL - say, altered a
-  // query value - then without this extra check the page would jump
-  // back to where the hash is.
-  if (to.hash && to.hash !== from.hash) {
-    const targetElement = document.querySelector(to.hash);
+
+  const getScrollToElementInfo = (id: string) => {
+    const targetElement = document.querySelector(id);
 
     // Take the scroll margin into account.
     if (targetElement) {
@@ -73,8 +78,22 @@ export const reseeScrollBehavior: RouterScrollBehavior = (to, from, savedPositio
       return {
         el       : targetElement,
         top      : topOffset,
-        behavior : 'smooth',
+        behavior : 'smooth' as const,
       };
+    }
+  };
+
+  // If a hash is present, and it differs from the previous hash value,
+  // then we will scroll to it. Checking that the hash has changed here
+  // is important. If the user were to follow a hash link, scroll away,
+  // and then do something else that changed the URL - say, altered a
+  // query value - then without this extra check the page would jump
+  // back to the hash.
+  if (to.path === from.path && to.hash && to.hash !== from.hash) {
+    const scrollInfo = getScrollToElementInfo(to.hash);
+
+    if (scrollInfo) {
+      return scrollInfo;
     }
   }
 
@@ -85,6 +104,31 @@ export const reseeScrollBehavior: RouterScrollBehavior = (to, from, savedPositio
     return false;
   }
 
-  // Lastly, scroll to the top.
-  return { left: 0, top: 0 };
+
+  const hasTransition = (route: RouteLocationNormalizedGeneric) => {
+    return !!(route.meta.pageTransition ?? defaultPageTransition);
+  }
+
+  const nuxtApp = useNuxtApp();
+  const waitFor = (hasTransition(from) && hasTransition(to)) ? 'page:transition:finish' : 'page:loading:end';
+
+  return new Promise<ScrollPosition>((resolve) => {
+    nuxtApp.hooks.hookOnce(waitFor, () => {
+      requestAnimationFrame(() => {
+        if (position) {
+          return resolve(position);
+        }
+
+        if (to.hash) {
+          const scrollInfo = getScrollToElementInfo(to.hash);
+
+          if (scrollInfo) {
+            return resolve(scrollInfo);
+          }
+        }
+
+        resolve({ left: 0, top: 0 });
+      });
+    });
+  });
 }
