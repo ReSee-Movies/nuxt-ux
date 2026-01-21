@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.22.2](///compare/0.22.1...0.22.2) (2026-01-21)
+
+### Bug Fixes
+
+* **useGlobalHeaderState:** subheader menu items are correctly replaced when switching between two views the both supply some c853bae
+
 ## [0.22.1](///compare/0.22.0...0.22.1) (2026-01-21)
 
 ### Bug Fixes
