@@ -7,6 +7,11 @@
       :prose           = "formModel.prose"
     >
       <template #actions v-if="formModel.showActions">
+        <NuxtLink class="a" :to="{ name: 'typography' }">
+          Go to Typography
+        </NuxtLink>
+
+        <!--
         <UiButton
           aria-label = "More Info"
           icon       = "i-ph-diamonds-four"
@@ -17,6 +22,7 @@
         <UiDialog v-model:visible="showMoreInfoModal" header="Some More Info">
           <UiLorem type="paragraphs" min="3" />
         </UiDialog>
+        -->
       </template>
 
       <template #default>
@@ -38,14 +44,22 @@
 <script setup lang="ts">
   import type { FormFieldBuilderOption } from '#resee-ux/components/form/FormFieldBuilder.vue';
   import type { LayoutPageColumnProps } from '#resee-ux/components/LayoutPageColumn.vue';
-  import { reactive, ref } from 'vue';
+  import { useGlobalHeaderState } from '#resee-ux/composables/use-global-header-state';
+  import { reactive } from 'vue';
 
   definePageMeta({
     layout  : 'basic',
     heading : 'Layout',
   });
 
-  const showMoreInfoModal = ref(false);
+  // const showMoreInfoModal = ref(false);
+
+  useGlobalHeaderState({
+    tableOfContents: [
+      { text: 'Option 1', slug: 'one' },
+      { text: 'Option 2', slug: 'two' },
+    ],
+  });
 
   const formModel = reactive({
     layout      : 'main' as LayoutPageColumnProps['layout'],

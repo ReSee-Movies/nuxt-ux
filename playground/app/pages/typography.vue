@@ -5,12 +5,16 @@
       which keeps everything in a narrow column which is easier to read.
     </p>
 
+    <NuxtLink class="a" :to="{ name: 'layout' }">
+      Go to Layout
+    </NuxtLink>
+
     <h1 class="hero text-accent-color">Hero Heading Level 1</h1>
     <p class="hero">This is a paragraph of hero text.</p>
 
     <hr>
 
-    <h2>Heading Level 2</h2>
+    <h2 id="level-2">Heading Level 2</h2>
     <UiLorem type="paragraphs" min="1" max="1" />
 
     <h3>Heading Level 3</h3>
@@ -25,7 +29,7 @@
     <h6>Heading Level 6</h6>
     <UiLorem type="paragraphs" min="1" max="1" />
 
-    <h2>Lists</h2>
+    <h2 id="lists">Lists</h2>
     <ol>
       <li>Item A</li>
       <li>
@@ -66,7 +70,7 @@
       </li>
     </ol>
 
-    <h2>Tables</h2>
+    <h2 id="tables">Tables</h2>
 
     <table>
       <thead>
@@ -138,7 +142,17 @@
 
 
 <script setup lang="ts">
+  import { useGlobalHeaderState } from '#resee-ux/composables/use-global-header-state';
+
   definePageMeta({
     heading: 'Typography',
+  });
+
+  useGlobalHeaderState({
+    tableOfContents: [
+      { text: 'Level 2 Heading', slug: 'level-2' },
+      { text: 'Lists', slug: 'lists' },
+      { text: 'Tables', slug: 'tables' },
+    ],
   });
 </script>

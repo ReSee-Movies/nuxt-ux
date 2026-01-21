@@ -46,12 +46,21 @@ const offsetFromHeaderStyles = computed(() => {
  */
 const subheaderToc = ref<TableOfContentsItem[]>([]);
 
+
 /**
- *
+ * The method responsible for adding/removing subheader TOC items.
  */
 function tableOfContents(toc: UseGlobalHeaderStateOptions['tableOfContents']) {
   onScopeDispose(() => {
-    subheaderToc.value.length = 0;
+    toValue(toc)?.forEach((item) => {
+      if (item) {
+        const index = subheaderToc.value.indexOf(item);
+
+        if (index > -1) {
+          subheaderToc.value.splice(index, 1);
+        }
+      }
+    });
   }, true);
 
   watch(
