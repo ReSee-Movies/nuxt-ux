@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.22.0](///compare/0.21.0...0.22.0) (2026-01-21)
+
+### Features
+
+* drop default usage of CSS scroll behavior in favor of a customized Vue Router scrolling solution for better control 7f5b6c1
+
+### Bug Fixes
+
+* show background color on images 4f7d483
+
 ## [0.21.0](///compare/0.20.3...0.21.0) (2026-01-20)
 
 ### Features
