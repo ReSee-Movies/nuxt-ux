@@ -17,7 +17,7 @@
     <Image
       :is              = "NuxtLink"
       to               = "/"
-      src              = "/rcpMbxYrYLngdyQrt1lK4QkpV06.jpg"
+      src              = "/rcpMbxYrYLngdyQrt1lK4QkpV0.jpg"
       type             = "tmdb"
       aspect           = "poster"
       :loading         = "showLoading"

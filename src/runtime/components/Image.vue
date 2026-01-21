@@ -110,8 +110,16 @@
 
 
 <style scoped>
+  @reference "tailwindcss";
+
   @layer components {
     .image {
+      --resee-card-bg-color: white;
+
+      @variant dark {
+        --resee-card-bg-color: black;
+      }
+
       position  : relative;
       overflow  : clip;
       display   : block;

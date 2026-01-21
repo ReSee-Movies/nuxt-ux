@@ -87,6 +87,8 @@
         --resee-card-bg-load-color-1 : rgb(0, 0, 0);
         --resee-card-bg-load-color-2 : rgb(15, 15, 15);
       }
+
+      background-color: var(--resee-card-bg-color);
     }
 
 
@@ -113,8 +115,7 @@
 
     .card.bordered:not(.interactive),
     .card.bordered.loading {
-      border           : solid var(--resee-card-border-weight) var(--resee-card-border-color);
-      background-color : var(--resee-card-bg-color);
+      border: solid var(--resee-card-border-weight) var(--resee-card-border-color);
     }
 
 
