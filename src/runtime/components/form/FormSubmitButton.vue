@@ -1,7 +1,7 @@
 <template>
   <Button
     type      = "submit"
-    :text     = "props.text ?? locale.form.submitButtonLabel"
+    :text     = "props.text ?? reseeUx.locale.form.submitButtonLabel"
     :loading  = "formState.isSubmitting.value"
     :disabled = "formState.isDisabled.value"
     :bordered = "props.bordered"
@@ -19,7 +19,7 @@
 
 
 <script setup lang="ts">
-  import { useReseeUx } from '../../composables/use-resee-ux';
+  import { useReseeUxStore } from '../../stores/use-resee-ux-store';
   import { injectFormInstance } from '../../utils/form';
   import Button from '../Button.vue';
 
@@ -32,5 +32,5 @@
   );
 
   const formState = injectFormInstance();
-  const { locale } = useReseeUx();
+  const reseeUx   = useReseeUxStore();
 </script>

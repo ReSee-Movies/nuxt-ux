@@ -1,7 +1,7 @@
 import { toInteger } from '@resee-movies/utilities/numbers/to-integer';
 import * as z from 'zod/mini';
 import type { core } from 'zod/mini';
-import { useReseeUx } from '../composables/use-resee-ux';
+import { useReseeUxStore } from '../stores/use-resee-ux-store';
 import { swapStringPlaceholders } from './string';
 
 
@@ -16,10 +16,10 @@ export type BooleanInputRequirements = {
 
 
 export function createBooleanValidator(requirements: BooleanInputRequirements) {
-  const { locale } = useReseeUx();
+  const reseeUx = useReseeUxStore();
 
   return requirements.required
-    ? z.coerce.boolean().check(z.refine(val => val === true, toValidationError(locale.validation.required)))
+    ? z.coerce.boolean().check(z.refine(val => val === true, toValidationError(reseeUx.locale.validation.required)))
     : undefined;
 }
 
@@ -33,18 +33,18 @@ export type TextInputRequirements = {
 
 
 export function createTextValidator(requirements: TextInputRequirements) {
-  const { locale } = useReseeUx();
-  const checkFns   = [] as core.$ZodCheck<unknown>[];
+  const reseeUx  = useReseeUxStore();
+  const checkFns = [] as core.$ZodCheck<unknown>[];
 
   if (requirements.required) {
-    checkFns.push(z.minLength(1, toValidationError(locale.validation.required)));
+    checkFns.push(z.minLength(1, toValidationError(reseeUx.locale.validation.required)));
   }
 
   if (requirements.type === 'email') {
-    checkFns.push(z.email(toValidationError(locale.validation.invalidEmail )));
+    checkFns.push(z.email(toValidationError(reseeUx.locale.validation.invalidEmail )));
   }
   else if (requirements.type === 'url') {
-    checkFns.push(z.url(toValidationError(locale.validation.invalidUrl )));
+    checkFns.push(z.url(toValidationError(reseeUx.locale.validation.invalidUrl )));
   }
   else {
     const minLength = toInteger(requirements.minLength);
@@ -52,19 +52,19 @@ export function createTextValidator(requirements: TextInputRequirements) {
 
     if (minLength) {
       checkFns.push(
-        z.minLength(minLength, toValidationError(locale.validation.tooFewChars, { count: minLength })),
+        z.minLength(minLength, toValidationError(reseeUx.locale.validation.tooFewChars, { count: minLength })),
       );
     }
 
     if (maxLength) {
       checkFns.push(
-        z.maxLength(maxLength, toValidationError(locale.validation.tooManyChars, { count: maxLength })),
+        z.maxLength(maxLength, toValidationError(reseeUx.locale.validation.tooManyChars, { count: maxLength })),
       );
     }
   }
 
   const stringSchema = z
-    .string(toValidationError(locale.validation.required))
+    .string(toValidationError(reseeUx.locale.validation.required))
     .check(z.trim(), ...checkFns);
 
   return requirements.required
@@ -81,26 +81,26 @@ export type ListInputRequirements = {
 
 
 export function createListValidator(requirements: ListInputRequirements) {
-  const { locale } = useReseeUx();
-  const checkFns   = [] as core.$ZodCheck<unknown>[];
+  const reseeUx  = useReseeUxStore();
+  const checkFns = [] as core.$ZodCheck<unknown>[];
 
   const minRequired = toInteger(requirements.minRequired) || (requirements.required ? 1 : undefined);
   const maxRequired = toInteger(requirements.maxRequired);
 
   if (minRequired) {
     checkFns.push(
-      z.minLength(minRequired, toValidationError(locale.validation.tooFewOptions, { count: minRequired })),
+      z.minLength(minRequired, toValidationError(reseeUx.locale.validation.tooFewOptions, { count: minRequired })),
     );
   }
 
   if (maxRequired) {
     checkFns.push(
-      z.maxLength(maxRequired, toValidationError(locale.validation.tooManyOptions, { count: maxRequired })),
+      z.maxLength(maxRequired, toValidationError(reseeUx.locale.validation.tooManyOptions, { count: maxRequired })),
     );
   }
 
   const arraySchema = z
-    .array(z.unknown(), toValidationError(locale.validation.required))
+    .array(z.unknown(), toValidationError(reseeUx.locale.validation.required))
     .check(...checkFns);
 
   return requirements.required

@@ -89,7 +89,7 @@
   import PrimeSelect from 'primevue/select';
   import { computed, useSlots } from 'vue';
   import { useReseeBreakpoints } from '../../../composables/use-resee-breakpoints';
-  import { useReseeUx } from '../../../composables/use-resee-ux';
+  import { useReseeUxStore } from '../../../stores/use-resee-ux-store';
   import { TeleportId } from '../../../constants';
   import { blockBodyScroll } from '../../../utils/dom';
   import { useOptionListMethods } from '../../../utils/form';
@@ -111,7 +111,7 @@
 
   const slots   = useSlots();
   const utils   = useOptionListMethods(props);
-  const reseeUx = useReseeUx();
+  const reseeUx = useReseeUxStore();
   const isSmall = useReseeBreakpoints().smallerOrEqual('sm');
 
   const showFilter = computed(() => {

@@ -31,7 +31,7 @@
   import { computed, ref } from 'vue';
   import CloseButton from './CloseButton.vue';
   import LayoutPageColumn from './LayoutPageColumn.vue';
-  import { useReseeUx } from '../composables/use-resee-ux';
+  import { useReseeUxStore } from '../stores/use-resee-ux-store';
 
   const props = withDefaults(
     defineProps<GlobalHeaderAnnouncementProps>(),
@@ -41,17 +41,17 @@
     },
   );
 
-  const { preferences } = useReseeUx();
+  const reseeUx = useReseeUxStore();
   const isLocallyDismissed = ref(false);
 
   const isDismissed = computed(() => {
     return isLocallyDismissed.value
-      || (props.announcementId && preferences.value.dismissNotification === props.announcementId);
+      || (props.announcementId && reseeUx.preferences.dismissNotification === props.announcementId);
   });
 
   function dismissAnnouncement() {
     if (props.announcementId) {
-      preferences.value.dismissNotification = props.announcementId;
+      reseeUx.preferences.dismissNotification = props.announcementId;
     }
 
     isLocallyDismissed.value = true;

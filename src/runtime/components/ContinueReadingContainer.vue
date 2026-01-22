@@ -13,7 +13,7 @@
 
     <div v-if="isOverflowing && !showAllContent">
       <Button
-        :text  = "locale.continueReading"
+        :text  = "reseeUx.locale.continueReading"
         size   = "sm"
         @click = "() => showAll()"
       />
@@ -33,7 +33,7 @@
 <script setup lang="ts">
   import { useElementSize } from '@vueuse/core';
   import { nextTick, ref, watchEffect } from 'vue';
-  import { useReseeUx } from '../composables/use-resee-ux';
+  import { useReseeUxStore } from '../stores/use-resee-ux-store';
   import Button from './Button.vue';
 
   const props = withDefaults(
@@ -48,7 +48,7 @@
   const showAllContent = ref(false);
   const isOverflowing  = ref(false);
 
-  const { locale } = useReseeUx();
+  const reseeUx    = useReseeUxStore();
   const { height } = useElementSize(innerContainer);
 
   const { stop } = watchEffect(() => {
