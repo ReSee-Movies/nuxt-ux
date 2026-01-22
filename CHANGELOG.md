@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.23.0](///compare/0.22.2...0.23.0) (2026-01-22)
+
+### Features
+
+* mark Archivo font for preload a974e74
+
+### Bug Fixes
+
+* reduce the number of images that the ImageTiler generates by default 7064e88
+
 ## [0.22.2](///compare/0.22.1...0.22.2) (2026-01-21)
 
 ### Bug Fixes
