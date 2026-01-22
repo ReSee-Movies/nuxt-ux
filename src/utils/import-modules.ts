@@ -1,5 +1,5 @@
 import type { ModuleDependencies, Nuxt } from '@nuxt/schema';
-import type { ModuleOptions } from '../runtime/types';
+import type { ModuleOptions } from '#resee-ux/types';
 
 
 /**
@@ -17,6 +17,7 @@ export function importModules(nuxt: Nuxt) {
           provider : 'google',
           styles   : ['normal'],
           weights  : [200, 300, 400, 500],
+          preload  : true,
         },
       ],
     }
