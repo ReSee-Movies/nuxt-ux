@@ -63,19 +63,19 @@
 
   export const DefaultImageTilerGridSizeFallback = {
     cols : 5,
-    rows : 8,
+    rows : 4,
     gap  : 3,
   };
 
   export const DefaultImageTilerGridSizeDefinition: BreakpointSettings<ImageTilerGridSizeDefinition> = {
     md: {
       cols : 7,
-      rows : 5,
+      rows : 4,
     },
 
     lg: {
       cols : 10,
-      rows : 5,
+      rows : 4,
     },
   };
 
