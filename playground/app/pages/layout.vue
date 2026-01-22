@@ -44,7 +44,6 @@
 <script setup lang="ts">
   import type { FormFieldBuilderOption } from '#resee-ux/components/form/FormFieldBuilder.vue';
   import type { LayoutPageColumnProps } from '#resee-ux/components/LayoutPageColumn.vue';
-  import { useGlobalHeaderStore } from '#resee-ux/stores/use-global-header-store';
   import { reactive } from 'vue';
 
   definePageMeta({
@@ -53,11 +52,6 @@
   });
 
   // const showMoreInfoModal = ref(false);
-
-  useGlobalHeaderStore().tableOfContents([
-    { text: 'Option 1', slug: 'one' },
-    { text: 'Option 2', slug: 'two' },
-  ]);
 
   const formModel = reactive({
     layout      : 'main' as LayoutPageColumnProps['layout'],

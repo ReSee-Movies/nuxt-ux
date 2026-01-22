@@ -142,15 +142,7 @@
 
 
 <script setup lang="ts">
-  import { useGlobalHeaderStore } from '#resee-ux/stores/use-global-header-store';
-
   definePageMeta({
     heading: 'Typography',
   });
-
-  useGlobalHeaderStore().tableOfContents([
-    { text: 'Level 2 Heading', slug: 'level-2' },
-    { text: 'Lists', slug: 'lists' },
-    { text: 'Tables', slug: 'tables' },
-  ]);
 </script>

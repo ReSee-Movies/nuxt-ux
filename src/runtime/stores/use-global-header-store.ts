@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { acceptHMRUpdate, defineStore } from 'pinia';
 import { computed, onScopeDispose, type MaybeRefOrGetter, ref, toValue, watch } from 'vue';
 import type { TableOfContentsItem } from '../components/TableOfContents.vue';
 
@@ -48,35 +48,19 @@ export const useGlobalHeaderStore = defineStore('global-header', () => {
    * Table of content entries for the global subheader. This ref should not be
    * used directly. Instead, use the {@link tableOfContents} method that is
    * returned by {@link useGlobalHeaderStore}.
+   *
+   * @experimental
    */
   const subheaderToc = ref<TableOfContentsItem[]>([]);
 
 
   /**
    * Add table of content items to the global subheader.
+   *
+   * @experimental
    */
-  function tableOfContents(toc: MaybeRefOrGetter<(TableOfContentsItem | undefined)[] | undefined>) {
-    onScopeDispose(() => {
-      toValue(toc)?.forEach((item) => {
-        if (item) {
-          const index = subheaderToc.value.indexOf(item);
-
-          if (index > -1) {
-            subheaderToc.value.splice(index, 1);
-          }
-        }
-      });
-    }, true);
-
-    watch(
-      () => toValue(toc),
-      (entries) => {
-        subheaderToc.value.push(
-          ...(entries?.filter((entry) => !!entry) ?? []),
-        );
-      },
-      { immediate: true },
-    );
+  function tableOfContents(toc: TableOfContentsItem[] | undefined) {
+    subheaderToc.value = toc ?? [];
   }
 
   return {
@@ -89,3 +73,6 @@ export const useGlobalHeaderStore = defineStore('global-header', () => {
     tableOfContents,
   };
 });
+
+// @ts-expect-error
+import.meta.hot?.accept(acceptHMRUpdate(useGlobalHeaderStore, import.meta.hot));
