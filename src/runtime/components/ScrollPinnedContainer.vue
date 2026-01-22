@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
   import { computed } from 'vue';
-  import { useGlobalHeaderState } from '../composables/use-global-header-state';
+  import { useGlobalHeaderStore } from '../stores/use-global-header-store';
 
   const props = withDefaults(
     defineProps<ScrollPinnedContainerProps>(),
@@ -25,20 +25,16 @@
     },
   );
 
-  const {
-    headerHeight,
-    subheaderHeight,
-    isHeaderPulledDown,
-  } = useGlobalHeaderState();
+  const globalHeaderStore = useGlobalHeaderStore();
 
   const topOffset = computed(() => {
     if (props.disabled) {
       return 0;
     }
 
-    return isHeaderPulledDown.value
-      ? headerHeight.value + props.top
-      : subheaderHeight.value + props.top;
+    return globalHeaderStore.isHeaderPulledDown
+      ? globalHeaderStore.headerHeight + props.top
+      : globalHeaderStore.subheaderHeight + props.top;
   });
 </script>
 

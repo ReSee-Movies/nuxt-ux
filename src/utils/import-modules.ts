@@ -7,6 +7,9 @@ import type { ModuleOptions } from '#resee-ux/types';
  * relies on.
  */
 export function importModules(nuxt: Nuxt) {
+  /* *****************************
+   * Nuxt Fonts
+   * ***************************** */
   const NuxtFonts: ModuleDependencies['@nuxt/fonts'] = {
     defaults: {
       provider: 'google',
@@ -23,6 +26,22 @@ export function importModules(nuxt: Nuxt) {
     }
   }
 
+
+  /* *****************************
+   * Nuxt Fonts
+   * ***************************** */
+  const NuxtDevice: ModuleDependencies['@nuxtjs/device'] = {};
+
+
+  /* *****************************
+   * Pinia
+   * ***************************** */
+  const Pinia: ModuleDependencies['@pinia/nuxt'] = {};
+
+
+  /* *****************************
+   * Primevue
+   * ***************************** */
   const primeOptions = nuxt.options.ux?.primevue as ModuleOptions['primevue'];
   const componentPrefix = primeOptions?.componentPrefix ?? 'Prime';
 
@@ -96,6 +115,7 @@ export function importModules(nuxt: Nuxt) {
   return {
     '@nuxt/fonts': NuxtFonts,
     '@primevue/nuxt-module': Primevue,
-    '@nuxtjs/device': {},
+    '@nuxtjs/device': NuxtDevice,
+    '@pinia/nuxt': Pinia,
   };
 }

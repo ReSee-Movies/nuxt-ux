@@ -25,7 +25,7 @@
       <LayoutPageColumn class="overflow-x-auto styled-scroll">
         <slot name="subheader">
           <TableOfContents
-            :toc       = "props.subheaderToc ?? headerState.subheaderToc.value"
+            :toc       = "props.subheaderToc ?? globalHeaderStore.subheaderToc"
             class      = "flex items-center flex-nowrap"
             link-class = "btn small borderless text-nowrap"
             :min-depth = "2"
@@ -61,9 +61,9 @@
   import { useHead } from '#imports';
   import { computed, ref, useSlots, watch } from 'vue';
   import { useElementSize } from '@vueuse/core';
-  import { useGlobalHeaderState } from '../composables/use-global-header-state';
   import { useReseeWindowScroll } from '../composables/use-resee-window-scroll';
   import { useTwoFrameRefToggle } from '../composables/use-two-frame-ref-toggle';
+  import { useGlobalHeaderStore } from '../stores/use-global-header-store';
   import LayoutPageColumn from './LayoutPageColumn.vue';
   import TableOfContents from './TableOfContents.vue';
 
@@ -98,10 +98,10 @@
   const [isHeaderAffixed, doTransitions, updateAffixState] = useTwoFrameRefToggle();
   const hideDrawerContent = ref(false);
 
-  const headerState = useGlobalHeaderState();
+  const globalHeaderStore = useGlobalHeaderStore();
 
   const renderSubheader = computed(() => {
-    return !!(slots.subheader || props.subheaderToc?.length || headerState.subheaderToc.value?.length);
+    return !!(slots.subheader || props.subheaderToc?.length || globalHeaderStore.subheaderToc?.length);
   });
 
   useHead({
@@ -180,10 +180,10 @@
         disableAffix();
       }
 
-      headerState.isHeaderDrawerEnabled.value = props.drawer;
-      headerState.headerHeight.value          = headerHeight.value;
-      headerState.subheaderHeight.value       = subheadHeight.value;
-      headerState.isHeaderPulledDown.value    = isHeaderAffixed.value && !hideDrawerContent.value;
+      globalHeaderStore.isHeaderDrawerEnabled = props.drawer;
+      globalHeaderStore.headerHeight          = headerHeight.value;
+      globalHeaderStore.subheaderHeight       = subheadHeight.value;
+      globalHeaderStore.isHeaderPulledDown    = isHeaderAffixed.value && !hideDrawerContent.value;
     },
     { immediate: true },
   );
