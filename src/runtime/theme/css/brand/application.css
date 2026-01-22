@@ -18,7 +18,8 @@
 
 
   html {
-    scrollbar-color: var(--color-global-foreground-accent) var(--color-global-background-accent);
+    overscroll-behavior : none;
+    scrollbar-color     : var(--color-global-foreground-accent) var(--color-global-background-accent);
   }
 
   body {
