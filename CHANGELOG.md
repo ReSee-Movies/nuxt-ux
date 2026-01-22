@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.23.1](///compare/0.23.0...0.23.1) (2026-01-22)
+
+### Bug Fixes
+
+* mark subheader tableOfContents method experimental while a better solution is figured out 22d8793
+* move the logic of useGlobalHeaderState into a Pinia store - useGlobalHeaderStore - to avoid leaking state in SSR fc77164
+* move the logic of useReseeUx into a Pinia store - useReseeUxStore - to avoid leaking state in SSR efa3952
+
 ## [0.23.0](///compare/0.22.2...0.23.0) (2026-01-22)
 
 ### Features
