@@ -61,6 +61,7 @@
 
 <style scoped>
   @reference "tailwindcss";
+  @reference "../theme/css/styles.css";
 
   .announcement {
     --announcement-bg-color: white;

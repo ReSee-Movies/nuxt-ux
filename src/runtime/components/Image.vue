@@ -111,6 +111,7 @@
 
 <style scoped>
   @reference "tailwindcss";
+  @reference "../theme/css/styles.css";
 
   @layer components {
     .image {

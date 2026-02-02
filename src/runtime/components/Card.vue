@@ -52,6 +52,7 @@
 
 <style scoped>
   @reference "tailwindcss";
+  @reference "../theme/css/styles.css";
 
   @layer components {
     @property --resee-card-border-coverage {

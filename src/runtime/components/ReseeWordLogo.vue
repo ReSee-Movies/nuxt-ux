@@ -63,6 +63,7 @@
 
 <style scoped>
   @reference "tailwindcss";
+  @reference "../theme/css/styles.css";
 
   .logo, .name {
     background-repeat : no-repeat;
