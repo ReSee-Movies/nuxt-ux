@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.23.2](///compare/0.23.1...0.23.2) (2026-02-02)
+
+### Bug Fixes
+
+* correctly apply the "dark" variant within Vue component styles 417bb73
+
 ## [0.23.1](///compare/0.23.0...0.23.1) (2026-01-22)
 
 ### Bug Fixes
