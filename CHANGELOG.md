@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.3](///compare/0.23.2...0.23.3) (2026-02-07)
+
+### Bug Fixes
+
+* added missing "placeholder" prop to FormFieldText 70a624d
+* pass props through to submit button when instantiating via FormFieldBuilder 0a4ab10
+
 ## [0.23.2](///compare/0.23.1...0.23.2) (2026-02-02)
 
 ### Bug Fixes
