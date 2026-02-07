@@ -2,13 +2,9 @@
   <div class="@container">
     <div class="grid grid-cols-1 gap-x-4 gap-y-6 sm:@lg:grid-cols-2 sm:@lg:gap-y-7">
       <template v-for="(field, index) of props.fields" :key="field.name ?? index">
-        <Component
-          :is    = "getComponent(field)"
-          v-bind = "field"
-          :class = "{
-            'sm:@lg:col-span-2': field.width !== 'half',
-          }"
-        />
+        <div :class="[field.gridCellClass, { 'sm:@lg:col-span-2': field.width !== 'half' }]">
+          <Component :is="getComponent(field)" v-bind="field" />
+        </div>
       </template>
     </div>
   </div>
@@ -16,6 +12,7 @@
 
 
 <script lang="ts">
+  import type { HTMLElementClassNames } from '../../types';
   import type { FormFieldCheckboxProps } from './FormFieldCheckbox.vue';
   import type { FormFieldRadioGroupProps } from './FormFieldRadioGroup.vue';
   import type { FormFieldSelectProps } from './FormFieldSelect.vue';
@@ -27,7 +24,8 @@
   import type { FormSubmitButtonProps } from './FormSubmitButton.vue';
 
   export interface CommonOptions {
-    width?: 'full' | 'half';
+    width?         : 'full' | 'half';
+    gridCellClass? : HTMLElementClassNames;
   }
 
   export interface CheckboxField extends FormFieldCheckboxProps, CommonOptions {
@@ -84,8 +82,6 @@
 
 
 <script setup lang="ts">
-  import { h } from 'vue';
-  import EmptyDiv from './element/FormElementEmptyDiv.vue';
   import CheckboxField from './FormFieldCheckbox.vue';
   import SelectField from './FormFieldSelect.vue';
   import SelectButtonField from './FormFieldSelectButton.vue';
@@ -108,7 +104,7 @@
       case 'textarea'      : return TextareaField;
       case 'toggle'        : return ToggleSwitchField;
       case 'turnstile'     : return TurnstileField;
-      case 'submit'        : return h(EmptyDiv, { class: 'text-end' }, { default: () => h(SubmitButton) });
+      case 'submit'        : return SubmitButton;
       default              : return 'div';
     }
   }
