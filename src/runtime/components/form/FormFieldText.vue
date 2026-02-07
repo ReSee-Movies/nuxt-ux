@@ -8,6 +8,7 @@
       <PrimeInputText
         :id               = "inputId"
         :aria-describedby = "messageId"
+        :placeholder      = "props.placeholder"
         :disabled         = "disabled"
         :readonly         = "readonly"
         :type             = "props.type"
@@ -25,9 +26,10 @@
   import { type FormFieldProps } from './FormField.vue';
 
   export interface FormFieldTextProps extends Omit<FormFieldProps, 'validator'> {
-    type?      : 'text' | 'url' | 'email';
-    minLength? : string | number;
-    maxLength? : string | number;
+    placeholder? : string;
+    type?        : 'text' | 'url' | 'email';
+    minLength?   : string | number;
+    maxLength?   : string | number;
   }
 </script>
 
