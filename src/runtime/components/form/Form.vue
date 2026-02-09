@@ -2,6 +2,7 @@
   <Transition
     leave-active-class = "transition-opacity duration-300"
     leave-to-class     = "opacity-0"
+    mode               = "out-in"
   >
     <LazySuccessSplash
       v-if  = "props.successText && success"
