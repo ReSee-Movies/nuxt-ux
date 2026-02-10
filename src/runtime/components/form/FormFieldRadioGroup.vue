@@ -6,12 +6,13 @@
 
     <template #default="{ inputId, messageId, disabled, readonly, invalid }">
       <template v-for="(option, index) of options" :key="`${ inputId }_${ index }`">
-        <FormLabelInputPair
+        <FormLabelFieldLayout
           :label-position = "props.optionLabelPosition"
           :disabled       = "disabled"
           :readonly       = "readonly"
           :input-id       = "`${ inputId }_${ index }`"
           :label-text     = "utils.getOptionLabel(option)"
+          class           = "mb-1"
         >
           <template #input>
             <PrimeRadioButton
@@ -24,7 +25,7 @@
               class                      = "input-group"
             />
           </template>
-        </FormLabelInputPair>
+        </FormLabelFieldLayout>
       </template>
     </template>
   </FormField>
@@ -33,14 +34,14 @@
 
 <script lang="ts">
   import type { FormFieldProps } from './FormField.vue';
-  import type { FormLabelInputPairProps } from './FormLabelInputPair.vue';
+  import type { FormLabelFieldLayoutProps } from './FormLabelFieldLayout.vue';
 
   export interface FormFieldRadioGroupProps extends Omit<FormFieldProps, 'validator'> {
     options              : unknown[];
     optionLabel?         : string;
     optionValue?         : string;
     optionDisabled?      : string;
-    optionLabelPosition? : FormLabelInputPairProps['labelPosition'];
+    optionLabelPosition? : FormLabelFieldLayoutProps['labelPosition'];
   }
 </script>
 
@@ -51,7 +52,7 @@
   import { useOptionListMethods } from '../../utils/form';
   import { createBooleanValidator } from '../../utils/validation';
   import FormField from './FormField.vue';
-  import FormLabelInputPair from './FormLabelInputPair.vue';
+  import FormLabelFieldLayout from './FormLabelFieldLayout.vue';
 
   const props = withDefaults(
     defineProps<FormFieldRadioGroupProps>(),

@@ -15,16 +15,20 @@
       },
     ]"
   >
-    <FormLabelInputPair
-      :input-id       = "inputId"
-      :label-is       = "props.is === 'fieldset' ? 'legend' : undefined"
-      :label-id       = "labelId"
-      :label-text     = "labelText"
-      :label-position = "props.labelPosition"
-      :label-sr-only  = "props.labelSrOnly"
-      :disabled       = "isDisabled && !isReadonly"
-      :required       = "props.required"
-      :faux-label     = "props.fauxLabel"
+    <FormLabelFieldLayout
+      :input-id        = "inputId"
+      :label-is        = "props.is === 'fieldset' ? 'legend' : undefined"
+      :label-id        = "labelId"
+      :label-text      = "labelText"
+      :label-position  = "props.labelPosition"
+      :label-sr-only   = "props.labelSrOnly"
+      :disabled        = "isDisabled && !isReadonly"
+      :required        = "props.required"
+      :faux-label      = "props.fauxLabel"
+      :note-text       = "props.noteText"
+      :validation-id   = "$field.error ? messageId : undefined"
+      :validation-text = "$field.error?.message"
+      :show-validation = "$field.touched || formState.hasSubmitted.value"
     >
       <template #label>
         <slot name="label" />
@@ -48,14 +52,17 @@
           :on-invalid = "$field.props?.onInvalid"
         />
       </template>
-    </FormLabelInputPair>
 
-    <FormValidationMessage
-      v-if     = "$field.error"
-      :id      = "messageId"
-      :visible = "$field.touched || formState.hasSubmitted.value"
-      :message = "$field.error.message"
-    />
+      <!--
+      <template v-if="$field.error" #validation>
+        <FormValidationMessage
+          :id      = "messageId"
+          :visible = "$field.touched || formState.hasSubmitted.value"
+          :message = "$field.error?.message"
+        />
+      </template>
+      -->
+    </FormLabelFieldLayout>
   </PrimeFormField>
 </template>
 
@@ -64,7 +71,8 @@
   import { computed } from 'vue';
   import type { ZodMiniType } from 'zod/mini';
   import type { HintedString, HTMLElementClassNames } from '../../types';
-  import type { FormLabelInputPairProps } from './FormLabelInputPair.vue';
+  import type { FormLabelFieldLayoutProps } from './FormLabelFieldLayout.vue';
+  import type { FormNoteProps } from './FormNote.vue';
 
   export interface FormFieldProps {
     name           : string;
@@ -75,9 +83,10 @@
     readonly?      : boolean;
     fauxLabel?     : boolean;
     labelSrOnly?   : boolean;
-    labelPosition? : FormLabelInputPairProps['labelPosition'];
+    labelPosition? : FormLabelFieldLayoutProps['labelPosition'];
     validator?     : (value: unknown, label: string) => undefined | ZodMiniType;
     class?         : HTMLElementClassNames;
+    noteText?       : FormNoteProps['noteText'];
   }
 </script>
 
@@ -85,9 +94,8 @@
 <script setup lang="ts">
   import PrimeFormField, { type FormFieldResolverOptions } from '@primevue/forms/formfield';
   import { humanize } from '@resee-movies/utilities/strings/humanize';
-  import { useId } from 'vue';
   import { injectFormInstance } from '../../utils/form';
-  import FormLabelInputPair from './FormLabelInputPair.vue';
+  import FormLabelFieldLayout from './FormLabelFieldLayout.vue';
   import FormValidationMessage from './FormValidationMessage.vue';
 
   defineOptions({

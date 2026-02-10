@@ -87,11 +87,15 @@
       fieldType : 'text',
       name      : 'firstName',
       width     : 'half',
+      noteText  : 'Here is some interesting info',
+      required  : true,
+      minLength : 5,
     },
     {
       fieldType : 'text',
       name      : 'surname',
       width     : 'half',
+      required  : true,
     },
     {
       fieldType   : 'select',
@@ -115,22 +119,26 @@
       iconOnly       : true,
       multiple       : false,
       width          : 'half',
+      noteText       : 'Here is some interesting info'
     },
     {
       fieldType : 'radio',
       name      : 'toppings',
       options   : ['Mushrooms', 'Onions', 'Sprouts', 'Pineapple'],
+      noteText  : 'Here is some interesting info'
     },
     {
       fieldType : 'toggle',
       name      : 'notifications',
       label     : 'Allow Notifications',
+      noteText  : 'Here is some interesting info'
     },
     {
       fieldType : 'checkbox',
       name      : 'termsOfService',
       label     : 'I agree to the terms of service',
       required  : true,
+      noteText  : 'Here is some interesting info'
     },
     {
       fieldType : 'textarea',

@@ -6,7 +6,8 @@
     display     : block;
     user-select : none;
 
-    &.required::after {
+    &.required:not(:has(.label-inner))::after,
+    &.required .label-inner::after {
       display             : inline-block;
       content             : "*";
       margin-inline-start : --spacing(1);
@@ -26,30 +27,6 @@
 
 
   /**
-   * The combination of a label + input element. Mostly used to control the
-   * relative layout of the two elements.
-   */
-  .input-label-pair {
-    display          : flex;
-    flex-direction   : column;
-    gap              : --spacing(1);
-    margin-block-end : --spacing(1);
-
-    &.label-before, &.label-after {
-      flex-direction : row;
-      align-items    : center;
-      gap            : --spacing(3);
-    }
-
-    &.label-after, &.label-below {
-      .input-label {
-        order: 2;
-      }
-    }
-  }
-
-
-  /**
    * The message that is displayed for an input when its value is not valid.
    * The height here is intentionally 0 - having a validation that appears and
    * pushes everything else on the page down is annoying. This relies on there
@@ -59,7 +36,6 @@
     color      : var(--color-danger);
     font-size  : var(--text-sm);
     line-clamp : 2;
-    height     : 0;
   }
 
 
@@ -145,7 +121,7 @@
      * submitted. This gives us a way to co-opt the disabled "you can't interact
      * with this right now" logic, and combine it with readonly styling.
      *
-     * Also note, the `p-hidden-accessible` class is provided by the Primevue in
+     * Also note, the `p-hidden-accessible` class is provided by Primevue in
      * some circumstances. The MultiSelect component, for example, uses a visually
      * hidden input field. These fields are also marked readonly, so the logic
      * explained above does not work unless this is also taken into account.
