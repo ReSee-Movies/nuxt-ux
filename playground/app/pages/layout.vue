@@ -53,7 +53,7 @@
 
   // const showMoreInfoModal = ref(false);
 
-  const formModel = reactive({
+  let formModel = reactive({
     layout      : 'main' as LayoutPageColumnProps['layout'],
     heading     : 'Layout',
     subheading  : 'Love looks not with the eyes, but with the mind; And therefore is wing\'d Cupid painted blind.',
