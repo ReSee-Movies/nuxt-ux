@@ -30,9 +30,15 @@
       </g>
     </svg>
 
-    <p v-if="props.text">
-      {{ props.text }}
-    </p>
+    <div class="content">
+      <slot name="before" />
+      <slot name="default">
+        <p v-if="props.text">
+          {{ props.text }}
+        </p>
+      </slot>
+      <slot name="after" />
+    </div>
   </div>
 </template>
 
@@ -61,7 +67,7 @@
     100% { r: 100; opacity: 0; }
   }
 
-  @keyframes show-text {
+  @keyframes opacity-in {
     100% { opacity: 1 }
   }
 
@@ -91,10 +97,13 @@
     }
   }
 
-  p {
-    opacity    : 0;
-    animation  : show-text 0.5s linear 0.9s forwards;
-    font-size  : var(--text-lg);
-    text-align : center;
+  .content {
+    opacity   : 0;
+    animation : opacity-in 0.5s linear 0.9s forwards;
+
+    p {
+      font-size  : var(--text-lg);
+      text-align : center;
+    }
   }
 </style>

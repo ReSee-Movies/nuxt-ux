@@ -7,7 +7,15 @@
     <LazySuccessSplash
       v-if  = "props.successText && success"
       :text = "props.successText"
-    />
+    >
+      <template #before>
+        <slot name="success-before" />
+      </template>
+
+      <template #after>
+        <slot name="success-after" />
+      </template>
+    </LazySuccessSplash>
 
     <div v-else>
       <LazyMessage
