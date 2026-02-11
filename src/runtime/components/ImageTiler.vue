@@ -144,23 +144,54 @@
     return { rows, cols, cells, gapX, gapY };
   });
 
-  const displayArray = ref<ImageDisplayInfo[]>([]);
+
+  const componentId  = useId();
+  const displayArray = useState<ImageDisplayInfo[]>(componentId, () => initializeDisplayArray());
+
 
   /**
    * Image cells are initially rendered with their `switching` flag toggled true,
-   * making them transparent. When mounted client-side, toggle those off, and being
+   * making them transparent. When mounted client-side, toggle those off, and begin
    * the replacement loop.
    */
   onMounted(() => {
-    for (let i = 0; i < grid.value.cells; i += 1) {
-      displayArray.value.push(
-        generateImageDisplayInfo(i, displayArray.value),
-      );
+    if (props.images?.length) {
+      showAll();
+      queueNextChange();
     }
-
-    showAll();
-    queueNextChange();
   });
+
+
+  /**
+   * A watcher that is responsible for keeping track of the available image
+   * sources that are to be used. There are three possibilities:
+   *
+   * 1. We're going from zero image choices, to more than zero. If so, update
+   *    all the ImageDisplayCell objects with content info, cancel any queued
+   *    changes, and start a fresh change loop.
+   *
+   * 2. We're going from one or more image choices, to zero. If so, hide the
+   *    visible images, and stop the change loop.
+   *
+   * 3. We're going from one set of image to another. In this case, nothing
+   *    special needs to be done. As the change loop advances, the old images
+   *    will be replaced with the new ones.
+   */
+  watch(() => props.images, (newImages, oldImages) => {
+    if (newImages.length > 0 && oldImages.length === 0) {
+      displayArray.value.forEach(
+        (entry, idx) => switchImageCellContent(entry, idx),
+      );
+
+      cancelNextQueuedChange();
+      queueNextChange();
+    }
+    else if (newImages.length === 0) {
+      cancelNextQueuedChange();
+      hideAll();
+    }
+  });
+
 
   /**
    * A watcher that is responsible for keeping the number of image cells in
@@ -184,11 +215,28 @@
   });
 
   /**
+   * Populates an array with the number of ImageDisplayInfo objects dictated
+   * by the tiler's grid settings.
+   */
+  function initializeDisplayArray() {
+    const arr: ImageDisplayInfo[] = [];
+
+    for (let i = 0; i < grid.value.cells; i += 1) {
+      arr.push(generateImageDisplayInfo(i, arr));
+    }
+
+    return arr;
+  }
+
+
+  let nextQueuedChangeId: number | NodeJS.Timeout | undefined = undefined;
+
+  /**
    * Sets a timeout that, when reached, will pick a random image cell to change.
    * It then calls itself to set up for the change.
    */
   function queueNextChange() {
-    setTimeout(async () => {
+    nextQueuedChangeId = setTimeout(async () => {
       if (props.play) {
         const idx  = getValueFromRange([0, displayArray.value.length - 1]);
         const info = displayArray.value[idx];
@@ -200,6 +248,16 @@
 
       queueNextChange();
     }, getValueFromRange(props.turnoverRate));
+  }
+
+  /**
+   * Clears the pending timeout that will change the next random image cell.
+   */
+  function cancelNextQueuedChange() {
+    if (nextQueuedChangeId) {
+      clearTimeout(nextQueuedChangeId);
+      nextQueuedChangeId = undefined;
+    }
   }
 
   /**
