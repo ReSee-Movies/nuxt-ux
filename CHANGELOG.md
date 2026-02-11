@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.24.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.24.0...0.24.1) (2026-02-11)
+
+### Bug Fixes
+
+* actual ImageTiler fix for missing images on initial load (Tiler was loading before images were available, with no mechanism to update after they were received) ([dd6b1b5](https://github.com/ReSee-Movies/nuxt-ux/commit/dd6b1b562455a8c0afb6f3f0bde7e31324b3bd5e))
+
 ## [0.24.0](///compare/0.23.3...0.24.0) (2026-02-11)
 
 ### Features
