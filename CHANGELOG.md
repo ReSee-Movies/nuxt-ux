@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.24.0](///compare/0.23.3...0.24.0) (2026-02-11)
+
+### Features
+
+* added "before" and "after" slots to the SuccessSplash component, and "success-before" and "success-after" to the Form component b146b3a
+* added the "note" prop to FormField 23ddab4
+
+### Bug Fixes
+
+* add "out-in" mode to the transition between a Form and success splash b2ebd09
+* the ImageTiler would sometimes not select image sources for the tiles on initial load (had something to do with SSR, maybe?) bb87594
+
 ## [0.23.3](///compare/0.23.2...0.23.3) (2026-02-07)
 
 ### Bug Fixes
