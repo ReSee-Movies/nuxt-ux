@@ -107,7 +107,7 @@
   import { getRandomInteger } from '@resee-movies/utilities/numbers/get-random-integer';
   import { toInteger } from '@resee-movies/utilities/numbers/to-integer';
   import { sleep } from '@resee-movies/utilities/timers/sleep';
-  import { computed, onMounted, shallowReactive, useId, watch } from 'vue';
+  import { computed, onMounted, shallowReactive, useId, ref, watch } from 'vue';
   import { useSettingsForBreakpoint } from '../composables/use-settings-for-breakpoint';
   import ImageBase from './ImageBase.vue';
 
@@ -144,16 +144,7 @@
     return { rows, cols, cells, gapX, gapY };
   });
 
-  const componentId  = useId();
-  const displayArray = useState<ImageDisplayInfo[]>(componentId, () => {
-    const arr: ImageDisplayInfo[] = [];
-
-    for (let i = 0; i < grid.value.cells; i += 1) {
-      arr.push(generateImageDisplayInfo(i, arr));
-    }
-
-    return arr;
-  });
+  const displayArray = ref<ImageDisplayInfo[]>([]);
 
   /**
    * Image cells are initially rendered with their `switching` flag toggled true,
@@ -161,6 +152,12 @@
    * the replacement loop.
    */
   onMounted(() => {
+    for (let i = 0; i < grid.value.cells; i += 1) {
+      displayArray.value.push(
+        generateImageDisplayInfo(i, displayArray.value),
+      );
+    }
+
     showAll();
     queueNextChange();
   });
