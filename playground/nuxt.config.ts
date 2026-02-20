@@ -9,7 +9,7 @@ export default defineNuxtConfig({
 
   sourcemap: false,
 
-  ssr: false,
+  ssr: true,
 
   app: {
     head: {
