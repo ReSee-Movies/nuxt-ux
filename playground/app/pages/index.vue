@@ -22,6 +22,7 @@
   const pages = [
     { label: 'Layout',            icon: 'i-ph-ruler',                route: 'layout' },
     { label: 'Typography',        icon: 'i-ph-text-aa',              route: 'typography' },
+    { label: 'Accordion',         icon: 'i-ph-stack',                route: 'components-accordion' },
     { label: 'Button',            icon: 'i-ph-radio-button',         route: 'components-button' },
     { label: 'Card',              icon: 'i-ph-bounding-box',         route: 'components-card' },
     { label: 'Card Scroller',     icon: 'i-ph-hand-swipe-right',     route: 'components-card-scroller' },

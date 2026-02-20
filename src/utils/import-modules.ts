@@ -60,6 +60,7 @@ export function importModules(nuxt: Nuxt): NuxtUxModuleDependencies {
 
   const primeComponents = Array.from(
     new Set([
+      'Accordion',
       'Checkbox',
       'Dialog',
       'Drawer',
