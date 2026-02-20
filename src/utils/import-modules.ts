@@ -2,15 +2,28 @@ import type { ModuleDependencies, Nuxt } from '@nuxt/schema';
 import type { ModuleOptions } from '#resee-ux/types';
 
 
+export type NuxtFontsConfig    = Exclude<ModuleDependencies['@nuxt/fonts'], false | undefined>;
+export type NuxtDeviceConfig   = Exclude<ModuleDependencies['@nuxtjs/device'], false | undefined>;
+export type NuxtPiniaConfig    = Exclude<ModuleDependencies['@pinia/nuxt'], false | undefined>;
+export type NuxtPrimevueConfig = Exclude<ModuleDependencies['@primevue/nuxt-module'], false | undefined>;
+
+export type NuxtUxModuleDependencies = {
+  '@nuxt/fonts'           : NuxtFontsConfig;
+  '@nuxtjs/device'        : NuxtDeviceConfig;
+  '@pinia/nuxt'           : NuxtPiniaConfig;
+  '@primevue/nuxt-module' : NuxtPrimevueConfig;
+};
+
+
 /**
  * Appends the config with additional modules that this one
  * relies on.
  */
-export function importModules(nuxt: Nuxt) {
+export function importModules(nuxt: Nuxt): NuxtUxModuleDependencies {
   /* *****************************
    * Nuxt Fonts
    * ***************************** */
-  const NuxtFonts: ModuleDependencies['@nuxt/fonts'] = {
+  const NuxtFonts: NuxtFontsConfig = {
     defaults: {
       provider: 'google',
 
@@ -28,21 +41,21 @@ export function importModules(nuxt: Nuxt) {
 
 
   /* *****************************
-   * Nuxt Fonts
+   * Nuxt Device
    * ***************************** */
-  const NuxtDevice: ModuleDependencies['@nuxtjs/device'] = {};
+  const NuxtDevice: NuxtDeviceConfig = {};
 
 
   /* *****************************
    * Pinia
    * ***************************** */
-  const Pinia: ModuleDependencies['@pinia/nuxt'] = {};
+  const Pinia: NuxtPiniaConfig = {};
 
 
   /* *****************************
    * Primevue
    * ***************************** */
-  const primeOptions = nuxt.options.ux?.primevue as ModuleOptions['primevue'];
+  const primeOptions    = (nuxt.options.ux || {}).primevue as ModuleOptions['primevue'];
   const componentPrefix = primeOptions?.componentPrefix ?? 'Prime';
 
   const primeComponents = Array.from(
@@ -76,7 +89,7 @@ export function importModules(nuxt: Nuxt) {
     'primevue/toastservice',
   );
 
-  const Primevue: ModuleDependencies['@primevue/nuxt-module'] = {
+  const Primevue: NuxtPrimevueConfig = {
     defaults: {
       autoImport : false,
       loadStyles : false,
@@ -113,9 +126,9 @@ export function importModules(nuxt: Nuxt) {
   };
 
   return {
-    '@nuxt/fonts': NuxtFonts,
-    '@primevue/nuxt-module': Primevue,
-    '@nuxtjs/device': NuxtDevice,
-    '@pinia/nuxt': Pinia,
+    '@nuxt/fonts'           : NuxtFonts,
+    '@primevue/nuxt-module' : Primevue,
+    '@nuxtjs/device'        : NuxtDevice,
+    '@pinia/nuxt'           : Pinia,
   };
 }

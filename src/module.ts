@@ -23,6 +23,8 @@ export default defineNuxtModule<ModuleOptions>({
     configKey : 'ux',
   },
 
+  // @ts-expect-error - Nuxt cannot keep its sh*t together for more than 5 minutes
+  // on how it would like to type things.
   moduleDependencies: (nuxt) => importModules(nuxt),
 
   async setup(options, nuxt) {
