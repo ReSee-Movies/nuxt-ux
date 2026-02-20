@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.24.2](https://github.com/ReSee-Movies/nuxt-ux/compare/0.24.1...0.24.2) (2026-02-20)
+
+### Documentation
+
+* add correct base path when creating site for GitHub pages ([375253b](https://github.com/ReSee-Movies/nuxt-ux/commit/375253b362381394736f7338a293171bdf44924a))
+* fix static site generate action ([68efcaf](https://github.com/ReSee-Movies/nuxt-ux/commit/68efcaf12f0d22466c879a98ca42e772a2d94ba4))
+* pre-render with static generation ([919b31a](https://github.com/ReSee-Movies/nuxt-ux/commit/919b31a3ce98f9969cda74bdb3ba8a7dc8198d0c))
+* update README ([a3a75b8](https://github.com/ReSee-Movies/nuxt-ux/commit/a3a75b827ce22f34caacaf94d07253b497eb7b9c))
+* updates to static site generate for GitHub pages ([88729dd](https://github.com/ReSee-Movies/nuxt-ux/commit/88729dd5a23f35f188e80ef4c47819715ea0b6a5))
+
 ## [0.24.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.24.0...0.24.1) (2026-02-11)
 
 ### Bug Fixes
