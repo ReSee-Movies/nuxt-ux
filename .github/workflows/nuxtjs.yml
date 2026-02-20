@@ -46,11 +46,13 @@ jobs:
             echo "Unable to determine package manager"
             exit 1
           fi
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "24"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache: npm
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
@@ -59,23 +61,27 @@ jobs:
           #
           # You may remove this line if you want to manage the configuration yourself.
           static_site_generator: nuxt
+
       - name: Restore cache
         uses: actions/cache@v4
         with:
           path: |
-            dist
+            ./playground/.dist
             .nuxt
-          key: ${{ runner.os }}-nuxt-build-${{ hashFiles('dist') }}
+          key: ${{ runner.os }}-nuxt-build-${{ hashFiles('./playground/.dist') }}
           restore-keys: |
             ${{ runner.os }}-nuxt-build-
+
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        run: npm ci
+
       - name: Static HTML export with Nuxt
-        run: ${{ steps.detect-package-manager.outputs.manager }} run dev:build
+        run: npm run dev:build:static
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./playground/.output
+          path: ./playground/.dist
 
   # Deployment job
   deploy:
