@@ -52,16 +52,6 @@
           :on-invalid = "$field.props?.onInvalid"
         />
       </template>
-
-      <!--
-      <template v-if="$field.error" #validation>
-        <FormValidationMessage
-          :id      = "messageId"
-          :visible = "$field.touched || formState.hasSubmitted.value"
-          :message = "$field.error?.message"
-        />
-      </template>
-      -->
     </FormLabelFieldLayout>
   </PrimeFormField>
 </template>

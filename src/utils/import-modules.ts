@@ -62,6 +62,7 @@ export function importModules(nuxt: Nuxt): NuxtUxModuleDependencies {
     new Set([
       'Accordion',
       'Checkbox',
+      'CheckboxGroup',
       'Dialog',
       'Drawer',
       'Form',

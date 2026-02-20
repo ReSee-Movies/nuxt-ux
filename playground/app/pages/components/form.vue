@@ -145,6 +145,12 @@
       name      : 'additionalInfo',
     },
     {
+      fieldType   : 'checkbox-group',
+      name        : 'numberedOptions',
+      options     : ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'],
+      maxRequired : 3,
+    },
+    {
       fieldType: 'submit',
     },
   ];

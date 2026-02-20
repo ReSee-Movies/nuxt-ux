@@ -14,6 +14,7 @@
 <script lang="ts">
   import type { HTMLElementClassNames } from '../../types';
   import type { FormFieldCheckboxProps } from './FormFieldCheckbox.vue';
+  import type { FormFieldCheckboxGroupProps } from './FormFieldCheckboxGroup.vue';
   import type { FormFieldRadioGroupProps } from './FormFieldRadioGroup.vue';
   import type { FormFieldSelectProps } from './FormFieldSelect.vue';
   import type { FormFieldSelectButtonProps } from './FormFieldSelectButton.vue';
@@ -30,6 +31,10 @@
 
   export interface CheckboxField extends FormFieldCheckboxProps, CommonOptions {
     fieldType: 'checkbox';
+  }
+
+  export interface CheckboxGroupField extends FormFieldCheckboxGroupProps, CommonOptions {
+    fieldType: 'checkbox-group';
   }
 
   export interface SelectField extends FormFieldSelectProps, CommonOptions {
@@ -66,6 +71,7 @@
 
   export type FormFieldBuilderOption
     = CheckboxField
+    | CheckboxGroupField
     | SelectField
     | SelectButtonField
     | RadioGroup
@@ -83,6 +89,7 @@
 
 <script setup lang="ts">
   import CheckboxField from './FormFieldCheckbox.vue';
+  import CheckboxFieldGroup from './FormFieldCheckboxGroup.vue';
   import SelectField from './FormFieldSelect.vue';
   import SelectButtonField from './FormFieldSelectButton.vue';
   import SubmitButton from './FormSubmitButton.vue';
@@ -96,16 +103,17 @@
 
   function getComponent(field: FormFieldBuilderOption) {
     switch (field.fieldType) {
-      case 'checkbox'      : return CheckboxField;
-      case 'select'        : return SelectField;
-      case 'select-button' : return SelectButtonField;
-      case 'radio'         : return RadioGroup;
-      case 'text'          : return TextField;
-      case 'textarea'      : return TextareaField;
-      case 'toggle'        : return ToggleSwitchField;
-      case 'turnstile'     : return TurnstileField;
-      case 'submit'        : return SubmitButton;
-      default              : return 'div';
+      case 'checkbox'       : return CheckboxField;
+      case 'checkbox-group' : return CheckboxFieldGroup;
+      case 'select'         : return SelectField;
+      case 'select-button'  : return SelectButtonField;
+      case 'radio'          : return RadioGroup;
+      case 'text'           : return TextField;
+      case 'textarea'       : return TextareaField;
+      case 'toggle'         : return ToggleSwitchField;
+      case 'turnstile'      : return TurnstileField;
+      case 'submit'         : return SubmitButton;
+      default               : return 'div';
     }
   }
 </script>
