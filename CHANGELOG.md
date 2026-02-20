@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.24.2...0.25.0) (2026-02-20)
+
+### Features
+
+* **accordion:** introduce Accordion component ([ec1cfff](https://github.com/ReSee-Movies/nuxt-ux/commit/ec1cfffb707681e449970d1286da719e8ccefac0))
+* **checkbox-group:** introduce CheckboxGroup form component ([71e097b](https://github.com/ReSee-Movies/nuxt-ux/commit/71e097bb6041ae5663adadad782653fb1b7c7e68))
+
 ## [0.24.2](https://github.com/ReSee-Movies/nuxt-ux/compare/0.24.1...0.24.2) (2026-02-20)
 
 ### Documentation
