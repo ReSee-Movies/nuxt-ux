@@ -9,7 +9,14 @@ export default defineNuxtConfig({
 
   sourcemap: false,
 
-  ssr: true,
+  $env: {
+    github: {
+      ssr: true,
+      app: {
+        baseURL: '/nuxt-ux/',
+      },
+    },
+  },
 
   app: {
     head: {

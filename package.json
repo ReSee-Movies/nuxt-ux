@@ -41,7 +41,7 @@
     "dev": "npm run dev:prepare && nuxi dev playground --port 3003 --public",
     "dev:preview": "npm run dev:build && NODE_ENV=development nuxi preview playground --port 3003",
     "dev:build": "nuxi build playground --envName=development",
-    "dev:build:static": "nuxt generate playground --envName=development",
+    "dev:build:static": "nuxt generate playground --envName=github",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "prepare": "nuxt-module-build prepare && nuxt-module-build build",
     "release": "dotenv release-it --",
