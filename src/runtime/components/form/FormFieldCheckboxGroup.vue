@@ -105,10 +105,13 @@
 
   @layer components {
     .checkbox-group {
+      --container-max-height-bind : v-bind(maxHeight);
+      --container-max-height      : var(--container-max-height-bind, 300px);
+
       border        : solid 1px var(--color-background-scale-b);
       border-radius : var(--radius-md);
       padding       : --spacing(2);
-      max-height    : v-bind(maxHeight);
+      max-height    : var(--container-max-height);
       overflow-y    : auto;
     }
   }
