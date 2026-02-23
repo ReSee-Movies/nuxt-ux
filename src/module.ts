@@ -1,11 +1,13 @@
 import {
   addComponentsDir,
   addImportsDir,
+  addPlugin,
   addServerScanDir,
   addTemplate,
   createResolver,
   defineNuxtModule,
   resolvePath,
+  updateRuntimeConfig,
 } from '@nuxt/kit';
 import type { ModuleOptions } from './runtime/types';
 import { importCSS } from './utils/import-css';
@@ -58,7 +60,6 @@ export default defineNuxtModule<ModuleOptions>({
       await importCSS(nuxt, { sources, plugins, imports });
     });
 
-
     const inlineStyles = nuxt.options.app.head.style ?? [];
 
     inlineStyles.push({
@@ -67,6 +68,25 @@ export default defineNuxtModule<ModuleOptions>({
     });
 
     nuxt.options.app.head.style = inlineStyles;
+
+
+    // ----------------------------
+    // ReSee Config
+    // ----------------------------
+    updateRuntimeConfig({
+      public: {
+        ux: {
+          reseeImageBaseUrl : options.reseeImageBaseUrl,
+          tmdbImageBaseUrl  : options.tmdbImageBaseUrl,
+        },
+      },
+    });
+
+    addPlugin(
+      await resolver.resolvePath('./runtime/plugins/configure-resee-ux', {
+        extensions: ['ts', 'js'],
+      }),
+    );
 
 
     // ----------------------------

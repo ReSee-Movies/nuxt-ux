@@ -3,7 +3,10 @@ export default defineNuxtConfig({
 
   modules: ['../src/module'],
 
-  ux: {},
+  ux: {
+    reseeImageBaseUrl : '/api/images/resee/',
+    tmdbImageBaseUrl  : '/api/images/tmdb/',
+  },
 
   devtools: { enabled: false },
 
@@ -14,6 +17,10 @@ export default defineNuxtConfig({
       ssr: true,
       app: {
         baseURL: '/nuxt-ux/',
+      },
+      ux: {
+        reseeImageBaseUrl : undefined,
+        tmdbImageBaseUrl  : undefined,
       },
     },
   },

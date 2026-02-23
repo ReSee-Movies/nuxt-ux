@@ -2,6 +2,8 @@ export interface ModuleOptions {
   defaultColorMode?        : 'lite' | 'dark';
   usePreferredColorScheme? : boolean;
   componentPrefix?         : string;
+  reseeImageBaseUrl?       : string;
+  tmdbImageBaseUrl?        : string;
 
   tailwind?: {
     plugins?: (string | undefined)[];
@@ -23,6 +25,13 @@ export interface ModuleHooks {
 
 declare module '@nuxt/schema' {
   interface NuxtHooks extends ModuleHooks {}
+
+  interface PublicRuntimeConfig {
+    ux?: {
+      reseeImageBaseUrl? : string;
+      tmdbImageBaseUrl?  : string;
+    };
+  }
 }
 
 
