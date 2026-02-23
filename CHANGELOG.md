@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.26.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.25.1...0.26.0) (2026-02-23)
+
+### Features
+
+* **ReseeWordLogo:** added the "inline" prop for placing the component in a text flow ([dd2a67e](https://github.com/ReSee-Movies/nuxt-ux/commit/dd2a67e614dc9f36b197583585858a260bbee93d))
+
+### Bug Fixes
+
+* **useImageStore:** moved the logic of useLoadImage into a store, so TmdbImageCache instances have isolation during SSR ([317b885](https://github.com/ReSee-Movies/nuxt-ux/commit/317b88562b755847a46d846ce44055985c96f22f))
+* **useReseeUxStore:** expose ability to set utility config values ([cd4e951](https://github.com/ReSee-Movies/nuxt-ux/commit/cd4e9511df3ff5fea9b53a29547e995fe433cdfc))
+
 ## [0.25.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.25.0...0.25.1) (2026-02-23)
 
 ### Bug Fixes
