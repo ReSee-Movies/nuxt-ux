@@ -1,10 +1,11 @@
 import { useCookie } from '#imports';
+import { type ReseeUtilitiesRuntimeConstants, setReseeUtilityConstant } from '@resee-movies/utilities/config';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 import { DefaultLocalization } from '../constants';
 
 export type ReseeUxAppPreferences = {
-  dismissNotification?: string;
+  dismissNotification?: string | string[];
 };
 
 /**
@@ -24,8 +25,13 @@ export const useReseeUxStore = defineStore('resee-ux', () => {
     expires  : new Date(Date.now() + msInYear),
   });
 
+  function setReseeUxConstant(value: Partial<ReseeUtilitiesRuntimeConstants>) {
+    setReseeUtilityConstant(value);
+  }
+
   return {
     locale,
     preferences,
+    setReseeUxConstant,
   };
 });
