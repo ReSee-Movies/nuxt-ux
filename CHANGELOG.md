@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.27.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.26.0...0.27.0) (2026-02-23)
+
+### Features
+
+* expand runtime configuration to support setting resee and tmdb image base URLs in nuxt.config ([438a279](https://github.com/ReSee-Movies/nuxt-ux/commit/438a279b5c8ba07fd68a20b5ae9560662f1505b5))
+
 ## [0.26.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.25.1...0.26.0) (2026-02-23)
 
 ### Features
