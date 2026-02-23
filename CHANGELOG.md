@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.25.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.25.0...0.25.1) (2026-02-23)
+
+### Bug Fixes
+
+* **FormFieldCheckboxGroup:** add a default max-height in the component's scoped CSS to prevent visual glitch while bound style value is made available ([104dd28](https://github.com/ReSee-Movies/nuxt-ux/commit/104dd2867ba993fa6099b5b043bc0572f1c2440c))
+* **LayoutPageColumn:** rewrite .page-column-xl class to avoid :global() usage due to https://github.com/vuejs/core/issues/12404 ([138cd40](https://github.com/ReSee-Movies/nuxt-ux/commit/138cd40ddedff54829377f21edcaef3a9d33002d))
+
+### Style Updates
+
+* ensure that the PrimeVue class .p-hidden-accessible is available before a component that requires it is rendered ([d225ff2](https://github.com/ReSee-Movies/nuxt-ux/commit/d225ff2c44b4db5915f18a9b40ab260464e1ffbf))
+
 ## [0.25.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.24.2...0.25.0) (2026-02-20)
 
 ### Features
