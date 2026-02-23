@@ -1,21 +1,31 @@
 <template>
-  <div
-    class       = "flex items-center"
-    :class      = "{
-      'gap-1'          : props.size === 'xs' || props.size === 'sm',
-      'gap-1 lg:gap-2' : props.size === 'lg' || props.size === 'responsive',
-    }"
+  <Component
+    :is        = "props.inline ? 'span' : 'div'"
+    role       = "img"
+    aria-label = "The ReSee Movies Logo"
+    :class     = "[
+      'items-center',
+      {
+        'flex'           : !props.inline,
+        'inline-flex'    : props.inline,
+        'translate-y-1'  : props.inline,
+        'gap-1'          : props.size === 'xs' || props.size === 'sm',
+        'gap-1 lg:gap-2' : props.size === 'lg' || props.size === 'responsive',
+      },
+    ]"
   >
-    <div
+    <Component
       v-if   = "props.showLogo"
+      :is    = "props.inline ? 'span' : 'div'"
       :class = "['logo', 'aspect-square', imageSizes.logo]"
     />
 
-    <div
+    <Component
       v-if   = "props.showName"
+      :is    = "props.inline ? 'span' : 'div'"
       :class = "['name', 'aspect-[3.875/1]', imageSizes.name]"
     />
-  </div>
+  </Component>
 </template>
 
 
@@ -29,6 +39,7 @@
     showLogo? : boolean;
     showName? : boolean;
     size?     : 'lg' | 'md' | 'sm' | 'xs' | 'responsive';
+    inline?   : boolean;
   }
 </script>
 
@@ -41,6 +52,7 @@
       showLogo : true,
       showName : true,
       size     : 'responsive',
+      inline   : false,
     },
   );
 
