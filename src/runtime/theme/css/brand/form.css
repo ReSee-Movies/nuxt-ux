@@ -1,5 +1,16 @@
 @layer components {
   /**
+   * This class is provided to visibly hidden components by PrimeVue, but tends
+   * to be loaded after the component that needs it has been rendered, causing
+   * visual jumps as the targeted element(s) gets hidden. Adding this here ensures
+   * those styles are already available when the component renders.
+   */
+  .p-hidden-accessible {
+    @apply sr-only;
+  }
+
+
+  /**
    * Anything that wants to look like a label.
    */
   .input-label {
