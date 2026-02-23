@@ -74,11 +74,9 @@
       }
     }
 
-    :global(.page-column-xl) {
-      @variant xl {
-        .page-column {
-          max-width: var(--container-7xl);
-        }
+    @variant xl {
+      .page-column:where(.page-column-xl .page-column) {
+        max-width: var(--container-7xl);
       }
     }
 
