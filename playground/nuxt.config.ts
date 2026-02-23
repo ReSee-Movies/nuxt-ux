@@ -5,7 +5,7 @@ export default defineNuxtConfig({
 
   ux: {},
 
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 
   sourcemap: false,
 

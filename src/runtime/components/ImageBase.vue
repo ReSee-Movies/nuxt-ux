@@ -1,7 +1,7 @@
 <template>
   <img
     ref      = "container"
-    :src     = "imgSrc"
+    :src     = "imageData.src"
     :alt     = "altText"
     :width   = "dimensions.width"
     :height  = "dimensions.height"
@@ -53,7 +53,7 @@
   import { getAspectRatio } from '@resee-movies/utilities/numbers/get-aspect-ratio';
   import { fromTmdbImageSize } from '@resee-movies/utilities/tmdb/from-tmdb-image-size';
   import { computed, ref } from 'vue';
-  import { useLoadImage } from '../composables/use-load-image';
+  import { useImageStore } from '../stores/use-image-store';
   import { useSharedIntersectionObserver } from '../composables/use-shared-intersection-observer';
 
   const props = withDefaults(
@@ -131,9 +131,9 @@
 
 
   /**
-   * Implementation of `useLoadImage`.
+   * Implementation of `useImageStore`.
    */
-  const { src: imgSrc, error: imgError } = useLoadImage(
+  const imageData = useImageStore().loadImage(
     () => normalizedSource.value.identifier,
     {
       deferLoad    : deferLoad,
@@ -194,7 +194,7 @@
    */
   const altText = computed(() => {
     return typeof props.alt === 'function'
-      ? props.alt(imgError.value)
+      ? props.alt(imageData.error)
       : (props.alt ?? normalizedSource.value.description ?? '');
   });
 </script>
