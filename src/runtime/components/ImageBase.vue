@@ -12,16 +12,18 @@
 
 
 <script lang="ts">
-  import type { ImageFileDescriptor } from '@resee-movies/utilities/images/normalize-image-file-descriptor';
+  import type {
+    ImageFileDescriptor,
+    NormalizedFileDescriptorSource,
+  } from '@resee-movies/utilities/images/normalize-image-file-descriptor';
   import type { AspectRatio } from '@resee-movies/utilities/numbers/get-aspect-ratio';
   import type { MediaAssetTransformConfig } from '@resee-movies/utilities/resee/get-media-asset-url';
   import type { TmdbImageSize } from '@resee-movies/utilities/tmdb/get-tmdb-image-url';
-  import type { LoadImageType } from '../composables/use-load-image';
 
   export interface ImageBaseProps {
     src          : ImageFileDescriptor | null | undefined;
     alt?         : string | null | ((error: unknown) => string);
-    type?        : LoadImageType;
+    type?        : NormalizedFileDescriptorSource;
     width?       : TmdbImageSize | string | number;
     height?      : string | number;
     aspect?      : AspectRatio | 'auto';

@@ -84,7 +84,7 @@
     "@primeuix/utils": "^0.6.4",
     "@primevue/forms": "^4.5.4",
     "@primevue/nuxt-module": "^4.5.4",
-    "@resee-movies/utilities": "^0.12.2",
+    "@resee-movies/utilities": "^1.0.1",
     "@tailwindcss/postcss": "^4.2.0",
     "@tailwindcss/vite": "^4.2.0",
     "@vueuse/core": "^14.2.1",

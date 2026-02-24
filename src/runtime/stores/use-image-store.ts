@@ -8,6 +8,8 @@ import { TmdbImageCache } from '@resee-movies/utilities/tmdb/get-tmdb-image-cach
 import { getTmdbImageUrl } from '@resee-movies/utilities/tmdb/get-tmdb-image-url';
 import { defineStore } from 'pinia';
 import { type MaybeRefOrGetter, type Reactive, type Ref, shallowReactive, toRef, toValue, watch } from 'vue';
+import type { ReseeUxPublicRuntimeConfig } from '../types';
+import { useReseeUxStore } from './use-resee-ux-store';
 
 
 export type LoadImageOptions = {
@@ -33,13 +35,16 @@ export type LoadImageState = Reactive<{
 }>;
 
 type LoadImageContext = {
-  state : LoadImageState;
-  cache : TmdbImageCache;
+  state  : LoadImageState;
+  cache  : TmdbImageCache;
+  config : ReseeUxPublicRuntimeConfig;
 };
 
 
 export const useImageStore = defineStore('image', () => {
   const cache = new TmdbImageCache();
+
+  const { config } = useReseeUxStore();
 
   function loadImageFunction(
     source  : MaybeRefOrGetter<string | null | undefined>,
@@ -65,7 +70,7 @@ export const useImageStore = defineStore('image', () => {
         toRef(options.deferLoad),
       ],
       () => {
-        handleImageLoad(source, options, { state, cache });
+        handleImageLoad(source, options, { state, cache, config });
       },
       { immediate: true },
     );
@@ -125,7 +130,7 @@ function handleImageLoad(
 
   switch(loadType) {
     case 'tmdb':
-      targetSrc = getTmdbImageUrl(rawSource, imgWidth);
+      targetSrc = getTmdbImageUrl(rawSource, imgWidth, { baseUrl: context.config.tmdbImageBaseUrl });
       break;
 
     case 'resee':
@@ -133,7 +138,13 @@ function handleImageLoad(
       const reseeConfig = toValue(options.reseeConfig);
       const width       = fromTmdbImageSize(imgWidth, { originalIsUndefined: true });
 
-      targetSrc = getMediaAssetUrl(rawSource, filename, { width, format: 'webp', ...reseeConfig });
+      targetSrc = getMediaAssetUrl(rawSource, filename, {
+        width   : width,
+        format  : 'webp',
+        baseUrl : context.config.reseeImageBaseUrl,
+
+        ...reseeConfig,
+      });
       break;
 
     default:
@@ -156,7 +167,7 @@ function handleImageLoad(
 
   switch (loadType) {
     case 'tmdb':
-      const cachedValue = context.cache.getImage(targetSrc);
+      const cachedValue = context.cache.getImage(targetSrc, { baseUrl: context.config.tmdbImageBaseUrl });
 
       if (isPromiseLike(cachedValue)) {
         tempSrc = cachedValue.placeholderUrl;

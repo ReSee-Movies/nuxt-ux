@@ -18,6 +18,11 @@ export interface ModuleOptions {
   };
 }
 
+export interface ReseeUxPublicRuntimeConfig {
+  reseeImageBaseUrl? : string;
+  tmdbImageBaseUrl?  : string;
+}
+
 export interface ModuleHooks {
   /** Allows extending sources for Tailwind CSS. */
   'tailwindcss:sources:extend': (sources: string[]) => void;
@@ -27,10 +32,7 @@ declare module '@nuxt/schema' {
   interface NuxtHooks extends ModuleHooks {}
 
   interface PublicRuntimeConfig {
-    ux?: {
-      reseeImageBaseUrl? : string;
-      tmdbImageBaseUrl?  : string;
-    };
+    ux?: ReseeUxPublicRuntimeConfig;
   }
 }
 

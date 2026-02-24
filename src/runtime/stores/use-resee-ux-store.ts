@@ -1,12 +1,14 @@
-import { useCookie } from '#imports';
-import { type ReseeUtilitiesRuntimeConstants, setReseeUtilityConstant } from '@resee-movies/utilities/config';
+import { useCookie, useRuntimeConfig } from '#imports';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 import { DefaultLocalization } from '../constants';
+import type { ReseeUxPublicRuntimeConfig } from '../types';
+
 
 export type ReseeUxAppPreferences = {
   dismissNotification?: string | string[];
-};
+} & Record<string, unknown>;
+
 
 /**
  * Various runtime configuration bits and bobs for the ReSee UX module.
@@ -25,13 +27,13 @@ export const useReseeUxStore = defineStore('resee-ux', () => {
     expires  : new Date(Date.now() + msInYear),
   });
 
-  function setReseeUxConstant(value: Partial<ReseeUtilitiesRuntimeConstants>) {
-    setReseeUtilityConstant(value);
-  }
+  const config = reactive<ReseeUxPublicRuntimeConfig>({
+    ...(useRuntimeConfig().public.ux ?? {}),
+  });
 
   return {
     locale,
     preferences,
-    setReseeUxConstant,
+    config,
   };
 });

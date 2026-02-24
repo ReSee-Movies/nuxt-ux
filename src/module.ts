@@ -1,7 +1,6 @@
 import {
   addComponentsDir,
   addImportsDir,
-  addPlugin,
   addServerScanDir,
   addTemplate,
   createResolver,
@@ -81,12 +80,6 @@ export default defineNuxtModule<ModuleOptions>({
         },
       },
     });
-
-    addPlugin(
-      await resolver.resolvePath('./runtime/plugins/configure-resee-ux', {
-        extensions: ['ts', 'js'],
-      }),
-    );
 
 
     // ----------------------------
