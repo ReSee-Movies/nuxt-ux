@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.27.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.27.0...0.27.1) (2026-02-24)
+
+### Refactors
+
+* support directly passing baseUrls to tmdb and resee image path functions ([5d0dee5](https://github.com/ReSee-Movies/nuxt-ux/commit/5d0dee56b4883d7c8d36227773c8ceeb3651934c))
+
 ## [0.27.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.26.0...0.27.0) (2026-02-23)
 
 ### Features
