@@ -20,6 +20,7 @@
             :width           = "props.singleImageOptions?.width ?? 'original'"
             :aspect          = "props.singleImageOptions?.aspect ?? 'video'"
             :scale-to-parent = "props.scaleToForeground ? 'cover' : undefined"
+            :key             = "transitionKey"
           />
 
           <div v-else-if="Array.isArray(props.src)">
@@ -76,6 +77,9 @@
 
 
 <script setup lang="ts">
+  import { isObjectLike } from '@resee-movies/utilities/objects/is-object-like';
+  import { isString } from '@resee-movies/utilities/strings/is-string';
+  import { computed } from 'vue';
   import LazyImage from './Image.vue';
   import LazyImageTiler from './ImageTiler.vue';
   import LazyMotionArt from './MotionArt.vue';
@@ -92,6 +96,32 @@
       multiImageOptions  : undefined,
     },
   );
+
+  const transitionKey = computed(() => {
+    if (Array.isArray(props.src)) {
+      return 'tiler';
+    }
+
+    if (isString(props.src)) {
+      return props.src;
+    }
+
+    if (isObjectLike(props.src)) {
+      if ('id' in props.src) {
+        return props.src.id ?? undefined;
+      }
+
+      if ('identifier' in props.src) {
+        return props.src.identifier ?? undefined;
+      }
+
+      if ('filename' in props.src) {
+        return props.src.filename ?? undefined;
+      }
+    }
+
+    return undefined;
+  });
 </script>
 
 
