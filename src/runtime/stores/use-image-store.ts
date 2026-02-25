@@ -1,11 +1,25 @@
 import { loadImage } from '@resee-movies/utilities/dom/load-image';
-import type { NormalizedFileDescriptorSource } from '@resee-movies/utilities/images/normalize-image-file-descriptor';
+import { getImageUrl } from '@resee-movies/utilities/images/get-image-url';
+import type {
+  ImageFileDescriptor,
+  NormalizedFileDescriptorSource,
+} from '@resee-movies/utilities/images/normalize-image-file-descriptor';
 import { isPromiseLike } from '@resee-movies/utilities/objects/is-promise-like';
-import { getMediaAssetUrl, type MediaAssetTransformConfig } from '@resee-movies/utilities/resee/get-media-asset-url';
+import {
+  type DirectusFileDescriptor,
+  getMediaAssetUrl,
+  type GetMediaAssetUrlOptions,
+  type MediaAssetTransformConfig,
+} from '@resee-movies/utilities/resee/get-media-asset-url';
 import { isString } from '@resee-movies/utilities/strings/is-string';
 import { fromTmdbImageSize } from '@resee-movies/utilities/tmdb/from-tmdb-image-size';
 import { TmdbImageCache } from '@resee-movies/utilities/tmdb/get-tmdb-image-cache';
-import { getTmdbImageUrl } from '@resee-movies/utilities/tmdb/get-tmdb-image-url';
+import {
+  getTmdbImageUrl,
+  type GetTmdbImageUrlOptions,
+  type TmdbFileDescriptor,
+  type TmdbImageSize,
+} from '@resee-movies/utilities/tmdb/get-tmdb-image-url';
 import { defineStore } from 'pinia';
 import { type MaybeRefOrGetter, type Reactive, type Ref, shallowReactive, toRef, toValue, watch } from 'vue';
 import type { ReseeUxPublicRuntimeConfig } from '../types';
@@ -40,12 +54,22 @@ type LoadImageContext = {
   config : ReseeUxPublicRuntimeConfig;
 };
 
-
+/**
+ * The Image store provides methods for generating image URLs, and/or intelligently
+ * loading image files into the browser.
+ */
 export const useImageStore = defineStore('image', () => {
   const cache = new TmdbImageCache();
 
-  const { config } = useReseeUxStore();
+  const {
+    config,
+  } = useReseeUxStore();
 
+  /**
+   * Loads an image resource, and provides a reactive object which conveys
+   * the status of the loading process. For TMDB images, an alternate might
+   * be provided while the original request completes in the background.
+   */
   function loadImageFunction(
     source  : MaybeRefOrGetter<string | null | undefined>,
     options : LoadImageOptions,
@@ -78,8 +102,63 @@ export const useImageStore = defineStore('image', () => {
     return state;
   }
 
+  /**
+   * A wrapper for {@link getImageUrl} that preconfigures the ReSee and TMDB
+   * base paths with preconfigured values.
+   */
+  function getImageUrlFunction(descriptor: ImageFileDescriptor | null | undefined) {
+    return getImageUrl(descriptor, {
+      reseeBaseUrl : config.reseeImageBaseUrl,
+      tmdbBaseUrl  : config.tmdbImageBaseUrl,
+    });
+  }
+
+  /**
+   * A wrapper for {@link getMediaAssetUrl} that preconfigures the ReSee base
+   * path with a preconfigured value.
+   */
+  function getMediaAssetUrlFunction(
+    fileId   : string,
+    options? : Omit<GetMediaAssetUrlOptions, 'baseUrl'>,
+  ): string;
+
+  function getMediaAssetUrlFunction(
+    fileId   : DirectusFileDescriptor,
+    options? : Omit<GetMediaAssetUrlOptions, 'baseUrl'>
+  ): string;
+
+  function getMediaAssetUrlFunction(
+    fileId    : string,
+    fileName? : string | null | undefined,
+    options?  : Omit<GetMediaAssetUrlOptions, 'baseUrl'>,
+  ): string;
+
+  function getMediaAssetUrlFunction(
+    fileId      : string | DirectusFileDescriptor,
+    nameOrOpts? : string | Omit<GetMediaAssetUrlOptions, 'baseUrl'> | null | undefined,
+    options?    : Omit<GetMediaAssetUrlOptions, 'baseUrl'>,
+  ) {
+    // @ts-expect-error - not bothering with the discriminated union of the fileId right now
+    return getMediaAssetUrl(fileId, nameOrOpts, { ...options, baseUrl: config.tmdbImageBaseUrl });
+  }
+
+  /**
+   * A wrapper for {@link getMediaAssetUrl} that preconfigures the ReSee base
+   * path with a preconfigured value.
+   */
+  function getTmdbImageUrlFunction(
+    file  : TmdbFileDescriptor | string | null | undefined,
+    size? : TmdbImageSize,
+    opts? : Omit<GetTmdbImageUrlOptions, 'baseUrl'>,
+  ) {
+    return getTmdbImageUrl(file, size, { ...opts, baseUrl: config.tmdbImageBaseUrl });
+  }
+
   return {
-    loadImage: loadImageFunction,
+    loadImage        : loadImageFunction,
+    getImageUrl      : getImageUrlFunction,
+    getMediaAssetUrl : getMediaAssetUrlFunction,
+    getTmdbImageUrl  : getTmdbImageUrlFunction,
   };
 });
 
