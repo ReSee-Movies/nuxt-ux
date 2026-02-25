@@ -110,8 +110,8 @@
     // value of the file) messing things up.
 
     if (props.width || props.height) {
-      intWidth  = fromTmdbImageSize(props.width);
-      intHeight = fromTmdbImageSize(props.height);
+      intWidth  = fromTmdbImageSize(props.width, { originalIsUndefined: true });
+      intHeight = fromTmdbImageSize(props.height, { originalIsUndefined: true });
     }
 
     if (!props.aspect || props.aspect === 'auto' || (intWidth && intHeight)) {
