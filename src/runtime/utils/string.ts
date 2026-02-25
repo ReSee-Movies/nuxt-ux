@@ -8,3 +8,16 @@ export function swapStringPlaceholders(target: string, placeholders?: Record<str
     ? target.replace(/\{\s*(\w+?)\s*}/g, (_, token) => String(placeholders[token] || ''))
     : target;
 }
+
+
+const MatchTagsRegex = new RegExp(/<(\w+)(?:>|.+?>)/gi);
+
+
+/**
+ * A really basic, Regex based HTML tag remover.
+ */
+export function stripHtml(htmlString: string) {
+  return htmlString.replace(MatchTagsRegex, (_, tagName) => {
+    return tagName === 'br' ? ' ' : '';
+  });
+}
