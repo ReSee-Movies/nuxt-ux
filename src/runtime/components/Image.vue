@@ -11,7 +11,8 @@
       'image',
       {
         'glass-effect'    : props.glassy && (!(imgHasError || isImgLoading || props.loading)),
-        'scale-to-parent' : props.scaleToParent,
+        'scale-to-width'  : props.scaleToParent,
+        'scale-to-height' : props.scaleToParent === 'cover'
       },
     ]"
   >
@@ -49,10 +50,23 @@
   import type { ImageBaseProps } from './ImageBase.vue';
 
   export interface ImageProps extends ImageBaseProps, CardProps {
-    defaultIcon?   : string;
-    iconSize?      : IconProps['size'];
-    glassy?        : boolean;
-    scaleToParent? : boolean;
+    defaultIcon? : string;
+    iconSize?    : IconProps['size'];
+    glassy?      : boolean;
+
+    /**
+     * Whether the image scales past its intrinsic size with the
+     * size of its parent container.
+     *
+     * - "width" : (alias boolean true) The image's min-width is
+     *             100% of the parent container.
+     * - "cover" : The image's min-width is 100% of the parent
+     *             container, and its height is set to 100cqh.
+     *             For this to work properly, the container that
+     *             the image is being scaled to must be a CSS
+     *             container type "size".
+     */
+    scaleToParent?: boolean | 'width' | 'cover';
   }
 </script>
 
@@ -142,12 +156,16 @@
       transform : translateX(-50%) translateY(-50%);
     }
 
-    .image.scale-to-parent {
+    .image.scale-to-width {
       max-width: unset;
     }
 
-    .image.scale-to-parent :deep(img) {
+    .image.scale-to-width :deep(img) {
       min-width: 100%;
+    }
+
+    .image.scale-to-height :deep(img) {
+      height: 100cqh;
     }
   }
 </style>

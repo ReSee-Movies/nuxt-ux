@@ -1,14 +1,25 @@
 <template>
   <div class="image-backdrop">
-    <div :class="['background', { 'fixed-position': props.fixedPosition }, props.maskPreset, props.backgroundClass]">
+    <div
+      :class="[
+        'background',
+        props.maskPreset,
+        props.backgroundClass,
+        {
+          'fixed-position'      : props.fixedPosition && !props.scaleToForeground,
+          'scale-to-foreground' : props.scaleToForeground,
+        },
+      ]"
+    >
       <slot name="background">
         <Transition name="fade" mode="out-in">
           <LazyImage
-            v-if    = "props.src && !Array.isArray(props.src)"
-            v-bind  = "props.singleImageOptions"
-            :src    = "props.src"
-            :width  = "props.singleImageOptions?.width ?? 'original'"
-            :aspect = "props.singleImageOptions?.aspect ?? 'video'"
+            v-if             = "props.src && !Array.isArray(props.src)"
+            v-bind           = "props.singleImageOptions"
+            :src             = "props.src"
+            :width           = "props.singleImageOptions?.width ?? 'original'"
+            :aspect          = "props.singleImageOptions?.aspect ?? 'video'"
+            :scale-to-parent = "props.scaleToForeground ? 'cover' : undefined"
           />
 
           <div v-else-if="Array.isArray(props.src)">
@@ -53,6 +64,7 @@
   export interface ImageBackdropProps {
     src?                : ImageFileDescriptor | ImageFileDescriptor[] | null | undefined;
     fixedPosition?      : boolean;
+    scaleToForeground?  : boolean;
     motionArt?          : boolean;
     maskPreset?         : ImageMaskPreset | ImageMaskPreset[];
     singleImageOptions? : SingleImageProps;
@@ -73,6 +85,7 @@
     {
       src                : undefined,
       fixedPosition      : true,
+      scaleToForeground  : false,
       motionArt          : true,
       maskPreset         : undefined,
       singleImageOptions : undefined,
@@ -121,6 +134,11 @@
     left     : var(--offset-left-base);
     right    : var(--offset-right-base);
     overflow : clip;
+  }
+
+  .image-backdrop .background.scale-to-foreground {
+    bottom         : 0;
+    container-type : size;
   }
 
   .image-backdrop .background.fixed-position {
