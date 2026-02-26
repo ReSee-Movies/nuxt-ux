@@ -27,7 +27,7 @@
       :slot-props = "{
         class : 'trailing-icon',
         name  : props.trailingIcon,
-        size  : props.iconSize
+        size  : props.iconSize,
       }"
     >
       <Icon

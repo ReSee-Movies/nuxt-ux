@@ -1,6 +1,6 @@
 <template>
   <PrimeAccordion
-    v-model:value = "activeKey"
+    v-model:value = "activeValue"
     :multiple     = "props.multiple"
     expand-icon   = "i-ph-caret-down"
     collapse-icon = "i-ph-caret-up"
@@ -27,5 +27,5 @@
     },
   );
 
-  const activeKey = defineModel<null | string | number | string[] | number[]>('activeKey', { default: null });
+  const activeValue = defineModel<null | string | number | string[] | number[]>('activeValue', { default: null });
 </script>

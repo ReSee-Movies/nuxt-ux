@@ -3,11 +3,11 @@
     <Icon
       v-if   = "props.loading || props.name"
       v-bind = "$attrs"
-      :name  = "props.name"
       :key   = "props.loading ? 'loading' : props.name"
+      :name  = "props.name"
       :size  = "props.size"
     >
-      <template #default v-if="props.loading">
+      <template v-if="props.loading" #default>
         <ProgressSpinner :size="props.size" />
       </template>
     </Icon>

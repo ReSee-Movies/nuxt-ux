@@ -1,7 +1,6 @@
-import UiLayoutPageColumn from '@resee-movies/nuxt-ux/components/UiLayoutPageColumn.vue';
+import UiLayoutPageColumn from '@/components/LayoutPageColumn.vue';
 import { mountSuspended } from '@nuxt/test-utils/runtime';
-import { describe, expect, it, } from 'vitest';
-
+import { describe, expect, it } from 'vitest';
 
 describe('Components | UiLayoutPageColumn', () => {
   it('can be mounted', async () => {

@@ -1,5 +1,5 @@
-import { type Ref, type WatchHandle, type WatchOptions } from 'vue'
 import { watchDebounced } from '@vueuse/core';
+import type { Ref, WatchHandle, WatchOptions } from 'vue';
 
 export type Side = 'left' | 'right';
 

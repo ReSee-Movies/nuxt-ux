@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
   import Button from '#resee-ux/components/Button.vue';
-  import HeroBanner, { type HeroBannerSingleItemProps} from '#resee-ux/components/HeroBanner.vue';
+  import HeroBanner, { type HeroBannerSingleItemProps } from '#resee-ux/components/HeroBanner.vue';
   import { TmdbBackgrounds, TmdbPosters } from '../../constants';
 
   definePageMeta({

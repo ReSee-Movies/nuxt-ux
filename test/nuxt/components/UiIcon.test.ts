@@ -1,9 +1,9 @@
-import UiIcon, { type UiIconProps } from '../../../src/runtime/components/UiIcon.vue';
+import UiIcon, { type IconProps } from '@/components/Icon.vue';
 import { mountSuspended } from '@nuxt/test-utils/runtime';
 import { describe, expect, test } from 'vitest';
 
 
-type TestCase = [name: string, mountOptions: { props?: UiIconProps }];
+type TestCase = [name: string, mountOptions: { props?: IconProps }];
 
 const TestCases: TestCase[] = [
   ['it can be mounted', { props: {} }],
@@ -11,9 +11,7 @@ const TestCases: TestCase[] = [
   ['it show a small icon', { props: { name: 'i-ph-chart-bar', size: 'sm' } }],
   ['it show a large icon', { props: { name: 'i-ph-chart-bar', size: 'lg' } }],
   ['it show a jumbo icon', { props: { name: 'i-ph-chart-bar', size: 'xl' } }],
-  ['it show a loading indicator', { props: { loading: true } }],
 ];
-
 
 describe('Components | UiIcon', () => {
   test.each(TestCases)('%s', async (_name, options) => {

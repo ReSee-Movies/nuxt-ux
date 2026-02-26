@@ -2,15 +2,15 @@
   <div :class="['label-field-layout', `label-${ props.labelPosition }`]">
     <slot name="label">
       <FormLabel
-        :inputId     = "props.inputId"
-        :labelId     = "props.labelId"
-        :labelText   = "props.labelText"
-        :labelSrOnly = "props.labelSrOnly"
-        :labelIs     = "props.labelIs"
-        :required    = "props.required"
-        :disabled    = "props.disabled"
-        :fauxLabel   = "props.fauxLabel"
-        :noteText    = "props.noteText && showNoteInLabel ? props.noteText : undefined"
+        :input-id      = "props.inputId"
+        :label-id      = "props.labelId"
+        :label-text    = "props.labelText"
+        :label-sr-only = "props.labelSrOnly"
+        :label-is      = "props.labelIs"
+        :required      = "props.required"
+        :disabled      = "props.disabled"
+        :faux-label    = "props.fauxLabel"
+        :note-text     = "props.noteText && showNoteInLabel ? props.noteText : undefined"
       />
     </slot>
 

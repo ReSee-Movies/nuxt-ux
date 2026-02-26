@@ -12,7 +12,7 @@
       {
         'glass-effect'    : props.glassy && (!(imgHasError || isImgLoading || props.loading)),
         'scale-to-width'  : props.scaleToParent,
-        'scale-to-height' : props.scaleToParent === 'cover'
+        'scale-to-height' : props.scaleToParent === 'cover',
       },
     ]"
   >
@@ -32,7 +32,7 @@
       :height      = "props.height"
       :aspect      = "props.aspect"
       :fit         = "props.fit"
-      :loadStyle   = "props.loadStyle"
+      :load-style  = "props.loadStyle"
       class        = "transition-opacity duration-300"
       :class       = "{ 'opacity-0': isImgLoading || props.loading || imgHasError }"
       :aria-hidden = "imgHasError ? 'true' : undefined"

@@ -73,7 +73,7 @@ export const reseeScrollBehavior: RouterScrollBehavior = (to, from, savedPositio
 
     // Take the scroll margin into account.
     if (targetElement) {
-      const topOffset = parseFloat(getComputedStyle(targetElement).scrollMarginBlockStart || '0');
+      const topOffset = Number.parseFloat(getComputedStyle(targetElement).scrollMarginBlockStart || '0');
 
       return {
         el       : targetElement,
@@ -107,7 +107,7 @@ export const reseeScrollBehavior: RouterScrollBehavior = (to, from, savedPositio
 
   const hasTransition = (route: RouteLocationNormalizedGeneric) => {
     return !!(route.meta.pageTransition ?? defaultPageTransition);
-  }
+  };
 
   const nuxtApp = useNuxtApp();
   const waitFor = (hasTransition(from) && hasTransition(to)) ? 'page:transition:finish' : 'page:loading:end';
@@ -131,4 +131,4 @@ export const reseeScrollBehavior: RouterScrollBehavior = (to, from, savedPositio
       });
     });
   });
-}
+};

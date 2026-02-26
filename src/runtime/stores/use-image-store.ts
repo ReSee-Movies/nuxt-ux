@@ -71,7 +71,7 @@ export const useImageStore = defineStore('image', () => {
    * be provided while the original request completes in the background.
    */
   function loadImageFunction(
-    source  : MaybeRefOrGetter<string | null | undefined>,
+    source : MaybeRefOrGetter<string | null | undefined>,
     options : LoadImageOptions,
   ) {
     const state = shallowReactive<LoadImageState>({
@@ -118,25 +118,25 @@ export const useImageStore = defineStore('image', () => {
    * path with a preconfigured value.
    */
   function getMediaAssetUrlFunction(
-    fileId   : string,
+    fileId : string,
     options? : Omit<GetMediaAssetUrlOptions, 'baseUrl'>,
   ): string;
 
   function getMediaAssetUrlFunction(
-    fileId   : DirectusFileDescriptor,
-    options? : Omit<GetMediaAssetUrlOptions, 'baseUrl'>
+    fileId : DirectusFileDescriptor,
+    options? : Omit<GetMediaAssetUrlOptions, 'baseUrl'>,
   ): string;
 
   function getMediaAssetUrlFunction(
-    fileId    : string,
+    fileId : string,
     fileName? : string | null | undefined,
-    options?  : Omit<GetMediaAssetUrlOptions, 'baseUrl'>,
+    options? : Omit<GetMediaAssetUrlOptions, 'baseUrl'>,
   ): string;
 
   function getMediaAssetUrlFunction(
-    fileId      : string | DirectusFileDescriptor,
+    fileId : string | DirectusFileDescriptor,
     nameOrOpts? : string | Omit<GetMediaAssetUrlOptions, 'baseUrl'> | null | undefined,
-    options?    : Omit<GetMediaAssetUrlOptions, 'baseUrl'>,
+    options? : Omit<GetMediaAssetUrlOptions, 'baseUrl'>,
   ) {
     // @ts-expect-error - not bothering with the discriminated union of the fileId right now
     return getMediaAssetUrl(fileId, nameOrOpts, { ...options, baseUrl: config.tmdbImageBaseUrl });
@@ -147,7 +147,7 @@ export const useImageStore = defineStore('image', () => {
    * path with a preconfigured value.
    */
   function getTmdbImageUrlFunction(
-    file  : TmdbFileDescriptor | string | null | undefined,
+    file : TmdbFileDescriptor | string | null | undefined,
     size? : TmdbImageSize,
     opts? : Omit<GetTmdbImageUrlOptions, 'baseUrl'>,
   ) {
@@ -164,7 +164,7 @@ export const useImageStore = defineStore('image', () => {
 
 
 function handleImageLoad(
-  source  : MaybeRefOrGetter<string | null | undefined>,
+  source : MaybeRefOrGetter<string | null | undefined>,
   options : LoadImageOptions,
   context : LoadImageContext,
 ) {
@@ -207,12 +207,12 @@ function handleImageLoad(
 
   let targetSrc : string | undefined;
 
-  switch(loadType) {
+  switch (loadType) {
     case 'tmdb':
       targetSrc = getTmdbImageUrl(rawSource, imgWidth, { baseUrl: context.config.tmdbImageBaseUrl });
       break;
 
-    case 'resee':
+    case 'resee': {
       const filename    = toValue(options.friendlyName);
       const reseeConfig = toValue(options.reseeConfig);
       const width       = fromTmdbImageSize(imgWidth, { originalIsUndefined: true });
@@ -225,6 +225,7 @@ function handleImageLoad(
         ...reseeConfig,
       });
       break;
+    }
 
     default:
       targetSrc = rawSource;
@@ -245,7 +246,7 @@ function handleImageLoad(
   let promise : Promise<string> | undefined;
 
   switch (loadType) {
-    case 'tmdb':
+    case 'tmdb': {
       const cachedValue = context.cache.getImage(targetSrc, { baseUrl: context.config.tmdbImageBaseUrl });
 
       if (isPromiseLike(cachedValue)) {
@@ -253,6 +254,7 @@ function handleImageLoad(
         promise = cachedValue;
       }
       break;
+    }
 
     default:
       promise = loadImage(targetSrc);

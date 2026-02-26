@@ -2,8 +2,8 @@
   <div class="continue-reading">
     <div
       :class = "{
-      'show-all'                    : showAllContent,
-      'image-mask-gradient-opacity' : isOverflowing && !showAllContent,
+        'show-all'                    : showAllContent,
+        'image-mask-gradient-opacity' : isOverflowing && !showAllContent,
       }"
     >
       <div ref="innerContainer">

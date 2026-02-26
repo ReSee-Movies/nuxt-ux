@@ -30,9 +30,9 @@
       </LazyMessage>
 
       <PrimeForm
-        v-slot                    = "$form"
         v-bind                    = "$attrs"
         :id                       = "formUid"
+        v-slot                    = "$form"
         ref                       = "form"
         novalidate                = "true"
         :validate-on-mount        = "true"
@@ -164,7 +164,7 @@
       const results = toNonNullableArray(props.onChange)
         .map((handler) => handler(newEvent));
 
-      if (!!results.find((result) => isPromiseLike(result))) {
+      if (results.find((result) => isPromiseLike(result))) {
         formInstance.isSubmitting.value = true;
         await Promise.allSettled(results);
         formInstance.isSubmitting.value = false;
@@ -183,7 +183,7 @@
    * This also manages some internal state flags that other components within the
    * form use to augment their own behavior.
    */
-  async function handleFormSubmit (event: PrimeFormSubmitEvent) {
+  async function handleFormSubmit(event: PrimeFormSubmitEvent) {
     if (props.disabled) {
       return;
     }
@@ -200,7 +200,7 @@
       const newEvent = { ...event, values } as FormSubmitEvent<T>;
       const results  = handlers.map((handler) => handler(newEvent));
 
-      if (!!results.find((result) => isPromiseLike(result))) {
+      if (results.find((result) => isPromiseLike(result))) {
         formInstance.isSubmitting.value = true;
 
         const result = await Promise.allSettled(results);

@@ -23,7 +23,7 @@ const NavigationKeys = [
 
 export type UseReseeWindowScrollReturn = UseWindowScrollReturn & {
   source: Ref<Event | undefined>;
-}
+};
 
 
 /**
@@ -69,7 +69,7 @@ export function useReseeWindowScroll(options?: UseWindowScrollOptions): UseResee
         scrollSource.value = e;
       }
     }
-    else if(e.type === 'mouseup') {
+    else if (e.type === 'mouseup') {
       clearScrollEndTimeout();
       scrollSource.value = undefined;
     }

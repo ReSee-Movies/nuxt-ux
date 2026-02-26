@@ -1,7 +1,7 @@
 <template>
   <PrimeAccordionPanel
     class          = "panel"
-    :value         = "props.key ?? props.title"
+    :value         = "props.value ?? props.title"
     :disabled      = "props.disabled"
   >
     <PrimeAccordionHeader class="header">
@@ -11,10 +11,10 @@
     </PrimeAccordionHeader>
 
     <PrimeAccordionContent
-      class              = "content"
-      :pt:contentWrapper = "{ class: 'wrapper' }"
-      :pt:content        = "{ class: 'inner' }"
-      :pt:transition     = "{ name: 'collapsible' }"
+      class               = "content"
+      :pt:content-wrapper = "{ class: 'wrapper' }"
+      :pt:content         = "{ class: 'inner' }"
+      :pt:transition      = "{ name: 'collapsible' }"
     >
       <slot />
     </PrimeAccordionContent>
@@ -24,7 +24,7 @@
 
 <script lang="ts">
   export interface AccordionPanelProps {
-    key?      : string | number;
+    value?    : string | number;
     title?    : string;
     disabled? : boolean;
   }
@@ -39,7 +39,7 @@
   const props = withDefaults(
     defineProps<AccordionPanelProps>(),
     {
-      key      : undefined,
+      value    : undefined,
       title    : undefined,
       disabled : false,
     },

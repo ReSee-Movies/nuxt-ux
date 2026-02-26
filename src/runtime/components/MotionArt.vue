@@ -1,8 +1,14 @@
 <template>
   <div class="motion-art">
-    <div class="spotlight spotlight-1"><div /></div>
-    <div class="spotlight spotlight-2"><div /></div>
-    <div class="spotlight spotlight-3"><div /></div>
+    <div class="spotlight spotlight-1">
+      <div />
+    </div>
+    <div class="spotlight spotlight-2">
+      <div />
+    </div>
+    <div class="spotlight spotlight-3">
+      <div />
+    </div>
   </div>
 </template>
 

@@ -15,14 +15,14 @@
     ]"
   >
     <Component
-      v-if   = "props.showLogo"
       :is    = "props.inline ? 'span' : 'div'"
+      v-if   = "props.showLogo"
       :class = "['logo', 'aspect-square', imageSizes.logo]"
     />
 
     <Component
-      v-if   = "props.showName"
       :is    = "props.inline ? 'span' : 'div'"
+      v-if   = "props.showName"
       :class = "['name', 'aspect-[3.875/1]', imageSizes.name]"
     />
   </Component>

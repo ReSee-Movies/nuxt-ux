@@ -6,7 +6,7 @@
       :subheading-text = "formModel.subheading"
       :prose           = "formModel.prose"
     >
-      <template #actions v-if="formModel.showActions">
+      <template v-if="formModel.showActions" #actions>
         <NuxtLink class="a" :to="{ name: 'typography' }">
           Go to Typography
         </NuxtLink>
@@ -51,8 +51,10 @@
     heading : 'Layout',
   });
 
-  // const showMoreInfoModal = ref(false);
-
+  // Intentionally disabling prefer-const here, due to the compiler warning:
+  // [@vue/compiler-sfc] v-model cannot update a const reactive binding formModel.
+  // The compiler has transformed it to let to make the update work.
+  // eslint-disable-next-line prefer-const
   let formModel = reactive({
     layout      : 'main' as LayoutPageColumnProps['layout'],
     heading     : 'Layout',
@@ -68,9 +70,9 @@
       optionLabel : 'label',
       optionValue : 'value',
       options     : [
-        { value: 'main',  label: 'Main' },
+        { value: 'main', label: 'Main' },
         { value: 'vista', label: 'Vista' },
-        { value: 'none',  label: 'None' },
+        { value: 'none', label: 'None' },
       ],
     },
     {
@@ -92,8 +94,8 @@
       optionValue : 'value',
       options     : [
         { value: false, label: 'Off' },
-        { value: 'md',  label: 'Md' },
-        { value: 'sm',  label: 'Sm' },
+        { value: 'md', label: 'Md' },
+        { value: 'sm', label: 'Sm' },
       ],
     },
   ];

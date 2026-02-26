@@ -12,14 +12,14 @@ export function toValidationError(str: string, placeholders?: Record<string, str
 
 export type BooleanInputRequirements = {
   required?: boolean;
-}
+};
 
 
 export function createBooleanValidator(requirements: BooleanInputRequirements) {
   const reseeUx = useReseeUxStore();
 
   return requirements.required
-    ? z.coerce.boolean().check(z.refine(val => val === true, toValidationError(reseeUx.locale.validation.required)))
+    ? z.coerce.boolean().check(z.refine((val) => val === true, toValidationError(reseeUx.locale.validation.required)))
     : undefined;
 }
 
@@ -29,7 +29,7 @@ export type TextInputRequirements = {
   type?      : 'text' | 'email' | 'url';
   minLength? : string | number;
   maxLength? : string | number;
-}
+};
 
 
 export function createTextValidator(requirements: TextInputRequirements) {
@@ -41,10 +41,10 @@ export function createTextValidator(requirements: TextInputRequirements) {
   }
 
   if (requirements.type === 'email') {
-    checkFns.push(z.email(toValidationError(reseeUx.locale.validation.invalidEmail )));
+    checkFns.push(z.email(toValidationError(reseeUx.locale.validation.invalidEmail)));
   }
   else if (requirements.type === 'url') {
-    checkFns.push(z.url(toValidationError(reseeUx.locale.validation.invalidUrl )));
+    checkFns.push(z.url(toValidationError(reseeUx.locale.validation.invalidUrl)));
   }
   else {
     const minLength = toInteger(requirements.minLength);
@@ -77,7 +77,7 @@ export type ListInputRequirements = {
   required?    : boolean;
   minRequired? : string | number;
   maxRequired? : string | number;
-}
+};
 
 
 export function createListValidator(requirements: ListInputRequirements) {

@@ -9,9 +9,9 @@
       {
         'input-field'    : props.is !== 'fieldset',
         'input-fieldset' : props.is === 'fieldset',
-        disabled         : isDisabled,
-        readonly         : isReadonly,
-        required         : props.required,
+        'disabled'       : isDisabled,
+        'readonly'       : isReadonly,
+        'required'       : props.required,
       },
     ]"
   >
@@ -76,7 +76,7 @@
     labelPosition? : FormLabelFieldLayoutProps['labelPosition'];
     validator?     : (value: unknown, label: string) => undefined | ZodMiniType;
     class?         : HTMLElementClassNames;
-    noteText?       : FormNoteProps['noteText'];
+    noteText?      : FormNoteProps['noteText'];
   }
 </script>
 
@@ -86,7 +86,6 @@
   import { humanize } from '@resee-movies/utilities/strings/humanize';
   import { injectFormInstance } from '../../utils/form';
   import FormLabelFieldLayout from './FormLabelFieldLayout.vue';
-  import FormValidationMessage from './FormValidationMessage.vue';
 
   defineOptions({
     inheritAttrs: false,

@@ -6,10 +6,10 @@
     :class = "[
       'input-label',
       {
-        'sr-only' : props.labelSrOnly,
-        disabled  : props.disabled,
-        required  : props.required,
-      }
+        'sr-only'  : props.labelSrOnly,
+        'disabled' : props.disabled,
+        'required' : props.required,
+      },
     ]"
   >
     <span class="label-inner">

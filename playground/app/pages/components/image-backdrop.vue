@@ -10,7 +10,9 @@
           :glass-effect = "true"
         >
           <div class="flex flex-col gap-6">
-            <p class="p">Currently Showing: {{ backgroundName }}</p>
+            <p class="p">
+              Currently Showing: {{ backgroundName }}
+            </p>
 
             <div class="flex gap-3">
               <UiButton

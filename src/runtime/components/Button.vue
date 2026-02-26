@@ -1,6 +1,7 @@
 <template>
   <Component
     :is         = "props.is"
+    v-prime-tooltip.top = "{ value: tooltipText, showDelay: 250 }"
     :aria-label = "shrink ? props.text : undefined"
     :disabled   = "props.disabled"
     :type       = "props.type"
@@ -17,8 +18,7 @@
         'icon-only'         : iconOnly,
       },
     ]"
-    v-prime-tooltip.top = "{ value: tooltipText, showDelay: 250 }"
-    @click              = "handleButtonClick"
+    @click = "handleButtonClick"
   >
     <IconTextPair
       :text          = "props.text"
@@ -31,7 +31,7 @@
         <IconTransition v-bind="slotProps" :loading="showLoading" />
       </template>
 
-      <template #default v-if="slots.default">
+      <template v-if="slots.default" #default>
         <slot />
       </template>
     </IconTextPair>
@@ -128,7 +128,7 @@
       const handlers = toNonNullableArray(props.onClick);
       const results  = handlers.map((handler) => handler(evt));
 
-      if (!!results.find((result) => isPromiseLike(result))) {
+      if (results.find((result) => isPromiseLike(result))) {
         pendingClickResult.value = true;
         await Promise.allSettled(results);
         pendingClickResult.value = false;

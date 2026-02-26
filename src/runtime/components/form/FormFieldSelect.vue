@@ -25,7 +25,7 @@
         :loading               = "props.loading"
         :selection-limit       = "props.maxRequired"
       >
-        <template #option="{ option, selected, index }" v-if="slots.option">
+        <template v-if="slots.option" #option="{ option, selected, index }">
           <slot
             name      = "option"
             :option   = "option as T"
@@ -40,7 +40,7 @@
 
 
 <script lang="ts">
-  import { type FormFieldProps } from './FormField.vue';
+  import type { FormFieldProps } from './FormField.vue';
 
   export interface FormFieldSelectProps<T = unknown> extends Omit<FormFieldProps, 'validator'> {
     options?           : T[];

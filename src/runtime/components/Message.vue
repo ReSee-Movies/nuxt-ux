@@ -4,7 +4,7 @@
     :severity = "props.severity"
     :pt       = "passthroughProps"
   >
-    <template #icon v-if="displayIcon">
+    <template v-if="displayIcon" #icon>
       <Icon :name="displayIcon" :size="props.iconSize" />
     </template>
 

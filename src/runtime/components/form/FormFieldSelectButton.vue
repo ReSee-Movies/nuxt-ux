@@ -30,8 +30,8 @@
 
 
 <script lang="ts">
-  import { type FormElementSelectButtonProps } from './element/FormElementSelectButton.vue';
-  import { type FormFieldProps } from './FormField.vue';
+  import type { FormElementSelectButtonProps } from './element/FormElementSelectButton.vue';
+  import type { FormFieldProps } from './FormField.vue';
 
   export interface FormFieldSelectButtonProps extends Omit<FormFieldProps, 'validator'>, FormElementSelectButtonProps {
     minRequired? : string | number;

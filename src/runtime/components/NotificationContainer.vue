@@ -41,7 +41,7 @@
     detail          : { class: 'text-detail' },
     buttonContainer : { class: 'close-wrapper' },
     closeButton     : { class: 'close' },
-    transition      : { name:'fade', appear: true },
+    transition      : { name: 'fade', appear: true },
   };
 </script>
 

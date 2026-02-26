@@ -7,11 +7,11 @@
   />
 
   <PrimeMenu
-    ref        = "menu"
     v-bind     = "attrs"
+    :id        = "menuId"
+    ref        = "menu"
     :model     = "props.model"
     :popup     = "true"
-    :id        = "menuId"
     class      = "menu"
     :pt        = "passthroughProps"
     :append-to = "TeleportId"

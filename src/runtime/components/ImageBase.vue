@@ -21,14 +21,14 @@
   import type { TmdbImageSize } from '@resee-movies/utilities/tmdb/get-tmdb-image-url';
 
   export interface ImageBaseProps {
-    src          : ImageFileDescriptor | null | undefined;
-    alt?         : string | null | ((error: unknown) => string);
-    type?        : NormalizedFileDescriptorSource;
-    width?       : TmdbImageSize | string | number;
-    height?      : string | number;
-    aspect?      : AspectRatio | 'auto';
-    fit?         : MediaAssetTransformConfig['fit'];
-    loadStyle?   : 'lazy' | 'eager';
+    src        : ImageFileDescriptor | null | undefined;
+    alt?       : string | null | ((error: unknown) => string);
+    type?      : NormalizedFileDescriptorSource;
+    width?     : TmdbImageSize | string | number;
+    height?    : string | number;
+    aspect?    : AspectRatio | 'auto';
+    fit?       : MediaAssetTransformConfig['fit'];
+    loadStyle? : 'lazy' | 'eager';
   }
 
   export const AspectRatioClassNames = {

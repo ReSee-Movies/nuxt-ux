@@ -1,21 +1,11 @@
 export default defineNuxtConfig({
-  compatibilityDate: '2025-08-12',
 
   modules: ['../src/module'],
 
-  ux: {
-    reseeImageBaseUrl : '/api/images/resee/',
-    tmdbImageBaseUrl  : '/api/images/tmdb/',
-  },
-
-  devtools: { enabled: false },
-
-  sourcemap: false,
-
   $env: {
     github: {
-      ssr: true,
-      app: {
+      ssr : true,
+      app : {
         baseURL: '/nuxt-ux/',
       },
       ux: {
@@ -24,6 +14,8 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  devtools: { enabled: false },
 
   app: {
     head: {
@@ -35,5 +27,13 @@ export default defineNuxtConfig({
     rootAttrs: {
       id: 'app-root',
     },
+  },
+
+  sourcemap         : false,
+  compatibilityDate : '2025-08-12',
+
+  ux: {
+    reseeImageBaseUrl : '/api/images/resee/',
+    tmdbImageBaseUrl  : '/api/images/tmdb/',
   },
 });

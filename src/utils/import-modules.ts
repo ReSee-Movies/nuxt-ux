@@ -36,8 +36,8 @@ export function importModules(nuxt: Nuxt): NuxtUxModuleDependencies {
           preload  : true,
         },
       ],
-    }
-  }
+    },
+  };
 
 
   /* *****************************
@@ -80,7 +80,7 @@ export function importModules(nuxt: Nuxt): NuxtUxModuleDependencies {
       'ToggleSwitch',
       ...(primeOptions?.includeComponents ?? []),
     ]),
-  )
+  );
 
   nuxt.options.vite.optimizeDeps ??= {};
   nuxt.options.vite.optimizeDeps.include ??= [];

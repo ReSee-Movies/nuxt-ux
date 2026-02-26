@@ -71,15 +71,15 @@
 
   export type FormFieldBuilderOption
     = CheckboxField
-    | CheckboxGroupField
-    | SelectField
-    | SelectButtonField
-    | RadioGroup
-    | TextField
-    | TextareaField
-    | ToggleSwitchField
-    | TurnstileField
-    | SubmitButton;
+      | CheckboxGroupField
+      | SelectField
+      | SelectButtonField
+      | RadioGroup
+      | TextField
+      | TextareaField
+      | ToggleSwitchField
+      | TurnstileField
+      | SubmitButton;
 
   export interface FormFieldBuilderProps {
     fields: undefined | FormFieldBuilderOption[];
@@ -103,17 +103,17 @@
 
   function getComponent(field: FormFieldBuilderOption) {
     switch (field.fieldType) {
-      case 'checkbox'       : return CheckboxField;
+      case 'checkbox' : return CheckboxField;
       case 'checkbox-group' : return CheckboxFieldGroup;
-      case 'select'         : return SelectField;
-      case 'select-button'  : return SelectButtonField;
-      case 'radio'          : return RadioGroup;
-      case 'text'           : return TextField;
-      case 'textarea'       : return TextareaField;
-      case 'toggle'         : return ToggleSwitchField;
-      case 'turnstile'      : return TurnstileField;
-      case 'submit'         : return SubmitButton;
-      default               : return 'div';
+      case 'select' : return SelectField;
+      case 'select-button' : return SelectButtonField;
+      case 'radio' : return RadioGroup;
+      case 'text' : return TextField;
+      case 'textarea' : return TextareaField;
+      case 'toggle' : return ToggleSwitchField;
+      case 'turnstile' : return TurnstileField;
+      case 'submit' : return SubmitButton;
+      default : return 'div';
     }
   }
 </script>

@@ -14,34 +14,6 @@
 </template>
 
 
-<style scoped>
-  @reference "tailwindcss";
-
-  @layer components {
-    .tiler {
-      display               : grid;
-      row-gap               : --spacing(v-bind(grid.gapX));
-      column-gap            : --spacing(v-bind(grid.gapY));
-      grid-template-columns : repeat(v-bind(grid.cols), 1fr);
-
-      > div {
-        justify-self: center;
-      }
-    }
-
-    img {
-      --duration : 200ms;
-      --delay    : 0ms;
-
-      transition                 : opacity;
-      transition-duration        : var(--duration);
-      transition-delay           : var(--delay);
-      transition-timing-function : ease-out;
-    }
-  }
-</style>
-
-
 <script lang="ts">
   import type {
     ImageFileDescriptor,
@@ -107,7 +79,7 @@
   import { getRandomInteger } from '@resee-movies/utilities/numbers/get-random-integer';
   import { toInteger } from '@resee-movies/utilities/numbers/to-integer';
   import { sleep } from '@resee-movies/utilities/timers/sleep';
-  import { computed, onMounted, shallowReactive, useId, ref, watch } from 'vue';
+  import { computed, onMounted, shallowReactive, useId, watch } from 'vue';
   import { useSettingsForBreakpoint } from '../composables/use-settings-for-breakpoint';
   import ImageBase from './ImageBase.vue';
 
@@ -206,7 +178,7 @@
 
     // Cell count has been increased, add entries.
     if (newCount > oldCount) {
-      while(displayArray.value.length < newCount) {
+      while (displayArray.value.length < newCount) {
         const info = generateImageDisplayInfo(displayArray.value.length, displayArray.value);
         displayArray.value.push(info);
         showImageCellContent(info);
@@ -311,27 +283,27 @@
    * is on one of the boundaries of the grid.
    */
   function getNeighborIndexes(
-    centerIdx   : number,
+    centerIdx : number,
     columnCount : number,
-    rowCount    : number,
-    distance    : '4-edge' | '8-edge' = '8-edge',
+    rowCount : number,
+    distance : '4-edge' | '8-edge' = '8-edge',
   ): number[] {
     const rowOffset = Math.floor(centerIdx / columnCount);
     const colOffset = centerIdx % columnCount;
 
-    const top    = (rowOffset > 0)           ? (centerIdx - columnCount) : -1;
-    const right  = (colOffset < columnCount) ? (centerIdx + 1)           : -1;
-    const bottom = (rowOffset < rowCount)    ? (centerIdx + columnCount) : -1;
-    const left   = (colOffset > 0)           ? (centerIdx - 1)           : -1;
+    const top    = (rowOffset > 0) ? (centerIdx - columnCount) : -1;
+    const right  = (colOffset < columnCount) ? (centerIdx + 1) : -1;
+    const bottom = (rowOffset < rowCount) ? (centerIdx + columnCount) : -1;
+    const left   = (colOffset > 0) ? (centerIdx - 1) : -1;
 
     if (distance === '4-edge') {
       return [top, right, bottom, left];
     }
 
-    const topRight    = (top > -1 && right > -1)    ? (top + 1)    : -1;
+    const topRight    = (top > -1 && right > -1) ? (top + 1) : -1;
     const bottomRight = (bottom > -1 && right > -1) ? (bottom + 1) : -1;
-    const bottomLeft  = (bottom > -1 && left > -1)  ? (bottom - 1) : -1;
-    const topLeft     = (top > -1 && left > -1)     ? (top - 1)    : -1;
+    const bottomLeft  = (bottom > -1 && left > -1) ? (bottom - 1) : -1;
+    const topLeft     = (top > -1 && left > -1) ? (top - 1) : -1;
 
     return [top, topRight, right, bottomRight, bottom, bottomLeft, left, topLeft];
   }
@@ -342,8 +314,8 @@
    * image.
    */
   function isImageInUse(
-    candidate      : NormalizedFileDescriptor,
-    sourceArray    : ImageDisplayInfo[],
+    candidate : NormalizedFileDescriptor,
+    sourceArray : ImageDisplayInfo[],
     indicesToCheck : number[],
   ) {
     for (const idx of indicesToCheck) {
@@ -420,7 +392,7 @@
    */
   async function showAll() {
     return Promise.allSettled(
-      displayArray.value.map(entry => showImageCellContent(entry)),
+      displayArray.value.map((entry) => showImageCellContent(entry)),
     );
   }
 
@@ -429,7 +401,35 @@
    */
   async function hideAll() {
     return Promise.allSettled(
-      displayArray.value.map(entry => hideImageCellContent(entry)),
+      displayArray.value.map((entry) => hideImageCellContent(entry)),
     );
   }
 </script>
+
+
+<style scoped>
+  @reference "tailwindcss";
+
+  @layer components {
+    .tiler {
+      display               : grid;
+      row-gap               : --spacing(v-bind(grid.gapX));
+      column-gap            : --spacing(v-bind(grid.gapY));
+      grid-template-columns : repeat(v-bind(grid.cols), 1fr);
+
+      > div {
+        justify-self: center;
+      }
+    }
+
+    img {
+      --duration : 200ms;
+      --delay    : 0ms;
+
+      transition                 : opacity;
+      transition-duration        : var(--duration);
+      transition-delay           : var(--delay);
+      transition-timing-function : ease-out;
+    }
+  }
+</style>

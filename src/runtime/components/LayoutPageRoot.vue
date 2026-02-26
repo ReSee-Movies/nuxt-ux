@@ -10,11 +10,11 @@
     </GlobalHeaderAnnouncement>
 
     <GlobalHeader v-if="slots.header || slots.subheader" class="app-header">
-      <template #default v-if="slots.header">
+      <template v-if="slots.header" #default>
         <slot name="header" />
       </template>
 
-      <template #subheader v-if="slots.subheader">
+      <template v-if="slots.subheader" #subheader>
         <slot name="subheader" />
       </template>
     </GlobalHeader>

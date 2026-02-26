@@ -12,7 +12,7 @@
 
 <script lang="ts">
   export interface LoremProps {
-    type?: 'words' | 'sentences' | 'paragraphs';
+    type?              : 'words' | 'sentences' | 'paragraphs';
     min?               : string | number;
     max?               : string | number;
     minParagraphCount? : string | number;
@@ -100,7 +100,7 @@
       return getSentences(minSent, maxSent, minWord, maxWord);
     }
 
-    const minPara = toInteger((type === 'paragraphs' && min), props.minParagraphCount) ?? 1
+    const minPara = toInteger((type === 'paragraphs' && min), props.minParagraphCount) ?? 1;
     const maxPara = toInteger((type === 'paragraphs' && max), props.maxParagraphCount, minPara + 3) ?? 4;
 
     if (props.type === 'paragraphs') {
@@ -128,7 +128,7 @@
         continue;
       }
 
-      return typeof value === 'string' ? parseInt(value) : value;
+      return typeof value === 'string' ? Number.parseInt(value) : value;
     }
 
     return undefined;
@@ -183,10 +183,10 @@
     const result = [] as string[];
     const count  = randomInteger(min, max < min ? min : max);
 
-      for (let i = 0; i < count; i += 1) {
-        result.push(getSentences(minSent, maxSent, minWord, maxWord).join(' ') ?? '');
-      }
+    for (let i = 0; i < count; i += 1) {
+      result.push(getSentences(minSent, maxSent, minWord, maxWord).join(' ') ?? '');
+    }
 
-      return result;
+    return result;
   }
 </script>

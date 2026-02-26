@@ -6,7 +6,7 @@
     :scale-to-foreground = "true"
     :role                = "isCarousel ? 'region' : undefined"
   >
-    <LayoutPageColumn :aria-live = "isCarousel ? ( props.autoplay ? 'off' : 'polite' ) : undefined">
+    <LayoutPageColumn :aria-live = "isCarousel ? (props.autoplay ? 'off' : 'polite') : undefined">
       <div
         :class="{
           'flex flex-col justify-center' : isCarousel,
@@ -16,8 +16,8 @@
       >
         <Transition :name="`slide-${ slideDir }`" mode="out-in">
           <div
-            class                 = "md:w-3/4"
             :key                  = "slideIdx"
+            class                 = "md:w-3/4"
             :role                 = "isCarousel ? 'group' : undefined"
             :aria-roledescription = "isCarousel ? 'Slideshow' : undefined"
             :aria-label           = "isCarousel ? `Slide ${ slideIdx }: ${ currentSlide?.headlineText }` : undefined"
@@ -65,7 +65,7 @@
               v-prime-tooltip.top = "{ value: stripHtml(slide.headlineText ?? ''), showDelay: 250 }"
               :aria-label         = "slide.headlineText"
               :tabindex           = "slideIdx === idx ? '0' : '-1'"
-              :class              = "{ 'active': slideIdx === idx }"
+              :class              = "{ active: slideIdx === idx }"
               @click              = "() => goToSlide(idx)"
             />
           </li>
@@ -84,7 +84,7 @@
     headlineText? : string;
     subheadText?  : string;
     introText?    : string;
-  }
+  };
 
   export interface HeroBannerProps<
     S extends HeroBannerSingleItemProps = HeroBannerSingleItemProps,
@@ -222,7 +222,7 @@
     const result = {
       buttons : [] as HTMLButtonElement[],
       active  : -1,
-    }
+    };
 
     if (!(target instanceof HTMLElement)) {
       return result;
@@ -249,7 +249,7 @@
   useEventListener(navigation, ['keyup'], (e: Event) => {
     if (e instanceof KeyboardEvent) {
       switch (e.key) {
-        case "ArrowRight": {
+        case 'ArrowRight': {
           const { buttons, active } = getActiveNavButton(e.currentTarget);
 
           if (active + 1 < buttons.length) {
@@ -259,7 +259,7 @@
           break;
         }
 
-        case "ArrowLeft": {
+        case 'ArrowLeft': {
           const { buttons, active } = getActiveNavButton(e.currentTarget);
 
           if (active - 1 >= 0) {
@@ -269,12 +269,12 @@
           break;
         }
 
-        case "Home": {
+        case 'Home': {
           getActiveNavButton(e.currentTarget).buttons.at(0)?.focus();
           break;
         }
 
-        case "End": {
+        case 'End': {
           getActiveNavButton(e.currentTarget).buttons.at(-1)?.focus();
           break;
         }

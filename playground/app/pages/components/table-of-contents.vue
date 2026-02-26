@@ -44,7 +44,7 @@
 
         <p>
           In ancient Sanskrit literature, works such as the <i>Sushruta Samhita</i> and the <i>Charaka
-          Samhita</i> (1st century BCE) were systematically divided into books and chapters, which
+            Samhita</i> (1st century BCE) were systematically divided into books and chapters, which
           were often listed at the beginning.
           In China, during the Han to Tang dynasties (206 BCE – 907 CE), classification catalogues began
           to appear in official records. One example is the <i>Hanshu</i> (Book of Han), which organized works

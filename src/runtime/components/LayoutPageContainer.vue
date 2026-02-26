@@ -9,8 +9,8 @@
         'mb-6',
         props.headerClass,
         {
-          'prose-layout-container': props.prose,
-          'sm': props.prose === 'sm',
+          'prose-layout-container' : props.prose,
+          'sm'                     : props.prose === 'sm',
         },
       ]"
     >
@@ -30,7 +30,9 @@
 
       <div v-if="showSubheading">
         <slot name="subheading">
-          <p class="text-global-foreground-accent">{{ props.subheadingText }}</p>
+          <p class="text-global-foreground-accent">
+            {{ props.subheadingText }}
+          </p>
         </slot>
       </div>
     </div>
@@ -39,8 +41,8 @@
       :class="[
         props.contentClass,
         {
-          'prose-container': props.prose,
-          'sm': props.prose === 'sm',
+          'prose-container' : props.prose,
+          'sm'              : props.prose === 'sm',
         },
       ]"
     >

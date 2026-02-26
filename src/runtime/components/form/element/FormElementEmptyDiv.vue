@@ -6,7 +6,7 @@
 
 
 <script lang="ts">
-  import type { StyleValue } from '@vue/runtime-dom';
+  import type { StyleValue } from 'vue';
   import type { HTMLElementClassNames } from '../../../types';
 
   export interface FormElementEmptyDivProps {

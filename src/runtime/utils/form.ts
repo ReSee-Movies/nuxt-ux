@@ -186,7 +186,6 @@ export function useOptionListMethods(config: MaybeRefOrGetter<UseOptionListMetho
       );
     };
 
-
     return {
       getOptionLabel,
       getOptionValue,
@@ -197,5 +196,4 @@ export function useOptionListMethods(config: MaybeRefOrGetter<UseOptionListMetho
       getOptionByValue,
     };
   });
-
 }

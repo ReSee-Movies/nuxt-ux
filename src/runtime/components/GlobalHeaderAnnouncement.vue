@@ -5,7 +5,7 @@
     role      = "alert"
     aria-live = "polite"
   >
-    <LayoutPageColumn :class="{ 'relative': props.dismissable }">
+    <LayoutPageColumn :class="{ relative: props.dismissable }">
       <slot />
 
       <CloseButton

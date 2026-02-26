@@ -6,9 +6,9 @@ export interface ModuleOptions {
   tmdbImageBaseUrl?        : string;
 
   tailwind?: {
-    plugins?: (string | undefined)[];
-    sources?: (string | undefined)[];
-    imports?: (string | undefined)[];
+    plugins? : (string | undefined)[];
+    sources? : (string | undefined)[];
+    imports? : (string | undefined)[];
   };
 
   primevue?: {
@@ -29,7 +29,7 @@ export interface ModuleHooks {
 }
 
 declare module '@nuxt/schema' {
-  interface NuxtHooks extends ModuleHooks {}
+  /* interface NuxtHooks extends ModuleHooks {} */
 
   interface PublicRuntimeConfig {
     ux?: ReseeUxPublicRuntimeConfig;
@@ -42,10 +42,10 @@ declare module '@nuxt/schema' {
  */
 export type HTMLElementClassNames
   = string
-  | HTMLElementClassNames[]
-  | Record<string, boolean>
-  | null
-  | undefined;
+    | HTMLElementClassNames[]
+    | Record<string, boolean>
+    | null
+    | undefined;
 
 /**
  * A string-type, with some suggestions.
@@ -72,7 +72,7 @@ export type StyleStatusLevel = 'default' | 'inverted' | StatusLevel;
  */
 export type ImageMaskPreset
   = 'image-mask-washout'
-  | 'image-mask-gradient-washout'
-  | 'image-mask-gradient-washout-lite'
-  | 'image-mask-gradient-opacity'
-  | 'image-mask-hero';
+    | 'image-mask-gradient-washout'
+    | 'image-mask-gradient-washout-lite'
+    | 'image-mask-gradient-opacity'
+    | 'image-mask-hero';

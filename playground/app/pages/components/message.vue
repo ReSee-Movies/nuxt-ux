@@ -1,6 +1,6 @@
 <template>
   <div class="grid md:grid-cols-2 gap-4">
-    <template v-for="item of messageTypes">
+    <template v-for="(item, idx) of messageTypes" :key="idx">
       <div>
         <UiMessage
           :severity = "item"

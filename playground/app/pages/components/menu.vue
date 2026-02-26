@@ -56,8 +56,8 @@
     { label: 'Item 5 with a really, really long label that you think should wrap around, right? RIGHT!?' },
 
     {
-      label: 'Documents',
-      items: [
+      label : 'Documents',
+      items : [
         { label: 'Foo' },
         { label: 'Bar' },
         { label: 'Baz' },

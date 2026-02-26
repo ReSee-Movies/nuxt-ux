@@ -12,7 +12,7 @@ import type { LocationQueryValueRaw, Router } from 'vue-router';
 export function useQueryParameters<
   D extends QueryParamDefinitionMap,
 >(
-  params   : D,
+  params : D,
   options? : UseQueryParametersOptions,
 ): UseQueryParametersReturn<D> {
   const router = useRouter();
@@ -74,8 +74,8 @@ export type QueryParamDefinitionMap = {
  * correspond to the different data types of URL query parameters that this
  * composable supports.
  */
-export type QueryParamValueType<T extends QueryParamDefinition['type']> =
-  T extends StringConstructor
+export type QueryParamValueType<T extends QueryParamDefinition['type']>
+  = T extends StringConstructor
     ? string | undefined
     : T extends [StringConstructor]
       ? string[] | undefined

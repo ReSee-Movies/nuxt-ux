@@ -9,7 +9,7 @@ const TooltipPassThru: TooltipDirectivePassThroughOptions = {
         top    : context.top,
         bottom : context.bottom,
       }],
-    }
+    };
   },
 
   text  : { class: 'content' },

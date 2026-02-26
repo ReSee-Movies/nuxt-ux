@@ -1,5 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-import { computed, onScopeDispose, type MaybeRefOrGetter, ref, toValue, watch } from 'vue';
+import { computed, ref } from 'vue';
 import type { TableOfContentsItem } from '../components/TableOfContents.vue';
 
 
@@ -74,5 +74,5 @@ export const useGlobalHeaderStore = defineStore('global-header', () => {
   };
 });
 
-// @ts-expect-error
+// @ts-expect-error - "hot" is not defined
 import.meta.hot?.accept(acceptHMRUpdate(useGlobalHeaderStore, import.meta.hot));

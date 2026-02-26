@@ -23,7 +23,7 @@
 
 
 <script lang="ts">
-  import { type FormFieldProps } from './FormField.vue';
+  import type { FormFieldProps } from './FormField.vue';
 
   export interface FormFieldTextProps extends Omit<FormFieldProps, 'validator'> {
     placeholder? : string;

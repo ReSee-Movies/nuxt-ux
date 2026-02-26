@@ -5,7 +5,7 @@
     :aria-pressed = "pressed"
     @click        = "handleClick"
   >
-    <template #default v-if="slots.default">
+    <template v-if="slots.default" #default>
       <slot />
     </template>
   </Button>
@@ -39,8 +39,7 @@
   );
 
   const emits = defineEmits<{
-    (e: 'click', pressed: boolean): void;
-    (e: 'change', pressed: boolean): void,
+    (e: 'click' | 'change', pressed: boolean): void;
   }>();
 
   const pressed = defineModel<boolean>('pressed', { default: false });

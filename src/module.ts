@@ -50,8 +50,8 @@ export default defineNuxtModule<ModuleOptions>({
     imports.push(stylesheet);
 
     addComponentsDir({ path: components, prefix: options.componentPrefix });
-    addImportsDir([ composables ]);
-    addServerScanDir([ server ]);
+    addImportsDir([composables]);
+    addServerScanDir([server]);
 
     await importTailwind(nuxt);
 

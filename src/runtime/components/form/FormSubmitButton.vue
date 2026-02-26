@@ -11,6 +11,7 @@
 
 <script lang="ts">
   import type { ButtonProps } from '../Button.vue';
+
   export interface FormSubmitButtonProps extends /* @vue-ignore */ Omit<ButtonProps, 'onClick' | 'loading'> {
     text?     : string;
     bordered? : boolean;

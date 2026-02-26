@@ -45,8 +45,8 @@
         severity         = "unset"
         icon             = "i-ph-x"
         class            = "input-button input-group-addon"
-        @click           = "clearCallback"
         :data-pc-section = "'clearicon' /* used internally by Primevue. No idea why they offer the slot like this. */"
+        @click           = "clearCallback"
       />
     </template>
 
@@ -62,15 +62,20 @@
       <span>{{ reseeUx.locale.form.noOptionsAvailable }}</span>
     </template>
 
-    <template #option="{ option, selected, index }" v-if="slots.option">
-      <slot name="option" :option="option" :selected="selected" :index="index" />
+    <template v-if="slots.option" #option="{ option, selected, index }">
+      <slot
+        name="option"
+        :option="option"
+        :selected="selected"
+        :index="index"
+      />
     </template>
   </Component>
 </template>
 
 
 <script lang="ts">
-  import { type SelectProps as PrimeSelectProps } from 'primevue/select';
+  import type { SelectProps as PrimeSelectProps } from 'primevue/select';
 
   export interface FormElementSelectOptionsProps extends Omit<PrimeSelectProps, 'inputId' | 'labelId' | 'optionGroupLabel' | 'optionGroupChildren'> {
     inputId?          : string;

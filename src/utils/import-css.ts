@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { resolveModuleDirectory } from './resolve-module-directory';
 
-
+/* eslint-disable-next-line regexp/prefer-character-class */
 const IMPORT_REGEX = /(?<=\s|^|;|\})@import\s+["']tailwindcss["']/gmu;
 
 type ExtNuxtConfig = NuxtConfig & { srcDir: string };
@@ -24,9 +24,9 @@ function getDefaults(config: ExtNuxtConfig) {
 
 
 export type Options = {
-  sources?: (string | undefined)[];
-  plugins?: (string | undefined)[];
-  imports?: (string | undefined)[];
+  sources? : (string | undefined)[];
+  plugins? : (string | undefined)[];
+  imports? : (string | undefined)[];
 };
 
 
@@ -44,21 +44,21 @@ export async function importCSS(nuxt: Nuxt = useNuxt(), options?: Options) {
     sources.push(...toNonNullableArray(options.sources));
   }
 
-  await nuxt.callHook('tailwindcss:sources:extend', sources)
+  await nuxt.callHook('tailwindcss:sources:extend', sources);
 
   const sourcesTemplate = addTemplate({
     filename    : 'tailwindcss/sources.css',
     write       : true,
     getContents : () => {
-      const sourceStrings = sources.map((source) => `@source ${JSON.stringify(source)};`).join('\n');
-      const pluginStrings = plugins.map((plugin) => `@plugin ${JSON.stringify(plugin)};`).join('\n');
+      const sourceStrings = sources.map((source) => `@source ${ JSON.stringify(source) };`).join('\n');
+      const pluginStrings = plugins.map((plugin) => `@plugin ${ JSON.stringify(plugin) };`).join('\n');
 
       return sourceStrings + '\n' + pluginStrings;
     },
   });
 
   const importingFiles  = [] as ImportingFile[];
-  const projectCSSFiles = await Promise.all(nuxt.options.css.map(p => resolvePath(p)));
+  const projectCSSFiles = await Promise.all(nuxt.options.css.map((p) => resolvePath(p)));
 
   for (let i = 0; i < nuxt.options._layers.length; i++) {
     const currentLayer = nuxt.options._layers[i];
@@ -81,6 +81,8 @@ export async function importCSS(nuxt: Nuxt = useNuxt(), options?: Options) {
 
     if (currentLayer?.config) {
       const promises = Array.from(
+        // @ts-expect-error - Nuxt cannot keep its sh*t together for more than 5 minutes
+        // on how it would like to type things.
         new Set([...getDefaults(currentLayer.config), ...resolvedCSS]),
       ).map(async (file) => {
         const contents = await readFile(file, { encoding: 'utf-8' }).catch(() => '');
@@ -104,19 +106,19 @@ export async function importCSS(nuxt: Nuxt = useNuxt(), options?: Options) {
 
   const [file, { isInNuxt } = {}] = importingFiles.length === 0
     ? [
-      addTemplate({
-        filename    : 'tailwind.css',
-        write       : true,
-        getContents : () => {
-          return [
-            `@import ${JSON.stringify(resolveModuleDirectory('tailwindcss'))};`,
-            `@import ${JSON.stringify(sourcesTemplate.dst)};`,
-            ...toNonNullableArray(options?.imports ?? []).map((item) => `@import ${JSON.stringify(item)};`),
-          ].join('\n');
+        addTemplate({
+          filename    : 'tailwind.css',
+          write       : true,
+          getContents : () => {
+            return [
+              `@import ${ JSON.stringify(resolveModuleDirectory('tailwindcss')) };`,
+              `@import ${ JSON.stringify(sourcesTemplate.dst) };`,
+              ...toNonNullableArray(options?.imports ?? []).map((item) => `@import ${ JSON.stringify(item) };`),
+            ].join('\n');
           },
-      }).dst,
-    ]
-    : importingFiles.find(file => file[1].isInNuxt) || importingFiles.pop()!
+        }).dst,
+      ]
+    : importingFiles.find((file) => file[1].isInNuxt) || importingFiles.pop()!;
 
   if (!isInNuxt) {
     nuxt.options.css.unshift(file);
@@ -131,7 +133,7 @@ export async function importCSS(nuxt: Nuxt = useNuxt(), options?: Options) {
         if (IMPORT_REGEX.test(fileContents)) {
           logger
             .withTag('@nuxtjs/tailwindcss')
-            .warn(`New import for \`tailwindcss\` detected in ${file}. Restart server.`);
+            .warn(`New import for \`tailwindcss\` detected in ${ file }. Restart server.`);
         }
       });
     }

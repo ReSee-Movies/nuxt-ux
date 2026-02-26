@@ -1,5 +1,6 @@
 <template>
   <PrimeTag
+    v-prime-tooltip.top="{ value: props.tooltip, showDelay: 500 }"
     :class="[
       'tag',
       props.severity,
@@ -9,7 +10,6 @@
         'has-tooltip'       : props.tooltip,
       },
     ]"
-    v-prime-tooltip.top="{ value: props.tooltip, showDelay: 500 }"
   >
     <IconTextPair :icon="props.icon" :text="props.text" />
   </PrimeTag>

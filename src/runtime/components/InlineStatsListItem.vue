@@ -8,7 +8,7 @@
   <dd>
     <slot name="default">
       <IconTextPair :icon="props.icon" :text="props.description">
-        <template #default v-if="slots.description">
+        <template v-if="slots.description" #default>
           <slot name="description" />
         </template>
       </IconTextPair>

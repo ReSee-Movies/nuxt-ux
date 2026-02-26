@@ -5,6 +5,7 @@ import type { Ref } from 'vue';
 /**
  * An object which carries the current values of a form's input fields.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type FormValues = Record<string, any>;
 
 

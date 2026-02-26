@@ -5,12 +5,12 @@
  */
 export function swapStringPlaceholders(target: string, placeholders?: Record<string, unknown>) {
   return placeholders
-    ? target.replace(/\{\s*(\w+?)\s*}/g, (_, token) => String(placeholders[token] || ''))
+    ? target.replace(/\{\s*(\w+)\s*\}/g, (_, token) => String(placeholders[token] || ''))
     : target;
 }
 
 
-const MatchTagsRegex = new RegExp(/<(\w+)(?:>|.+?>)/gi);
+const MatchTagsRegex = new RegExp(/<(\w+)(?:>|\/>|\s.+>)/g);
 
 
 /**

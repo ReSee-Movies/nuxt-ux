@@ -16,15 +16,15 @@
           <LazyImage
             v-if             = "props.src && !Array.isArray(props.src)"
             v-bind           = "props.singleImageOptions"
+            :key             = "transitionKey"
             :src             = "props.src"
             :width           = "props.singleImageOptions?.width ?? 'original'"
             :aspect          = "props.singleImageOptions?.aspect ?? 'video'"
             :scale-to-parent = "props.scaleToForeground ? 'cover' : undefined"
-            :key             = "transitionKey"
           />
 
           <div v-else-if="Array.isArray(props.src)">
-            <ClientOnly >
+            <ClientOnly>
               <LazyImageTiler
                 v-bind  = "props.multiImageOptions"
                 :images = "props.src"
@@ -58,7 +58,7 @@
 
   export type SingleImageProps
     = Omit<ImageBaseProps, 'src' | 'alt' | 'loadStyle'>
-    & Pick<ImageProps, 'defaultIcon' | 'iconSize'>;
+      & Pick<ImageProps, 'defaultIcon' | 'iconSize'>;
 
   export type MultiImageProps = Omit<ImageTilerProps, 'images' | 'maskPreset'>;
 

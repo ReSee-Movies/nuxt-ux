@@ -9,12 +9,18 @@
       Go to Layout
     </NuxtLink>
 
-    <h1 class="hero text-accent-color">Hero Heading Level 1</h1>
-    <p class="hero">This is a paragraph of hero text.</p>
+    <h1 class="hero text-accent-color">
+      Hero Heading Level 1
+    </h1>
+    <p class="hero">
+      This is a paragraph of hero text.
+    </p>
 
     <hr>
 
-    <h2 id="level-2">Heading Level 2</h2>
+    <h2 id="level-2">
+      Heading Level 2
+    </h2>
     <UiLorem type="paragraphs" min="1" max="1" />
 
     <h3>Heading Level 3</h3>
@@ -29,7 +35,9 @@
     <h6>Heading Level 6</h6>
     <UiLorem type="paragraphs" min="1" max="1" />
 
-    <h2 id="lists">Lists</h2>
+    <h2 id="lists">
+      Lists
+    </h2>
     <ol>
       <li>Item A</li>
       <li>
@@ -70,21 +78,28 @@
       </li>
     </ol>
 
-    <h2 id="tables">Tables</h2>
+    <h2 id="tables">
+      Tables
+    </h2>
 
     <table>
       <thead>
         <tr>
-          <th colspan="2">Columns 1 - 2</th>
+          <th colspan="2">
+            Columns 1 - 2
+          </th>
           <th>Column 3</th>
         </tr>
       </thead>
 
       <tbody>
         <tr>
-          <th scope="row">Row 1</th>
+          <th scope="row">
+            Row 1
+          </th>
           <td><UiLorem /></td>
-          <td><UiLorem />
+          <td>
+            <UiLorem />
             <ul>
               <li><UiLorem /></li>
               <li><UiLorem /></li>
@@ -93,7 +108,9 @@
           </td>
         </tr>
         <tr>
-          <th scope="row">Row 2</th>
+          <th scope="row">
+            Row 2
+          </th>
           <td><UiLorem /></td>
           <td><UiLorem type="paragraphs" /></td>
         </tr>
@@ -127,7 +144,7 @@
         <p>
           <span>Nothing makes me prouder than seeing repeat guests strike up conversations with familiar faces.
             Picture from our </span><a href="https://www.reseemovies.com/film-series/cinesonic" target="_blank" rel="noopener noreferrer nofollow">cinesonic</a><span>
-          launch event featuring </span><span class="italic">The Matrix</span><span> and a Matrix-inspired dance party.</span>
+            launch event featuring </span><span class="italic">The Matrix</span><span> and a Matrix-inspired dance party.</span>
         </p>
       </figcaption>
     </figure>

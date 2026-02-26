@@ -16,12 +16,16 @@
 
         <hr class="hr">
 
-        <h2 class="h3">Bound Model</h2>
+        <h2 class="h3">
+          Bound Model
+        </h2>
         <pre class="pre overflow-x-auto">{{ JSON.stringify(queryParams, null, 2) }}</pre>
 
         <hr class="hr">
 
-        <h2 class="h3">Form State</h2>
+        <h2 class="h3">
+          Form State
+        </h2>
         <pre class="pre overflow-x-auto">{{ JSON.stringify($form, null, 2) }}</pre>
       </div>
     </template>
@@ -66,18 +70,18 @@
   const showDrawer = ref(false);
 
   const countryOptions = [
-    { label: `${ getRegionalIndicatorUnicodeSymbol('au') } Australia`,      value: 'AU' },
-    { label: `${ getRegionalIndicatorUnicodeSymbol('ca') } Canada`,         value: 'CA' },
-    { label: `${ getRegionalIndicatorUnicodeSymbol('fr') } France`,         value: 'FR' },
-    { label: `${ getRegionalIndicatorUnicodeSymbol('de') } Germany`,        value: 'DE' },
-    { label: `${ getRegionalIndicatorUnicodeSymbol('jp') } Japan`,          value: 'JP' },
-    { label: `${ getRegionalIndicatorUnicodeSymbol('mx') } Mexico`,         value: 'MX' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('au') } Australia`, value: 'AU' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('ca') } Canada`, value: 'CA' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('fr') } France`, value: 'FR' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('de') } Germany`, value: 'DE' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('jp') } Japan`, value: 'JP' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('mx') } Mexico`, value: 'MX' },
     { label: `${ getRegionalIndicatorUnicodeSymbol('gb') } United Kingdom`, value: 'GB' },
-    { label: `${ getRegionalIndicatorUnicodeSymbol('us') } United States`,  value: 'US' },
+    { label: `${ getRegionalIndicatorUnicodeSymbol('us') } United States`, value: 'US' },
   ];
 
   const journeyTypes = [
-    { label: 'One Way',    icon: 'i-ph-arrow-right' },
+    { label: 'One Way', icon: 'i-ph-arrow-right' },
     { label: 'Round Trip', icon: 'i-ph-arrows-left-right' },
     { label: 'Multi-City', icon: 'i-ph-dots-nine' },
   ];
@@ -125,26 +129,26 @@
       iconOnly       : true,
       multiple       : false,
       width          : 'half',
-      noteText       : 'Here is some interesting info'
+      noteText       : 'Here is some interesting info',
     },
     {
       fieldType : 'radio',
       name      : 'toppings',
       options   : ['Mushrooms', 'Onions', 'Sprouts', 'Pineapple'],
-      noteText  : 'Here is some interesting info'
+      noteText  : 'Here is some interesting info',
     },
     {
       fieldType : 'toggle',
       name      : 'notifications',
       label     : 'Allow Notifications',
-      noteText  : 'Here is some interesting info'
+      noteText  : 'Here is some interesting info',
     },
     {
       fieldType : 'checkbox',
       name      : 'termsOfService',
       label     : 'I agree to the terms of service',
       required  : true,
-      noteText  : 'Here is some interesting info'
+      noteText  : 'Here is some interesting info',
     },
     {
       fieldType : 'textarea',

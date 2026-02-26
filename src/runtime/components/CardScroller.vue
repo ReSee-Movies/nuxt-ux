@@ -177,8 +177,8 @@
     const rulerStyles    = defaultWindow?.getComputedStyle(rulerEl);
     const rulerLeft      = rulerBounds.left.value;
     const rulerWidth     = rulerBounds.width.value;
-    const rulerPadLeft   = parseFloat(rulerStyles?.paddingLeft || '0');
-    const rulerPadRight  = parseFloat(rulerStyles?.paddingRight || '0');
+    const rulerPadLeft   = Number.parseFloat(rulerStyles?.paddingLeft || '0');
+    const rulerPadRight  = Number.parseFloat(rulerStyles?.paddingRight || '0');
     const scrollBoxWidth = scrollBox.value?.scrollWidth ?? 0;
 
     const bounds = {
@@ -219,7 +219,7 @@
    * the final measurements of elements, so this last call performs a final pass when
    * everything had (hopefully) stabilized.
    */
-  const scrollState = useScroll(scrollBox,);
+  const scrollState = useScroll(scrollBox);
 
   const {
     pause  : pauseStyleChanges,
@@ -263,9 +263,9 @@
   let queuedFrame: number | undefined = undefined;
 
   function queueStyleChanges(
-    transiting   : 'left' | 'right' | 'both',
+    transiting : 'left' | 'right' | 'both',
     styleOpacity : boolean,
-    styleScale   : boolean,
+    styleScale : boolean,
   ) {
     if (queuedFrame) {
       cancelAnimationFrame(queuedFrame);
@@ -280,9 +280,9 @@
 
 
   function applyStyleChanges(
-    transiting   : 'left' | 'right' | 'both',
+    transiting : 'left' | 'right' | 'both',
     styleOpacity : boolean,
-    styleScale   : boolean,
+    styleScale : boolean,
   ) {
     const styleLeft  = transiting === 'both' || transiting === 'left';
     const styleRight = transiting === 'both' || transiting === 'right';

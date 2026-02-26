@@ -26,14 +26,14 @@ export type UseUrlHashUpdateOptions = {
    * Whether to update the hash in a way that will cause the browser
    * to scroll to the identified element (default: false).
    */
-  scrollTo? : boolean;
+  scrollTo?: boolean;
 
   /**
    * Whether to create a new history entry for the hash - push - or to replace the
    * current (default: replace).
    */
   mode?: 'push' | 'replace';
-}
+};
 
 
 /**

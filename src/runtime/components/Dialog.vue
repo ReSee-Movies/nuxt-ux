@@ -17,7 +17,7 @@
     @update:visible   = "updatedValue => emits('update:visible', updatedValue)"
   >
     <template #header>
-      <div class="title" :id="dialogLabelledBy">
+      <div :id="dialogLabelledBy" class="title">
         <slot v-if="props.showHeaderText" name="title">
           {{ props.header }}
         </slot>
@@ -79,11 +79,11 @@
 
   const dialogWidth = computed(() => {
     switch (props.size) {
-      case 'lg'  : return 'max-w-5xl';
-      case 'sm'  : return 'max-w-xl';
-      case 'xs'  : return 'max-w-md';
+      case 'lg' : return 'max-w-5xl';
+      case 'sm' : return 'max-w-xl';
+      case 'xs' : return 'max-w-md';
       case 'xxs' : return 'max-w-sm';
-      default    : return 'max-w-3xl';
+      default : return 'max-w-3xl';
     }
   });
 

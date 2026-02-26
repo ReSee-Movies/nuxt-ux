@@ -21,14 +21,14 @@ export type UseSharedIntersectionObserverTargetOptions = {
    * come into the viewport.
    */
   once?: boolean;
-}
+};
 
 /**
  * Config for the {@link useSharedIntersectionObserver} composable.
  */
 export type UseSharedIntersectionObserverOptions
   = UseSharedIntersectionObserverTargetOptions
-  & IntersectionObserverInit;
+    & IntersectionObserverInit;
 
 /**
  * The return type of {@link useSharedIntersectionObserver}.
@@ -48,7 +48,7 @@ export type UseSharedIntersectionObjectReturn = {
  * and possible performance degradation.
  */
 export function useSharedIntersectionObserver(
-  target  : MaybeElementRef,
+  target : MaybeElementRef,
   options : UseSharedIntersectionObserverOptions = {},
 ): UseSharedIntersectionObjectReturn {
   const observer = getObserver(options);
@@ -91,16 +91,16 @@ export function useSharedIntersectionObserver(
  */
 type UseSharedIntersectionObserverElementState
   = UseSharedIntersectionObserverTargetOptions
-  & { isIntersecting : Ref<boolean> };
+    & { isIntersecting: Ref<boolean> };
 
 /**
  * Adds the provided target element to a given observer, storing its
  * state in the process.
  */
 function attachObserver(
-  target   : MaybeElementRef,
+  target : MaybeElementRef,
   observer : IntersectionObserver,
-  options  : UseSharedIntersectionObserverElementState,
+  options : UseSharedIntersectionObserverElementState,
 ) {
   const rawTarget = unrefElement(target);
 

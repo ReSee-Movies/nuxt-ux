@@ -3,7 +3,9 @@
     <dt>Small</dt>
     <dd><UiProgressSpinner size="sm" /></dd>
 
-    <dt class="text-nowrap">Medium (default)</dt>
+    <dt class="text-nowrap">
+      Medium (default)
+    </dt>
     <dd><UiProgressSpinner /></dd>
 
     <dt>Large</dt>

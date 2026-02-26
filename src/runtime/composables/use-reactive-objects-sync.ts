@@ -36,8 +36,8 @@ export type UseReactiveObjectsSyncOptions<
   L extends SyncObject,
   R extends SyncObject,
 > = {
-  left          : MaybeRefOrGetter<L | undefined>,
-  right         : MaybeRefOrGetter<R | undefined>,
+  left          : MaybeRefOrGetter<L | undefined>;
+  right         : MaybeRefOrGetter<R | undefined>;
   keySource?    : Side | (KeyOf<L> | KeyOf<R>)[];
   onChange?     : <S extends Side>(side: S, key: KeyOfSide<S, L, R>, value: unknown) => void;
   leftOptions?  : ComputedReadWriteOptions<L>;
@@ -152,8 +152,8 @@ function aggregateKeys<
  * methods can be provided to further augment behavior.
  */
 function computedReadWrite<S extends SyncObject>(
-  source   : MaybeRefOrGetter<S | undefined>,
-  key      : KeyOf<S>,
+  source : MaybeRefOrGetter<S | undefined>,
+  key : KeyOf<S>,
   options? : ComputedReadWriteOptions<S>,
 ) {
   return computed({
@@ -167,6 +167,7 @@ function computedReadWrite<S extends SyncObject>(
       return undefined;
     },
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     set(val: any) {
       const target = toValue(source);
 

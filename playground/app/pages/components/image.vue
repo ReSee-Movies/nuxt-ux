@@ -11,7 +11,9 @@
   </div>
 
   <hr class="hr">
-  <h2 class="h2">Flexbox</h2>
+  <h2 class="h2">
+    Flexbox
+  </h2>
 
   <div class="flex gap-4">
     <Image
@@ -46,7 +48,9 @@
   </div>
 
   <hr class="hr">
-  <h2 class="h2">Grid</h2>
+  <h2 class="h2">
+    Grid
+  </h2>
 
   <div class="grid grid-cols-2 gap-4">
     <Image

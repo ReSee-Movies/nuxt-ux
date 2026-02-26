@@ -1,7 +1,14 @@
 <template>
   <CardScroller :items="posters">
     <template #item="{ item }">
-      <Image :src="item" aspect="poster" bordered beveled interactive colorful />
+      <Image
+        :src="item"
+        aspect="poster"
+        bordered
+        beveled
+        interactive
+        colorful
+      />
     </template>
   </CardScroller>
 </template>

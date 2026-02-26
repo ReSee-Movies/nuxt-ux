@@ -12,7 +12,7 @@ import { ref, type Ref } from 'vue';
 type UseTwoFrameRefToggleOptions = {
   direction?    : 'one-way' | 'reverse';
   defaultValue? : boolean;
-}
+};
 
 
 /**

@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-  import { usePrimeVue } from "primevue/config";
+  import { usePrimeVue } from 'primevue/config';
   import Button from './Button.vue';
 
   const primevue = usePrimeVue();
