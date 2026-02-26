@@ -1,4 +1,4 @@
-import UiIcon, { type IconProps } from '@/components/Icon.vue';
+import UiIcon, { type IconProps } from '@/src/runtime/components/Icon.vue';
 import { mountSuspended } from '@nuxt/test-utils/runtime';
 import { describe, expect, test } from 'vitest';
 

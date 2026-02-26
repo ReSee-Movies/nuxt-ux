@@ -1,4 +1,4 @@
-import UiLayoutPageColumn from '@/components/LayoutPageColumn.vue';
+import UiLayoutPageColumn from '@/src/runtime/components/LayoutPageColumn.vue';
 import { mountSuspended } from '@nuxt/test-utils/runtime';
 import { describe, expect, it } from 'vitest';
 

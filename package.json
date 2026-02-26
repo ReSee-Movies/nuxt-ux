@@ -46,7 +46,7 @@
     "prepare": "nuxt-module-build prepare && nuxt-module-build build",
     "release": "dotenv release-it --",
     "lint": "eslint .",
-    "test": "vitest",
+    "test": "vitest run",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
     "test:coverage": "vitest run --coverage"

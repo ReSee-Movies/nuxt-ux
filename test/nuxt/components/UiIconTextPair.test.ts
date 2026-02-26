@@ -1,4 +1,4 @@
-import UiIconTextPair from '@/components/IconTextPair.vue';
+import UiIconTextPair from '@/src/runtime/components/IconTextPair.vue';
 import { mountSuspended } from '@nuxt/test-utils/runtime';
 import { describe, expect, it } from 'vitest';
 
