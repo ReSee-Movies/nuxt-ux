@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.28.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.27.1...0.28.0) (2026-02-26)
+
+### Features
+
+* added additional utility methods "getImageUrl", "getMediaAssetUrl", and "getTmdbImageUrl" to the Image store ([9706336](https://github.com/ReSee-Movies/nuxt-ux/commit/9706336814a19f11e6dbd70242a78fa16a084d48))
+* **HeroBanner:** introduced new HeroBanner component ([0ef3301](https://github.com/ReSee-Movies/nuxt-ux/commit/0ef3301fb5d2e1d88e03426bb1829068f9f60229))
+* **ImageBackdrop:** added the "scale-to-foreground" prop to keep the background synced to the foreground size (works best with the single Image backdrop right now) ([2a65246](https://github.com/ReSee-Movies/nuxt-ux/commit/2a6524675cfdb24ddff06ba578f06d3fac902be2))
+
+### Bug Fixes
+
+* avoid setting "Infinity" or "undefined" as an image's height/width ([d6492a1](https://github.com/ReSee-Movies/nuxt-ux/commit/d6492a19521e09099668c69395e808322c387686))
+* **ImageBackdrop:** changing single image backgrounds will now trigger a fade transition ([2b7432d](https://github.com/ReSee-Movies/nuxt-ux/commit/2b7432d53c3f6e96fb75553c2f896b9e51a9427a))
+
+### Testing
+
+* linting ([db8b84d](https://github.com/ReSee-Movies/nuxt-ux/commit/db8b84d66cb72610b604bd639cdbe54b18a28646))
+* update and pass tests ([50ff02f](https://github.com/ReSee-Movies/nuxt-ux/commit/50ff02f0a1d91e1ed92fef3c533185556c1900d6))
+
 ## [0.27.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.27.0...0.27.1) (2026-02-24)
 
 ### Refactors
