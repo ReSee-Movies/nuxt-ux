@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.29.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.28.0...0.29.0) (2026-03-02)
+
+### Features
+
+* **ImageGallery:** introduce new ImageGallery component ([29ebeb3](https://github.com/ReSee-Movies/nuxt-ux/commit/29ebeb3a93f3dfba52f1dff25121c7baf180d3d2))
+
+### Bug Fixes
+
+* **ImageBase:** use the normalized image info's width, if available, to determine the resolution to load ([61d1adc](https://github.com/ReSee-Movies/nuxt-ux/commit/61d1adc65d761375e9e27b6a28d09aa6ab898b5e))
+
 ## [0.28.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.27.1...0.28.0) (2026-02-26)
 
 ### Features
