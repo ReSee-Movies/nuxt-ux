@@ -140,7 +140,7 @@
     {
       deferLoad    : deferLoad,
       type         : () => normalizedSource.value.sourceType,
-      width        : () => props.width,
+      width        : () => normalizedSource.value.width ?? props.width,
       friendlyName : () => normalizedSource.value.friendlyName,
       onLoading    : () => emits('loading'),
       onLoad       : (src, key) => emits('load', src, key),
