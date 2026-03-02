@@ -33,6 +33,7 @@
     { label: 'Icon', icon: 'i-ph-mask-happy', route: 'components-icon' },
     { label: 'Image', icon: 'i-ph-image', route: 'components-image' },
     { label: 'Image Backdrop', icon: 'i-ph-selection-background', route: 'components-image-backdrop' },
+    { label: 'Image Gallery', icon: 'i-ph-images-square', route: 'components-image-gallery' },
     { label: 'Image Tiler', icon: 'i-ph-grid-four', route: 'components-image-tiler' },
     { label: 'Inline Stats List', icon: 'i-ph-dots-three-outline', route: 'components-inline-stats-list' },
     { label: 'Menu', icon: 'i-ph-list', route: 'components-menu' },

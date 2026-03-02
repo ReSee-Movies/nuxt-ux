@@ -67,6 +67,7 @@ export function importModules(nuxt: Nuxt): NuxtUxModuleDependencies {
       'Drawer',
       'Form',
       'FormField',
+      'Galleria',
       'InputText',
       'Message',
       'Menu',

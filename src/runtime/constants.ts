@@ -41,4 +41,9 @@ export const DefaultLocalization = {
   },
 
   continueReading: 'Continue Reading',
+
+  aria: {
+    previous : 'Previous',
+    next     : 'Next',
+  },
 };
