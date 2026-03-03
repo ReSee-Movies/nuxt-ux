@@ -127,7 +127,7 @@
    within a `.prose` or `.prose-container` parent element, or if given
    the `.prose` classname directly while also utilizing a `.h*` classname.
    */
-  :where(.prose-container, .prose) :where(h1, h2, h3, h4, h5, h6),
+  :where(.prose-container, .prose) :where(h1, h2, h3, h4, h5, h6):not(:where(.not-prose *)),
   :where(.h1, .h2, .h3, .h4, .h5, .h6).prose {
     margin-block-start        : 0.9lh;
     margin-block-end          : 0.4lh;
@@ -141,7 +141,7 @@
    the `.prose` classname directly while also utilizing a
    typography-related classname.
    */
-  :where(.prose-container, .prose) :where(p, pre, table, ol, ul, img, figure, blockquote),
+  :where(.prose-container, .prose) :where(p, pre, table, ol, ul, img, figure, blockquote):not(:where(.not-prose *)),
   :where(.p, .pre, .table, .ol, .ul, .img, .figure, .blockquote).prose {
     margin-block-end : 1lh;
     text-wrap        : pretty;
@@ -158,7 +158,7 @@
     margin-block-end: 0;
   }
 
-  .hr, .prose hr, .prose-container hr {
+  .hr, :where(.prose, .prose-container) :where(hr):not(:where(.not-prose *)) {
     border-color       : var(--color-global-background-accent);
     margin-block-start : 1lh;
     margin-block-end   : 1lh;
@@ -167,7 +167,7 @@
   /** ---------------------------------
       Heading Level 1
    -- --------------------------------- */
-  .h1, .prose h1, .prose-container h1 {
+  .h1, :where(.prose, .prose-container) :where(h1):not(:where(.not-prose *)) {
     font-size      : var(--typo-h1);
     line-height    : 1.125;
     letter-spacing : 0.0025em;
@@ -182,7 +182,7 @@
   /** ---------------------------------
       Heading Level 2
    -- --------------------------------- */
-  .h2, .prose h2, .prose-container h2 {
+  .h2, :where(.prose, .prose-container) :where(h2):not(:where(.not-prose *)) {
     font-size      : var(--typo-h2);
     line-height    : 1.1765;
     letter-spacing : 0.0108em;
@@ -192,7 +192,7 @@
   /** ---------------------------------
       Heading Level 3
    -- --------------------------------- */
-  .h3, .prose h3, .prose-container h3 {
+  .h3, :where(.prose, .prose-container) :where(h3):not(:where(.not-prose *)) {
     font-size      : var(--typo-h3);
     line-height    : 1.2;
     letter-spacing : 0.022em;
@@ -202,7 +202,7 @@
   /** ---------------------------------
       Heading Level 4
    -- --------------------------------- */
-  .h4, .prose h4, .prose-container h4 {
+  .h4, :where(.prose, .prose-container) :where(h4):not(:where(.not-prose *)) {
     font-size      : var(--typo-h4);
     line-height    : 1.25;
     letter-spacing : 0.035em;
@@ -211,7 +211,7 @@
   /** ---------------------------------
       Heading Level 5
    -- --------------------------------- */
-  .h5, .prose h5, .prose-container h5 {
+  .h5, :where(.prose, .prose-container) :where(h5):not(:where(.not-prose *)) {
     font-size      : var(--typo-h5);
     line-height    : 1.28;
     letter-spacing : 0.0532em;
@@ -220,7 +220,7 @@
   /** ---------------------------------
       Heading Level 6
    -- --------------------------------- */
-  .h6, .prose h6, .prose-container h6 {
+  .h6, :where(.prose, .prose-container) :where(h6):not(:where(.not-prose *)) {
     font-size      : var(--typo-h6);
     line-height    : 1.28;
     letter-spacing : 0.0532em;
@@ -229,7 +229,7 @@
   /** ---------------------------------
     Paragraph
  -- --------------------------------- */
-  .p, .prose p, .prose-container p {
+  .p, :where(.prose, .prose-container) :where(p):not(:where(.not-prose *)) {
     font-size      : 1rem;
     line-height    : 1.5;
     letter-spacing : 0.03em;
@@ -253,8 +253,7 @@
   /** ---------------------------------
       Code
    -- --------------------------------- */
-  .code, .prose code, .prose-container code,
-  .pre, .prose pre, .prose-container pre {
+  .code, .pre, :where(.prose, .prose-container) :where(code, pre):not(:where(.not-prose *)) {
     font-family         : monospace;
     color               : var(--color-foreground-scale-e);
     outline             : dashed 2px var(--color-background-scale-g);
@@ -274,15 +273,16 @@
   /** ---------------------------------
       Pre (also see .code class above)
    -- --------------------------------- */
-  .pre, .prose pre, .prose-container pre {
+  .pre, :where(.prose, .prose-container) :where(pre):not(:where(.not-prose *)) {
     padding: 0.5rem 0.75rem;
   }
 
   /** ---------------------------------
       Table
    -- --------------------------------- */
-  .table, .prose table, .prose-container table {
-    border-collapse: collapse;
+  .table, :where(.prose, .prose-container) :where(table):not(:where(.not-prose *)) {
+    border-collapse : collapse;
+    width           : 100%;
 
     td, th {
       border         : solid 1px var(--color-background-scale-f);
@@ -309,8 +309,8 @@
   /** ---------------------------------
       Un/ordered List
    -- --------------------------------- */
-  .ul, .prose ul, .prose-container ul,
-  .ol, .prose ol, .prose-container ol {
+  .ul, :where(.prose, .prose-container) :where(ul):not(:where(.not-prose *)),
+  .ol, :where(.prose, .prose-container) :where(ol):not(:where(.not-prose *)) {
     list-style-type      : disc;
     padding-inline-start : 1.25rem;
 
@@ -336,7 +336,7 @@
   /** ---------------------------------
       Ordered List (also see .ul class above)
    -- --------------------------------- */
-  .ol, .prose ol, .prose-container ol {
+  .ol, :where(.prose, .prose-container) :where(ol):not(:where(.not-prose *)) {
     list-style-type : none;
     counter-reset   : item;
 
@@ -352,45 +352,54 @@
   /** ---------------------------------
       Image
    -- --------------------------------- */
-  .img, .prose img, .prose-container img {
-    border        : solid 2px var(--color-background-scale-e);
-    margin-left   : auto;
-    margin-right  : auto;
-    max-height    : 450px;
-    width         : auto;
-    border-radius : 0.25rem;
+  .img, :where(.prose, .prose-container) :where(img):not(:where(.not-prose *)),
+  .figure img {
+    --typo-img-max-height: 450px;
+
+    @apply card-border card-bevel;
+
+    width        : auto;
+    max-height   : var(--typo-img-max-height);
+    margin-left  : auto;
+    margin-right : auto;
   }
 
   /** ---------------------------------
       Figure
    -- --------------------------------- */
-  .figure, .prose figure, .prose-container figure {
+  .figure, :where(.prose, .prose-container) :where(figure):not(:where(.not-prose *)) {
+    @apply card-border card-bevel;
+
     display      : table;
     margin-left  : auto;
     margin-right : auto;
 
     img {
-      display : block;
-      margin  : 0;
+      border        : none;
+      border-radius : 0;
+      margin-bottom : 0;
+    }
 
-      &:has(+figcaption) {
-        border-bottom-left-radius  : 0;
-        border-bottom-right-radius : 0;
-      }
+    &:has(figcaption) {
+      border-bottom-left-radius  : 0;
+      border-bottom-right-radius : 0;
+      border-bottom              : none;
     }
 
     figcaption {
-      background-color           : var(--color-background-scale-e);
-      display                    : table-caption;
-      caption-side               : bottom;
-      text-align                 : center;
-      padding                    : 0.5rem;
-      font-size                  : 0.85rem;
-      border-bottom-left-radius  : 0.25rem;
-      border-bottom-right-radius : 0.25rem;
+      @apply card-border card-bevel;
+
+      background-color        : var(--color-background-scale-c);
+      border-top              : solid 1px var(--color-global-background-accent);
+      display                 : table-caption;
+      caption-side            : bottom;
+      padding                 : --spacing(2);
+      font-size               : var(--text-sm);
+      border-top-left-radius  : 0;
+      border-top-right-radius : 0;
 
       & > * {
-        font-size: 0.85rem;
+        font-size: var(--text-sm);
       }
 
       > :last-child {
@@ -402,7 +411,7 @@
   /** ---------------------------------
       Blockquote
    -- --------------------------------- */
-  .blockquote, .prose blockquote, .prose-container blockquote {
+  .blockquote, :where(.prose, .prose-container) :where(blockquote):not(:where(.not-prose *)) {
     font-family      : serif;
     font-size        : 1.1rem;
     background-color : var(--color-background-scale-b);

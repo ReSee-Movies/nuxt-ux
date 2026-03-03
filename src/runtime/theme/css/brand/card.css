@@ -1,0 +1,13 @@
+@utility card-bevel {
+  overflow                  : clip;
+  border-top-right-radius   : var(--radius-xl);
+  border-bottom-left-radius : var(--radius-xl);
+}
+
+
+@utility card-border {
+  --resee-card-border-color  : var(--color-global-background-accent);
+  --resee-card-border-weight : 2px;
+
+  border: solid var(--resee-card-border-weight) var(--resee-card-border-color);
+}
