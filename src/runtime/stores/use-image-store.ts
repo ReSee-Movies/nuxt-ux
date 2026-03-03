@@ -139,7 +139,7 @@ export const useImageStore = defineStore('image', () => {
     options? : Omit<GetMediaAssetUrlOptions, 'baseUrl'>,
   ) {
     // @ts-expect-error - not bothering with the discriminated union of the fileId right now
-    return getMediaAssetUrl(fileId, nameOrOpts, { ...options, baseUrl: config.tmdbImageBaseUrl });
+    return getMediaAssetUrl(fileId, nameOrOpts, { ...options, baseUrl: config.reseeImageBaseUrl });
   }
 
   /**
