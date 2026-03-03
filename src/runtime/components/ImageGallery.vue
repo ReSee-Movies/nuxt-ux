@@ -1,66 +1,84 @@
 <template>
-  <PrimeGalleria
-    v-model:active-index  = "activeIndex"
-    :value                = "normalizedSources"
-    :pt                   = "passThrough"
-    :num-visible          = "6"
-    :show-item-navigators = "true"
-    :show-thumbnails      = "showThumbnails"
+  <Card
+    :beveled  = "props.beveled"
+    :bordered = "props.bordered"
   >
-    <template #item="slotProps">
-      <ImageBase :src="slotProps.item.image" width="original" fit="contain" />
-    </template>
+    <PrimeGalleria
+      v-model:active-index  = "activeIndex"
+      :value                = "normalizedSources"
+      :pt                   = "passThrough"
+      :num-visible          = "6"
+      :show-item-navigators = "true"
+      :show-thumbnails      = "props.showThumbnailToggle && showThumbnails"
+    >
+      <template #item="slotProps">
+        <ImageBase :src="slotProps.item.image" width="original" fit="contain" />
+      </template>
 
-    <template #thumbnail="slotProps">
-      <ImageBase :src="slotProps.item.thumb" width="w92" fit="contain" />
-    </template>
+      <template #thumbnail="slotProps">
+        <ImageBase :src="slotProps.item.thumb" width="w92" fit="contain" />
+      </template>
 
-    <template #footer>
-      <div class="bg-background-scale-c text-sm flex items-center gap-1 overflow-hidden">
-        <button
-          class      = "cursor-pointer py-1 px-2 hover:bg-background-scale-f focus-active:bg-background-scale-f"
-          aria-label = "Thumbnails"
-          @click     = "() => showThumbnails = !showThumbnails"
-        >
-          <Icon name="i-ph-images-square" />
-        </button>
+      <template #footer>
+        <div :class="['footer', { 'pt-1 pb-0.5 px-2': !props.showThumbnailToggle }]">
+          <button
+            v-if       = "props.showThumbnailToggle"
+            class      = "cursor-pointer py-1 px-2 hover:bg-background-scale-f focus-active:bg-background-scale-f"
+            aria-label = "Thumbnails"
+            @click     = "() => showThumbnails = !showThumbnails"
+          >
+            <Icon name="i-ph-images-square" />
+          </button>
 
-        <span class="text-nowrap mr-4">
-          {{ activeIndex + 1 }} / {{ normalizedSources.length }}
-        </span>
+          <span class="text-nowrap mr-2">
+            {{ activeIndex + 1 }} / {{ normalizedSources.length }}
+          </span>
 
-        <span class="text-nowrap truncate font-semibold">
-          {{ normalizedSources[activeIndex]?.image.friendlyName }}
-        </span>
-      </div>
-    </template>
-  </PrimeGalleria>
+          <span
+            v-if  = "props.showImageTitles"
+            class = "text-nowrap truncate font-semibold"
+          >
+            {{ normalizedSources[activeIndex]?.image.friendlyName }}
+          </span>
+        </div>
+      </template>
+    </PrimeGalleria>
+  </Card>
 </template>
 
 
 <script lang="ts">
   import type { ImageFileDescriptor } from '@resee-movies/utilities/images/normalize-image-file-descriptor';
-  import type { HTMLElementClassNames } from '../types';
+  import type { CardProps } from './Card.vue';
 
-  export interface ImageGalleryProps {
-    sources? : ImageFileDescriptor[];
-    class?   : HTMLElementClassNames;
+  export interface ImageGalleryProps extends Pick<CardProps, 'beveled' | 'bordered'> {
+    sources?             : ImageFileDescriptor[];
+    showThumbnailToggle? : boolean;
+    showImageTitles?     : boolean;
+    maxHeight?           : number | string;
   }
 </script>
 
 
 <script setup lang="ts">
   import { normalizeImageFileDescriptor } from '@resee-movies/utilities/images/normalize-image-file-descriptor';
+  import { isString } from '@resee-movies/utilities/strings/is-string';
   import PrimeGalleria, { type GalleriaPassThroughOptions } from 'primevue/galleria';
   import { computed, ref } from 'vue';
   import { useReseeUxStore } from '../stores/use-resee-ux-store';
+  import Card from './Card.vue';
   import Icon from './Icon.vue';
   import ImageBase from './ImageBase.vue';
 
   const props = withDefaults(
     defineProps<ImageGalleryProps>(),
     {
-      sources: undefined,
+      sources             : undefined,
+      showThumbnailToggle : false,
+      showImageTitles     : true,
+      beveled             : true,
+      bordered            : true,
+      maxHeight           : 400,
     },
   );
 
@@ -85,7 +103,7 @@
 
   const passThrough = computed(() => {
     return {
-      root    : { class: ['gallery', props.class] },
+      root    : { class: 'gallery' },
       content : { class: 'content' },
       items   : { class: 'items' },
       item    : { class: 'item' },
@@ -103,17 +121,18 @@
 
     } as GalleriaPassThroughOptions;
   });
+
+  const maxHeightString = computed(() => {
+    return isString(props.maxHeight) ? props.maxHeight : `${ props.maxHeight }px`;
+  });
 </script>
+
 
 <style scoped>
   @reference "tailwindcss";
 
   .gallery {
-    border        : solid 1px var(--color-global-background-accent);
-    background    : var(--color-background-scale-a);
-    border-radius : var(--radius-lg);
-    max-width     : var(--container-xl);
-    overflow      : clip;
+    background: var(--color-background-scale-a);
 
     &:deep(.content) {
       position: relative;
@@ -121,7 +140,7 @@
 
     &:deep(.items) {
       .item {
-        height          : 400px;
+        height          : v-bind(maxHeightString);
         display         : flex;
         align-items     : center;
         justify-content : center;
@@ -171,6 +190,16 @@
         align-items : center;
         cursor      : pointer;
       }
+    }
+
+    .footer {
+      border-top  : solid 1px var(--color-global-background-accent);
+      background  : var(--color-background-scale-c);
+      font-size   : var(--text-sm);
+      display     : flex;
+      gap         : --spacing(1);
+      align-items : center;
+      overflow    : hidden;
     }
   }
 </style>
