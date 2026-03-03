@@ -33,7 +33,7 @@ export default defineNuxtConfig({
   compatibilityDate : '2025-08-12',
 
   ux: {
-    reseeImageBaseUrl : '/api/images/resee/',
+    reseeImageBaseUrl : 'http://localhost:8055/assets/',
     tmdbImageBaseUrl  : '/api/images/tmdb/',
   },
 });

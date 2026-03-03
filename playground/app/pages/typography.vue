@@ -2,7 +2,7 @@
   <div class="prose-container">
     <p class="note">
       The content of this page is contained within a <code class="code">.prose-container</code>
-      which keeps everything in a narrow column which is easier to read.
+      which keeps everything in a narrow column that is easier to read.
     </p>
 
     <NuxtLink class="a" :to="{ name: 'layout' }">
@@ -130,10 +130,19 @@
       oft beguil'd.”
     </blockquote>
 
+    <h2>Image</h2>
+    <img
+      :src="imageStore.getMediaAssetUrl('6f94b9e4-e3cb-4d79-87c6-3c17152013fb')"
+      alt="A snapshot from our cinesonic launch event. Guests are gathered by the bar to listen to our guest techno DJs."
+      height="1600"
+      width="1200"
+      loading="lazy"
+    >
+
     <h2>Figure</h2>
     <figure style="width: 100%; max-width: 337.5px;">
       <img
-        src="https://api.reseemovies.com/assets/6f94b9e4-e3cb-4d79-87c6-3c17152013fb/IMG_9748.JPG"
+        :src="imageStore.getMediaAssetUrl('6f94b9e4-e3cb-4d79-87c6-3c17152013fb')"
         alt="A snapshot from our cinesonic launch event. Guests are gathered by the bar to listen to our guest techno DJs."
         height="1600"
         width="1200"
@@ -159,7 +168,13 @@
 
 
 <script setup lang="ts">
+  import { useImageStore } from '#resee-ux/stores/use-image-store';
+
   definePageMeta({
     heading: 'Typography',
   });
+
+  const imageStore = useImageStore();
+
+  // http://api.reseemovies.com/assets/6f94b9e4-e3cb-4d79-87c6-3c17152013fb/IMG_9748.JPG
 </script>

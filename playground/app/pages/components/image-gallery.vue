@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <UiImageGallery :sources="imageSources" class="mx-auto" />
+  <div class="mx-auto max-w-xl prose-container">
+    <div class="not-prose">
+      <UiImageGallery :sources="imageSources" class="mx-auto" show-thumbnail-toggle />
+    </div>
   </div>
 </template>
+
 
 <script setup lang="ts">
   import {
