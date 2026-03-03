@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.29.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.29.0...0.29.1) (2026-03-03)
+
+### Bug Fixes
+
+* **ImageGallery:** added the ability to disable thumbnails until such time as they don't look so wonky ([55cb3d6](https://github.com/ReSee-Movies/nuxt-ux/commit/55cb3d6fa3e85111c39720ac596f1ab036f8ab00))
+* **useImageStore:** correction to use reseeBaseUrl config to resolve image assets from the ReSee API ([5cf4ecd](https://github.com/ReSee-Movies/nuxt-ux/commit/5cf4ecd795aa0b16525f156c755ad7c93d65f1cc))
+
+### Style Updates
+
+* typography updates to include a new .not-prose class for breaking out of a prose styling block, and closer standardizing of image / figure / gallery styles ([94ef658](https://github.com/ReSee-Movies/nuxt-ux/commit/94ef658ed855277f1aa5ad1ff07dbff57c83d90e))
+
 ## [0.29.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.28.0...0.29.0) (2026-03-02)
 
 ### Features
