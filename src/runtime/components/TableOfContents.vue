@@ -4,7 +4,7 @@
       <li v-if="shouldRenderLevel(entry.level)">
         <NuxtLink
           :href  = "`#${ entry.slug }`"
-          :class = "[props.linkClass, { active: doesRouteHaveHash(route, entry.slug) }]"
+          :class = "[props.linkClass, { active: mounted && doesRouteHaveHash(route, entry.slug) }]"
         >
           <span v-html="entry.text" />
         </NuxtLink>
