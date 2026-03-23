@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.29.1...1.0.0) (2026-03-23)
+
+### Features
+
+* **ScrollPinnedContainer:** the "fullHeight" props, when enabled, will cause the container to pin its height to the available vertical space between where it begins and the bottom of the viewport ([d6d2f9f](https://github.com/ReSee-Movies/nuxt-ux/commit/d6d2f9f553ee8e198a7d8c6718cc33d5c53194f9))
+
+### Bug Fixes
+
+* **TableOfContents:** only attempt to apply the "active" style client-side, as URL hashes are not available on the server, leading to a hydration mismatch ([3bf85b5](https://github.com/ReSee-Movies/nuxt-ux/commit/3bf85b54e9d98a2557838cd375aa630668322a97))
+
 ## [0.29.1](https://github.com/ReSee-Movies/nuxt-ux/compare/0.29.0...0.29.1) (2026-03-03)
 
 ### Bug Fixes
