@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ pinned: !props.disabled }">
+  <div ref="container" :class="{ pinnable: !props.disabled }">
     <slot />
   </div>
 </template>
@@ -7,45 +7,65 @@
 
 <script lang="ts">
   export interface ScrollPinnedContainerProps {
-    top?      : number;
-    disabled? : boolean;
+    defaultTopOffset? : number;
+    disabled?         : boolean;
+    fullHeight?       : boolean;
   }
 </script>
 
 
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { useElementBounding } from '@vueuse/core';
+  import { computed, ref } from 'vue';
   import { useGlobalHeaderStore } from '../stores/use-global-header-store';
 
   const props = withDefaults(
     defineProps<ScrollPinnedContainerProps>(),
     {
-      top      : 24,
-      disabled : false,
+      defaultTopOffset : 24,
+      disabled         : false,
+      fullHeight       : false,
     },
   );
 
-  const globalHeaderStore = useGlobalHeaderStore();
+  const container   = ref<HTMLElement>();
+  const headerStore = useGlobalHeaderStore();
+  const boundingBox = useElementBounding(container, { updateTiming: 'next-frame' });
 
-  const topOffset = computed(() => {
+  const containerTopOffset = computed(() => {
     if (props.disabled) {
       return 0;
     }
 
-    return globalHeaderStore.isHeaderPulledDown
-      ? globalHeaderStore.headerHeight + props.top
-      : globalHeaderStore.subheaderHeight + props.top;
+    return headerStore.isHeaderPulledDown
+      ? headerStore.headerHeight + props.defaultTopOffset
+      : headerStore.subheaderHeight + props.defaultTopOffset;
+  });
+
+  const containerHeight = computed(() => {
+    if (props.disabled || !props.fullHeight) {
+      return { size: 'initial', timing: '0ms' };
+    }
+
+    const pinnedOffset   = containerTopOffset.value + props.defaultTopOffset;
+    const staticOffset   = boundingBox.top.value + props.defaultTopOffset;
+    const relevantOffset = Math.max(pinnedOffset, staticOffset);
+
+    return {
+      size   : `calc(100vh - ${ relevantOffset }px)`,
+      timing : relevantOffset === pinnedOffset ? 'calc(var(--default-transition-duration) * 2)' : '0ms',
+    };
   });
 </script>
 
 
 <style scoped>
-  .pinned {
+  .pinnable {
     position                   : sticky;
-    top                        : calc(v-bind(topOffset) * 1px);
-    will-change                : top;
-    transition-property        : top;
-    transition-duration        : calc(var(--default-transition-duration) * 2);
+    top                        : calc(v-bind(containerTopOffset) * 1px);
+    height                     : v-bind(containerHeight.size);
+    transition-property        : top, height;
+    transition-duration        : calc(var(--default-transition-duration) * 2), v-bind(containerHeight.timing);
     transition-timing-function : var(--default-transition-timing-function);
   }
 </style>

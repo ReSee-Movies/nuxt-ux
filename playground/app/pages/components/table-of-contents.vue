@@ -8,7 +8,7 @@
 
     <div class="grid md:grid-cols-[20rem_1fr] gap-4">
       <div>
-        <UiScrollPinnedContainer :disabled="isTabletOrSmaller">
+        <UiScrollPinnedContainer :disabled="isTabletOrSmaller" full-height>
           <UiTableOfContents :toc="toc?.tableOfContents" />
         </UiScrollPinnedContainer>
       </div>
