@@ -314,6 +314,10 @@
     list-style-type      : disc;
     padding-inline-start : 1.25rem;
 
+    &:has(> li:nth-child(10)) {
+      padding-inline-start: 1.875rem;
+    }
+
     li {
       ol, ul {
         padding-inline-start : 2rem;
