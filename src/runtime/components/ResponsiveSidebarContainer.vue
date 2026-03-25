@@ -1,5 +1,8 @@
 <template>
-  <ScrollPinnedContainer v-if="isColumn">
+  <ScrollPinnedContainer
+    v-if         = "isColumn"
+    :full-height = "props.columnFullHeight"
+  >
     <slot :state="containerState" :is-drawer="isDrawer" :is-column="isColumn" />
   </ScrollPinnedContainer>
 
@@ -25,9 +28,10 @@
   export type ResponseSidebarContainerState = 'column' | 'drawer' | 'unknown';
 
   export interface ResponsiveSidebarContainerProps {
-    drawerPosition? : DrawerProps['position'];
-    drawerHeader?   : DrawerProps['header'];
-    switchPoint?    : 'md' | 'lg';
+    drawerPosition?   : DrawerProps['position'];
+    drawerHeader?     : DrawerProps['header'];
+    switchPoint?      : 'md' | 'lg';
+    columnFullHeight? : boolean;
   }
 
   export interface ResponsiveSidebarContainerEmits {
@@ -46,9 +50,10 @@
   const props = withDefaults(
     defineProps<ResponsiveSidebarContainerProps>(),
     {
-      drawerPosition : 'right',
-      drawerHeader   : undefined,
-      switchPoint    : 'lg',
+      drawerPosition   : 'right',
+      drawerHeader     : undefined,
+      switchPoint      : 'lg',
+      columnFullHeight : false,
     },
   );
 

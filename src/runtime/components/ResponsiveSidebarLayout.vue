@@ -20,6 +20,7 @@
         :drawer-position       = "props.drawerPosition ?? props.sidebarPosition"
         :drawer-header         = "props.drawerHeader"
         :switch-point          = "props.switchPoint"
+        :column-full-height    = "props.columnFullHeight"
         @state-change          = "handleSidebarStateChange"
       >
         <slot name="sidebar" :sidebar-state="sidebarState" />
@@ -49,8 +50,9 @@
   const props = withDefaults(
     defineProps<ResponsiveSidebarLayoutProps>(),
     {
-      sidebarPosition : 'right',
-      switchPoint     : 'lg',
+      sidebarPosition  : 'right',
+      switchPoint      : 'lg',
+      columnFullHeight : false,
     },
   );
 
