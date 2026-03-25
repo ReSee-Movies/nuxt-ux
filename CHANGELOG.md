@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.0](https://github.com/ReSee-Movies/nuxt-ux/compare/1.1.0...1.2.0) (2026-03-25)
+
+### Features
+
+* **FormFieldBuilder:** support for a new type of field "heading" that inserts a heading and optional subtext ([628d6b0](https://github.com/ReSee-Movies/nuxt-ux/commit/628d6b0007c70714a8b1f8ff6d9ba3c34fa7cb22))
+
 ## [1.1.0](https://github.com/ReSee-Movies/nuxt-ux/compare/1.0.0...1.1.0) (2026-03-25)
 
 ### Features
