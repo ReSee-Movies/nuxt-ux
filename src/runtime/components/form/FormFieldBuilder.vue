@@ -1,8 +1,18 @@
 <template>
   <div class="@container">
     <div class="grid grid-cols-1 gap-x-4 gap-y-6 sm:@lg:grid-cols-2 sm:@lg:gap-y-7">
-      <template v-for="(field, index) of props.fields" :key="field.name ?? index">
-        <div :class="[field.gridCellClass, { 'sm:@lg:col-span-2': field.width !== 'half' }]">
+      <template v-for="(field, index) of props.fields" :key="getEnumerationKey(field, index)">
+        <div v-if="field.fieldType === 'heading'" class="sm:@lg:col-span-2 -mb-4">
+          <h2 class="h2">
+            {{ field.heading }}
+          </h2>
+
+          <p v-if="field.subheading" class="text-global-foreground-accent">
+            {{ field.subheading }}
+          </p>
+        </div>
+
+        <div v-else :class="[field.gridCellClass, { 'sm:@lg:col-span-2': field.width !== 'half' }]">
           <Component :is="getComponent(field)" v-bind="field" />
         </div>
       </template>
@@ -69,6 +79,12 @@
     fieldType: 'submit';
   }
 
+  export interface HeadingField {
+    fieldType   : 'heading';
+    heading     : string;
+    subheading? : string;
+  }
+
   export type FormFieldBuilderOption
     = CheckboxField
       | CheckboxGroupField
@@ -79,7 +95,8 @@
       | TextareaField
       | ToggleSwitchField
       | TurnstileField
-      | SubmitButton;
+      | SubmitButton
+      | HeadingField;
 
   export interface FormFieldBuilderProps {
     fields: undefined | FormFieldBuilderOption[];
@@ -115,5 +132,17 @@
       case 'submit' : return SubmitButton;
       default : return 'div';
     }
+  }
+
+  function getEnumerationKey(field: FormFieldBuilderOption, idx: number) {
+    if ('name' in field) {
+      return field.name;
+    }
+
+    if ('heading' in field) {
+      return field.heading;
+    }
+
+    return idx;
   }
 </script>
