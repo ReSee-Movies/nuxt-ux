@@ -1,5 +1,11 @@
 <template>
-  <div ref="container" :class="{ pinnable: !props.disabled }">
+  <div
+    ref    = "container"
+    :class = "{
+      'scroll-pinned-container'   : !props.disabled,
+      'full-height styled-scroll' : props.fullHeight,
+    }"
+  >
     <slot />
   </div>
 </template>
@@ -60,12 +66,17 @@
 
 
 <style scoped>
-  .pinnable {
+  .scroll-pinned-container {
     position                   : sticky;
     top                        : calc(v-bind(containerTopOffset) * 1px);
     height                     : v-bind(containerHeight.size);
     transition-property        : top, height;
     transition-duration        : calc(var(--default-transition-duration) * 2), v-bind(containerHeight.timing);
     transition-timing-function : var(--default-transition-timing-function);
+
+    &.full-height {
+      overflow-y       : auto;
+      scrollbar-gutter : stable;
+    }
   }
 </style>

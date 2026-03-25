@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <div class="content">
+      <div class="content styled-scroll">
         <slot />
       </div>
     </template>
