@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/ReSee-Movies/nuxt-ux/compare/1.0.0...1.1.0) (2026-03-25)
+
+### Features
+
+* **ResponsiveSidebarContainer,ResponsiveSidebarLayout:** added ability to pass "fullHeight" prop through the underlying ScrollPinnedContainer component ([f52a6df](https://github.com/ReSee-Movies/nuxt-ux/commit/f52a6df6703f956c577b626ac00f3287f2477995))
+* **ResponsiveSidebarContainer,ResponsiveSidebarLayout:** introduce new components for layout of some primary content with a sidebar whose content collapses into a drawer below a certain breakpoint ([ae12afc](https://github.com/ReSee-Movies/nuxt-ux/commit/ae12afc46ade3a8a84fbf7fc3a0ad7a63ce66a8c))
+
+### Style Updates
+
+* **Drawer,ScrollPinnedContainer:** update scrollbar styling ([aebef09](https://github.com/ReSee-Movies/nuxt-ux/commit/aebef0909fe00ef80136ddba37f3f37b58792675))
+* give ol lists more left padding when they have 10 or more list items so that the numbering doesn't get cut off ([d49fa3a](https://github.com/ReSee-Movies/nuxt-ux/commit/d49fa3a12702ecd5d447ef564e6e0f703599f982))
+
 ## [1.0.0](https://github.com/ReSee-Movies/nuxt-ux/compare/0.29.1...1.0.0) (2026-03-23)
 
 ### Features
