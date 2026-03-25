@@ -59,7 +59,7 @@
 
   const emits = defineEmits<ResponsiveSidebarContainerEmits>();
 
-  const drawerVisible      = defineModel<boolean | undefined>('drawerVisible', undefined);
+  const drawerVisible      = defineModel<boolean | undefined>('drawerVisible', { default: undefined });
   const isComponentMounted = useMounted();
   const isAtOrAboveSwitch  = useReseeBreakpoints().greaterOrEqual(props.switchPoint);
 

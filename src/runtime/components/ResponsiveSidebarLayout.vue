@@ -58,7 +58,7 @@
 
   const emits = defineEmits<ResponsiveSidebarContainerEmits>();
 
-  const drawerVisible = defineModel<boolean | undefined>('drawerVisible', undefined);
+  const drawerVisible = defineModel<boolean | undefined>('drawerVisible', { default: undefined });
   const sidebarState  = ref<ResponseSidebarContainerState>('unknown');
 
   function handleSidebarStateChange(state: ResponseSidebarContainerState) {
