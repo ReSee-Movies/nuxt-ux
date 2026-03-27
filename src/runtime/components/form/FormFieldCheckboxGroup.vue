@@ -70,7 +70,7 @@
       optionLabelPosition : 'after',
       minRequired         : undefined,
       maxRequired         : undefined,
-      maxHeight           : '300px',
+      maxHeight           : '200px',
     },
   );
 
@@ -106,13 +106,14 @@
   @layer components {
     .checkbox-group {
       --container-max-height-bind : v-bind(maxHeight);
-      --container-max-height      : var(--container-max-height-bind, 300px);
+      --container-max-height      : var(--container-max-height-bind, 200px);
 
-      border        : solid 1px var(--color-background-scale-b);
-      border-radius : var(--radius-md);
-      padding       : --spacing(2);
-      max-height    : var(--container-max-height);
-      overflow-y    : auto;
+      border           : solid 1px var(--color-background-scale-b);
+      border-radius    : var(--radius-md);
+      padding          : --spacing(2);
+      max-height       : var(--container-max-height);
+      overflow-y       : auto;
+      background-color : var(--color-global-background);
     }
   }
 </style>
