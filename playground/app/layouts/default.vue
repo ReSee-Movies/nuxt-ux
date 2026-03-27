@@ -1,6 +1,10 @@
 <template>
   <UiLayoutPageColumn layout="main">
-    <UiLayoutPageContainer is="main" :heading-text="route.meta.heading">
+    <UiLayoutPageContainer
+      is            = "main"
+      :heading-text = "route.meta.heading"
+      :prose        = "route.meta.prose"
+    >
       <slot />
     </UiLayoutPageContainer>
   </UiLayoutPageColumn>

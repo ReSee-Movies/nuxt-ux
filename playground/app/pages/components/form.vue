@@ -55,7 +55,8 @@
   import { ref } from 'vue';
 
   definePageMeta({
-    heading: 'Form',
+    heading : 'Form',
+    prose   : 'md',
   });
 
   const queryParams = useQueryParameters({
@@ -108,6 +109,11 @@
       maxRequired : 3,
     },
     {
+      fieldType  : 'heading',
+      heading    : 'A section of fields',
+      subheading : 'And a bit more information about what all of this is.',
+    },
+    {
       fieldType   : 'select',
       name        : 'country',
       options     : countryOptions,
@@ -134,8 +140,14 @@
     {
       fieldType : 'radio',
       name      : 'toppings',
-      options   : ['Mushrooms', 'Onions', 'Sprouts', 'Pineapple'],
       noteText  : 'Here is some interesting info',
+      options   : [
+        'Option A: This is an extra long, run-on label for a radio option. Does it really need so much description?',
+        'Option B: This is an extra long, run-on label for a radio option. Does it really need so much description?',
+        'Option C: This is an extra long, run-on label for a radio option. Does it really need so much description?',
+        'Option D: This is an extra long, run-on label for a radio option. Does it really need so much description?',
+        'Option E: This is an extra long, run-on label for a radio option. Does it really need so much description?',
+      ],
     },
     {
       fieldType : 'toggle',

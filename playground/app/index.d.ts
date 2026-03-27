@@ -1,6 +1,7 @@
 declare module '#app' {
   interface PageMeta {
-    heading?: string;
+    heading? : string;
+    prose?   : boolean | 'sm' | 'md';
   }
 }
 
