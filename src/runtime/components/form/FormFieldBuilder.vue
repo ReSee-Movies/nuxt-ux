@@ -11,7 +11,7 @@
             field.gridCellClass,
             props.gridCellClass,
             props.gridCellFullClass,
-            'mt-6 -mb-2',
+            'mt-6 -mb-6 first:mt-0',
           ]"
         >
           <FormElementHeading :heading="field.heading" :subheading="field.subheading" />
@@ -139,7 +139,7 @@
   const props = withDefaults(
     defineProps<FormFieldBuilderProps>(),
     {
-      gridClass         : 'grid grid-cols-1 gap-x-4 gap-y-6 sm:@lg:grid-cols-2 sm:@lg:gap-y-7',
+      gridClass         : 'grid grid-cols-1 gap-x-4 gap-y-10 sm:@lg:grid-cols-2 sm:@lg:gap-y-7',
       gridCellClass     : undefined,
       gridCellHalfClass : undefined,
       gridCellFullClass : 'sm:@lg:col-span-2',
@@ -188,25 +188,38 @@
     .form-grid {
       > .variant-blocks {
         background-color : var(--color-background-scale-a);
-        padding          : --spacing(4);
         border-radius    : var(--radius-md);
+        padding          : 0 --spacing(4) --spacing(4);
 
         &:has(.input-validation.visible) {
           padding-bottom: --spacing(7);
         }
 
+        &:not(:has(.label-field-layout.label-above > .input-label)) {
+          padding-top: --spacing(4);
+        }
+
         &:deep(.label-field-layout.label-above > .input-label) {
-          border-bottom : solid 1px var(--color-global-background-accent);
-          margin-bottom : --spacing(2);
+          background-color        : var(--color-background-scale-c);
+          padding                 : --spacing(1) --spacing(4) --spacing(0.5);
+          margin                  : 0 --spacing(-4) --spacing(4);
+          border-top-left-radius  : var(--radius-md);
+          border-top-right-radius : var(--radius-md);
+          border-bottom           : solid 1px var(--color-background-scale-d);
         }
 
         &:deep(.form-field-radiogroup .label-field-layout.label-after) {
-          border-bottom : solid 1px var(--color-global-background-accent);
+          border-bottom : solid 1px var(--color-background-scale-d);
           padding       : --spacing(2) 0;
           margin-bottom : 0 !important;
 
+          &:first-child {
+            padding-top: 0;
+          }
+
           &:last-child {
-            border-bottom: none;
+            border-bottom  : none;
+            padding-bottom : 0;
           }
         }
       }
