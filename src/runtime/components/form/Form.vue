@@ -46,7 +46,11 @@
         <slot name="before" :state="$form" />
 
         <slot name="default" :state="$form">
-          <FormFieldBuilder v-if="props.fields?.length" :fields="props.fields" />
+          <FormFieldBuilder
+            v-if     = "props.fields?.length"
+            :fields  = "props.fields"
+            :variant = "props.builderVariant"
+          />
         </slot>
 
         <slot name="after" :state="$form" />
@@ -59,18 +63,20 @@
 <script lang="ts">
   import type { FormSubmitEvent as PrimeFormSubmitEvent } from '@primevue/forms';
   import type { FormChangeHandler, FormSubmitEvent, FormSubmitHandler, FormValues } from '../../types/form';
-  import type { FormFieldBuilderOption } from './FormFieldBuilder.vue';
+  import type { FormFieldBuilderProps } from './FormFieldBuilder.vue';
 
   export * from '../../types/form';
 
   export interface FormProps<T extends FormValues = FormValues> {
-    disabled?      : boolean;
-    onSubmit?      : FormSubmitHandler<T> | FormSubmitHandler<T>[];
-    onChange?      : FormChangeHandler<T> | FormChangeHandler<T>[];
-    changeDelay?   : number;
-    initialValues? : Partial<T>;
-    fields?        : FormFieldBuilderOption[];
-    successText?   : string;
+    disabled?        : boolean;
+    onSubmit?        : FormSubmitHandler<T> | FormSubmitHandler<T>[];
+    onChange?        : FormChangeHandler<T> | FormChangeHandler<T>[];
+    changeDelay?     : number;
+    initialValues?   : Partial<T>;
+    fields?          : FormFieldBuilderProps['fields'];
+    builderVariant?  : FormFieldBuilderProps['variant'];
+    successText?     : string;
+    scrollToInvalid? : boolean;
   }
 </script>
 
@@ -79,7 +85,7 @@
   import PrimeForm, { type FormInstance } from '@primevue/forms/form';
   import { toNonNullableArray } from '@resee-movies/utilities/arrays/to-non-nullable-array';
   import { isPromiseLike } from '@resee-movies/utilities/objects/is-promise-like';
-  import { syncRefs } from '@vueuse/core';
+  import { syncRefs, unrefElement } from '@vueuse/core';
   import { ref, useId, useTemplateRef } from 'vue';
   import type { FormChangeEvent } from '../../types/form';
   import FormFieldBuilder from './FormFieldBuilder.vue';
@@ -95,17 +101,19 @@
   const props = withDefaults(
     defineProps<FormProps<T>>(),
     {
-      disabled      : false,
-      onSubmit      : undefined,
-      onChange      : undefined,
-      changeDelay   : 1,
-      initialValues : undefined,
-      fields        : undefined,
-      successText   : undefined,
+      disabled        : false,
+      onSubmit        : undefined,
+      onChange        : undefined,
+      changeDelay     : 1,
+      initialValues   : undefined,
+      fields          : undefined,
+      builderVariant  : undefined,
+      successText     : undefined,
+      scrollToInvalid : true,
     },
   );
 
-  const form    = useTemplateRef<FormInstance>('form');
+  const form    = useTemplateRef<FormInstance & HTMLFormElement>('form');
   const values  = defineModel<Partial<T> | undefined>('values', { default: undefined });
   const success = ref(false);
   const errors  = ref<unknown[]>();
@@ -118,7 +126,6 @@
 
   const formInstance = provideFormInstance(formUid);
   syncRefs(() => props.disabled, formInstance.isDisabled);
-
 
   /**
    * The following bit implements a custom kind of v-model support for forms,
@@ -191,6 +198,12 @@
     formInstance.hasSubmitted.value = true;
 
     if (!event.valid) {
+      if (props.scrollToInvalid) {
+        unrefElement(form.value)
+          ?.querySelector('[aria-invalid="true"]')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
       return;
     }
 
