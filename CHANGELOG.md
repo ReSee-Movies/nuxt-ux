@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.3.0](https://github.com/ReSee-Movies/nuxt-ux/compare/1.2.0...1.3.0) (2026-03-27)
+
+### Features
+
+* **Form:** added css classnames to form fields for easier style customization ([bc729cb](https://github.com/ReSee-Movies/nuxt-ux/commit/bc729cbe832bf228ed19536859b4e44d3012bf3f))
+* **FormFieldBuilder:** introduced the idea of style variants, beginning with "blocks" ([5478750](https://github.com/ReSee-Movies/nuxt-ux/commit/5478750d8d2aa5db7949be4492aa588aa4e53bce))
+* **Form:** optionally scroll to the first invalid field when the form is submitted with invalid values ([ab2989d](https://github.com/ReSee-Movies/nuxt-ux/commit/ab2989dcad9ae753d29c092ae61e5c14763dddc3))
+
+### Style Updates
+
+* **FormFieldBuilder:** more block style tweaks ([acf5b57](https://github.com/ReSee-Movies/nuxt-ux/commit/acf5b57bbe8368acc1bce0f494402f8e11c28db8))
+* **FormFieldCheckboxGroup:** tweaked the max-height of the scroll box, and set its background color to the same as other inputs ([68ad6f2](https://github.com/ReSee-Movies/nuxt-ux/commit/68ad6f21a615d5f661860d2cd5143a8777cc9223))
+
+### Refactors
+
+* create FormElementHeading component, moving the markup out of FormFieldBuilder ([6ba88ef](https://github.com/ReSee-Movies/nuxt-ux/commit/6ba88ef51350d5f3d72dc3cab102cfa53ed2b1c8))
+
 ## [1.2.0](https://github.com/ReSee-Movies/nuxt-ux/compare/1.1.0...1.2.0) (2026-03-25)
 
 ### Features
