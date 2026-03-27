@@ -1,18 +1,31 @@
 <template>
   <div class="@container">
-    <div class="grid grid-cols-1 gap-x-4 gap-y-6 sm:@lg:grid-cols-2 sm:@lg:gap-y-7">
-      <template v-for="(field, index) of props.fields" :key="getEnumerationKey(field, index)">
-        <div v-if="field.fieldType === 'heading'" class="sm:@lg:col-span-2 -mb-4">
-          <h2 class="h2">
-            {{ field.heading }}
-          </h2>
-
-          <p v-if="field.subheading" class="text-global-foreground-accent">
-            {{ field.subheading }}
-          </p>
+    <div :class="['form-grid', 'not-prose', props.gridClass]">
+      <template
+        v-for = "(field, index) of props.fields"
+        :key  = "getEnumerationKey(field, index)"
+      >
+        <div
+          v-if   = "field.fieldType === 'heading'"
+          :class = "[
+            field.gridCellClass,
+            props.gridCellClass,
+            props.gridCellFullClass,
+            'mt-6 -mb-2',
+          ]"
+        >
+          <FormElementHeading :heading="field.heading" :subheading="field.subheading" />
         </div>
 
-        <div v-else :class="[field.gridCellClass, { 'sm:@lg:col-span-2': field.width !== 'half' }]">
+        <div
+          v-else
+          :class="[
+            field.gridCellClass,
+            props.gridCellClass,
+            (applyVariantStyling(field) ? `variant-${ props.variant }` : undefined),
+            (field.width !== 'half' ? props.gridCellFullClass : props.gridCellHalfClass),
+          ]"
+        >
           <Component :is="getComponent(field)" v-bind="field" />
         </div>
       </template>
@@ -80,9 +93,10 @@
   }
 
   export interface HeadingField {
-    fieldType   : 'heading';
-    heading     : string;
-    subheading? : string;
+    fieldType      : 'heading';
+    heading        : string;
+    subheading?    : string;
+    gridCellClass? : string;
   }
 
   export type FormFieldBuilderOption
@@ -99,12 +113,18 @@
       | HeadingField;
 
   export interface FormFieldBuilderProps {
-    fields: undefined | FormFieldBuilderOption[];
+    fields             : undefined | FormFieldBuilderOption[];
+    gridClass?         : string;
+    gridCellClass?     : string;
+    gridCellHalfClass? : string;
+    gridCellFullClass? : string;
+    variant?           : 'blocks';
   }
 </script>
 
 
 <script setup lang="ts">
+  import FormElementHeading from './element/FormElementHeading.vue';
   import CheckboxField from './FormFieldCheckbox.vue';
   import CheckboxFieldGroup from './FormFieldCheckboxGroup.vue';
   import SelectField from './FormFieldSelect.vue';
@@ -116,7 +136,16 @@
   import ToggleSwitchField from './FormFieldToggleSwitch.vue';
   import TurnstileField from './FormFieldTurnstile.vue';
 
-  const props = defineProps<FormFieldBuilderProps>();
+  const props = withDefaults(
+    defineProps<FormFieldBuilderProps>(),
+    {
+      gridClass         : 'grid grid-cols-1 gap-x-4 gap-y-6 sm:@lg:grid-cols-2 sm:@lg:gap-y-7',
+      gridCellClass     : undefined,
+      gridCellHalfClass : undefined,
+      gridCellFullClass : 'sm:@lg:col-span-2',
+      variant           : 'blocks',
+    },
+  );
 
   function getComponent(field: FormFieldBuilderOption) {
     switch (field.fieldType) {
@@ -145,4 +174,42 @@
 
     return idx;
   }
+
+  function applyVariantStyling(field: FormFieldBuilderOption) {
+    return props.variant && field.fieldType !== 'submit' && field.fieldType !== 'turnstile';
+  }
 </script>
+
+
+<style scoped>
+  @reference "tailwindcss";
+
+  @layer components {
+    .form-grid {
+      > .variant-blocks {
+        background-color : var(--color-background-scale-a);
+        padding          : --spacing(4);
+        border-radius    : var(--radius-md);
+
+        &:has(.input-validation.visible) {
+          padding-bottom: --spacing(7);
+        }
+
+        &:deep(.label-field-layout.label-above > .input-label) {
+          border-bottom : solid 1px var(--color-global-background-accent);
+          margin-bottom : --spacing(2);
+        }
+
+        &:deep(.form-field-radiogroup .label-field-layout.label-after) {
+          border-bottom : solid 1px var(--color-global-background-accent);
+          padding       : --spacing(2) 0;
+          margin-bottom : 0 !important;
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+</style>
