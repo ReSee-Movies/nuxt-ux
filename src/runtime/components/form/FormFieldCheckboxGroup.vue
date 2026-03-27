@@ -1,5 +1,10 @@
 <template>
-  <FormField v-bind="props" is="fieldset" :validator="validatorFunction">
+  <FormField
+    v-bind     = "props"
+    is         = "fieldset"
+    :validator = "validatorFunction"
+    class      = "form-field-checkboxgroup"
+  >
     <template #label>
       <slot name="label" />
     </template>

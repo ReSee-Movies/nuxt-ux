@@ -1,5 +1,9 @@
 <template>
-  <FormField v-bind="props" :validator="() => createTextValidator({ required: true })">
+  <FormField
+    v-bind     = "props"
+    :validator = "() => createTextValidator({ required: true })"
+    class      = "form-field-turnstile"
+  >
     <template #label>
       <slot name="label" />
     </template>

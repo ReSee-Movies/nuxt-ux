@@ -1,5 +1,9 @@
 <template>
-  <FormField v-bind="props" :validator="validatorFunction">
+  <FormField
+    v-bind     = "props"
+    :validator = "validatorFunction"
+    class      = "form-field-select"
+  >
     <template #label>
       <slot name="label" />
     </template>
