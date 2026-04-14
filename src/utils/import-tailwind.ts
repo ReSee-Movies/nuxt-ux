@@ -1,6 +1,6 @@
 import { addVitePlugin, useNuxt } from '@nuxt/kit';
 import type { Nuxt } from '@nuxt/schema';
-import type Chalk from 'chalk';
+import { magenta, green, yellow } from 'yoctocolors';
 import type { Plugin } from 'vite';
 
 
@@ -78,33 +78,19 @@ async function disableCssNanoCalcPlugin(nuxt: Nuxt) {
     newPreset = ['default', { calc: false, ...currentPreset[1] }];
   }
   else {
-    let chalk: Chalk.Chalk;
-
-    try {
-      ({ default: chalk } = await import('chalk'));
-    }
-    catch {
-      chalk = {
-        magenta : (text: string) => text,
-        green   : (text: string) => text,
-      } as Chalk.Chalk;
-    }
-
     console.warn(
-      chalk.yellow(
-        '[module @resee-movies/nuxt-ux:import-tailwind]\n\n'
-        + 'It appears that NanoCSS is enabled in your build, but done so in a way that prevents this module\n'
-        + 'from accessing its preset configuration.\n\n'
-        + 'The NanoCSS "calc" plugin will emit a warning when it encounters certain syntax - specifically calc\n'
-        + 'functions within CSS color module level 5 grammar - which this module heavily relies on.\n\n'
-        + 'These warnings have no effect on the resulting output, but can cause a noisy console during builds.\n'
-        + 'To disable, within your "nuxt.config.ts", add:\n',
-      )
+      yellow('[module @resee-movies/nuxt-ux:import-tailwind]\n\n')
+      + yellow('It appears that NanoCSS is enabled in your build, but done so in a way that prevents this module\n')
+      + yellow('from accessing its preset configuration.\n\n')
+      + yellow('The NanoCSS "calc" plugin will emit a warning when it encounters certain syntax - specifically calc\n')
+      + yellow('functions within CSS color module level 5 grammar - which this module heavily relies on.\n\n')
+      + yellow('These warnings have no effect on the resulting output, but can cause a noisy console during builds.\n')
+      + yellow('To disable, within your "nuxt.config.ts", add:\n')
       + '\n{'
-      + `\n  ${ chalk.magenta('postcss') }: {`
-      + `\n    ${ chalk.magenta('plugins') }: {`
-      + `\n      ${ chalk.magenta('nanocss') }: {`
-      + `\n        ${ chalk.magenta('preset') }: [${ chalk.green('"default"') }, { ${ chalk.magenta('calc') }: false }],`
+      + `\n  ${ magenta('postcss') }: {`
+      + `\n    ${ magenta('plugins') }: {`
+      + `\n      ${ magenta('nanocss') }: {`
+      + `\n        ${ magenta('preset') }: [${ green('"default"') }, { ${ magenta('calc') }: false }],`
       + '\n      },'
       + '\n    },'
       + '\n  },'
