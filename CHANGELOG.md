@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.0.0-beta.0](https://github.com/ReSee-Movies/nuxt-ux/compare/1.3.0...2.0.0-beta.0) (2026-04-14)
+
+### ⚠ BREAKING CHANGES
+
+* move relevant directories into /app subdirectory to match standard Nuxt project layout
+
+### Bug Fixes
+
+* **build:** configure nanocss, as needed, to disable its calc plugin which causes build-time warnings due to lack of support for certain usages of calc ([c54d1f1](https://github.com/ReSee-Movies/nuxt-ux/commit/c54d1f158179a0c438ac58036a7db7087b21c0b4))
+* **build:** suppress invalid sourcemap warnings due to Tailwind not being able to reliably create them right now ([e99c36f](https://github.com/ReSee-Movies/nuxt-ux/commit/e99c36f53751a951f71da0207240f28fa5b1298e))
+
+### Refactors
+
+* move relevant directories into /app subdirectory to match standard Nuxt project layout ([9bc8f2b](https://github.com/ReSee-Movies/nuxt-ux/commit/9bc8f2bad998b6e15347fb208cb4ed6f99d09482))
+
 ## [1.3.0](https://github.com/ReSee-Movies/nuxt-ux/compare/1.2.0...1.3.0) (2026-03-27)
 
 ### Features
