@@ -1,9 +1,10 @@
 export interface ModuleOptions {
-  defaultColorMode?        : 'lite' | 'dark';
-  usePreferredColorScheme? : boolean;
-  componentPrefix?         : string;
-  reseeImageBaseUrl?       : string;
-  tmdbImageBaseUrl?        : string;
+  defaultColorMode?            : 'lite' | 'dark';
+  usePreferredColorScheme?     : boolean;
+  componentPrefix?             : string;
+  reseeImageBaseUrl?           : string;
+  tmdbImageBaseUrl?            : string;
+  disableSourceMapWarningsFor? : string[];
 
   tailwind?: {
     plugins? : (string | undefined)[];

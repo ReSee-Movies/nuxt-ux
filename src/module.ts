@@ -17,6 +17,11 @@ import { importTailwind } from './utils/import-tailwind';
 export default defineNuxtModule<ModuleOptions>({
   defaults: {
     componentPrefix: 'Ui',
+
+    disableSourceMapWarningsFor: [
+      '@tailwindcss/vite:generate:build',
+      'nuxt:module-preload-polyfill',
+    ],
   },
 
   meta: {
@@ -53,7 +58,7 @@ export default defineNuxtModule<ModuleOptions>({
     addImportsDir([composables]);
     addServerScanDir([server]);
 
-    await importTailwind(nuxt);
+    await importTailwind(nuxt, options);
 
     nuxt.hook('modules:done', async () => {
       await importCSS(nuxt, { sources, plugins, imports });

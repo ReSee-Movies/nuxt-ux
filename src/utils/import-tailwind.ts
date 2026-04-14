@@ -1,11 +1,45 @@
 import { addVitePlugin, useNuxt } from '@nuxt/kit';
 import type { Nuxt } from '@nuxt/schema';
 import type Chalk from 'chalk';
+import type { Plugin } from 'vite';
 
 
 const Builder    = '@nuxt/vite-builder';
 const VitePlugin = '@tailwindcss/vite';
 const PostPlugin = '@tailwindcss/postcss';
+
+
+export type ImportTailwindOptions = {
+  disableSourceMapWarningsFor?: string[];
+};
+
+
+/**
+ * Installs the Tailwind PostCSS or Vite plugin, depending on what's needed.
+ */
+export async function importTailwind(nuxt: Nuxt = useNuxt(), options?: ImportTailwindOptions) {
+  addVitePlugin(
+    disableInvalidSourcemapWarningsPlugin(options),
+  );
+
+  await disableCssNanoCalcPlugin(nuxt);
+
+  if (nuxt.options.builder === Builder) {
+    if (!checkVitePlugins(nuxt.options.vite.plugins ?? [])) {
+      await import(VitePlugin).then(
+        (tailwind) => addVitePlugin(tailwind.default()),
+      );
+    }
+  }
+  else {
+    nuxt.options.postcss ??= { plugins: {}, order: [] };
+    nuxt.options.postcss.plugins ??= {};
+
+    if (!nuxt.options.postcss.plugins[PostPlugin]) {
+      nuxt.options.postcss.plugins[PostPlugin] = {};
+    }
+  }
+}
 
 
 function checkVitePlugins(plugins: unknown[]): boolean {
@@ -24,71 +58,98 @@ function checkVitePlugins(plugins: unknown[]): boolean {
 
 
 /**
- * Installs the Tailwind PostCSS or Vite plugin, depending on what's needed.
+ * What it says on the tin - disables the "calc" plugin in CSSNano, as it causes a lot
+ * of needless warnings with this module due to the mixing of calc + CSS level 5 color
+ * functions. A descriptive warning is provided if this cannot be done automatically,
+ * and an explicit `calc: true` in the plugin preset's configuration will be honored.
  */
-export async function importTailwind(nuxt: Nuxt = useNuxt()) {
-  if (nuxt.options.builder === Builder) {
-    if (!checkVitePlugins(nuxt.options.vite.plugins ?? [])) {
-      await import(VitePlugin).then(
-        (tailwind) => addVitePlugin(tailwind.default()),
-      );
-    }
+async function disableCssNanoCalcPlugin(nuxt: Nuxt) {
+  if (!nuxt.options.postcss?.plugins?.cssnano) {
+    return;
+  }
+
+  const currentPreset = nuxt.options.postcss.plugins.preset;
+  let newPreset: ['default', Record<string, unknown>] | undefined = undefined;
+
+  if (!currentPreset || (typeof currentPreset === 'string' && currentPreset === 'default')) {
+    newPreset = ['default', { calc: false }];
+  }
+  else if (Array.isArray(currentPreset) && currentPreset[0] === 'default') {
+    newPreset = ['default', { calc: false, ...currentPreset[1] }];
   }
   else {
-    nuxt.options.postcss         ??= { plugins: {}, order: [] };
-    nuxt.options.postcss.plugins ??= {};
+    let chalk: Chalk.Chalk;
 
-    if (!nuxt.options.postcss.plugins[PostPlugin]) {
-      nuxt.options.postcss.plugins[PostPlugin] = {};
+    try {
+      ({ default: chalk } = await import('chalk'));
     }
+    catch {
+      chalk = {
+        magenta : (text: string) => text,
+        green   : (text: string) => text,
+      } as Chalk.Chalk;
+    }
+
+    console.warn(
+      chalk.yellow(
+        '[module @resee-movies/nuxt-ux:import-tailwind]\n\n'
+        + 'It appears that NanoCSS is enabled in your build, but done so in a way that prevents this module\n'
+        + 'from accessing its preset configuration.\n\n'
+        + 'The NanoCSS "calc" plugin will emit a warning when it encounters certain syntax - specifically calc\n'
+        + 'functions within CSS color module level 5 grammar - which this module heavily relies on.\n\n'
+        + 'These warnings have no effect on the resulting output, but can cause a noisy console during builds.\n'
+        + 'To disable, within your "nuxt.config.ts", add:\n',
+      )
+      + '\n{'
+      + `\n  ${ chalk.magenta('postcss') }: {`
+      + `\n    ${ chalk.magenta('plugins') }: {`
+      + `\n      ${ chalk.magenta('nanocss') }: {`
+      + `\n        ${ chalk.magenta('preset') }: [${ chalk.green('"default"') }, { ${ chalk.magenta('calc') }: false }],`
+      + '\n      },'
+      + '\n    },'
+      + '\n  },'
+      + '\n}',
+    );
   }
 
+  nuxt.options.postcss.plugins.cssnano.preset = newPreset;
+}
 
-  if (nuxt.options.postcss?.plugins?.cssnano) {
-    const currentPreset = nuxt.options.postcss.plugins.preset;
-    let newPreset: ['default', Record<string, unknown>] | undefined = undefined;
 
-    if (!currentPreset || (typeof currentPreset === 'string' && currentPreset === 'default')) {
-      newPreset = ['default', { calc: false }];
-    }
-    else if (Array.isArray(currentPreset) && currentPreset[0] === 'default') {
-      newPreset = ['default', { ...currentPreset[1], calc: false }];
-    }
-    else {
-      let chalk: Chalk.Chalk;
+/**
+ * Per the time of writing this, Tailwind's Vite plugin does not generate source maps.
+ * Vite will complain about this via warnings if sourcemaps are otherwise enabled, so
+ * this intercepts those warnings and squashes them. Ooof.
+ *
+ * @see https://github.com/tailwindlabs/tailwindcss/discussions/16119
+ * @see
+ */
+function disableInvalidSourcemapWarningsPlugin(options?: ImportTailwindOptions): Plugin {
+  return {
+    apply : 'build',
+    name  : 'vite-plugin-resee-ux-ignore-tailwind-sourcemap-warnings',
 
-      try {
-        ({ default: chalk } = await import('chalk'));
-      }
-      catch {
-        chalk = {
-          magenta : (text: string) => text,
-          green   : (text: string) => text,
-        } as Chalk.Chalk;
+    configResolved(config) {
+      if (!options?.disableSourceMapWarningsFor?.length) {
+        return;
       }
 
-      console.warn(
-        chalk.yellow(
-          '[module @resee-movies/nuxt-ux:import-tailwind]\n\n'
-          + 'It appears that NanoCSS is enabled in your build, but done so in a way that prevents this module\n'
-          + 'from accessing its preset configuration.\n\n'
-          + 'The NanoCSS "calc" plugin will emit a warning when it encounters certain syntax - specifically calc\n'
-          + 'functions within CSS color module level 5 grammar - which this module heavily relies on.\n\n'
-          + 'These warnings have no effect on the resulting output, but can cause a noisy console during builds.\n'
-          + 'To disable, within your "nuxt.config.ts", add:\n',
-        )
-        + '\n{'
-        + `\n  ${ chalk.magenta('postcss') }: {`
-        + `\n    ${ chalk.magenta('plugins') }: {`
-        + `\n      ${ chalk.magenta('nanocss') }: {`
-        + `\n        ${ chalk.magenta('preset') }: [${ chalk.green('"default"') }, { ${ chalk.magenta('calc') }: false }],`
-        + '\n      },'
-        + '\n    },'
-        + '\n  },'
-        + '\n}',
-      );
-    }
+      const originalOnWarn = config.build.rollupOptions.onwarn;
 
-    nuxt.options.postcss.plugins.cssnano.preset = newPreset;
-  }
+      config.build.rollupOptions.onwarn = (warning, warn) => {
+        const { code, plugin } = warning;
+
+        if (code === 'SOURCEMAP_BROKEN' && plugin && options?.disableSourceMapWarningsFor?.includes(plugin)) {
+          return;
+        }
+
+        if (originalOnWarn) {
+          originalOnWarn(warning, warn);
+        }
+        else {
+          warn(warning);
+        }
+      };
+    },
+  };
 }
