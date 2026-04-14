@@ -1,6 +1,6 @@
-import type { NitroAppPlugin } from 'nitropack';
 import { useAppConfig } from '#imports';
-import type { ModuleOptions } from '../../types';
+import type { ModuleOptions } from '#resee-ux-build-types';
+import type { NitroAppPlugin } from 'nitropack';
 
 
 export default <NitroAppPlugin> function (nitroApp) {

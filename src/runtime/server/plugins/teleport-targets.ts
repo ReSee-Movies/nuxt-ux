@@ -1,5 +1,5 @@
 import type { NitroAppPlugin } from 'nitropack';
-import { TeleportId } from '../../constants';
+import { TeleportId } from '../../app/constants';
 
 
 export default <NitroAppPlugin> function (nitroApp) {

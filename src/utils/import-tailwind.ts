@@ -1,7 +1,7 @@
 import { addVitePlugin, useNuxt } from '@nuxt/kit';
 import type { Nuxt } from '@nuxt/schema';
-import { magenta, green, yellow } from 'yoctocolors';
 import type { Plugin } from 'vite';
+import { green, magenta, yellow } from 'yoctocolors';
 
 
 const Builder    = '@nuxt/vite-builder';

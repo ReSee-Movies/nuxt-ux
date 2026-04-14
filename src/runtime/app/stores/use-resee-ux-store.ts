@@ -2,7 +2,7 @@ import { useCookie, useRuntimeConfig } from '#imports';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 import { DefaultLocalization } from '../constants';
-import type { ReseeUxPublicRuntimeConfig } from '../types';
+import type { ReseeUxPublicRuntimeConfig } from '../../../utils/types';
 
 
 export type ReseeUxAppPreferences = {

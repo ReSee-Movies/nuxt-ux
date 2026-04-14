@@ -44,6 +44,7 @@ export async function importCSS(nuxt: Nuxt = useNuxt(), options?: Options) {
     sources.push(...toNonNullableArray(options.sources));
   }
 
+  // @ts-expect-error - custom call hook
   await nuxt.callHook('tailwindcss:sources:extend', sources);
 
   const sourcesTemplate = addTemplate({

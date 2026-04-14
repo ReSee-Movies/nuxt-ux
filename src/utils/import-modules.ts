@@ -1,6 +1,5 @@
 import type { ModuleDependencies, Nuxt } from '@nuxt/schema';
-import type { ModuleOptions } from '#resee-ux/types';
-
+import type { ModuleOptions } from '#resee-ux-build-types';
 
 export type NuxtFontsConfig    = Exclude<ModuleDependencies['@nuxt/fonts'], false | undefined>;
 export type NuxtDeviceConfig   = Exclude<ModuleDependencies['@nuxtjs/device'], false | undefined>;

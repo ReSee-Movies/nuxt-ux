@@ -8,10 +8,10 @@ import {
   resolvePath,
   updateRuntimeConfig,
 } from '@nuxt/kit';
-import type { ModuleOptions } from './runtime/types';
 import { importCSS } from './utils/import-css';
 import { importModules } from './utils/import-modules';
 import { importTailwind } from './utils/import-tailwind';
+import type { ModuleOptions } from './utils/types';
 
 
 export default defineNuxtModule<ModuleOptions>({
@@ -35,18 +35,19 @@ export default defineNuxtModule<ModuleOptions>({
 
   async setup(options, nuxt) {
     const resolver    = createResolver(import.meta.url);
-    const components  = resolver.resolve('./runtime/components/');
-    const composables = resolver.resolve('./runtime/composables/');
+    const components  = resolver.resolve('./runtime/app/components/');
+    const composables = resolver.resolve('./runtime/app/composables/');
+    const stylesheet  = resolver.resolve('./runtime/app/theme/css/styles.css');
     const server      = resolver.resolve('./runtime/server/');
-    const stylesheet  = resolver.resolve('./runtime/theme/css/styles.css');
 
-    nuxt.options.alias['#resee-ux'] = resolver.resolve('./runtime');
+    nuxt.options.alias['#resee-ux'] = resolver.resolve('./runtime/app');
+    nuxt.options.alias['#resee-ux-build-types'] = resolver.resolve('./utils/types.ts');
 
     const sources = options.tailwind?.sources?.slice() ?? [];
     const plugins = options.tailwind?.plugins?.slice() ?? [];
     const imports = options.tailwind?.plugins?.slice() ?? [];
 
-    const constants = await resolver.resolvePath('./runtime/constants', {
+    const constants = await resolver.resolvePath('./runtime/app/constants', {
       extensions: ['ts', 'js'],
     });
 
@@ -90,7 +91,7 @@ export default defineNuxtModule<ModuleOptions>({
     // ----------------------------
     // Primevue Passthrough
     // ----------------------------
-    let primePassthroughFilename = await resolver.resolvePath('./runtime/theme/primevue/index', {
+    let primePassthroughFilename = await resolver.resolvePath('./runtime/app/theme/primevue/index', {
       extensions: ['ts', 'js'],
     });
 

@@ -22,7 +22,7 @@ import {
 } from '@resee-movies/utilities/tmdb/get-tmdb-image-url';
 import { defineStore } from 'pinia';
 import { type MaybeRefOrGetter, type Reactive, type Ref, shallowReactive, toRef, toValue, watch } from 'vue';
-import type { ReseeUxPublicRuntimeConfig } from '../types';
+import type { ReseeUxPublicRuntimeConfig } from '../../../utils/types';
 import { useReseeUxStore } from './use-resee-ux-store';
 
 

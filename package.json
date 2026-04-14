@@ -14,16 +14,13 @@
       "import": "./dist/module.mjs"
     },
     "./components/*": {
-      "import": "./dist/runtime/components/*"
+      "import": "./dist/runtime/app/components/*"
     },
     "./composables/*": {
-      "import": "./dist/runtime/composables/*.js"
+      "import": "./dist/runtime/app/composables/*.js"
     },
     "./stores/*": {
-      "import": "./dist/runtime/stores/*.js"
-    },
-    "./types": {
-      "types": "./dist/runtime/types/index.d.ts"
+      "import": "./dist/runtime/app/stores/*.js"
     }
   },
   "main": "./dist/module.mjs",
