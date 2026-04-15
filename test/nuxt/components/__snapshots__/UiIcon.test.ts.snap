@@ -1,11 +1,11 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Components | UiIcon > it can be mounted 1`] = `"<span data-v-7b3b5673="" role="presentation" class="icon"><span data-v-7b3b5673="" class=""></span></span>"`;
+exports[`Components | UiIcon > it can be mounted 1`] = `"<span data-v-8e8f0d35="" role="presentation" class="icon"><span data-v-8e8f0d35="" class=""></span></span>"`;
 
-exports[`Components | UiIcon > it show a jumbo icon 1`] = `"<span data-v-7b3b5673="" role="presentation" class="icon xl"><span data-v-7b3b5673="" class="i-ph-chart-bar"></span></span>"`;
+exports[`Components | UiIcon > it show a jumbo icon 1`] = `"<span data-v-8e8f0d35="" role="presentation" class="icon xl"><span data-v-8e8f0d35="" class="i-ph-chart-bar"></span></span>"`;
 
-exports[`Components | UiIcon > it show a large icon 1`] = `"<span data-v-7b3b5673="" role="presentation" class="icon lg"><span data-v-7b3b5673="" class="i-ph-chart-bar"></span></span>"`;
+exports[`Components | UiIcon > it show a large icon 1`] = `"<span data-v-8e8f0d35="" role="presentation" class="icon lg"><span data-v-8e8f0d35="" class="i-ph-chart-bar"></span></span>"`;
 
-exports[`Components | UiIcon > it show a small icon 1`] = `"<span data-v-7b3b5673="" role="presentation" class="icon sm"><span data-v-7b3b5673="" class="i-ph-chart-bar"></span></span>"`;
+exports[`Components | UiIcon > it show a small icon 1`] = `"<span data-v-8e8f0d35="" role="presentation" class="icon sm"><span data-v-8e8f0d35="" class="i-ph-chart-bar"></span></span>"`;
 
-exports[`Components | UiIcon > it shows an icon 1`] = `"<span data-v-7b3b5673="" role="presentation" class="icon"><span data-v-7b3b5673="" class="i-ph-chart-bar"></span></span>"`;
+exports[`Components | UiIcon > it shows an icon 1`] = `"<span data-v-8e8f0d35="" role="presentation" class="icon"><span data-v-8e8f0d35="" class="i-ph-chart-bar"></span></span>"`;
