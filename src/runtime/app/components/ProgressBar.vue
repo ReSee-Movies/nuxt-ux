@@ -1,12 +1,13 @@
 <template>
   <PrimeProgressBar
-    :value      = "props.value ?? 0"
+    :value      = "props.value"
     :show-value = "props.showValue"
     :mode       = "mode"
     :class      = "['progress', mode]"
     :pt         = "{ value: { class: 'value' } }"
   />
 </template>
+
 
 <script lang="ts">
   export interface ProgressBarProps {
@@ -16,6 +17,7 @@
   }
 </script>
 
+
 <script setup lang="ts">
   import { computed } from 'vue';
   import PrimeProgressBar from 'primevue/progressbar';
@@ -23,18 +25,15 @@
   const props = withDefaults(
     defineProps<ProgressBarProps>(),
     {
-      value         : undefined,
+      value         : 0,
       showValue     : false,
       indeterminate : false,
     },
   );
 
-  const mode = computed(() => {
-    return props.indeterminate || typeof props.value !== 'number'
-      ? 'indeterminate'
-      : 'determinate';
-  });
+  const mode = computed(() => props.indeterminate ? 'indeterminate' : 'determinate');
 </script>
+
 
 <style scoped>
   @reference "tailwindcss";
@@ -66,7 +65,6 @@
         content            : "";
         will-change        : auto;
         inset-inline-start : 0;
-        inset-inline-end   : 0;
         height             : --spacing(1.5);
         background         : var(--custom-accent-color, var(--color-global-foreground));
         border-radius      : var(--radius-full);
