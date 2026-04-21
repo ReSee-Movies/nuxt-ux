@@ -7,7 +7,9 @@ import {
   type WritableComputedRef,
   computed,
   shallowRef,
+  onScopeDispose,
   type ComputedRef,
+  type WatchHandle,
 } from 'vue';
 import { useDebouncedSyncRef, type UseDebouncedSyncRefOptions, type Side } from './use-debounced-sync-ref';
 
@@ -50,6 +52,10 @@ type SyncHandle = {
   stopSync : () => void;
 };
 
+type UseReactiveObjectsSyncReturn = {
+  stop(): void;
+};
+
 
 /**
  * Provides two-way binding between a pair of reactive objects.
@@ -57,26 +63,41 @@ type SyncHandle = {
 export function useReactiveObjectsSync<
   L extends SyncObject,
   R extends SyncObject,
->(options: UseReactiveObjectsSyncOptions<L, R>) {
+>(
+  options: UseReactiveObjectsSyncOptions<L, R>,
+): UseReactiveObjectsSyncReturn {
   const { left, right } = options;
 
-  const watchKeys  = aggregateKeys(options);
-  const syncHandle = new Map<KeyOf<L> | KeyOf<R>, SyncHandle>();
+  const {
+    aggregatedKeys,
+    watchHandles,
+  } = aggregateKeys(options);
 
-  watch(watchKeys, (newKeys, oldKeys) => {
+  const syncHandles = new Map<KeyOf<L> | KeyOf<R>, SyncHandle>();
+
+  const stopWatchersFn = () => {
+    watchHandles.forEach((handle) => handle.stop());
+    syncHandles.forEach((handle) => handle.stopSync());
+  };
+
+  onScopeDispose(() => {
+    stopWatchersFn();
+  });
+
+  const handle = watch(aggregatedKeys, (newKeys, oldKeys) => {
     // Remove old keys
     for (const key of oldKeys.difference(newKeys)) {
-      const handle = syncHandle.get(key);
+      const handle = syncHandles.get(key);
 
       if (handle) {
-        syncHandle.delete(key);
+        syncHandles.delete(key);
         handle.stopSync();
       }
     }
 
     // Add new keys
     for (const key of newKeys) {
-      if (syncHandle.has(key)) {
+      if (syncHandles.has(key)) {
         continue;
       }
 
@@ -94,9 +115,15 @@ export function useReactiveObjectsSync<
         },
       });
 
-      syncHandle.set(key, { leftRef, rightRef, stopSync: handles.stop });
+      syncHandles.set(key, { leftRef, rightRef, stopSync: handles.stop });
     }
   });
+
+  watchHandles.push(handle);
+
+  return {
+    stop: stopWatchersFn,
+  };
 }
 
 
@@ -104,15 +131,22 @@ export function useReactiveObjectsSync<
  * Returns an array ref that keeps up-to-date with the enumerable property
  * names of the provided reactive object.
  */
-function objectKeysRef<S extends SyncObject>(source: MaybeRefOrGetter<S | undefined>): Ref<KeyOf<S>[]> {
+function objectKeysRef<
+  S extends SyncObject,
+>(
+  source: MaybeRefOrGetter<S | undefined>,
+): {
+  keys   : Ref<KeyOf<S>[]>;
+  handle : WatchHandle;
+} {
   const keys = shallowRef<KeyOf<S>[]>([]);
 
-  watchEffect(() => {
+  const handle = watchEffect(() => {
     const value = toValue(source);
     keys.value = value ? Object.keys(value) : [];
   });
 
-  return keys;
+  return { keys, handle };
 }
 
 
@@ -125,24 +159,34 @@ function aggregateKeys<
   R extends SyncObject,
 >(
   options: UseReactiveObjectsSyncOptions<L, R>,
-): ComputedRef<Set<KeyOf<L> | KeyOf<R>>> {
-  const leftKeys = (!options.keySource || options.keySource === 'left')
+): {
+  aggregatedKeys : ComputedRef<Set<KeyOf<L> | KeyOf<R>>>;
+  watchHandles   : WatchHandle[];
+} {
+  const leftValues = (!options.keySource || options.keySource === 'left')
     ? objectKeysRef(options.left)
     : undefined;
 
-  const rightKeys = (!options.keySource || options.keySource === 'right')
+  const rightValues = (!options.keySource || options.keySource === 'right')
     ? objectKeysRef(options.right)
     : undefined;
 
-  return computed(() => {
+  const aggregatedKeys = computed(() => {
     if (Array.isArray(options.keySource)) {
       return new Set(options.keySource);
     }
 
     return new Set(
-      [...(leftKeys?.value ?? []), ...(rightKeys?.value ?? [])],
+      [...(leftValues?.keys.value ?? []), ...(rightValues?.keys.value ?? [])],
     );
   });
+
+  const watchHandles = [
+    leftValues?.handle,
+    rightValues?.handle,
+  ].filter((entry) => !!entry);
+
+  return { aggregatedKeys, watchHandles };
 }
 
 

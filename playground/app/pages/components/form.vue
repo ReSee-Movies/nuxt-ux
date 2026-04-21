@@ -14,6 +14,10 @@
           <UiButton text="Flyout Form" @click="showDrawer = true" />
         </div>
 
+        <div>
+          {{ flyoutValues }}
+        </div>
+
         <hr class="hr">
 
         <h2 class="h3">
@@ -34,9 +38,10 @@
   <UiDrawer v-model:visible="showDrawer" position="right" header="Flyout Form">
     <div class="px-1">
       <UiForm
-        :fields      = "formFields"
-        success-text = "Thank you for the feedback"
-        @submit      = "handleFormSubmit"
+        v-model:values = "flyoutValues"
+        :fields        = "formFields"
+        success-text   = "Thank you for the feedback"
+        @submit        = "handleFormSubmit"
       />
     </div>
   </UiDrawer>
@@ -68,7 +73,8 @@
 
   const { notifyInfo } = useNotification();
 
-  const showDrawer = ref(false);
+  const showDrawer   = ref(false);
+  const flyoutValues = reactive({});
 
   const countryOptions = [
     { label: `${ getRegionalIndicatorUnicodeSymbol('au') } Australia`, value: 'AU' },
