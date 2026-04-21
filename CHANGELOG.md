@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.0.0](https://github.com/ReSee-Movies/nuxt-ux/compare/2.0.0-beta.0...2.0.0) (2026-04-21)
+
+### Features
+
+* **Form:** added "onWillChange" event that will be dispatched immediately when a form field is updated. ([d55fc79](https://github.com/ReSee-Movies/nuxt-ux/commit/d55fc7974cf9577078b69487a3e5f970b97acb32))
+* **Form:** added "wrapperClass" prop to provide class names to the outer div element that wraps the form ([9353d64](https://github.com/ReSee-Movies/nuxt-ux/commit/9353d6444f6cfc83376e29e57be567823476b18e))
+* **FormFieldCheckboxGroup:** added a `heightStrategy` prop to toggle between height and max-height for how tall the control's container should grow ([6b1d41d](https://github.com/ReSee-Movies/nuxt-ux/commit/6b1d41dabcf9f2fb59e75836095c9195515eda6b))
+
+### Bug Fixes
+
+* **FormFieldBuilder:** no not automatically opt-in to the "blocks" style variant ([0a50f90](https://github.com/ReSee-Movies/nuxt-ux/commit/0a50f90b8089d506981499b068e8364548c46888))
+* **useReactiveObjectsSync:** properly stop watch handles when the composable's scope gets disposed so that the bound reactive object does not have its properties emptied ([797b83b](https://github.com/ReSee-Movies/nuxt-ux/commit/797b83bdaf897add00ba07b2eaee9267b6541d8f))
+
+### Testing
+
+* update snapshots ([203310e](https://github.com/ReSee-Movies/nuxt-ux/commit/203310edf2cd04774ac22ed0ba5ecd067772f706))
+
 ## [2.0.0-beta.0](https://github.com/ReSee-Movies/nuxt-ux/compare/1.3.0...2.0.0-beta.0) (2026-04-14)
 
 ### ⚠ BREAKING CHANGES
