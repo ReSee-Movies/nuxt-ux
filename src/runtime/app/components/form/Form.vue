@@ -17,7 +17,7 @@
       </template>
     </LazySuccessSplash>
 
-    <div v-else>
+    <div v-else :class="props.wrapperClass">
       <LazyMessage
         v-if              = "errors?.length"
         severity          = "error"
@@ -62,6 +62,7 @@
 
 <script lang="ts">
   import type { FormSubmitEvent as PrimeFormSubmitEvent } from '@primevue/forms';
+  import type { HTMLElementClassNames } from '../../types';
   import type { FormChangeHandler, FormSubmitEvent, FormSubmitHandler, FormValues } from '../../types/form';
   import type { FormFieldBuilderProps } from './FormFieldBuilder.vue';
 
@@ -77,6 +78,7 @@
     builderVariant?  : FormFieldBuilderProps['variant'];
     successText?     : string;
     scrollToInvalid? : boolean;
+    wrapperClass?    : HTMLElementClassNames;
   }
 </script>
 
@@ -110,6 +112,7 @@
       builderVariant  : undefined,
       successText     : undefined,
       scrollToInvalid : true,
+      wrapperClass    : undefined,
     },
   );
 
