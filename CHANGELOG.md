@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.1](https://github.com/ReSee-Movies/nuxt-ux/compare/2.0.0...2.0.1) (2026-04-21)
+
+### Bug Fixes
+
+* **ProgressBar:** start the indicator at "0%" when in indeterminate mode ([0439e17](https://github.com/ReSee-Movies/nuxt-ux/commit/0439e1756f533a12f0e2cc276679a83186171558))
+
 ## [2.0.0](https://github.com/ReSee-Movies/nuxt-ux/compare/2.0.0-beta.0...2.0.0) (2026-04-21)
 
 ### Features
