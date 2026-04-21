@@ -143,7 +143,7 @@
       gridCellClass     : undefined,
       gridCellHalfClass : undefined,
       gridCellFullClass : 'sm:@lg:col-span-2',
-      variant           : 'blocks',
+      variant           : undefined,
     },
   );
 
