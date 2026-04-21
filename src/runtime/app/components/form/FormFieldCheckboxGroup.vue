@@ -10,7 +10,16 @@
     </template>
 
     <template #default="{ inputName, value, inputId, messageId, readonly, invalid }">
-      <PrimeCheckboxGroup :name="inputName" class="checkbox-group styled-scroll">
+      <PrimeCheckboxGroup
+        :name  = "inputName"
+        :class = "[
+          'checkbox-group styled-scroll',
+          {
+            'with-max-height'   : props.heightStrategy === 'max-height',
+            'with-fixed-height' : props.heightStrategy === 'fixed-height',
+          },
+        ]"
+      >
         <template v-for="(option, index) of options" :key="`${ inputId }_${ index }`">
           <FormLabelFieldLayout
             :label-position = "props.optionLabelPosition"
@@ -52,6 +61,7 @@
     minRequired?         : string | number;
     maxRequired?         : string | number;
     maxHeight?           : string;
+    heightStrategy?      : 'fixed-height' | 'max-height';
   }
 </script>
 
@@ -76,6 +86,7 @@
       minRequired         : undefined,
       maxRequired         : undefined,
       maxHeight           : '200px',
+      heightStrategy      : 'max-height',
     },
   );
 
@@ -116,9 +127,16 @@
       border           : solid 1px var(--color-background-scale-b);
       border-radius    : var(--radius-md);
       padding          : --spacing(2);
-      max-height       : var(--container-max-height);
       overflow-y       : auto;
       background-color : var(--color-global-background);
+
+      &.with-max-height {
+        max-height: var(--container-max-height);
+      }
+
+      &.with-fixed-height {
+        height: var(--container-max-height);
+      }
     }
   }
 </style>
