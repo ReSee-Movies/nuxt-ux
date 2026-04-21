@@ -72,6 +72,7 @@
     disabled?        : boolean;
     onSubmit?        : FormSubmitHandler<T> | FormSubmitHandler<T>[];
     onChange?        : FormChangeHandler<T> | FormChangeHandler<T>[];
+    onWillChange?    : <K extends keyof T>(key: K, value: T[K]) => void;
     changeDelay?     : number;
     initialValues?   : Partial<T>;
     fields?          : FormFieldBuilderProps['fields'];
@@ -106,6 +107,7 @@
       disabled        : false,
       onSubmit        : undefined,
       onChange        : undefined,
+      onWillChange    : undefined,
       changeDelay     : 1,
       initialValues   : undefined,
       fields          : undefined,
@@ -125,6 +127,7 @@
   defineEmits<{
     (e: 'submit', evt: FormSubmitEvent<T>): (void | Promise<void>);
     (e: 'change', evt: FormChangeEvent<T>): (void | Promise<void>);
+    <K extends keyof T>(e: 'willChange', key: K, value: T[K]): void;
   }>();
 
   const formInstance = provideFormInstance(formUid);
@@ -141,6 +144,7 @@
     keySource     : 'left',
     debounceMsLtr : props.changeDelay,
     onChange      : () => handleOnChange(),
+    onWillChange  : (_side, key, value) => props.onWillChange?.(key, value as T[typeof key]),
 
     leftOptions: {
       getter(obj, key) {

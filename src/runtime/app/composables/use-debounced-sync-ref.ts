@@ -1,5 +1,5 @@
 import { watchDebounced } from '@vueuse/core';
-import type { Ref, WatchHandle, WatchOptions } from 'vue';
+import { type Ref, type WatchHandle, type WatchOptions, watch } from 'vue';
 
 export type Side = 'left' | 'right';
 
@@ -12,6 +12,7 @@ export type UseDebouncedSyncRefOptions<L = unknown, R = unknown> = WatchOptions 
   debounceMsLtr? : number;
   debounceMsRtl? : number;
   onChange?      : <S extends Side>(side: S, value: S extends 'left' ? L : R) => void;
+  onWillChange?  : <S extends Side>(side: S, value: S extends 'left' ? L : R) => void;
 };
 
 
@@ -45,19 +46,34 @@ export function useDebouncedSyncRef<L, R>(left: Ref<L>, right: Ref<R>, options?:
    * `resume()` is called.
    */
 
-  let ignoreLeft  = false;
-  let ignoreRight = false;
+  let ignoreLeftTrailing  = false;
+  let ignoreRightTrailing = false;
 
+  /**
+   * Handles changes that need to propagate left -> right.
+   */
   if (syncDirection === 'both' || syncDirection === 'left') {
-    watchers.push(watchDebounced(
-      left,
-      (newValue) => {
-        if (ignoreLeft) {
-          ignoreLeft = false;
+    // Leading watcher
+    if (options?.onWillChange) {
+      watch(left, () => {
+        if (ignoreLeftTrailing) {
           return;
         }
 
-        ignoreRight = true;
+        options?.onWillChange?.('right', left.value as unknown as R);
+      }, watchOptions);
+    }
+
+    // Trailing watcher
+    watchers.push(watchDebounced(
+      left,
+      (newValue) => {
+        if (ignoreLeftTrailing) {
+          ignoreLeftTrailing = false;
+          return;
+        }
+
+        ignoreRightTrailing = true;
         right.value = newValue as unknown as R;
 
         options?.onChange?.('right', right.value);
@@ -66,16 +82,31 @@ export function useDebouncedSyncRef<L, R>(left: Ref<L>, right: Ref<R>, options?:
     ));
   }
 
+  /**
+   * Handles changes that need to propagate right -> left.
+   */
   if (syncDirection === 'both' || syncDirection === 'right') {
-    watchers.push(watchDebounced(
-      right,
-      (newValue) => {
-        if (ignoreRight) {
-          ignoreRight = false;
+    // Leading watcher
+    if (options?.onWillChange) {
+      watch(right, () => {
+        if (ignoreRightTrailing) {
           return;
         }
 
-        ignoreLeft = true;
+        options?.onWillChange?.('left', right.value as unknown as L);
+      }, watchOptions);
+    }
+
+    // Trailing watcher
+    watchers.push(watchDebounced(
+      right,
+      (newValue) => {
+        if (ignoreRightTrailing) {
+          ignoreRightTrailing = false;
+          return;
+        }
+
+        ignoreLeftTrailing = true;
         left.value = newValue as unknown as L;
 
         options?.onChange?.('left', left.value);

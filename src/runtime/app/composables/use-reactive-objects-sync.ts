@@ -42,9 +42,10 @@ export type UseReactiveObjectsSyncOptions<
   right         : MaybeRefOrGetter<R | undefined>;
   keySource?    : Side | (KeyOf<L> | KeyOf<R>)[];
   onChange?     : <S extends Side>(side: S, key: KeyOfSide<S, L, R>, value: unknown) => void;
+  onWillChange? : <S extends Side>(side: S, key: KeyOfSide<S, L, R>, value: unknown) => void;
   leftOptions?  : ComputedReadWriteOptions<L>;
   rightOptions? : ComputedReadWriteOptions<R>;
-} & Omit<UseDebouncedSyncRefOptions, 'onChange'>;
+} & Omit<UseDebouncedSyncRefOptions, 'onChange' | 'onWillChange'>;
 
 type SyncHandle = {
   leftRef  : WritableComputedRef<unknown>;
@@ -109,6 +110,10 @@ export function useReactiveObjectsSync<
         debounceMs    : options?.debounceMs,
         debounceMsLtr : options?.debounceMsLtr,
         debounceMsRtl : options?.debounceMsRtl,
+
+        onWillChange(side, value) {
+          options?.onWillChange?.(side, key, value);
+        },
 
         onChange(side, value) {
           options?.onChange?.(side, key, value);
