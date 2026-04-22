@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.0](https://github.com/ReSee-Movies/nuxt-ux/compare/2.0.2...2.1.0) (2026-04-22)
+
+### Features
+
+* **LayoutPageContainer:** added an optional ProgressBar component to the top of the container that can be controlled via the `progressOptions` props object ([4e135e9](https://github.com/ReSee-Movies/nuxt-ux/commit/4e135e9170c14bdc2ab2ba1e85d25f11725f9950))
+
 ## [2.0.2](https://github.com/ReSee-Movies/nuxt-ux/compare/2.0.1...2.0.2) (2026-04-22)
 
 ### Bug Fixes
