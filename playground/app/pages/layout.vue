@@ -1,28 +1,16 @@
 <template>
   <UiLayoutPageColumn :layout="formModel.layout">
     <UiLayoutPageContainer
-      is               = "main"
-      :heading-text    = "formModel.heading"
-      :subheading-text = "formModel.subheading"
-      :prose           = "formModel.prose"
+      is                = "main"
+      :heading-text     = "formModel.heading"
+      :subheading-text  = "formModel.subheading"
+      :prose            = "formModel.prose"
+      :progress-options = "{ indeterminate: formModel.progress }"
     >
       <template v-if="formModel.showActions" #actions>
         <NuxtLink class="a" :to="{ name: 'typography' }">
           Go to Typography
         </NuxtLink>
-
-        <!--
-        <UiButton
-          aria-label = "More Info"
-          icon       = "i-ph-diamonds-four"
-          tooltip    = "More Info"
-          @click     = "showMoreInfoModal = true"
-        />
-
-        <UiDialog v-model:visible="showMoreInfoModal" header="Some More Info">
-          <UiLorem type="paragraphs" min="3" />
-        </UiDialog>
-        -->
       </template>
 
       <template #default>
@@ -61,9 +49,14 @@
     subheading  : 'Love looks not with the eyes, but with the mind; And therefore is wing\'d Cupid painted blind.',
     showActions : true,
     prose       : false,
+    progress    : false,
   });
 
   const formFields: FormFieldBuilderOption[] = [
+    {
+      fieldType : 'toggle',
+      name      : 'progress',
+    },
     {
       fieldType   : 'select-button',
       name        : 'layout',
