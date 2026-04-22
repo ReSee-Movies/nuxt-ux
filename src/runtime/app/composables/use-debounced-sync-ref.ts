@@ -55,13 +55,17 @@ export function useDebouncedSyncRef<L, R>(left: Ref<L>, right: Ref<R>, options?:
   if (syncDirection === 'both' || syncDirection === 'left') {
     // Leading watcher
     if (options?.onWillChange) {
-      watch(left, () => {
-        if (ignoreLeftTrailing) {
-          return;
-        }
+      watchers.push(watch(
+        left,
+        () => {
+          if (ignoreLeftTrailing) {
+            return;
+          }
 
-        options?.onWillChange?.('right', left.value as unknown as R);
-      }, watchOptions);
+          options?.onWillChange?.('right', left.value as unknown as R);
+        },
+        watchOptions,
+      ));
     }
 
     // Trailing watcher
@@ -88,13 +92,17 @@ export function useDebouncedSyncRef<L, R>(left: Ref<L>, right: Ref<R>, options?:
   if (syncDirection === 'both' || syncDirection === 'right') {
     // Leading watcher
     if (options?.onWillChange) {
-      watch(right, () => {
-        if (ignoreRightTrailing) {
-          return;
-        }
+      watchers.push(watch(
+        right,
+        () => {
+          if (ignoreRightTrailing) {
+            return;
+          }
 
-        options?.onWillChange?.('left', right.value as unknown as L);
-      }, watchOptions);
+          options?.onWillChange?.('left', right.value as unknown as L);
+        },
+        watchOptions,
+      ));
     }
 
     // Trailing watcher
