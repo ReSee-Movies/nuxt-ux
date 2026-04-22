@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.2](https://github.com/ReSee-Movies/nuxt-ux/compare/2.0.1...2.0.2) (2026-04-22)
+
+### Bug Fixes
+
+* **useDebouncedSyncRef:** included the "onWillChange" watchers in the returned WatchHandle rollup controls ([ff09dc0](https://github.com/ReSee-Movies/nuxt-ux/commit/ff09dc08d31a6e7482fdfdeb99149a809d005776))
+
 ## [2.0.1](https://github.com/ReSee-Movies/nuxt-ux/compare/2.0.0...2.0.1) (2026-04-21)
 
 ### Bug Fixes
