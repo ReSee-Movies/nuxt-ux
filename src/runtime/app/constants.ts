@@ -40,7 +40,11 @@ export const DefaultLocalization = {
     numOptionsSelected : '{count} Item(s) Selected',
   },
 
-  continueReading: 'Continue Reading',
+  continueReading : 'Continue Reading',
+  close           : 'Close',
+  closeDescribe   : 'Close {describe}',
+  remove          : 'Remove',
+  removeDescribe  : 'Remove {describe}',
 
   aria: {
     previous : 'Previous',

@@ -25,6 +25,8 @@
       icon="i-ph-person-simple-ski"
       severity="help"
       tooltip="This is a help tag"
+      dismissible
+      @dismiss = "() => console.log('Dismissed')"
     />
   </div>
 </template>
