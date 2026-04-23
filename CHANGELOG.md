@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/ReSee-Movies/nuxt-ux/compare/2.1.0...2.2.0) (2026-04-23)
+
+### Features
+
+* **Tag:** added the "dismissible" boolean prop, which adds a small button with an X to the tag which when clicked causes the tag to emit a "dismiss" event ([a3108f8](https://github.com/ReSee-Movies/nuxt-ux/commit/a3108f8011e44d894b7ff3f0633d5a564faac6fb))
+* **useReseeUxStore:** added utility method "getLocaleString" to simplify retrieving and formatted localized string content ([bff91e6](https://github.com/ReSee-Movies/nuxt-ux/commit/bff91e650ad8a8e6ff7005c1072f5d150a7aa376))
+
 ## [2.1.0](https://github.com/ReSee-Movies/nuxt-ux/compare/2.0.2...2.1.0) (2026-04-22)
 
 ### Features
