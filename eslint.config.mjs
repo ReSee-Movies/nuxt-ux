@@ -71,6 +71,7 @@ export default createConfigForNuxt({
           PropertyDefinition     : true,
           VariableDeclarator     : true,
           AssignmentExpression   : true,
+          Identifier             : true,
         },
       }],
 
