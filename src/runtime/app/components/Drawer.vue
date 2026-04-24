@@ -10,8 +10,8 @@
     @update:visible  = "updatedValue => emits('update:visible', updatedValue)"
   >
     <template #container="{ closeCallback }">
-      <div v-if="props.showHeaderText || props.showCloseIcon" class="header">
-        <div class="title">
+      <div v-if="props.showHeaderText || props.showCloseIcon" class="drawer-header">
+        <div class="drawer-header-title">
           <slot v-if="props.showHeaderText" name="title">
             {{ props.header }}
           </slot>
@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <div class="content styled-scroll">
+      <div class="drawer-content styled-scroll">
         <slot />
       </div>
     </template>
@@ -148,19 +148,19 @@
       }
     }
 
-    .drawer .header {
+    .drawer .drawer-header {
       display: flex;
       align-items         : center;
       padding-bottom      : var(--drawer-spacing);
       border-bottom       : solid 1px var(--color-global-background-accent);
 
-      .title {
+      .drawer-header-title {
         flex-grow : 1;
         font-size : var(--text-lg);
       }
     }
 
-    .drawer .content {
+    .drawer .drawer-content {
       flex-grow  : 1;
       overflow-y : auto;
     }

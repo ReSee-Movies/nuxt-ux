@@ -17,7 +17,7 @@
     @update:visible   = "updatedValue => emits('update:visible', updatedValue)"
   >
     <template #header>
-      <div :id="dialogLabelledBy" class="title">
+      <div :id="dialogLabelledBy" class="dialog-header-title">
         <slot v-if="props.showHeaderText" name="title">
           {{ props.header }}
         </slot>
@@ -94,11 +94,11 @@
   const passthroughProps = computed(() => {
     return {
       header: () => ({
-        class: ['header', { 'header-styles': props.showHeaderStyle }],
+        class: ['dialog-header', { 'header-styles': props.showHeaderStyle }],
       }),
 
       content: {
-        class: 'content',
+        class: 'dialog-content',
       },
 
       mask: {
@@ -122,19 +122,19 @@
       width  : 100%;
       margin : --spacing(2);
 
-      .header {
+      .dialog-header {
         display        : flex;
         align-items    : center;
         gap            : --spacing(3);
         padding-bottom : --spacing(3);
 
-        .title {
+        .dialog-header-title {
           flex-grow : 1;
           font-size : var(--text-lg);
         }
       }
 
-      .content {
+      .dialog-content {
         overflow-y: auto;
       }
     }
@@ -151,7 +151,7 @@
         height     : auto;
       }
 
-      .header {
+      .dialog-header {
         margin-inline : --spacing(3);
         margin-top    : --spacing(3);
 
@@ -160,7 +160,7 @@
         }
       }
 
-      .content {
+      .dialog-content {
         padding: --spacing(3);
       }
     }
