@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.2.2](https://github.com/ReSee-Movies/nuxt-ux/compare/2.2.1...2.2.2) (2026-04-28)
+
+### Bug Fixes
+
+* **ImageTiler:** the tiler does not _need_ to slowly repopulate with new images when the source array is changed, this can be controlled with the `weaveInNewImages` prop ([b3ab2c5](https://github.com/ReSee-Movies/nuxt-ux/commit/b3ab2c510d4def47226814aa2a47d34cbaa6e1ba))
+
+### Style Updates
+
+* **HeroBanner:** switched from "text-balance" to "text-pretty" wrapping, and made subtle tweaks to the background gradient overlay ([cf6de42](https://github.com/ReSee-Movies/nuxt-ux/commit/cf6de425526f9ad46c3c7e9b5b1ed2c5188c1468))
+
 ## [2.2.1](https://github.com/ReSee-Movies/nuxt-ux/compare/2.2.0...2.2.1) (2026-04-24)
 
 ### Bug Fixes
