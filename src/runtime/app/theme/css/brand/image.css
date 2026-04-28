@@ -88,12 +88,12 @@
   }
 
   &::before {
-    background: --alpha(var(--image-mask-color) / 75%);
+    background: --alpha(var(--image-mask-color) / 80%);
 
     @variant sm {
       background: linear-gradient(
         to right,
-        --alpha(var(--image-mask-color) / 90%) 35%,
+        --alpha(var(--image-mask-color) / 90%) 45%,
         --alpha(var(--image-mask-color) / 15%)
       );
     }

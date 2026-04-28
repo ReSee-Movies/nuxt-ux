@@ -25,7 +25,7 @@
             <Heading
               v-if  = "currentSlide?.headlineText || slots.headline"
               level = "1"
-              class = "hero mb-2 md:mb-4 line-clamp-2 dark:text-shadow"
+              class = "hero text-pretty mb-2 md:mb-4 line-clamp-2 dark:text-shadow"
             >
               <slot name="headline" :slide="currentSlide">
                 <span v-html="currentSlide?.headlineText" />
@@ -35,7 +35,7 @@
             <Heading
               v-if  = "currentSlide?.subheadText || slots.subhead"
               level = "2"
-              class = "mb-3 md:mb-5 text-balance line-clamp-2 dark:text-shadow"
+              class = "text-pretty mb-3 md:mb-5 line-clamp-2 dark:text-shadow"
             >
               <slot name="subhead" :slide="currentSlide">
                 <span v-html="currentSlide?.subheadText" />
@@ -44,7 +44,7 @@
 
             <p
               v-if  = "currentSlide?.introText || slots.intro"
-              class = "p hero text-balance line-clamp-2 dark:text-shadow"
+              class = "p hero text-pretty line-clamp-2 dark:text-shadow"
             >
               <slot name="intro" :slide="currentSlide">
                 <span v-html="currentSlide?.introText" />

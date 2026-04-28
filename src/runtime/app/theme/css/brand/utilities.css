@@ -41,3 +41,24 @@
     transition-delay : 0ms;
   }
 }
+
+/**
+ * Variant that targets styles to just the Firefox browser.
+ */
+@custom-variant firefox {
+  @supports (-moz-appearance: none) { @slot; }
+}
+
+/**
+ * Variant that targets styles to just the Safari browser.
+ */
+@custom-variant safari {
+  @supports (background: -webkit-named-image(i)) { @slot; }
+}
+
+/**
+ * Variant that targets styles to just the Chrome browser.
+ */
+@custom-variant chrome {
+  @supports (-webkit-app-region: inherit) { @slot; }
+}
