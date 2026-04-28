@@ -1,5 +1,5 @@
 <template>
-  <HeroBanner :carousel="carouselContent" :autoplay="false">
+  <HeroBanner :carousel="carouselContent" :autoplay="true">
     <template #actions>
       <Button text="Button One" />
       <Button text="Button Two" />
@@ -18,11 +18,11 @@
   });
 
   const carouselContent: HeroBannerSingleItemProps[] = [
-    ...Array.from({ length: 3 }, (_, idx) => ({
+    ...Array.from({ length: 4 }, (_, idx) => ({
       headlineText : `This is Headline #${ idx + 1 }`,
       subheadText  : `This is the sub-heading #${ idx + 1 }`,
       introText    : `Here is some more content describing what hero banner notice #${ idx + 1 } is all about`,
-      backdropSrc  : TmdbBackgrounds.at(idx),
+      backdropSrc  : (idx % 2) === 0 ? TmdbBackgrounds.at(idx) : [TmdbPosters.at(idx) as string],
     })),
     {
       headlineText : 'More Than Just<br>a Movie Night.',

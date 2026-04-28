@@ -4,6 +4,7 @@
     :class               = "['hero-banner', { carousel: isCarousel }]"
     mask-preset          = "image-mask-hero"
     :scale-to-foreground = "true"
+    :multi-image-options = "{ weaveInNewImages: false }"
     :role                = "isCarousel ? 'region' : undefined"
   >
     <LayoutPageColumn :aria-live = "isCarousel ? (props.autoplay ? 'off' : 'polite') : undefined">

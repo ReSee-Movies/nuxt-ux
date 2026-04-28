@@ -52,14 +52,15 @@
   };
 
   export interface ImageTilerProps {
-    images        : ImageFileDescriptor[];
-    play?         : boolean;
-    gridSettings? : BreakpointSettings<ImageTilerGridSizeDefinition>;
-    turnoverRate? : ValueOrRange;
-    switchTime?   : ValueOrRange;
-    switchDelay?  : ValueOrRange;
-    imageClass?   : HTMLElementClassNames;
-    maskPreset?   : ImageMaskPreset | ImageMaskPreset[];
+    images            : ImageFileDescriptor[];
+    weaveInNewImages? : boolean;
+    play?             : boolean;
+    gridSettings?     : BreakpointSettings<ImageTilerGridSizeDefinition>;
+    turnoverRate?     : ValueOrRange;
+    switchTime?       : ValueOrRange;
+    switchDelay?      : ValueOrRange;
+    imageClass?       : HTMLElementClassNames;
+    maskPreset?       : ImageMaskPreset | ImageMaskPreset[];
   }
 
   type ImageDisplayInfo = ShallowReactive<{
@@ -87,15 +88,15 @@
   const props = withDefaults(
     defineProps<ImageTilerProps>(),
     {
-      play         : true,
-      gridSettings : () => DefaultImageTilerGridSizeDefinition,
-      turnoverRate : () => [2000, 6000],
-      switchTime   : () => [1200, 1800],
-      switchDelay  : () => [0, 500],
-      imageClass   : undefined,
+      weaveInNewImages : true,
+      play             : true,
+      gridSettings     : () => DefaultImageTilerGridSizeDefinition,
+      turnoverRate     : () => [2000, 6000],
+      switchTime       : () => [1200, 1800],
+      switchDelay      : () => [0, 500],
+      imageClass       : undefined,
     },
   );
-
 
   const gridSettingsForBreakpoint = useSettingsForBreakpoint(() => props.gridSettings);
 
@@ -136,7 +137,7 @@
 
   /**
    * A watcher that is responsible for keeping track of the available image
-   * sources that are to be used. There are three possibilities:
+   * sources that are to be used. There are a few possibilities:
    *
    * 1. We're going from zero image choices, to more than zero. If so, update
    *    all the ImageDisplayCell objects with content info, cancel any queued
@@ -145,22 +146,26 @@
    * 2. We're going from one or more image choices, to zero. If so, hide the
    *    visible images, and stop the change loop.
    *
-   * 3. We're going from one set of image to another. In this case, nothing
-   *    special needs to be done. As the change loop advances, the old images
-   *    will be replaced with the new ones.
+   * 3. We're going from one set of image to another. In this case, behavior
+   *    is dependent on the `weaveInNewImages` prop flag.
+   *      If true (default): Old images will be slowly replaced with the new
+   *      ones as the change loop advances.
+   *      If false: The old images will first be transitioned out, and then the
+   *      whole image grid will be updated with new content.
    */
   watch(() => props.images, (newImages, oldImages) => {
-    if (newImages.length > 0 && oldImages.length === 0) {
-      displayArray.value.forEach(
-        (entry, idx) => switchImageCellContent(entry, idx),
-      );
+    cancelNextQueuedChange();
 
-      cancelNextQueuedChange();
-      queueNextChange();
-    }
-    else if (newImages.length === 0) {
-      cancelNextQueuedChange();
+    if (newImages.length === 0) {
       hideAll();
+      return;
+    }
+
+    if ((newImages.length > 0 && oldImages.length === 0) || !props.weaveInNewImages) {
+      updateAll(!props.weaveInNewImages).then(() => {
+        queueNextChange();
+      });
+      return;
     }
   });
 
@@ -222,6 +227,7 @@
     }, getValueFromRange(props.turnoverRate));
   }
 
+
   /**
    * Clears the pending timeout that will change the next random image cell.
    */
@@ -232,6 +238,7 @@
     }
   }
 
+
   /**
    * Takes a `ValueOrRange`, and always returns a number. If a range is provided,
    * the returned number is randomly chosen from between the two bounds.
@@ -239,6 +246,7 @@
   function getValueFromRange(value: ValueOrRange): number {
     return Array.isArray(value) ? getRandomInteger(value[0], value[1]) : toInteger(value);
   }
+
 
   /**
    * Selects a single image from those provided via the `images` prop. The selection is
@@ -391,7 +399,7 @@
    * Toggles the `switching` property of each image cell to false.
    */
   async function showAll() {
-    return Promise.allSettled(
+    await Promise.allSettled(
       displayArray.value.map((entry) => showImageCellContent(entry)),
     );
   }
@@ -400,8 +408,21 @@
    * Toggles the `switching` property of each image cell to true.
    */
   async function hideAll() {
-    return Promise.allSettled(
+    await Promise.allSettled(
       displayArray.value.map((entry) => hideImageCellContent(entry)),
+    );
+  }
+
+  /**
+   * Replaces all the image cells with new content.
+   */
+  async function updateAll(fadeThruBlack?: boolean) {
+    if (fadeThruBlack) {
+      await hideAll();
+    }
+
+    await Promise.allSettled(
+      displayArray.value.map((entry, idx) => switchImageCellContent(entry, idx)),
     );
   }
 </script>
