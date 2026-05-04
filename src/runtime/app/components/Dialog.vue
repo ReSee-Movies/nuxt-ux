@@ -10,7 +10,7 @@
     :footer           = "props.footer"
     :dismissable-mask = "props.dismissableMask"
     :position         = "props.position"
-    :class            = "['dialog', dialogWidth, { 'dialog-styles': props.showModalStyle }]"
+    :class            = "['dialog', dialogWidth, { 'dialog-styles': props.showModalStyle, 'dialog-sidebar-header': props.sidebarHeader }]"
     :content-class    = "props.contentClass"
     :pt               = "passthroughProps"
     :aria-labelledby  = "dialogLabelledBy"
@@ -19,7 +19,7 @@
     <template #header>
       <div :id="dialogLabelledBy" class="dialog-header-title">
         <slot v-if="props.showHeaderText" name="title">
-          {{ props.header }}
+          <span>{{ props.header }}</span>
         </slot>
       </div>
     </template>
@@ -43,6 +43,7 @@
     showHeaderText?  : boolean;
     showHeaderStyle? : boolean;
     showModalStyle?  : boolean;
+    sidebarHeader?   : boolean;
   }
 </script>
 
@@ -66,6 +67,7 @@
       showModalStyle  : true,
       position        : undefined,
       contentClass    : undefined,
+      sidebarHeader   : false,
     },
   );
 
@@ -119,8 +121,10 @@
 
   @layer components {
     .dialog {
-      width  : 100%;
-      margin : --spacing(2);
+      width      : 100%;
+      margin     : --spacing(2);
+      max-height : calc(100vh - --spacing(4));
+      overflow   : clip;
 
       .dialog-header {
         display        : flex;
@@ -135,16 +139,15 @@
       }
 
       .dialog-content {
-        overflow-y: auto;
+        overflow-y : auto;
       }
     }
 
     .dialog.dialog-styles {
-      height           : calc(100% - --spacing(4));
       border           : solid 1px var(--color-global-background-accent);
       border-radius    : var(--radius-md);
       background-color : var(--color-global-background);
-      overflow         : clip;
+      height           : calc(100vh - --spacing(4));
 
       @variant sm {
         box-shadow : var(--shadow-heavy);
@@ -162,6 +165,41 @@
 
       .dialog-content {
         padding: --spacing(3);
+      }
+    }
+
+    @variant landscape {
+      .dialog.dialog-sidebar-header {
+        display        : flex;
+        flex-direction : row !important;
+
+        .dialog-content {
+          flex-grow: 1;
+        }
+
+        .dialog-header {
+          order          : 2;
+          flex-direction : column;
+          padding-bottom : 0;
+          padding-left   : --spacing(3);
+          margin-left    : 0;
+
+          .dialog-header-title {
+            order            : 2;
+            writing-mode     : vertical-lr;
+            text-orientation : mixed;
+          }
+
+          &.header-styles {
+            border-bottom  : none;
+          }
+        }
+
+        &.dialog-styles {
+          .dialog-header.header-styles {
+            border-left: solid 1px var(--color-global-background-accent);
+          }
+        }
       }
     }
   }
