@@ -59,7 +59,7 @@
     --typo-h1-hero: clamp(var(--typo-h1), 9.331vw, 4.479rem);
 
     /* Slightly larger text for hero paragraphs */
-    --typo-p-hero: clamp(1.25rem, 3.125vw, 1.5rem);
+    --typo-p-hero: clamp(1rem, 3.125vw, 1.5rem);
 
     /*
      Additional top scroll margin to add to headers.

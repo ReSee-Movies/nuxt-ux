@@ -11,7 +11,7 @@
       <div
         :class="{
           'flex flex-col justify-center' : isCarousel,
-          'h-100 sm:h-112.5 md:h-120.5'  : isCarousel,
+          'h-90 sm:h-112.5 md:h-120.5'   : isCarousel,
           'pt-8 pb-10 md:pt-16 md:pb-18' : !isCarousel,
         }"
       >
@@ -36,7 +36,7 @@
             <Heading
               v-if  = "currentSlide?.subheadText || slots.subhead"
               level = "2"
-              class = "text-pretty mb-3 md:mb-5 line-clamp-2 dark:text-shadow"
+              class = "text-pretty mb-2 md:mb-5 line-clamp-2 dark:text-shadow"
             >
               <slot name="subhead" :slide="currentSlide">
                 <span v-html="currentSlide?.subheadText" />

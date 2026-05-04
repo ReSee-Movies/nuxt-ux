@@ -1,5 +1,5 @@
 <template>
-  <HeroBanner :carousel="carouselContent" :autoplay="true">
+  <HeroBanner :carousel="carouselContent" :autoplay="false">
     <template #actions>
       <Button text="Button One" />
       <Button text="Button Two" />
