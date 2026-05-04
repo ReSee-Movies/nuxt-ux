@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.3.0](https://github.com/ReSee-Movies/nuxt-ux/compare/2.2.2...2.3.0) (2026-05-04)
+
+### Features
+
+* **deps:** bump Tailwind to 4.2.4 ([03206f2](https://github.com/ReSee-Movies/nuxt-ux/commit/03206f27e10bb216c6be0089eeb445fc37288a4d))
+* **Dialog:** introduced the new prop "sidebarHeader" which causes the header to pivot into a sidebar along the right edge of the dialog when the screen is in landscape orientation ([3118415](https://github.com/ReSee-Movies/nuxt-ux/commit/3118415c36450e0c856c854fbbf8b2c39eb5e233))
+
+### Style Updates
+
+* **HeroBanner:** font-size and spacing tweaks to squeeze a bit more text into two lines at the smallest supported screen widths ([636048e](https://github.com/ReSee-Movies/nuxt-ux/commit/636048ed9251fe489f3114705c3cfc9f81431e28))
+
 ## [2.2.2](https://github.com/ReSee-Movies/nuxt-ux/compare/2.2.1...2.2.2) (2026-04-28)
 
 ### Bug Fixes
