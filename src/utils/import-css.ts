@@ -82,8 +82,6 @@ export async function importCSS(nuxt: Nuxt = useNuxt(), options?: Options) {
 
     if (currentLayer?.config) {
       const promises = Array.from(
-        // @ts-expect-error - Nuxt cannot keep its sh*t together for more than 5 minutes
-        // on how it would like to type things.
         new Set([...getDefaults(currentLayer.config), ...resolvedCSS]),
       ).map(async (file) => {
         const contents = await readFile(file, { encoding: 'utf-8' }).catch(() => '');
