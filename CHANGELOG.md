@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.4.0](https://github.com/ReSee-Movies/nuxt-ux/compare/2.3.0...2.4.0) (2026-05-12)
+
+### Features
+
+* **Card:** introduce .card-container class to wrap a card in and have its interactive behavior be expressed when the classname marked container is interacted with ([fb66911](https://github.com/ReSee-Movies/nuxt-ux/commit/fb66911b33ae349abdb9f159d19bc488f213b7f2))
+
 ## [2.3.0](https://github.com/ReSee-Movies/nuxt-ux/compare/2.2.2...2.3.0) (2026-05-04)
 
 ### Features
