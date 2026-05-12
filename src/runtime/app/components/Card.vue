@@ -145,24 +145,25 @@
       }
     }
 
-
     .card.interactive:not(.loading) {
       user-select                : none;
       transition-property        : border-radius, box-shadow, --resee-card-border-coverage;
       transition-duration        : calc(var(--default-transition-duration) * 3);
       transition-timing-function : var(--default-transition-timing-function);
+    }
 
-      &:focus-within, &:hover {
-        &.bordered {
-          --resee-card-border-coverage: 0%;
-        }
-
-        &.beveled {
-          border-radius: 0;
-        }
-
-        box-shadow: var(--shadow-heavy);
+    .card.interactive:not(.loading):where(.card-container:hover .card, .card-container:focus-within .card),
+    .card.interactive:not(.loading):focus-within,
+    .card.interactive:not(.loading):hover {
+      &.bordered {
+        --resee-card-border-coverage: 0%;
       }
+
+      &.beveled {
+        border-radius: 0;
+      }
+
+      box-shadow: var(--shadow-heavy);
     }
   }
 </style>

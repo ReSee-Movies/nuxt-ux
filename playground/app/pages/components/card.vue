@@ -24,6 +24,25 @@
       <p>As a hyperlink to the homepage.</p>
       <UiLorem type="sentences" min="5" />
     </UiCard>
+
+    <div class="card-container">
+      <UiCard
+        :interactive = "showInteractive"
+        :colorful    = "showColorful"
+        :beveled     = "showBevel"
+        :bordered    = "showBorder"
+        :raised      = "showRaised"
+        class        = "rounded-full overflip-clip"
+      >
+        <div class="aspect-square bg-gray-900">
+          <UiLorem type="sentences" min="4" max="4" />
+        </div>
+      </UiCard>
+
+      <p class="text-center">
+        <UiLorem type="words" min="9" max="9" />
+      </p>
+    </div>
   </div>
 
   <div class="flex gap-4">
