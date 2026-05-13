@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.0](https://github.com/ReSee-Movies/nuxt-ux/compare/2.4.0...2.5.0) (2026-05-13)
+
+### Features
+
+* **LayoutPageContainerHeading:** introduce new component that handles heading layout so it can be reapplied elsewhere ([009363d](https://github.com/ReSee-Movies/nuxt-ux/commit/009363d4011aa45ca26ccad701e40bdd446e34d4))
+* **ResponsiveSidebarLayout:** expose more info through the stateChange event so it is known whether the sidebar is in its drawer or column configuration without needing to do a comparison ([76c92e0](https://github.com/ReSee-Movies/nuxt-ux/commit/76c92e0032c1f76b6297464aa245376f7f3757c1))
+
 ## [2.4.0](https://github.com/ReSee-Movies/nuxt-ux/compare/2.3.0...2.4.0) (2026-05-12)
 
 ### Features
