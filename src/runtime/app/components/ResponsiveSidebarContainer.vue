@@ -34,8 +34,14 @@
     columnFullHeight? : boolean;
   }
 
+  export type ResponsiveSidebarContainerStateChangeEventStatus = {
+    state    : ResponseSidebarContainerState;
+    isDrawer : boolean;
+    isColumn : boolean;
+  };
+
   export interface ResponsiveSidebarContainerEmits {
-    (e: 'stateChange', containerState: ResponseSidebarContainerState): void;
+    (e: 'stateChange', status: ResponsiveSidebarContainerStateChangeEventStatus): void;
   }
 </script>
 
@@ -75,7 +81,11 @@
   const isColumn = computed(() => containerState.value === 'column');
 
   watch(containerState, () => {
-    emits('stateChange', containerState.value);
+    emits('stateChange', {
+      state    : containerState.value,
+      isDrawer : isDrawer.value,
+      isColumn : isColumn.value,
+    });
 
     if (!isDrawer.value) {
       drawerVisible.value = undefined;

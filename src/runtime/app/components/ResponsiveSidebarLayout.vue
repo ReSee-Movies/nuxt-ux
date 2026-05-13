@@ -11,7 +11,12 @@
     ]"
   >
     <div>
-      <slot name="content" :sidebar-state="sidebarState" />
+      <slot
+        name           = "content"
+        :sidebar-state = "sidebarState?.state ?? 'unknown'"
+        :is-drawer     = "sidebarState?.isDrawer ?? false"
+        :is-column     = "sidebarState?.isColumn ?? false"
+      />
     </div>
 
     <div>
@@ -23,7 +28,12 @@
         :column-full-height    = "props.columnFullHeight"
         @state-change          = "handleSidebarStateChange"
       >
-        <slot name="sidebar" :sidebar-state="sidebarState" />
+        <slot
+          name           = "sidebar"
+          :sidebar-state = "sidebarState?.state ?? 'unknown'"
+          :is-drawer     = "sidebarState?.isDrawer ?? false"
+          :is-column     = "sidebarState?.isColumn ?? false"
+        />
       </ResponsiveSidebarContainer>
     </div>
   </div>
@@ -34,7 +44,7 @@
   import type {
     ResponsiveSidebarContainerEmits,
     ResponsiveSidebarContainerProps,
-    ResponseSidebarContainerState,
+    ResponsiveSidebarContainerStateChangeEventStatus,
   } from './ResponsiveSidebarContainer.vue';
 
   export interface ResponsiveSidebarLayoutProps extends ResponsiveSidebarContainerProps {
@@ -59,9 +69,9 @@
   const emits = defineEmits<ResponsiveSidebarContainerEmits>();
 
   const drawerVisible = defineModel<boolean | undefined>('drawerVisible', { default: undefined });
-  const sidebarState  = ref<ResponseSidebarContainerState>('unknown');
+  const sidebarState  = ref<ResponsiveSidebarContainerStateChangeEventStatus>();
 
-  function handleSidebarStateChange(state: ResponseSidebarContainerState) {
+  function handleSidebarStateChange(state: ResponsiveSidebarContainerStateChangeEventStatus) {
     sidebarState.value = state;
     emits('stateChange', state);
   }
