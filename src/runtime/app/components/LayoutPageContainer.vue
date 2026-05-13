@@ -18,39 +18,25 @@
       </Transition>
     </div>
 
-    <div
-      v-if   = "showTitleBar"
-      :class = "[
-        'mb-6',
-        props.headerClass,
-        {
-          'prose-layout-container' : props.prose,
-          'sm'                     : props.prose === 'sm',
-        },
-      ]"
+    <LayoutPageContainerHeading
+      :prose           = "props.prose"
+      :heading-text    = "props.headingText"
+      :heading-level   = "props.headingLevel"
+      :header-class    = "props.headerClass"
+      :subheading-text = "props.subheadingText"
     >
-      <div v-if="showHeading || slots.actions" class="flex gap-4 items-center">
-        <slot name="heading">
-          <Heading
-            :text  = "props.headingText"
-            :level = "props.headingLevel"
-            class  = "grow"
-          />
-        </slot>
+      <template v-if="slots.heading" #heading>
+        <slot name="heading" />
+      </template>
 
-        <div v-if="slots.actions">
-          <slot name="actions" />
-        </div>
-      </div>
+      <template v-if="slots.subheading" #subheading>
+        <slot name="subheading" />
+      </template>
 
-      <div v-if="showSubheading">
-        <slot name="subheading">
-          <p class="text-global-foreground-accent">
-            {{ props.subheadingText }}
-          </p>
-        </slot>
-      </div>
-    </div>
+      <template v-if="slots.actions" #actions>
+        <slot name="actions" />
+      </template>
+    </LayoutPageContainerHeading>
 
     <div
       :class="[
@@ -69,18 +55,13 @@
 
 <script lang="ts">
   import type { HintedString, HTMLElementClassNames } from '../types';
-  import type { HeadingProps } from './Heading.vue';
   import type { ProgressBarProps } from './ProgressBar.vue';
+  import type { LayoutPageContainerHeadingProps } from './LayoutPageContainerHeading.vue';
 
-  export interface LayoutPageContainerProps {
+  export interface LayoutPageContainerProps extends LayoutPageContainerHeadingProps {
     is?              : HintedString<'div' | 'main' | 'section' | 'article' | 'nav'>;
     glassEffect?     : boolean;
     accentColor?     : string;
-    prose?           : boolean | 'md' | 'sm';
-    headingText?     : string;
-    headingLevel?    : HeadingProps['level'];
-    subheadingText?  : string;
-    headerClass?     : HTMLElementClassNames;
     contentClass?    : HTMLElementClassNames;
     progressOptions? : ProgressBarProps;
   }
@@ -88,36 +69,20 @@
 
 
 <script setup lang="ts">
-  import { computed, useSlots } from 'vue';
-  import Heading from './Heading.vue';
+  import { useSlots } from 'vue';
+  import LayoutPageContainerHeading from './LayoutPageContainerHeading.vue';
   import LazyProgressBar from './ProgressBar.vue';
-
-  const slots = useSlots();
 
   const props = withDefaults(
     defineProps<LayoutPageContainerProps>(),
     {
-      is              : 'div',
-      glassEffect     : false,
-      accentColor     : undefined,
-      headingText     : undefined,
-      subheadingText  : undefined,
-      prose           : false,
-      progressOptions : undefined,
+      is          : 'div',
+      glassEffect : false,
+      prose       : false,
     },
   );
 
-  const showSubheading = computed(
-    () => !!(props.subheadingText || slots.subheading),
-  );
-
-  const showHeading = computed(
-    () => !!(props.headingText || slots.heading),
-  );
-
-  const showTitleBar = computed(
-    () => showHeading.value || showSubheading.value || !!slots.actions,
-  );
+  const slots = useSlots();
 </script>
 
 
